@@ -1,0 +1,110 @@
+<% if readonly %>
+  <%=cell.to_html %>
+<% elsif @filtered_reference[field.custom_field_id.to_s].nil? %>
+  <span class="error_message">Filter for '<%=field.descr %>' is required!!</span>
+<% else %>
+  <%
+  name_prefix ||= ''
+  input_name = "#{name_prefix}cells[#{field.custom_field_id}]"
+
+  scr_row_id = @filtered_reference[field.custom_field_id.to_s][:scr_row_id].to_i
+  scr_row = Row.find(scr_row_id)
+%>
+
+  <%=h scr_row.screen_combined_code %>
+  <%=hidden_field_tag( "#{input_name}[scr_row_id]", scr_row.id) %>
+  <br />
+  <%
+  scr_row_cell_value = scr_row.screen_combined_cell.value
+  sub_scr_row_id = CustomFields::ScreenCombindedReference.group_row_id(scr_row_cell_value)
+
+  parts = CustomFields::ScreenCombindedReference.cell_parts(scr_row_cell_value)
+
+  screen_options = CustomFields::ScreenCombindedReference.screen_combined_reference_rows(scr_row)
+  options = CustomFields::OptionCombindedReference.cell_options(cell.value)
+
+  multiplier_screen_index = -1
+
+  option_name_tag = "#{input_name}[options]"
+
+  parts.each_with_index do |p,i|
+    if p[:type] == :screen
+      screen = Screen.find(p[:screen_id])
+    %>
+      <br />
+      <%=hidden_field_tag("#{option_name_tag}[#{i}][screen_id]", screen.id ) %>
+
+      <%
+      selected_rows = Row.find(options[i][:row_ids]) unless row.new_record?
+      if CustomFields::ScreenCombindedReference.is_screen_used_as_multiply_count?(scr_row_cell_value, screen.id)
+        multiplier_screen_index = i
+
+        sub_scr_index = CustomFields::ScreenCombindedReference.cell_screen_group_index(scr_row_cell_value)
+
+        operation_url = url_for(:controller => "rows",
+          :action => "option_combined_reference_group",
+          :id => 0,
+          :screen_id => row.screen_id,
+          :row_id => "JAVASCRIPT_VAR_VALUE_01",
+          :field_id => field.id,
+          :scr_row_id => scr_row_id,
+          :sub_scr_row_id => sub_scr_row_id,
+          :index => sub_scr_index,
+          :input_name => input_name
+        )
+        selected_multiplier_row = selected_rows.first unless row.new_record?
+        select_options = options_from_collection_for_select_tag(screen_options[i][:rows], "id", "description", row.new_record? || selected_multiplier_row.nil? ? nil : selected_multiplier_row.id, { :include_blank => true })
+        select_group_onchange = <<JAVASCRIPT
+        fncAjaxUpdaterWithReplacement("combined_group_result_#{field.id}", "#{operation_url}", ["JAVASCRIPT_VAR_VALUE_01", this.value]);
+JAVASCRIPT
+        %>
+        <br />
+        <%= screen.label_descr %>: <%=select_tag("#{option_name_tag}[#{i}][row_ids]", select_options, :onchange => select_group_onchange) %>
+        <br />
+      <%
+      else
+      %>
+
+        <%=left_to_right_tag(
+          :descr => screen.label_descr,
+          :name =>  "#{option_name_tag}[#{i}][row_ids]",
+          :assigned_options => row.new_record? ? [] : selected_rows,
+          :all_options => screen_options[i][:rows],
+          :value_method => :id,
+          :text_method => :description,
+          :sort => true ) %>
+      <%
+      end
+    elsif p[:type] == :group
+    %>
+      <hr />
+      <div id='combined_group_result_<%=field.id %>'>
+        <%
+        if multiplier_screen_index == -1
+          @multiplier_row = selected_multiplier_row = scr_row
+        elsif !row.new_record?
+          selected_multiplier_row = Row.find(options[multiplier_screen_index][:row_ids].first)
+        end
+        
+        sub_scr_row = Row.find(sub_scr_row_id)
+        %>
+        <%=render(:partial => "/rows/option_combined_reference_group" ,
+          :locals => {
+            :field => field,
+            :selected_multiplier_row => selected_multiplier_row,
+            :scr_row => scr_row,
+            :sub_scr_row => sub_scr_row,
+            :assigned_group_options => options[i] || [],
+            :index => i,
+            :input_name => input_name
+          }
+        )
+      %>
+      </div>
+      <hr />
+    <%
+    end
+  end
+%>
+  <%= field_descr_tag :descr => field.custom_field.descr %>
+<% end %>

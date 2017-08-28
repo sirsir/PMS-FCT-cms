@@ -1,0 +1,32 @@
+
+<tr>
+  <th class="th_row_header">Source Field:</th>
+  <td>
+    <%=select_tag("field[value][field_id]", options_from_collection_for_select_tag( @assigned_options, :id, :screen_field_caption )) %>
+    <%= field_descr_tag %>
+  </td>
+</tr>
+
+<tr>
+  <th class="th_row_header">Wildcard:</th>
+  <td>
+    <%= check_box_tag('field[value][wildcard]', '1', false) %>
+    <%= hidden_field_tag 'field[value][wildcard]', 0 %>
+    <%= field_descr_tag %>
+  </td>
+</tr>
+
+<tr>
+  <th class="th_row_header">Option:</th>
+  <td>
+    <%
+    options = Field.display_code_combined_reference
+    html_tag = ""
+    options.each_with_index  do |k, i|
+        html_tag << radio_button_tag("field[value][display_as]", k , i==0 ) + k.to_s.gsub('_', ' ').capitalize
+    end
+    %>
+    <%= html_tag %>
+    <%= field_descr_tag %>
+  </td>
+</tr>

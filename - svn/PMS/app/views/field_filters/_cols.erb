@@ -1,0 +1,41 @@
+
+<%
+if field_report.field_id < 0 then
+%>
+  <table  class='table_data_content' cellspacing='0'>
+    <tr class='tr_header'>
+      <th class='th_col_header'>&nbsp;</th>
+      <th class='th_col_header'>Name</th>
+      <th class='th_col_header'>Count</th>
+     </tr>
+     <%= render :partial => "field_filters/col", :collection => cols, :locals => {:field_report => field_report, :cols => cols, :read_only => read_only} %>
+  </table>
+
+<%
+else
+case field_report.field.custom_field
+when CustomFields::Reference, CustomFields::ComboBox, CustomFields::RadioButton, CustomFields::LoginField then %>
+  <table  class='table_data_content' cellspacing='0'>
+  <tr class='tr_header'>
+    <th class='th_col_header'>&nbsp;</th>
+    <th class='th_col_header'>Name</th>
+    <th class='th_col_header'>Count</th>
+   </tr>
+   <%= render :partial => "field_filters/col", :collection => cols, :locals => {:field_report => field_report, :cols => cols, :read_only => read_only} %>
+</table>
+<%  when CustomFields::DateTimeField then %>
+ <%
+field_filter = @report_request.field_filter(field_report.field_id)
+accounting_year = field_filter.accounting_year
+ %>
+ <table cellspacing='0'>
+   <tr > <td> <%= select_year(accounting_year, {:start_year => accounting_year - 5, :end_year => accounting_year + 1, :prefix => "field_filter[#{field_report.field_id}][value]", :field_name => "accounting_year"} )  %> </td>  </tr>
+</table>  
+<% when CustomFields::IssueTracking then %>
+<span class='missing_implementation'>Missing implement of Col's FieldFilter of CustomFields::IssueTracking. in <%= __FILE__.gsub(RAILS_ROOT, "") %></span>
+<% when CustomFields::ListBox then %>
+<span class='missing_implementation'>Missing implement of Col's FieldFilter of CustomFields::ListBox. in <%= __FILE__.gsub(RAILS_ROOT, "") %></span>
+<% else %>
+<span class='missing_implementation'>Missing implement of Col's FieldFilter. in <%= __FILE__.gsub(RAILS_ROOT, "") %></span>
+<% end %>
+<% end %>

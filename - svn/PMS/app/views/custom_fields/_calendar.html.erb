@@ -1,0 +1,65 @@
+<%
+new_or_monthly_format = @custom_field.value.nil? || @custom_field.monthly_format?
+format_type = @custom_field.format_type
+format = @custom_field.value.nil? ? format_type.first : @custom_field.format
+%>
+
+<tr>
+  <th class="th_row_header">Format:</th>
+  <td>
+    <div onclick='
+      $("custom_field_value_start_of_week").disabled =
+        $("custom_field_value_time_start_hour").disabled =
+        $("custom_field_value_time_start_minute").disabled =
+        $("custom_field_value_time_end_hour").disabled =
+        $("custom_field_value_time_end_minute").disabled =
+        $("custom_field_value_days_per_year").disabled =
+        $("custom_field_value_format_monthly").checked ? "true" : '';
+
+      $("tr_start_of_week").style.display =
+        $("tr_hours").style.display =
+        $("tr_days_per_year").style.display =
+        $("custom_field_value_format_monthly").checked ? "none" : '';
+         '>
+      <% format_type.each do |f|  %>
+          <%= radio_button_tag 'custom_field[value][format]', f, (f == format) %>
+          <%= label_tag "custom_field_value_format_" + f.to_s, f.to_s.titleize  %><br/>
+      <% end %>
+    </div>
+  </td>
+</tr>
+
+<tr id="tr_start_of_week" style="<%="display: none" if new_or_monthly_format %>">
+  <th class="th_row_header">Start of week:</th>
+  <td>
+    <%
+    start_of_week_options = %w(Sunday Monday Tuesday Wednesday Thursday Friday Saturday)
+    %>
+    <%= select_tag('custom_field[value][start_of_week]', options_for_select(start_of_week_options, @custom_field.start_of_week)) %>
+  </td>
+</tr>
+
+<tr id="tr_hours" style="<%="display: none" if new_or_monthly_format %>">
+  <th class="th_row_header">Hours:</th>
+  <td>
+    Start: <%= select_time(@custom_field.get_start_time, :time_separator => ':', :prefix => "custom_field[value][time][start]") %> -
+    End: <%= select_time(@custom_field.get_end_time, :time_separator => ':', :prefix => "custom_field[value][time][end]") %>
+  </td>
+</tr>
+
+<tr id="tr_days_per_year" style="<%="display: none" if new_or_monthly_format %>">
+  <th class="th_row_header">Days per year:</th>
+  <td>Standard
+    <%= hidden_field_tag 'custom_field[value][days_per_year]', "Standard" %>
+  </td>
+</tr>
+
+<tr>
+  <th class="th_row_header">Detail screen:</th>
+  <td>
+    <%
+    detail_screens = @screens.select{|s| s.is_a?(DetailScreen)}
+    %>
+    <%= select_tag('custom_field[value][detail_screen]', options_from_collection_for_select(detail_screens, :id, :name, @custom_field.detail_screen_id.to_i )) %>
+  </td>
+</tr>

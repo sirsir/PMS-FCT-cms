@@ -1,0 +1,386 @@
+# Logfile created on Thu Jun 09 13:20:40 +0700 2016
+
+Processing FrontDeskController#index (for 127.0.0.1 at 2016-06-09 13:21:29) [GET]
+  Session ID: 1dc37ae3650ad168e6b7456951641a6e
+  Parameters: {"action"=>"index", "controller"=>"front_desk"}
+  [4;36;1mSession Columns (1230.8ms)[0m   [0;1mSHOW FIELDS FROM `sessions`[0m
+  [4;35;1mSession Load (2126.2ms)[0m   [0mSELECT * FROM `sessions` [0m
+  [4;36;1mSQL (2556.2ms)[0m   [0;1mBEGIN[0m
+  [4;35;1mJoin Table Columns (2696.3ms)[0m   [0mSHOW FIELDS FROM `rows_sessions`[0m
+  [4;36;1mRow Columns (3175.6ms)[0m   [0;1mSHOW FIELDS FROM `rows`[0m
+  [4;35;1mRow Load (3413.2ms)[0m   [0mSELECT * FROM `rows` INNER JOIN `rows_sessions` ON `rows`.id = `rows_sessions`.row_id WHERE (`rows_sessions`.session_id = 411 ) [0m
+  [4;36;1mSession Destroy (3565.0ms)[0m   [0;1mDELETE FROM `sessions` WHERE `id` = 411[0m
+  [4;35;1mSQL (2713.0ms)[0m   [0mCOMMIT[0m
+Redirected to actionlogincontrollerfront_desk
+Filter chain halted as [:authorize] rendered_or_redirected.
+Completed in 27421ms (DB: 35967) | 302 Found [http://localhost/]
+
+
+Processing FrontDeskController#login (for 127.0.0.1 at 2016-06-09 13:22:39) [GET]
+  Session ID: 1dc37ae3650ad168e6b7456951641a6e
+  Parameters: {"action"=>"login", "controller"=>"front_desk"}
+Rendering template within layouts/standard-layout
+Rendering front_desk/login
+Rendered front_desk/_system_title (8.8ms)
+Rendered front_desk/_login (0.0ms)
+Completed in 214ms (View: 149, DB: 27633) | 200 OK [http://localhost/front_desk/login]
+
+
+Processing FrontDeskController#login (for 127.0.0.1 at 2016-06-09 13:24:43) [POST]
+  Session ID: 1dc37ae3650ad168e6b7456951641a6e
+  Parameters: {"user_login"=>"tsestaff", "action"=>"login", "authenticity_token"=>"118c2f153d099aadb9c2b11df58b29261337a33c", "controller"=>"front_desk", "user_password"=>"[FILTERED]", "login"=>"Login »"}
+  [4;36;1mUser Columns (2284.3ms)[0m   [0;1mSHOW FIELDS FROM `users`[0m
+  [4;35;1mUser Load (3646.5ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`encrypted_password` = N'3fc38ab01555ff2538f30f456b49a1da7efce478' AND `users`.`login` = N'tsestaff' AND `users`.`disabled_flag` = 0) LIMIT 1[0m
+Redirected to actionindex
+Completed in 6117ms (DB: 11924) | 302 Found [http://localhost/front_desk/login]
+
+
+Processing FrontDeskController#index (for 127.0.0.1 at 2016-06-09 13:25:41) [GET]
+  Session ID: 1dc37ae3650ad168e6b7456951641a6e
+  Parameters: {"action"=>"index", "controller"=>"front_desk"}
+  [4;36;1mUser Exists (1704.6ms)[0m   [0;1mSELECT `users`.id FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;35;1mUser Columns (1485.5ms)[0m   [0mSHOW FIELDS FROM `users`[0m
+  [4;36;1mUser Load (973.5ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 4) [0m
+  [4;35;1mScreen Columns (1392.9ms)[0m   [0mSHOW FIELDS FROM `screens`[0m
+  [4;36;1mSQL (2464.0ms)[0m   [0;1mSELECT count(*) AS count_all FROM `screens` [0m
+  [4;35;1mScreen Load (2554.3ms)[0m   [0mSELECT * FROM `screens` WHERE ((action = N'index' and controller = N'front_desk') or id = 0) LIMIT 1[0m
+  [4;36;1mMenuGroupScreen Columns (4124.4ms)[0m   [0;1mSHOW FIELDS FROM `screens`[0m
+  [4;35;1mScreen Load (4892.5ms)[0m   [0mSELECT * FROM `screens` WHERE (`screens`.`id` = 8) [0m
+  [4;36;1mScreen Load (2923.2ms)[0m   [0;1mSELECT * FROM `screens` WHERE (`screens`.screen_id = 8) ORDER BY display_seq[0m
+  [4;35;1mScreen Load (1379.4ms)[0m   [0mSELECT * FROM `screens` WHERE (`screens`.screen_id = 37) ORDER BY display_seq[0m
+  [4;36;1mScreen Load (1753.2ms)[0m   [0;1mSELECT * FROM `screens` WHERE (`screens`.screen_id = 1066) ORDER BY display_seq[0m
+  [4;35;1mListScreen Columns (1534.7ms)[0m   [0mSHOW FIELDS FROM `screens`[0m
+  [4;36;1mPermissions::UserScreen Columns (1332.7ms)[0m   [0;1mSHOW FIELDS FROM `permissions`[0m
+  [4;35;1mPermissions::UserScreen Load (1840.4ms)[0m   [0mSELECT * FROM `permissions` WHERE (`permissions`.screen_id = 1067 AND ( user_id = 4 )) AND ( (`permissions`.`type` = 'Permissions::UserScreen' ) ) LIMIT 1[0m
+  [4;36;1mJoin Table Columns (2105.8ms)[0m   [0;1mSHOW FIELDS FROM `roles_users`[0m
+  [4;35;1mRole Columns (1944.0ms)[0m   [0mSHOW FIELDS FROM `roles`[0m
+  [4;36;1mRole Load (2423.7ms)[0m   [0;1mSELECT * FROM `roles` INNER JOIN `roles_users` ON `roles`.id = `roles_users`.role_id WHERE (`roles_users`.user_id = 4 ) [0m
+  [4;35;1mPermissions::RoleScreen Columns (3722.2ms)[0m   [0mSHOW FIELDS FROM `permissions`[0m
+  [4;36;1mPermissions::RoleScreen Load (1969.4ms)[0m   [0;1mSELECT * FROM `permissions` WHERE (`permissions`.screen_id = 1067 AND ( role_id in (NULL) )) AND ( (`permissions`.`type` = 'Permissions::RoleScreen' ) ) [0m
+  [4;35;1mUser Load (2812.9ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`login` = N'tsestaff' AND `users`.`disabled_flag` = 0) LIMIT 1[0m
+  [4;36;1mScreen Load (6543.0ms)[0m   [0;1mSELECT * FROM `screens` [0m
+  [4;35;1mHeaderScreen Columns (6511.5ms)[0m   [0mSHOW FIELDS FROM `screens`[0m
+  [4;36;1mRevisionScreen Columns (3497.5ms)[0m   [0;1mSHOW FIELDS FROM `screens`[0m
+  [4;35;1mDetailScreen Columns (3295.4ms)[0m   [0mSHOW FIELDS FROM `screens`[0m
+  [4;36;1mCustomField Columns (4668.5ms)[0m   [0;1mSHOW FIELDS FROM `custom_fields`[0m
+  [4;35;1mCustomField Load (6630.5ms)[0m   [0mSELECT * FROM `custom_fields` [0m
+  [4;36;1mCustomFields::TextField Columns (2228.8ms)[0m   [0;1mSHOW FIELDS FROM `custom_fields`[0m
+  [4;35;1mCustomFields::DateTimeField Columns (1930.6ms)[0m   [0mSHOW FIELDS FROM `custom_fields`[0m
+  [4;36;1mCustomFields::Reference Columns (1506.7ms)[0m   [0;1mSHOW FIELDS FROM `custom_fields`[0m
+  [4;35;1mCustomFields::TextArea Columns (2781.8ms)[0m   [0mSHOW FIELDS FROM `custom_fields`[0m
+  [4;36;1mCustomFields::ComboBox Columns (2550.6ms)[0m   [0;1mSHOW FIELDS FROM `custom_fields`[0m
+  [4;35;1mCustomFields::NumericField Columns (1803.6ms)[0m   [0mSHOW FIELDS FROM `custom_fields`[0m
+  [4;36;1mCustomFields::AutoNumbering Columns (2208.5ms)[0m   [0;1mSHOW FIELDS FROM `custom_fields`[0m
+  [4;35;1mCustomFields::RadioButton Columns (3469.2ms)[0m   [0mSHOW FIELDS FROM `custom_fields`[0m
+  [4;36;1mCustomFields::CheckBox Columns (1563.5ms)[0m   [0;1mSHOW FIELDS FROM `custom_fields`[0m
+  [4;35;1mCustomFields::UploadImage Columns (2852.4ms)[0m   [0mSHOW FIELDS FROM `custom_fields`[0m
+Rendering front_desk/index
+Rendered front_desk/_system_title (2.0ms)
+Completed in 100410ms (View: 9, DB: 108086) | 200 OK [http://localhost/]
+
+
+Processing FrontDeskController#login (for 127.0.0.1 at 2016-06-09 13:27:52) [POST]
+  Session ID: 1dc37ae3650ad168e6b7456951641a6e
+  Parameters: {"user_login"=>"tsestaff", "action"=>"login", "authenticity_token"=>"118c2f153d099aadb9c2b11df58b29261337a33c", "controller"=>"front_desk", "user_password"=>"[FILTERED]", "login"=>"Login »"}
+  [4;36;1mUser Load (10410.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`encrypted_password` = N'3fc38ab01555ff2538f30f456b49a1da7efce478' AND `users`.`login` = N'tsestaff' AND `users`.`disabled_flag` = 0) LIMIT 1[0m
+  [4;35;1mUser Columns (5865.8ms)[0m   [0mSHOW FIELDS FROM `users`[0m
+Redirected to actionindex
+Completed in 16420ms (DB: 28061) | 302 Found [http://localhost/front_desk/login]
+/!\ FAILSAFE /!\  Thu Jun 09 13:29:35 +0700 2016
+  Status: 500 Internal Server Error
+  Lost connection to MySQL server during query
+    D:/TSE Projects/pms-fct - CMS/- svn/PMS/vendor/rails/activerecord/lib/active_record/connection_adapters/mysql_adapter.rb:548:in `real_connect'
+    D:/TSE Projects/pms-fct - CMS/- svn/PMS/vendor/rails/activerecord/lib/active_record/connection_adapters/mysql_adapter.rb:548:in `connect'
+    D:/TSE Projects/pms-fct - CMS/- svn/PMS/vendor/rails/activerecord/lib/active_record/connection_adapters/mysql_adapter.rb:198:in `initialize'
+    D:/TSE Projects/pms-fct - CMS/- svn/PMS/vendor/rails/activerecord/lib/active_record/connection_adapters/mysql_adapter.rb:74:in `new'
+    D:/TSE Projects/pms-fct - CMS/- svn/PMS/vendor/rails/activerecord/lib/active_record/connection_adapters/mysql_adapter.rb:74:in `mysql_connection'
+    D:/TSE Projects/pms-fct - CMS/- svn/PMS/vendor/rails/activerecord/lib/active_record/connection_adapters/abstract/connection_pool.rb:223:in `send'
+    D:/TSE Projects/pms-fct - CMS/- svn/PMS/vendor/rails/activerecord/lib/active_record/connection_adapters/abstract/connection_pool.rb:223:in `new_connection'
+    D:/TSE Projects/pms-fct - CMS/- svn/PMS/vendor/rails/activerecord/lib/active_record/connection_adapters/abstract/connection_pool.rb:245:in `checkout_new_connection'
+    D:/TSE Projects/pms-fct - CMS/- svn/PMS/vendor/rails/activerecord/lib/active_record/connection_adapters/abstract/connection_pool.rb:188:in `checkout'
+    D:/TSE Projects/pms-fct - CMS/- svn/PMS/vendor/rails/activerecord/lib/active_record/connection_adapters/abstract/connection_pool.rb:184:in `loop'
+    D:/TSE Projects/pms-fct - CMS/- svn/PMS/vendor/rails/activerecord/lib/active_record/connection_adapters/abstract/connection_pool.rb:184:in `checkout'
+    C:/Ruby/Ruby/lib/ruby/1.8/monitor.rb:242:in `synchronize'
+    D:/TSE Projects/pms-fct - CMS/- svn/PMS/vendor/rails/activerecord/lib/active_record/connection_adapters/abstract/connection_pool.rb:183:in `checkout'
+    D:/TSE Projects/pms-fct - CMS/- svn/PMS/vendor/rails/activerecord/lib/active_record/connection_adapters/abstract/connection_pool.rb:98:in `connection'
+    D:/TSE Projects/pms-fct - CMS/- svn/PMS/vendor/rails/activerecord/lib/active_record/connection_adapters/abstract/connection_pool.rb:326:in `retrieve_connection'
+    D:/TSE Projects/pms-fct - CMS/- svn/PMS/vendor/rails/activerecord/lib/active_record/connection_adapters/abstract/connection_specification.rb:121:in `retrieve_connection'
+    D:/TSE Projects/pms-fct - CMS/- svn/PMS/vendor/rails/activerecord/lib/active_record/connection_adapters/abstract/connection_specification.rb:113:in `connection'
+    D:/TSE Projects/pms-fct - CMS/- svn/PMS/vendor/rails/activerecord/lib/active_record/base.rb:2934:in `quoted_table_name'
+    D:/TSE Projects/pms-fct - CMS/- svn/PMS/vendor/rails/activerecord/lib/active_record/base.rb:1626:in `construct_finder_sql'
+    D:/TSE Projects/pms-fct - CMS/- svn/PMS/vendor/rails/activerecord/lib/active_record/base.rb:1490:in `find_every'
+    D:/TSE Projects/pms-fct - CMS/- svn/PMS/vendor/rails/activerecord/lib/active_record/base.rb:1452:in `find_initial'
+    D:/TSE Projects/pms-fct - CMS/- svn/PMS/vendor/rails/activerecord/lib/active_record/base.rb:587:in `find_uncached'
+    D:/TSE Projects/pms-fct - CMS/- svn/PMS/lib/active_record_base_ext.rb:53:in `find'
+    D:/TSE Projects/pms-fct - CMS/- svn/PMS/vendor/rails/actionpack/lib/action_controller/session/active_record_store.rb:113:in `find_by_session_id'
+    D:/TSE Projects/pms-fct - CMS/- svn/PMS/vendor/rails/actionpack/lib/action_controller/session/active_record_store.rb:288:in `initialize'
+    D:/TSE Projects/pms-fct - CMS/- svn/PMS/vendor/rails/activerecord/lib/active_record/base.rb:1398:in `silence'
+    D:/TSE Projects/pms-fct - CMS/- svn/PMS/vendor/rails/actionpack/lib/action_controller/session/active_record_store.rb:288:in `initialize'
+    C:/Ruby/Ruby/lib/ruby/1.8/cgi/session.rb:280:in `new'
+    C:/Ruby/Ruby/lib/ruby/1.8/cgi/session.rb:280:in `initialize_without_cgi_reader'
+    D:/TSE Projects/pms-fct - CMS/- svn/PMS/vendor/rails/actionpack/lib/action_controller/cgi_ext/session.rb:19:in `initialize'
+    D:/TSE Projects/pms-fct - CMS/- svn/PMS/vendor/rails/actionpack/lib/action_controller/cgi_process.rb:94:in `new'
+    D:/TSE Projects/pms-fct - CMS/- svn/PMS/vendor/rails/actionpack/lib/action_controller/cgi_process.rb:94:in `session'
+    D:/TSE Projects/pms-fct - CMS/- svn/PMS/vendor/rails/actionpack/lib/action_controller/cgi_process.rb:130:in `stale_session_check!'
+    D:/TSE Projects/pms-fct - CMS/- svn/PMS/vendor/rails/actionpack/lib/action_controller/cgi_process.rb:78:in `session'
+    D:/TSE Projects/pms-fct - CMS/- svn/PMS/vendor/rails/actionpack/lib/action_controller/base.rb:1205:in `assign_shortcuts_without_flash'
+    D:/TSE Projects/pms-fct - CMS/- svn/PMS/vendor/rails/actionpack/lib/action_controller/flash.rb:166:in `assign_shortcuts'
+    D:/TSE Projects/pms-fct - CMS/- svn/PMS/vendor/rails/actionpack/lib/action_controller/base.rb:519:in `process_without_filters'
+    D:/TSE Projects/pms-fct - CMS/- svn/PMS/vendor/rails/actionpack/lib/action_controller/filters.rb:606:in `process_without_session_management_support'
+    D:/TSE Projects/pms-fct - CMS/- svn/PMS/vendor/rails/actionpack/lib/action_controller/session_management.rb:134:in `process'
+    D:/TSE Projects/pms-fct - CMS/- svn/PMS/app/controllers/front_desk_controller.rb:28:in `process'
+    D:/TSE Projects/pms-fct - CMS/- svn/PMS/vendor/rails/actionpack/lib/action_controller/base.rb:392:in `process'
+    D:/TSE Projects/pms-fct - CMS/- svn/PMS/vendor/rails/actionpack/lib/action_controller/dispatcher.rb:183:in `handle_request'
+    D:/TSE Projects/pms-fct - CMS/- svn/PMS/vendor/rails/actionpack/lib/action_controller/dispatcher.rb:110:in `dispatch_unlocked'
+    D:/TSE Projects/pms-fct - CMS/- svn/PMS/vendor/rails/actionpack/lib/action_controller/dispatcher.rb:123:in `dispatch'
+    D:/TSE Projects/pms-fct - CMS/- svn/PMS/vendor/rails/actionpack/lib/action_controller/dispatcher.rb:122:in `synchronize'
+    D:/TSE Projects/pms-fct - CMS/- svn/PMS/vendor/rails/actionpack/lib/action_controller/dispatcher.rb:122:in `dispatch'
+    D:/TSE Projects/pms-fct - CMS/- svn/PMS/vendor/rails/actionpack/lib/action_controller/dispatcher.rb:132:in `dispatch_cgi'
+    D:/TSE Projects/pms-fct - CMS/- svn/PMS/vendor/rails/actionpack/lib/action_controller/dispatcher.rb:39:in `dispatch'
+    D:/TSE Projects/pms-fct - CMS/- svn/PMS/vendor/rails/railties/lib/webrick_server.rb:103:in `handle_dispatch'
+    D:/TSE Projects/pms-fct - CMS/- svn/PMS/vendor/rails/railties/lib/webrick_server.rb:74:in `service'
+    C:/Ruby/Ruby/lib/ruby/1.8/webrick/httpserver.rb:104:in `service'
+    C:/Ruby/Ruby/lib/ruby/1.8/webrick/httpserver.rb:65:in `run'
+    C:/Ruby/Ruby/lib/ruby/1.8/webrick/server.rb:173:in `start_thread'
+    C:/Ruby/Ruby/lib/ruby/1.8/webrick/server.rb:162:in `start'
+    C:/Ruby/Ruby/lib/ruby/1.8/webrick/server.rb:162:in `start_thread'
+    C:/Ruby/Ruby/lib/ruby/1.8/webrick/server.rb:95:in `start'
+    C:/Ruby/Ruby/lib/ruby/1.8/webrick/server.rb:92:in `each'
+    C:/Ruby/Ruby/lib/ruby/1.8/webrick/server.rb:92:in `start'
+    C:/Ruby/Ruby/lib/ruby/1.8/webrick/server.rb:23:in `start'
+    C:/Ruby/Ruby/lib/ruby/1.8/webrick/server.rb:82:in `start'
+    D:/TSE Projects/pms-fct - CMS/- svn/PMS/vendor/rails/railties/lib/webrick_server.rb:60:in `dispatch'
+    D:/TSE Projects/pms-fct - CMS/- svn/PMS/vendor/rails/railties/lib/commands/servers/webrick.rb:68
+    C:/Ruby/Ruby/lib/ruby/site_ruby/1.8/rubygems/custom_require.rb:29:in `gem_original_require'
+    C:/Ruby/Ruby/lib/ruby/site_ruby/1.8/rubygems/custom_require.rb:29:in `require'
+    D:/TSE Projects/pms-fct - CMS/- svn/PMS/vendor/rails/activesupport/lib/active_support/dependencies.rb:153:in `require'
+    D:/TSE Projects/pms-fct - CMS/- svn/PMS/vendor/rails/activesupport/lib/active_support/dependencies.rb:521:in `new_constants_in'
+    D:/TSE Projects/pms-fct - CMS/- svn/PMS/vendor/rails/activesupport/lib/active_support/dependencies.rb:153:in `require'
+    D:/TSE Projects/pms-fct - CMS/- svn/PMS/vendor/rails/railties/lib/commands/server.rb:49
+    C:/Ruby/Ruby/lib/ruby/site_ruby/1.8/rubygems/custom_require.rb:29:in `gem_original_require'
+    C:/Ruby/Ruby/lib/ruby/site_ruby/1.8/rubygems/custom_require.rb:29:in `require'
+    script/server:3
+/!\ FAILSAFE /!\  Thu Jun 09 13:35:07 +0700 2016
+  Status: 500 Internal Server Error
+  Mysql::Error: Lost connection to MySQL server during query: SET NAMES 'utf8'
+    D:/TSE Projects/pms-fct - CMS/- svn/PMS/vendor/rails/activerecord/lib/active_record/connection_adapters/abstract_adapter.rb:188:in `log'
+    D:/TSE Projects/pms-fct - CMS/- svn/PMS/vendor/rails/activerecord/lib/active_record/connection_adapters/mysql_adapter.rb:309:in `execute'
+    D:/TSE Projects/pms-fct - CMS/- svn/PMS/vendor/rails/activerecord/lib/active_record/connection_adapters/mysql_adapter.rb:554:in `configure_connection'
+    D:/TSE Projects/pms-fct - CMS/- svn/PMS/vendor/rails/activerecord/lib/active_record/connection_adapters/mysql_adapter.rb:549:in `connect'
+    D:/TSE Projects/pms-fct - CMS/- svn/PMS/vendor/rails/activerecord/lib/active_record/connection_adapters/mysql_adapter.rb:198:in `initialize'
+    D:/TSE Projects/pms-fct - CMS/- svn/PMS/vendor/rails/activerecord/lib/active_record/connection_adapters/mysql_adapter.rb:74:in `new'
+    D:/TSE Projects/pms-fct - CMS/- svn/PMS/vendor/rails/activerecord/lib/active_record/connection_adapters/mysql_adapter.rb:74:in `mysql_connection'
+    D:/TSE Projects/pms-fct - CMS/- svn/PMS/vendor/rails/activerecord/lib/active_record/connection_adapters/abstract/connection_pool.rb:223:in `send'
+    D:/TSE Projects/pms-fct - CMS/- svn/PMS/vendor/rails/activerecord/lib/active_record/connection_adapters/abstract/connection_pool.rb:223:in `new_connection'
+    D:/TSE Projects/pms-fct - CMS/- svn/PMS/vendor/rails/activerecord/lib/active_record/connection_adapters/abstract/connection_pool.rb:245:in `checkout_new_connection'
+    D:/TSE Projects/pms-fct - CMS/- svn/PMS/vendor/rails/activerecord/lib/active_record/connection_adapters/abstract/connection_pool.rb:188:in `checkout'
+    D:/TSE Projects/pms-fct - CMS/- svn/PMS/vendor/rails/activerecord/lib/active_record/connection_adapters/abstract/connection_pool.rb:184:in `loop'
+    D:/TSE Projects/pms-fct - CMS/- svn/PMS/vendor/rails/activerecord/lib/active_record/connection_adapters/abstract/connection_pool.rb:184:in `checkout'
+    C:/Ruby/Ruby/lib/ruby/1.8/monitor.rb:242:in `synchronize'
+    D:/TSE Projects/pms-fct - CMS/- svn/PMS/vendor/rails/activerecord/lib/active_record/connection_adapters/abstract/connection_pool.rb:183:in `checkout'
+    D:/TSE Projects/pms-fct - CMS/- svn/PMS/vendor/rails/activerecord/lib/active_record/connection_adapters/abstract/connection_pool.rb:98:in `connection'
+    D:/TSE Projects/pms-fct - CMS/- svn/PMS/vendor/rails/activerecord/lib/active_record/connection_adapters/abstract/connection_pool.rb:326:in `retrieve_connection'
+    D:/TSE Projects/pms-fct - CMS/- svn/PMS/vendor/rails/activerecord/lib/active_record/connection_adapters/abstract/connection_specification.rb:121:in `retrieve_connection'
+    D:/TSE Projects/pms-fct - CMS/- svn/PMS/vendor/rails/activerecord/lib/active_record/connection_adapters/abstract/connection_specification.rb:113:in `connection'
+    D:/TSE Projects/pms-fct - CMS/- svn/PMS/vendor/rails/activerecord/lib/active_record/base.rb:2934:in `quoted_table_name'
+    D:/TSE Projects/pms-fct - CMS/- svn/PMS/vendor/rails/activerecord/lib/active_record/base.rb:1626:in `construct_finder_sql'
+    D:/TSE Projects/pms-fct - CMS/- svn/PMS/vendor/rails/activerecord/lib/active_record/base.rb:1490:in `find_every'
+    D:/TSE Projects/pms-fct - CMS/- svn/PMS/vendor/rails/activerecord/lib/active_record/base.rb:1452:in `find_initial'
+    D:/TSE Projects/pms-fct - CMS/- svn/PMS/vendor/rails/activerecord/lib/active_record/base.rb:587:in `find_uncached'
+    D:/TSE Projects/pms-fct - CMS/- svn/PMS/lib/active_record_base_ext.rb:53:in `find'
+    D:/TSE Projects/pms-fct - CMS/- svn/PMS/vendor/rails/actionpack/lib/action_controller/session/active_record_store.rb:113:in `find_by_session_id'
+    D:/TSE Projects/pms-fct - CMS/- svn/PMS/vendor/rails/actionpack/lib/action_controller/session/active_record_store.rb:288:in `initialize'
+    D:/TSE Projects/pms-fct - CMS/- svn/PMS/vendor/rails/activerecord/lib/active_record/base.rb:1398:in `silence'
+    D:/TSE Projects/pms-fct - CMS/- svn/PMS/vendor/rails/actionpack/lib/action_controller/session/active_record_store.rb:288:in `initialize'
+    C:/Ruby/Ruby/lib/ruby/1.8/cgi/session.rb:280:in `new'
+    C:/Ruby/Ruby/lib/ruby/1.8/cgi/session.rb:280:in `initialize_without_cgi_reader'
+    D:/TSE Projects/pms-fct - CMS/- svn/PMS/vendor/rails/actionpack/lib/action_controller/cgi_ext/session.rb:19:in `initialize'
+    D:/TSE Projects/pms-fct - CMS/- svn/PMS/vendor/rails/actionpack/lib/action_controller/cgi_process.rb:94:in `new'
+    D:/TSE Projects/pms-fct - CMS/- svn/PMS/vendor/rails/actionpack/lib/action_controller/cgi_process.rb:94:in `session'
+    D:/TSE Projects/pms-fct - CMS/- svn/PMS/vendor/rails/actionpack/lib/action_controller/cgi_process.rb:130:in `stale_session_check!'
+    D:/TSE Projects/pms-fct - CMS/- svn/PMS/vendor/rails/actionpack/lib/action_controller/cgi_process.rb:78:in `session'
+    D:/TSE Projects/pms-fct - CMS/- svn/PMS/vendor/rails/actionpack/lib/action_controller/base.rb:1205:in `assign_shortcuts_without_flash'
+    D:/TSE Projects/pms-fct - CMS/- svn/PMS/vendor/rails/actionpack/lib/action_controller/flash.rb:166:in `assign_shortcuts'
+    D:/TSE Projects/pms-fct - CMS/- svn/PMS/vendor/rails/actionpack/lib/action_controller/base.rb:519:in `process_without_filters'
+    D:/TSE Projects/pms-fct - CMS/- svn/PMS/vendor/rails/actionpack/lib/action_controller/filters.rb:606:in `process_without_session_management_support'
+    D:/TSE Projects/pms-fct - CMS/- svn/PMS/vendor/rails/actionpack/lib/action_controller/session_management.rb:134:in `process'
+    D:/TSE Projects/pms-fct - CMS/- svn/PMS/app/controllers/front_desk_controller.rb:28:in `process'
+    D:/TSE Projects/pms-fct - CMS/- svn/PMS/vendor/rails/actionpack/lib/action_controller/base.rb:392:in `process'
+    D:/TSE Projects/pms-fct - CMS/- svn/PMS/vendor/rails/actionpack/lib/action_controller/dispatcher.rb:183:in `handle_request'
+    D:/TSE Projects/pms-fct - CMS/- svn/PMS/vendor/rails/actionpack/lib/action_controller/dispatcher.rb:110:in `dispatch_unlocked'
+    D:/TSE Projects/pms-fct - CMS/- svn/PMS/vendor/rails/actionpack/lib/action_controller/dispatcher.rb:123:in `dispatch'
+    D:/TSE Projects/pms-fct - CMS/- svn/PMS/vendor/rails/actionpack/lib/action_controller/dispatcher.rb:122:in `synchronize'
+    D:/TSE Projects/pms-fct - CMS/- svn/PMS/vendor/rails/actionpack/lib/action_controller/dispatcher.rb:122:in `dispatch'
+    D:/TSE Projects/pms-fct - CMS/- svn/PMS/vendor/rails/actionpack/lib/action_controller/dispatcher.rb:132:in `dispatch_cgi'
+    D:/TSE Projects/pms-fct - CMS/- svn/PMS/vendor/rails/actionpack/lib/action_controller/dispatcher.rb:39:in `dispatch'
+    D:/TSE Projects/pms-fct - CMS/- svn/PMS/vendor/rails/railties/lib/webrick_server.rb:103:in `handle_dispatch'
+    D:/TSE Projects/pms-fct - CMS/- svn/PMS/vendor/rails/railties/lib/webrick_server.rb:74:in `service'
+    C:/Ruby/Ruby/lib/ruby/1.8/webrick/httpserver.rb:104:in `service'
+    C:/Ruby/Ruby/lib/ruby/1.8/webrick/httpserver.rb:65:in `run'
+    C:/Ruby/Ruby/lib/ruby/1.8/webrick/server.rb:173:in `start_thread'
+    C:/Ruby/Ruby/lib/ruby/1.8/webrick/server.rb:162:in `start'
+    C:/Ruby/Ruby/lib/ruby/1.8/webrick/server.rb:162:in `start_thread'
+    C:/Ruby/Ruby/lib/ruby/1.8/webrick/server.rb:95:in `start'
+    C:/Ruby/Ruby/lib/ruby/1.8/webrick/server.rb:92:in `each'
+    C:/Ruby/Ruby/lib/ruby/1.8/webrick/server.rb:92:in `start'
+    C:/Ruby/Ruby/lib/ruby/1.8/webrick/server.rb:23:in `start'
+    C:/Ruby/Ruby/lib/ruby/1.8/webrick/server.rb:82:in `start'
+    D:/TSE Projects/pms-fct - CMS/- svn/PMS/vendor/rails/railties/lib/webrick_server.rb:60:in `dispatch'
+    D:/TSE Projects/pms-fct - CMS/- svn/PMS/vendor/rails/railties/lib/commands/servers/webrick.rb:68
+    C:/Ruby/Ruby/lib/ruby/site_ruby/1.8/rubygems/custom_require.rb:29:in `gem_original_require'
+    C:/Ruby/Ruby/lib/ruby/site_ruby/1.8/rubygems/custom_require.rb:29:in `require'
+    D:/TSE Projects/pms-fct - CMS/- svn/PMS/vendor/rails/activesupport/lib/active_support/dependencies.rb:153:in `require'
+    D:/TSE Projects/pms-fct - CMS/- svn/PMS/vendor/rails/activesupport/lib/active_support/dependencies.rb:521:in `new_constants_in'
+    D:/TSE Projects/pms-fct - CMS/- svn/PMS/vendor/rails/activesupport/lib/active_support/dependencies.rb:153:in `require'
+    D:/TSE Projects/pms-fct - CMS/- svn/PMS/vendor/rails/railties/lib/commands/server.rb:49
+    C:/Ruby/Ruby/lib/ruby/site_ruby/1.8/rubygems/custom_require.rb:29:in `gem_original_require'
+    C:/Ruby/Ruby/lib/ruby/site_ruby/1.8/rubygems/custom_require.rb:29:in `require'
+    script/server:3
+/!\ FAILSAFE /!\  Thu Jun 09 14:02:58 +0700 2016
+  Status: 500 Internal Server Error
+  Can't connect to MySQL server on '192.168.1.3' (10060)
+    D:/TSE Projects/pms-fct - CMS/- svn/PMS/vendor/rails/activerecord/lib/active_record/connection_adapters/mysql_adapter.rb:548:in `real_connect'
+    D:/TSE Projects/pms-fct - CMS/- svn/PMS/vendor/rails/activerecord/lib/active_record/connection_adapters/mysql_adapter.rb:548:in `connect'
+    D:/TSE Projects/pms-fct - CMS/- svn/PMS/vendor/rails/activerecord/lib/active_record/connection_adapters/mysql_adapter.rb:198:in `initialize'
+    D:/TSE Projects/pms-fct - CMS/- svn/PMS/vendor/rails/activerecord/lib/active_record/connection_adapters/mysql_adapter.rb:74:in `new'
+    D:/TSE Projects/pms-fct - CMS/- svn/PMS/vendor/rails/activerecord/lib/active_record/connection_adapters/mysql_adapter.rb:74:in `mysql_connection'
+    D:/TSE Projects/pms-fct - CMS/- svn/PMS/vendor/rails/activerecord/lib/active_record/connection_adapters/abstract/connection_pool.rb:223:in `send'
+    D:/TSE Projects/pms-fct - CMS/- svn/PMS/vendor/rails/activerecord/lib/active_record/connection_adapters/abstract/connection_pool.rb:223:in `new_connection'
+    D:/TSE Projects/pms-fct - CMS/- svn/PMS/vendor/rails/activerecord/lib/active_record/connection_adapters/abstract/connection_pool.rb:245:in `checkout_new_connection'
+    D:/TSE Projects/pms-fct - CMS/- svn/PMS/vendor/rails/activerecord/lib/active_record/connection_adapters/abstract/connection_pool.rb:188:in `checkout'
+    D:/TSE Projects/pms-fct - CMS/- svn/PMS/vendor/rails/activerecord/lib/active_record/connection_adapters/abstract/connection_pool.rb:184:in `loop'
+    D:/TSE Projects/pms-fct - CMS/- svn/PMS/vendor/rails/activerecord/lib/active_record/connection_adapters/abstract/connection_pool.rb:184:in `checkout'
+    C:/Ruby/Ruby/lib/ruby/1.8/monitor.rb:242:in `synchronize'
+    D:/TSE Projects/pms-fct - CMS/- svn/PMS/vendor/rails/activerecord/lib/active_record/connection_adapters/abstract/connection_pool.rb:183:in `checkout'
+    D:/TSE Projects/pms-fct - CMS/- svn/PMS/vendor/rails/activerecord/lib/active_record/connection_adapters/abstract/connection_pool.rb:98:in `connection'
+    D:/TSE Projects/pms-fct - CMS/- svn/PMS/vendor/rails/activerecord/lib/active_record/connection_adapters/abstract/connection_pool.rb:326:in `retrieve_connection'
+    D:/TSE Projects/pms-fct - CMS/- svn/PMS/vendor/rails/activerecord/lib/active_record/connection_adapters/abstract/connection_specification.rb:121:in `retrieve_connection'
+    D:/TSE Projects/pms-fct - CMS/- svn/PMS/vendor/rails/activerecord/lib/active_record/connection_adapters/abstract/connection_specification.rb:113:in `connection'
+    D:/TSE Projects/pms-fct - CMS/- svn/PMS/vendor/rails/activerecord/lib/active_record/base.rb:2934:in `quoted_table_name'
+    D:/TSE Projects/pms-fct - CMS/- svn/PMS/vendor/rails/activerecord/lib/active_record/base.rb:1626:in `construct_finder_sql'
+    D:/TSE Projects/pms-fct - CMS/- svn/PMS/vendor/rails/activerecord/lib/active_record/base.rb:1490:in `find_every'
+    D:/TSE Projects/pms-fct - CMS/- svn/PMS/vendor/rails/activerecord/lib/active_record/base.rb:1452:in `find_initial'
+    D:/TSE Projects/pms-fct - CMS/- svn/PMS/vendor/rails/activerecord/lib/active_record/base.rb:587:in `find_uncached'
+    D:/TSE Projects/pms-fct - CMS/- svn/PMS/lib/active_record_base_ext.rb:53:in `find'
+    D:/TSE Projects/pms-fct - CMS/- svn/PMS/vendor/rails/actionpack/lib/action_controller/session/active_record_store.rb:113:in `find_by_session_id'
+    D:/TSE Projects/pms-fct - CMS/- svn/PMS/vendor/rails/actionpack/lib/action_controller/session/active_record_store.rb:288:in `initialize'
+    D:/TSE Projects/pms-fct - CMS/- svn/PMS/vendor/rails/activerecord/lib/active_record/base.rb:1398:in `silence'
+    D:/TSE Projects/pms-fct - CMS/- svn/PMS/vendor/rails/actionpack/lib/action_controller/session/active_record_store.rb:288:in `initialize'
+    C:/Ruby/Ruby/lib/ruby/1.8/cgi/session.rb:280:in `new'
+    C:/Ruby/Ruby/lib/ruby/1.8/cgi/session.rb:280:in `initialize_without_cgi_reader'
+    D:/TSE Projects/pms-fct - CMS/- svn/PMS/vendor/rails/actionpack/lib/action_controller/cgi_ext/session.rb:19:in `initialize'
+    D:/TSE Projects/pms-fct - CMS/- svn/PMS/vendor/rails/actionpack/lib/action_controller/cgi_process.rb:94:in `new'
+    D:/TSE Projects/pms-fct - CMS/- svn/PMS/vendor/rails/actionpack/lib/action_controller/cgi_process.rb:94:in `session'
+    D:/TSE Projects/pms-fct - CMS/- svn/PMS/vendor/rails/actionpack/lib/action_controller/cgi_process.rb:130:in `stale_session_check!'
+    D:/TSE Projects/pms-fct - CMS/- svn/PMS/vendor/rails/actionpack/lib/action_controller/cgi_process.rb:78:in `session'
+    D:/TSE Projects/pms-fct - CMS/- svn/PMS/vendor/rails/actionpack/lib/action_controller/base.rb:1205:in `assign_shortcuts_without_flash'
+    D:/TSE Projects/pms-fct - CMS/- svn/PMS/vendor/rails/actionpack/lib/action_controller/flash.rb:166:in `assign_shortcuts'
+    D:/TSE Projects/pms-fct - CMS/- svn/PMS/vendor/rails/actionpack/lib/action_controller/base.rb:519:in `process_without_filters'
+    D:/TSE Projects/pms-fct - CMS/- svn/PMS/vendor/rails/actionpack/lib/action_controller/filters.rb:606:in `process_without_session_management_support'
+    D:/TSE Projects/pms-fct - CMS/- svn/PMS/vendor/rails/actionpack/lib/action_controller/session_management.rb:134:in `process'
+    D:/TSE Projects/pms-fct - CMS/- svn/PMS/app/controllers/front_desk_controller.rb:28:in `process'
+    D:/TSE Projects/pms-fct - CMS/- svn/PMS/vendor/rails/actionpack/lib/action_controller/base.rb:392:in `process'
+    D:/TSE Projects/pms-fct - CMS/- svn/PMS/vendor/rails/actionpack/lib/action_controller/dispatcher.rb:183:in `handle_request'
+    D:/TSE Projects/pms-fct - CMS/- svn/PMS/vendor/rails/actionpack/lib/action_controller/dispatcher.rb:110:in `dispatch_unlocked'
+    D:/TSE Projects/pms-fct - CMS/- svn/PMS/vendor/rails/actionpack/lib/action_controller/dispatcher.rb:123:in `dispatch'
+    D:/TSE Projects/pms-fct - CMS/- svn/PMS/vendor/rails/actionpack/lib/action_controller/dispatcher.rb:122:in `synchronize'
+    D:/TSE Projects/pms-fct - CMS/- svn/PMS/vendor/rails/actionpack/lib/action_controller/dispatcher.rb:122:in `dispatch'
+    D:/TSE Projects/pms-fct - CMS/- svn/PMS/vendor/rails/actionpack/lib/action_controller/dispatcher.rb:132:in `dispatch_cgi'
+    D:/TSE Projects/pms-fct - CMS/- svn/PMS/vendor/rails/actionpack/lib/action_controller/dispatcher.rb:39:in `dispatch'
+    D:/TSE Projects/pms-fct - CMS/- svn/PMS/vendor/rails/railties/lib/webrick_server.rb:103:in `handle_dispatch'
+    D:/TSE Projects/pms-fct - CMS/- svn/PMS/vendor/rails/railties/lib/webrick_server.rb:74:in `service'
+    C:/Ruby/Ruby/lib/ruby/1.8/webrick/httpserver.rb:104:in `service'
+    C:/Ruby/Ruby/lib/ruby/1.8/webrick/httpserver.rb:65:in `run'
+    C:/Ruby/Ruby/lib/ruby/1.8/webrick/server.rb:173:in `start_thread'
+    C:/Ruby/Ruby/lib/ruby/1.8/webrick/server.rb:162:in `start'
+    C:/Ruby/Ruby/lib/ruby/1.8/webrick/server.rb:162:in `start_thread'
+    C:/Ruby/Ruby/lib/ruby/1.8/webrick/server.rb:95:in `start'
+    C:/Ruby/Ruby/lib/ruby/1.8/webrick/server.rb:92:in `each'
+    C:/Ruby/Ruby/lib/ruby/1.8/webrick/server.rb:92:in `start'
+    C:/Ruby/Ruby/lib/ruby/1.8/webrick/server.rb:23:in `start'
+    C:/Ruby/Ruby/lib/ruby/1.8/webrick/server.rb:82:in `start'
+    D:/TSE Projects/pms-fct - CMS/- svn/PMS/vendor/rails/railties/lib/webrick_server.rb:60:in `dispatch'
+    D:/TSE Projects/pms-fct - CMS/- svn/PMS/vendor/rails/railties/lib/commands/servers/webrick.rb:68
+    C:/Ruby/Ruby/lib/ruby/site_ruby/1.8/rubygems/custom_require.rb:29:in `gem_original_require'
+    C:/Ruby/Ruby/lib/ruby/site_ruby/1.8/rubygems/custom_require.rb:29:in `require'
+    D:/TSE Projects/pms-fct - CMS/- svn/PMS/vendor/rails/activesupport/lib/active_support/dependencies.rb:153:in `require'
+    D:/TSE Projects/pms-fct - CMS/- svn/PMS/vendor/rails/activesupport/lib/active_support/dependencies.rb:521:in `new_constants_in'
+    D:/TSE Projects/pms-fct - CMS/- svn/PMS/vendor/rails/activesupport/lib/active_support/dependencies.rb:153:in `require'
+    D:/TSE Projects/pms-fct - CMS/- svn/PMS/vendor/rails/railties/lib/commands/server.rb:49
+    C:/Ruby/Ruby/lib/ruby/site_ruby/1.8/rubygems/custom_require.rb:29:in `gem_original_require'
+    C:/Ruby/Ruby/lib/ruby/site_ruby/1.8/rubygems/custom_require.rb:29:in `require'
+    script/server:3
+/!\ FAILSAFE /!\  Thu Jun 09 14:14:50 +0700 2016
+  Status: 500 Internal Server Error
+  Can't connect to MySQL server on '192.168.1.3' (10060)
+    D:/TSE Projects/pms-fct - CMS/- svn/PMS/vendor/rails/activerecord/lib/active_record/connection_adapters/mysql_adapter.rb:548:in `real_connect'
+    D:/TSE Projects/pms-fct - CMS/- svn/PMS/vendor/rails/activerecord/lib/active_record/connection_adapters/mysql_adapter.rb:548:in `connect'
+    D:/TSE Projects/pms-fct - CMS/- svn/PMS/vendor/rails/activerecord/lib/active_record/connection_adapters/mysql_adapter.rb:198:in `initialize'
+    D:/TSE Projects/pms-fct - CMS/- svn/PMS/vendor/rails/activerecord/lib/active_record/connection_adapters/mysql_adapter.rb:74:in `new'
+    D:/TSE Projects/pms-fct - CMS/- svn/PMS/vendor/rails/activerecord/lib/active_record/connection_adapters/mysql_adapter.rb:74:in `mysql_connection'
+    D:/TSE Projects/pms-fct - CMS/- svn/PMS/vendor/rails/activerecord/lib/active_record/connection_adapters/abstract/connection_pool.rb:223:in `send'
+    D:/TSE Projects/pms-fct - CMS/- svn/PMS/vendor/rails/activerecord/lib/active_record/connection_adapters/abstract/connection_pool.rb:223:in `new_connection'
+    D:/TSE Projects/pms-fct - CMS/- svn/PMS/vendor/rails/activerecord/lib/active_record/connection_adapters/abstract/connection_pool.rb:245:in `checkout_new_connection'
+    D:/TSE Projects/pms-fct - CMS/- svn/PMS/vendor/rails/activerecord/lib/active_record/connection_adapters/abstract/connection_pool.rb:188:in `checkout'
+    D:/TSE Projects/pms-fct - CMS/- svn/PMS/vendor/rails/activerecord/lib/active_record/connection_adapters/abstract/connection_pool.rb:184:in `loop'
+    D:/TSE Projects/pms-fct - CMS/- svn/PMS/vendor/rails/activerecord/lib/active_record/connection_adapters/abstract/connection_pool.rb:184:in `checkout'
+    C:/Ruby/Ruby/lib/ruby/1.8/monitor.rb:242:in `synchronize'
+    D:/TSE Projects/pms-fct - CMS/- svn/PMS/vendor/rails/activerecord/lib/active_record/connection_adapters/abstract/connection_pool.rb:183:in `checkout'
+    D:/TSE Projects/pms-fct - CMS/- svn/PMS/vendor/rails/activerecord/lib/active_record/connection_adapters/abstract/connection_pool.rb:98:in `connection'
+    D:/TSE Projects/pms-fct - CMS/- svn/PMS/vendor/rails/activerecord/lib/active_record/connection_adapters/abstract/connection_pool.rb:326:in `retrieve_connection'
+    D:/TSE Projects/pms-fct - CMS/- svn/PMS/vendor/rails/activerecord/lib/active_record/connection_adapters/abstract/connection_specification.rb:121:in `retrieve_connection'
+    D:/TSE Projects/pms-fct - CMS/- svn/PMS/vendor/rails/activerecord/lib/active_record/connection_adapters/abstract/connection_specification.rb:113:in `connection'
+    D:/TSE Projects/pms-fct - CMS/- svn/PMS/vendor/rails/activerecord/lib/active_record/base.rb:2934:in `quoted_table_name'
+    D:/TSE Projects/pms-fct - CMS/- svn/PMS/vendor/rails/activerecord/lib/active_record/base.rb:1626:in `construct_finder_sql'
+    D:/TSE Projects/pms-fct - CMS/- svn/PMS/vendor/rails/activerecord/lib/active_record/base.rb:1490:in `find_every'
+    D:/TSE Projects/pms-fct - CMS/- svn/PMS/vendor/rails/activerecord/lib/active_record/base.rb:1452:in `find_initial'
+    D:/TSE Projects/pms-fct - CMS/- svn/PMS/vendor/rails/activerecord/lib/active_record/base.rb:587:in `find_uncached'
+    D:/TSE Projects/pms-fct - CMS/- svn/PMS/lib/active_record_base_ext.rb:53:in `find'
+    D:/TSE Projects/pms-fct - CMS/- svn/PMS/vendor/rails/actionpack/lib/action_controller/session/active_record_store.rb:113:in `find_by_session_id'
+    D:/TSE Projects/pms-fct - CMS/- svn/PMS/vendor/rails/actionpack/lib/action_controller/session/active_record_store.rb:288:in `initialize'
+    D:/TSE Projects/pms-fct - CMS/- svn/PMS/vendor/rails/activerecord/lib/active_record/base.rb:1398:in `silence'
+    D:/TSE Projects/pms-fct - CMS/- svn/PMS/vendor/rails/actionpack/lib/action_controller/session/active_record_store.rb:288:in `initialize'
+    C:/Ruby/Ruby/lib/ruby/1.8/cgi/session.rb:280:in `new'
+    C:/Ruby/Ruby/lib/ruby/1.8/cgi/session.rb:280:in `initialize_without_cgi_reader'
+    D:/TSE Projects/pms-fct - CMS/- svn/PMS/vendor/rails/actionpack/lib/action_controller/cgi_ext/session.rb:19:in `initialize'
+    D:/TSE Projects/pms-fct - CMS/- svn/PMS/vendor/rails/actionpack/lib/action_controller/cgi_process.rb:94:in `new'
+    D:/TSE Projects/pms-fct - CMS/- svn/PMS/vendor/rails/actionpack/lib/action_controller/cgi_process.rb:94:in `session'
+    D:/TSE Projects/pms-fct - CMS/- svn/PMS/vendor/rails/actionpack/lib/action_controller/cgi_process.rb:130:in `stale_session_check!'
+    D:/TSE Projects/pms-fct - CMS/- svn/PMS/vendor/rails/actionpack/lib/action_controller/cgi_process.rb:78:in `session'
+    D:/TSE Projects/pms-fct - CMS/- svn/PMS/vendor/rails/actionpack/lib/action_controller/base.rb:1205:in `assign_shortcuts_without_flash'
+    D:/TSE Projects/pms-fct - CMS/- svn/PMS/vendor/rails/actionpack/lib/action_controller/flash.rb:166:in `assign_shortcuts'
+    D:/TSE Projects/pms-fct - CMS/- svn/PMS/vendor/rails/actionpack/lib/action_controller/base.rb:519:in `process_without_filters'
+    D:/TSE Projects/pms-fct - CMS/- svn/PMS/vendor/rails/actionpack/lib/action_controller/filters.rb:606:in `process_without_session_management_support'
+    D:/TSE Projects/pms-fct - CMS/- svn/PMS/vendor/rails/actionpack/lib/action_controller/session_management.rb:134:in `process'
+    D:/TSE Projects/pms-fct - CMS/- svn/PMS/app/controllers/front_desk_controller.rb:28:in `process'
+    D:/TSE Projects/pms-fct - CMS/- svn/PMS/vendor/rails/actionpack/lib/action_controller/base.rb:392:in `process'
+    D:/TSE Projects/pms-fct - CMS/- svn/PMS/vendor/rails/actionpack/lib/action_controller/dispatcher.rb:183:in `handle_request'
+    D:/TSE Projects/pms-fct - CMS/- svn/PMS/vendor/rails/actionpack/lib/action_controller/dispatcher.rb:110:in `dispatch_unlocked'
+    D:/TSE Projects/pms-fct - CMS/- svn/PMS/vendor/rails/actionpack/lib/action_controller/dispatcher.rb:123:in `dispatch'
+    D:/TSE Projects/pms-fct - CMS/- svn/PMS/vendor/rails/actionpack/lib/action_controller/dispatcher.rb:122:in `synchronize'
+    D:/TSE Projects/pms-fct - CMS/- svn/PMS/vendor/rails/actionpack/lib/action_controller/dispatcher.rb:122:in `dispatch'
+    D:/TSE Projects/pms-fct - CMS/- svn/PMS/vendor/rails/actionpack/lib/action_controller/dispatcher.rb:132:in `dispatch_cgi'
+    D:/TSE Projects/pms-fct - CMS/- svn/PMS/vendor/rails/actionpack/lib/action_controller/dispatcher.rb:39:in `dispatch'
+    D:/TSE Projects/pms-fct - CMS/- svn/PMS/vendor/rails/railties/lib/webrick_server.rb:103:in `handle_dispatch'
+    D:/TSE Projects/pms-fct - CMS/- svn/PMS/vendor/rails/railties/lib/webrick_server.rb:74:in `service'
+    C:/Ruby/Ruby/lib/ruby/1.8/webrick/httpserver.rb:104:in `service'
+    C:/Ruby/Ruby/lib/ruby/1.8/webrick/httpserver.rb:65:in `run'
+    C:/Ruby/Ruby/lib/ruby/1.8/webrick/server.rb:173:in `start_thread'
+    C:/Ruby/Ruby/lib/ruby/1.8/webrick/server.rb:162:in `start'
+    C:/Ruby/Ruby/lib/ruby/1.8/webrick/server.rb:162:in `start_thread'
+    C:/Ruby/Ruby/lib/ruby/1.8/webrick/server.rb:95:in `start'
+    C:/Ruby/Ruby/lib/ruby/1.8/webrick/server.rb:92:in `each'
+    C:/Ruby/Ruby/lib/ruby/1.8/webrick/server.rb:92:in `start'
+    C:/Ruby/Ruby/lib/ruby/1.8/webrick/server.rb:23:in `start'
+    C:/Ruby/Ruby/lib/ruby/1.8/webrick/server.rb:82:in `start'
+    D:/TSE Projects/pms-fct - CMS/- svn/PMS/vendor/rails/railties/lib/webrick_server.rb:60:in `dispatch'
+    D:/TSE Projects/pms-fct - CMS/- svn/PMS/vendor/rails/railties/lib/commands/servers/webrick.rb:68
+    C:/Ruby/Ruby/lib/ruby/site_ruby/1.8/rubygems/custom_require.rb:29:in `gem_original_require'
+    C:/Ruby/Ruby/lib/ruby/site_ruby/1.8/rubygems/custom_require.rb:29:in `require'
+    D:/TSE Projects/pms-fct - CMS/- svn/PMS/vendor/rails/activesupport/lib/active_support/dependencies.rb:153:in `require'
+    D:/TSE Projects/pms-fct - CMS/- svn/PMS/vendor/rails/activesupport/lib/active_support/dependencies.rb:521:in `new_constants_in'
+    D:/TSE Projects/pms-fct - CMS/- svn/PMS/vendor/rails/activesupport/lib/active_support/dependencies.rb:153:in `require'
+    D:/TSE Projects/pms-fct - CMS/- svn/PMS/vendor/rails/railties/lib/commands/server.rb:49
+    C:/Ruby/Ruby/lib/ruby/site_ruby/1.8/rubygems/custom_require.rb:29:in `gem_original_require'
+    C:/Ruby/Ruby/lib/ruby/site_ruby/1.8/rubygems/custom_require.rb:29:in `require'
+    script/server:3

@@ -1,0 +1,23 @@
+<%=javascript_include_tag "prototype" %>
+<%=javascript_include_tag "application" %>
+<%=javascript_include_tag "dialog" %>
+<%=javascript_include_tag "fr" %>
+<script type="text/javascript">
+<% if @screen.errors.empty? %>
+    fncAppendTrToTableContent(<%= @screen_self.id %>, <%= @screen.id %>);
+
+  <% unless @form_content_reuse %>
+      var main_doc = fncGetMainDocument();
+      var div = main_doc.getElementById("operation_area_<%= @screen_self.id %>");
+      fncClearDiv(div);
+      div = main_doc.getElementById("relation_area_<%= @screen_self.id %>");
+      fncClearDiv(div);
+      div = main_doc.getElementById("field_area_<%= @screen_self.id %>");
+      fncClearDiv(div);
+  <% end %>
+<% else %>
+    fncSetError('<%=error_messages_for(:object => @screen).to_s.gsub(/'/, "&rsquo\;") %>');
+<% end %>
+
+  fncLoadTempFrame();
+</script>

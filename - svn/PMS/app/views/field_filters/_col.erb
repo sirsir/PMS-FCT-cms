@@ -1,0 +1,32 @@
+ 
+<%
+html_tag = ""
+row_class = cols.index(col) % 2 == 0 ? "even" : "odd"
+name_tag = "field_filter[#{field_report.field_id}][value][selected_ids][]"
+selected_ids = @report_request.field_filter(field_report.field_id).selected_ids
+
+if (read_only && selected_ids.include?(col.id)) || !read_only then
+case field_report.field.custom_field
+when CustomFields::Reference then # row_id
+  html_tag = "<tr class='tr_data_#{row_class}'><td class='td_cell' > #{read_only ? "&nbsp;" : check_box_tag(name_tag, col.id, selected_ids.include?(col.id))} </td>" +
+             "<td class='td_cell' > #{col.description}</td>" +
+             "<td class='td_cell'> 10 </td></tr>"
+when CustomFields::ComboBox || CustomFields::RadioButton then # label_id
+  html_tag = "<tr class='tr_data_#{row_class}'><td class='td_cell'> #{read_only ? "&nbsp;" : check_box_tag(name_tag, col.id, selected_ids.include?(col.id))} </td>" +
+             "<td class='td_cell'> #{col.descr}</td>" +
+             "<td class='td_cell'> 12 </td></tr>"
+when CustomFields::LoginField then
+  html_tag = "<tr class='tr_data_#{row_class}'><td class='td_cell'> #{read_only ? "&nbsp;" : check_box_tag(name_tag, col.id, selected_ids.include?(col.id))} </td>" +
+             "<td class='td_cell'> #{col.login}</td>" +
+             "<td class='td_cell'> 14 </td></tr>"
+when CustomFields::DateTimeField then
+  html_tag = ""
+when CustomFields::IssueTracking then
+  html_tag = "Need to Implment Filter for CustomFields::IssueTracking "
+when CustomFields::ListBox then
+  html_tag = "Need to Implment Filter for CustomFields::ListBox "
+end
+
+end
+%>
+<%= html_tag %>

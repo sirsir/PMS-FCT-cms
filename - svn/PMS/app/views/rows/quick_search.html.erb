@@ -1,0 +1,30 @@
+<% result_row_id = sanitize_to_id(@result_row_id)  %>
+<a href="#" onClick="this.parentNode.className +='_hidden'; fncResetQuickSearchText('<%=@input_id%>', this, '<%=result_row_id.gsub(/_row_id/, '')%>');return false;">
+<img src="/images/cal_close.gif" alt="Close" border="0" /></a>
+<br>
+
+<%
+field = Field.find(params[:field_id])
+custom_field_ids = field.custom_field.is_a?(CustomFields::Reference) ? field.custom_field.custom_field_ids : []
+%>
+
+<% @result[:rows].each do |r|  
+  update_ref_att = update_ref_att_javascript(@field, { :value => r.id }) if @field
+  row_descr = r.description(custom_field_ids)
+
+  if @relate_to == ""
+    on_click = <<JAVASCRIPT
+fncSetSuggestedValue('#{@input_id}', '#{row_descr.gsub("'","`")}',this.parentNode,'#{result_row_id}','#{r.id.to_s}');#{update_ref_att};return false;
+JAVASCRIPT
+  else
+    on_click = <<JAVASCRIPT
+fncSetSuggestedValueRef('#{@input_id}', '#{row_descr.gsub("'","`")}',this.parentNode,'#{result_row_id}','#{r.id.to_s}','#{@relate_to}','#{@from_cf_id}','#{field.screen_id}');#{update_ref_att};return false;
+JAVASCRIPT
+  end
+%>
+    <a href="#" onClick="<%=on_click%>"><%=row_descr %></a> <br />
+<% end %>
+<% if @result[:count] > @result[:rows].size %>
+    <span style="text-align: right">(<%= @result[:count] - @result[:rows].size %> more...)</span>
+    
+<% end %>

@@ -1,0 +1,15 @@
+<%
+option_tags = options_from_collection_for_select_tag(
+  custom_field.labels, :id, :descr, custom_field.default_value
+)
+
+options = {
+  :sort => true,
+  :size => 8,
+  :style => "width:100%",
+  :onchange => events
+}
+%>
+
+<%=select_tag(name, option_tags, options) %>
+<%=field_descr_tag %>

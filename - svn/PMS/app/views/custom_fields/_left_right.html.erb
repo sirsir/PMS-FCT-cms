@@ -1,0 +1,18 @@
+<tr>
+  <th class="th_row_header">Left-Right Screen Source:</th>
+  <td>
+    <%
+    selected_screen = (@custom_field.value).nil? ? nil : @custom_field.value['screen_id']
+
+    screen_options = options_from_collection_for_select_tag(@screens, :id, :name, selected_screen.to_i, :include_blank => true)
+    %>
+    <%= select_tag("custom_field[value][screen_id]", screen_options) %>
+    <%= field_descr_tag %>
+  </td>
+</tr>
+<tr>
+  <th class="th_row_header" >Default Value:</th>
+  <td>
+    <span class="missing_implementation">Need choose which row to set as default (None, First, Latest) <br />/Not fixed row_id/</span>
+  </td>
+</tr>

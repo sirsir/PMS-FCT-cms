@@ -1,0 +1,26 @@
+<%
+field = select_filter
+field_reports ||= []
+tr_class = "tr_#{(select_filters.index(field).to_i % 2 == 0 ? "odd" : "even")}"
+
+field_id = field.nil? ? -1 : field.id
+
+set_field_filters ||= {}
+field_report_filter = set_field_filters[field_id]
+field_report_filter_id = field_report_filter.nil? ? "#{reference_screen_index}_#{field_id}" : field_report_filter.id
+
+operation_area = "frm_set_filter_#{report_id}"
+operation_url = url_for(:controller => "reports", :action=>"edit_filter", :id=> field_report_filter_id,
+                        :report_id => report_id, :field_id => field_id, :reference_screen_index => reference_screen_index)
+%>
+<tr class="<%=tr_class %>" id="<%=field_report_filter_id %>"
+     operation_area='<%=operation_area%>' operation_url='<%=operation_url%>'
+     relation_area='' relation_url=''
+     handleonclick='true' > 
+  <td class="td_cell" style="white-space: nowrap">
+    <%=field.nil? ? 'Id' : field.descr %>
+  </td>
+  <td class="td_cell">
+    <%= field_report_filter.nil? ? "&nbsp;" : field_report_filter.filter_to_html %>
+  </td> 
+</tr>

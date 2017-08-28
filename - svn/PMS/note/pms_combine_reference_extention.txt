@@ -1,0 +1,194 @@
+﻿Refer to Issue 08:
+
+---- Design ----
+
+==== Screen Combined Reference ====
+
+# Sample for XSEL-AXIS #
+screen: -[MOTOR_TYPE]
+screen:  [ENCORDER_TYPE]								#~ No delimiter
+         (
+option:  	-[BRAKE_OPTION]								#~ No delimiter
+option:  	-[SENSOR_OPTION]							#~ No delimiter
+option:  	-[AXIS_OPTION]								#~ No delimiter
+         )
+
+# Sample of XSEL #
+screen: -[MODEL_TYPE]
+screen: -[NUMBER_OF_AXIS_FOR_CONNECTION]
+group :  [XSEL-AXIS]<NUMBER_OF_AXIS_FOR_CONNECTION>	#~ No delimiter, Group type
+screen: -[STANDARD_I_O]
+screen: -[EXPANTION_I_O]
+screen:  [EXPANTION_I_O]
+screen:  [EXPANTION_I_O]
+screen: -[I_O_CABLE_LENGTH]
+screen: -[POWER_VOLTAGE]
+
+# Data Structure of each part
+{
+ :delimiter =>
+ :type => :screen/:group/:option
+ :screen_id =>
+ :screen_combinded_reference_cell_id =>
+ :group_multiply_count => 0,1,...
+}
+
+# Final result of XSEL #
+-[MODEL_TYPE]
+-[NUMBER_OF_AXIS_FOR_CONNECTION]
+{
+	-[MOTOR_TYPE]
+	 [ENCORDER_TYPE]								#~ No delimiter
+	 (
+	 	-[BRAKE_OPTION]								#~ No delimiter
+	 	-[SENSOR_OPTION]							#~ No delimiter
+	 	-[AXIS_OPTION]								#~ No delimiter
+	 )
+}<NUMBER_OF_AXIS_FOR_CONNECTION>	#~ Which field to use for multiply
+-[STANDARD_I_O]
+-[EXPANTION_I_O]
+ [EXPANTION_I_O]
+ [EXPANTION_I_O]
+-[I_O_CABLE_LENGTH]
+-[POWER_VOLTAGE]
+
+==== Option Combined Reference ====
+:options => {
+    0 => { :row_ids => [11] },
+    1 => { :row_ids => [21] },                #~ Sample case when row_id=21 is 3 Axis
+    2 => { :group => 3 },                     #~ Redirect to the group options
+    3 => { :row_ids => [41,42] },
+    4 => { :row_ids => [51,52,53] },
+    5 => { :row_ids => [61] },
+    6 => { :row_ids => [71] }
+  },
+:groups => {
+    0 => {                                    #~ Index 0 (axis-1)
+        :options => {
+            0 => { :row_ids => [3111] },
+            1 => { :row_ids => [3121] },
+            2 => { :row_ids => [3131,3132,3133] }
+          }
+      },
+    1 => {                                    #~ Index 1 (axis-2)
+        :options => {
+            0 => { :row_ids => [3211] },
+            1 => { :row_ids => [3221] },
+            2 => { :row_ids => [3231,3232,3233] }
+          }
+      },
+    2 => {                                    #~ Index 2 (axis-3)
+        :options => {
+            0 => { :row_ids => [3311] },
+            1 => { :row_ids => [3321] },
+            2 => { :row_ids => [3331,3332,3333] }
+          }
+      }
+  }
+
+==== Code Combined Reference ====
+:text => "AAA-BBB-CCC-DDD",
+:selecteds => [
+    {:row_id => 11},
+    {:row_id => 21},
+    {:group => 3},
+    {:row_id => 41},
+    {:row_id => 51},
+    {:row_id => 61},
+    {:row_id => 71}
+  ],
+:opt_row_ids => [-1, 10, 12],
+:groups => {
+    0 => {
+        :selecteds => [
+          {:row_id => 3111},
+          {:row_id => 3121},
+          {:row_id => 3131}
+        ],
+        :opt_row_ids => [-1, 3141, 3142]
+      },
+    1 => {
+        :selecteds => [
+          {:row_id => 3211},
+          {:row_id => 3221},
+          {:row_id => 3231}
+        ],
+        :opt_row_ids => [-1, 3241, 3242]
+      },
+    2 => {
+        :selecteds => [
+          {:row_id => 3311},
+          {:row_id => 3321},
+          {:row_id => 3331}
+        ],
+        :opt_row_ids => [-1, 3341, 3342]
+      }
+  }
+
+---- Tesk ----
+[ ] Config SCR
+[ ] Select type :screen/:group/:option
+[ ] Select delimiter between screen, group, option (free-text)
+[ ] If :group type; select SCR to be source
+[ ] If :group type; select screen to be multiply
+[ ] Config OCR
+[ ] Use CustomFields::SCR.is_screen_used_as_multiply_count?(cell_value, screen_id) to check is the screen (part) is used as a multiplier.
+		If is is, show the control as a drop down (only select 1), if not then show as left to right
+[ ] Use the selected multiple counter description.gsub(/[^0-9]/, '').to_i to make the copies of the subpart.
+[ ] Use JavaScript AjaxWithReplacement to reload group content.
+[ ] For OCR, Render muliple sub controls with the following namings
+    Normal Naming :   ...[options][0][row_ids][]
+    Group Naming :    ...[options][2][group]
+    Sub controls  : ...[groups][0][0][row_ids][]
+    
+       <Prefix><Middle><Postfix>
+       
+    Prefix : [options] or [groups][n]
+    Middle : [i]
+    Postfix: [row_ids] or [group]
+    
+    Note: the [] after [row_ids] will be automatically add by the L2R controll
+[ ] When displaying in list; display the group as one column
+       | AAA | 2 | BBB-BBB     | CCC | DDD | x
+       | AAA | 1 | BBB         | CCC | DDD | x
+       | AAA | 3 | BBB-BBB-BBB | CCC | DDD | x
+[ ] Config CCR
+[ ] For CCR, Render muliple sub controls with the following namings
+    # Codes #
+		Normal Naming:            ...[selecteds][][row_id]
+		Group Naming :            ...[selecteds][][group]
+		Sub controls : ...[groups][0][selecteds][][row_id]
+    
+       <Prefix><Middle><Postfix>
+       
+    Prefix : [selecteds] or [groups][n][selecteds]
+    Middle : []
+    Postfix: [row_id] or [group]
+		
+    # Options #
+		Normal Naming:            ...[opt_row_ids][]
+		Sub controls : ...[groups][0][opt_row_ids][]
+    
+       <Prefix><Middle><Postfix>
+       
+    Prefix : [opt_row_ids] or [groups][0][opt_row_ids]
+    Middle : []
+    Postfix: /* none */
+[ ] Display the "SubScreen" name, for sub parts
+
+   Code: AAA-N-BBBO-CCCO-DDDO-EEE-FFF
+   Options: [ ] O (N-1)
+            [ ] O (N-2)
+            [ ] O (N-3)
+
+---- Schedule ----
+[-] 11/06/13 Modify Model Relation screen to support using sub patterns to pair items
+[ ] 11/06/14 Modify Model Option screen to display options from the sup patterns
+[ ] 11/06/16 Modify Quotation screen to support using sub patterns and display options from the sup patterns
+[ ] 11/06/20 Modify Quotation screen to input model spec as 'Free Text"
+
+---- Legend ----
+[ ] Open Items
+[?] Pending Items
+[-] In Progress Items
+[+] Complete Items

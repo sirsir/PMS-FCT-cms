@@ -1,0 +1,13 @@
+<%=javascript_include_tag "application" %>
+<%=javascript_include_tag "dialog" %>
+<%=javascript_include_tag "fr" %>
+<script type="text/javascript">
+<% if @report_request.errors.empty? %>
+  <% ajax_url = url_for(:action => :show, :controller => :report_requests, :id => @report_request.id, :authenticity_token => form_authenticity_token)  %>
+    fncSetOperationContent("operation_area", "<%=ajax_url %>", "update");
+<% else %>
+    fncSetError('<%=error_messages_for(:object => @report_request).to_s.gsub(/'/, "&rsquo\;") %>');
+<% end %>
+  
+  fncLoadTempFrame();
+</script>

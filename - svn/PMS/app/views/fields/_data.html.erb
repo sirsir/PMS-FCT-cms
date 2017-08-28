@@ -1,0 +1,95 @@
+<tr>
+  <th class="th_row_header">Related from:</th>
+  <% selected_value = (@field.value).nil? ? "" : @field.value['related_from'] %>
+  <td>
+    <%= field_combo_box_collection_tag("field[value][related_from]",[@assigned_reference_custom_field,"#{selected_value}"]) %>
+    <%= field_descr_tag %>
+  </td>
+</tr>
+
+<tr>
+  <th class="th_row_header">Relate to:</th>
+  <% selected_value = (@field.value).nil? ? "" : @field.value['relate_to'] %>
+  <td>
+    <%= field_combo_box_collection_tag("field[value][relate_to]",[@assigned_reference_custom_field,"#{selected_value}"]) %>
+    <%= field_descr_tag %>
+  </td>
+</tr>
+
+<tr>
+  <th class="th_row_header"><%= field_label_tag :custom_field, :mandatory => true %>:</th>
+  <td>
+    <% operation_url = url_for(:controller => "fields",
+      :action=>"special_value",
+      :id=>0,
+      :screen_id=>@field.screen_id,
+      :custom_field_id=>"JAVASCRIPT_VAR_VALUE")%>
+    <%=
+    if (@field.id.nil?)
+      collection_select(:field, :custom_field_id,
+        @available_custom_field, :id, :name_with_label_descr,
+        {:prompt => true},
+        {:onchange=>"fncAjaxUpdaterWithReplacement(\"combined_result\",\"#{operation_url}\", [\"JAVASCRIPT_VAR_VALUE\", this.value] );"})
+    else
+      @field.custom_field ? @field.custom_field.name : CustomField.missing_msg(@field.custom_field_id)
+    end
+  %>
+    <%= field_descr_tag %>
+
+    <% if !(@field.id.nil?) and
+        ((@field.custom_field.is_a?(CustomFields::OptionCombindedReference)) ||
+          (@field.custom_field.is_a?(CustomFields::CodeCombindedReference))) %> <!--Edit-->
+
+      <br /><b>Source Field:</b>
+      <%=hidden_field_tag "field[value][field_id]", "#{@field.value[:field_id]}" %>
+      <%= @combinded_field.screen_field_caption %> 
+    <% else %>
+      <div id='combined_result'>
+      </div>
+    <% end %>
+
+    <% if !(@field.id.nil?) and (@field.custom_field.is_a?(CustomFields::CodeCombindedReference)) %>
+      <br /><b>Wildcard:</b>
+      <%=hidden_field_tag "field[value][wildcard]", @field.wildcard? ? "1" : "0" %>
+      <%=  @field.wildcard? ? "True" : "False" %>
+      <br /><b>Option:</b>
+      <%=hidden_field_tag "field[value][display_as]", CustomFields::CodeCombindedReference.field_display_as(@field.value).to_sym %>
+      <%=  CustomFields::CodeCombindedReference.field_display_as(@field.value).to_s %>
+    <%end%>
+
+     <% if !(@field.id.nil?) and
+         (@field.custom_field.is_a?(CustomFields::Parameter)) %> <!--Edit-->
+       <br /><b>DT Field:</b>
+       <%=hidden_field_tag "field[value][field_id]", "#{@field.value[:field_id]}" %>
+       <%= @field.screen_field_caption %>
+     <% else %>
+       <div id='combined_result'>
+       </div>
+     <%  end %>
+  </td>
+</tr>
+
+<tr>
+  <th class="th_row_header">Filter:</th>
+  <% selected_value = (@field.value).nil? ? false : @field.value[:filter] %>
+  <td><%= check_box_tag('field[value][filter]',"1", selected_value) %><%= field_descr_tag %></td>
+</tr>
+
+<tr>
+  <th class="th_row_header">Mandatory check:</th>
+  <td>
+    <%= check_box_tag('field[mandatory_check]', '1', @field.is_mandatory?) %>
+    <%= label_tag('field[mandatory_check]', 'This field is required') %>
+    <%= hidden_field_tag 'field[mandatory_check]', 0 %>
+    <%= field_descr_tag %>
+  </td>
+</tr>
+<tr>
+  <th class="th_row_header">Unique check:</th>
+  <td>
+    <%= check_box_tag('field[unique]', '1', @field.is_unique?) %>
+    <%= label_tag('field[unique]', 'This field is part of the Unique Key') %>
+    <%= hidden_field_tag 'field[unique]', 0 %>
+    <%= field_descr_tag %>
+  </td>
+</tr>

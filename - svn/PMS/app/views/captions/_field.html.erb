@@ -1,0 +1,23 @@
+<%
+language = field
+caption = @label.caption_by_lang(language.name)
+input_name = "captions[#{language.id}]"
+url = url_for(
+  :action => :translate,
+  :id => 0,
+  :from => language.name,
+  :text => 'JAVA_PARAM_01'
+)
+onchange = <<JAVASCRIPT
+fncAjaxUpdaterWithReplacement("caption_translation_en", "#{url}", ["JAVA_PARAM_01", this.value]);
+JAVASCRIPT
+
+onchange = "" #~ Temporary disable the event
+%>
+<tr>
+  <th class="th_row_header"><%= language.name %>:</th>
+  <td style="white-space: nowrap">
+    <%= text_field_tag input_name, caption.name, :style => 'width:100%', :onchange => onchange %>
+    <%= field_descr_tag %>
+  </td>
+</tr>

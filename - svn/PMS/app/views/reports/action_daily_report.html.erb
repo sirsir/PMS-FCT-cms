@@ -1,0 +1,187 @@
+<% form_tag url_for(:action => 'action_daily_report'), :target => "_blank" do %>
+<%= hidden_field_tag("date_to", @date_to) %>
+<%= hidden_field_tag("date_from", @date_from) %>
+<%= hidden_field_tag("rpt", @rpt) %>
+<%= hidden_field_tag("rpt_type", @rpt_type) %>
+<%= hidden_field_tag("export", "yes") %>
+<%= submit_tag("Export") %>
+<% end if @screen.allow_action?("export") %>
+<% col = @header.length %>
+<% action = ["New Visit","Routine","Special","Assembly Tech '10","Metalex '10","Telephone","Email","Direct Mail","Other"]
+ task = ["Request Quotation","Project Followup","Delivery","Training","Claim Trouble","Other"]
+ business = ["Quotation","P/O","Delivery","Invoice","Payment"]
+ count = ["Quotation_count","P/O_count","Delivery_count","Invoice_count","Payment_count"]%>
+
+<%
+def empty_td_tags(n)
+  '<td>&nbsp;</td>'*n
+end
+%>
+<font size="large"><center><B>From <%= h @date_from%> To <%= h @date_to%></B></center></font><br>
+<table border=1  align="Center">
+<tr class='table_content'>
+  <% for name in @header %>
+    <th rowspan=3 align="Center"><%= h name %></th>
+  <% end %>
+  <th colspan=9 align="Center">Action (Count)</th>
+  <th colspan=6 align="Center">Task (Count)</th>
+  <th colspan=5 align="Center">Sales (Amount)</th>
+  <th colspan=5 align="Center">Sales (Count)</th>
+</tr>
+<tr class='table_content'>
+  <th colspan=5 align="Center">Visit</th>
+  <th rowspan=2 align="Center">Tel</th>
+  <th rowspan=2 align="Center">E-Mail</th>
+  <th rowspan=2 align="Center">DM</th>
+  <th rowspan=2 align="Center">Other</th>
+  <th rowspan=2 align="Center">Request<br>Quotation</th>
+  <th rowspan=2 align="Center">Follow<br>Project</th>
+  <th rowspan=2 align="Center">Delivery</th>
+  <th rowspan=2 align="Center">Training</th>
+  <th rowspan=2 align="Center">Claim<br>Trouble</th>
+  <th rowspan=2 align="Center">Other</th>
+  <th rowspan=2 align="Center">Quotation</th>
+  <th rowspan=2 align="Center">P/O</th>
+  <th rowspan=2 align="Center">Delivery</th>
+  <th rowspan=2 align="Center">Invoice</th>
+  <th rowspan=2 align="Center">Payment</th>
+  <th rowspan=2 align="Center">Quotation</th>
+  <th rowspan=2 align="Center">P/O</th>
+  <th rowspan=2 align="Center">Delivery</th>
+  <th rowspan=2 align="Center">Invoice</th>
+  <th rowspan=2 align="Center">Payment</th>
+</tr>
+<tr class='table_content'>
+  <th align="Center">New</th>
+  <th align="Center">Routine</th>
+  <th align="Center">Special</th>
+  <th align="Center">Assembly Tech '10</th>
+  <th align="Center">Metalex '10</th>
+</tr>
+<% color = []
+   color << "#CEE7FF"
+   color << "#F5F8FD"%>
+<% @result.each_with_index do |p, m| %>
+<%  bgcolor_m = (col == 1) ? color[m%2] : color[0] %>
+<tr bgcolor=<%= bgcolor_m %>>
+  <td nowrap><%= h p[0] %></td>
+  <% if col > 1 %>
+    <% if p[1].empty? %>
+      <%= empty_td_tags(23) %>
+      </tr>
+    <% end %>
+    <% p[1].each_with_index do |b,n| %>
+      <%  bgcolor_n = (col == 2) ? color[n%2] : color[0] %>
+      <% if n > 0 %>
+        <tr bgcolor=<%= bgcolor_n %>
+        <%= empty_td_tags(1) %>
+      <% end %>
+      <td nowrap><%= h b[0] %></td>
+      <% if col > 2 %>
+        <% if b[1].empty? %>
+          <%= empty_td_tags(25) %>
+          </tr>
+        <% end %>
+      <% b[1].each_with_index do |s,i| %>
+        <%  bgcolor_i = (col == 3) ? color[i%2] : color[0] %>
+        <% if i > 0 %>
+          <tr bgcolor=<%= bgcolor_i %>>
+          <%= empty_td_tags(2) %>
+        <% end %>
+        <td nowrap><%= h s[0] %></td>
+        <% if col > 3 %>
+          <% if s[1].empty? %>
+            <%= empty_td_tags(24) %>
+            </tr>
+          <% end %>
+          <% s[1].each_with_index do |r,j| %>
+            <%  bgcolor_j = (col == 4) ? color[j%2] : color[0] %>
+            <% if j > 0 %>
+              <tr bgcolor=<%=bgcolor_j%>>
+              <%= empty_td_tags(3) %>
+            <% end %>
+            <td nowrap><%= h r[0] %></td>
+            <% if  col > 4 %>
+              <% if r[1].empty? %>
+                <%= empty_td_tags(24) %>
+                </tr>
+              <% end %>
+              <% r[1].each_with_index do |c,k| %>
+                <% if k > 0 %>
+                  <tr bgcolor=<%= color[k%2] %>>
+                  <%= empty_td_tags(4) %>
+                <% end %>
+                <td nowrap><%= h c[0] %></td>
+                <% for name in action %><td align="center"><%=c[1]["action"][name] ||="&nbsp"%></td><% end %>
+                <% for name in task %><td align="center"><%=c[1]["task"][name] ||="&nbsp"%></td><% end %>
+                <% for name in business %><td align="right"><%=number_to_currency(c[1]["business"][name] ||="&nbsp", :unit => "", :precision => 2)%></td><% end %>
+                <% for name in count %><td align="center"><%=c[1]["business"][name] ||="&nbsp"%></td><% end %>
+                <%="</tr>" if k > 0 %>
+              <% end #r1 %>
+              <tr bgcolor="#2AF8CC">
+                <td colspan="3">&nbsp;</td><td colspan="<%=col-3%>"><b><%=r[0]%> Total</b></td>
+                <% for name in action %><td align="center"><%=@total[p[0]][b[0]][s[0]][r[0]]["action"][name] ||="0"%></td><% end %>
+                <% for name in task %><td align="center"><%=@total[p[0]][b[0]][s[0]][r[0]]["task"][name] ||="0"%></td><% end %>
+                <% for name in business %><td align="right"><%=number_to_currency(@total[p[0]][b[0]][s[0]][r[0]]["business"][name] ||="0.00", :unit => "", :precision => 2)%></td><% end %>
+                <% for name in count %><td align="center"><%=@total[p[0]][b[0]][s[0]][r[0]]["business"][name] ||="0"%></td><% end %>
+              </tr>
+            <% else # if col > 4 %>
+              <% for name in action %><td align="center"><%=r[1]["action"][name] ||="&nbsp"%></td><% end %>
+              <% for name in task %><td align="center"><%=r[1]["task"][name] ||="&nbsp"%></td><% end %>
+              <% for name in business %><td align="right"><%=number_to_currency(r[1]["business"][name] ||="&nbsp", :unit => "", :precision => 2)%></td><% end %>
+              <% for name in count %><td align="center"><%=r[1]["business"][name] ||="&nbsp"%></td><% end %>
+            <% end # if col > 4%>
+            <%="</tr>" if j > 0 %>
+          <% end #s1%>
+          <tr bgcolor="#FAF8CC">
+            <td colspan="2">&nbsp;</td><td colspan="<%=col-2%>"><b><%=s[0]%> Total</b></td>
+            <% for name in action %><td align="center"><%=@total[p[0]][b[0]][s[0]]["action"][name] ||="0"%></td><% end %>
+            <% for name in task %><td align="center"><%=@total[p[0]][b[0]][s[0]]["task"][name] ||="0"%></td><% end %>
+            <% for name in business %><td align="right"><%=number_to_currency(@total[p[0]][b[0]][s[0]]["business"][name] ||="0.00", :unit => "", :precision => 2)%></td><% end %>
+            <% for name in count %><td align="center"><%=@total[p[0]][b[0]][s[0]]["business"][name] ||="0"%></td><% end %>
+          </tr>
+        <% else # if col > 3 %>
+            <% for name in action %><td align="center"><%=s[1]["action"][name] ||="&nbsp"%></td><% end %>
+            <% for name in task %><td align="center"><%=s[1]["task"][name] ||="&nbsp"%></td><% end %>
+            <% for name in business %><td align="right"><%=number_to_currency(s[1]["business"][name] ||="&nbsp", :unit => "", :precision => 2)%></td><% end %>
+            <% for name in count %><td align="center"><%=s[1]["business"][name] ||="&nbsp"%></td><% end %>
+        <% end # if col > 3 %>
+         <%="</tr>" if i > 0 %>
+      <% end #b1%>
+          <tr bgcolor="#98AFC7">
+            <td>&nbsp;</td><td colspan="<%=col-1%>"><b><%=b[0]%> Total</b></td>
+            <% for name in action %><td align="center"><%=@total[p[0]][b[0]]["action"][name] ||="0"%></td><% end %>
+            <% for name in task %><td align="center"><%=@total[p[0]][b[0]]["task"][name] ||="0"%></td><% end %>
+            <% for name in business %><td align="right"><%=number_to_currency(@total[p[0]][b[0]]["business"][name] ||="0.00", :unit => "", :precision => 2)%></td><% end %>
+            <% for name in count %><td align="center"><%=@total[p[0]][b[0]]["business"][name] ||="0"%></td><% end %>
+          </tr>
+        <% else # if col > 2 %>
+            <% for name in action %><td align="center"><%=b[1]["action"][name] ||="&nbsp"%></td><% end %>
+            <% for name in task %><td align="center"><%=b[1]["task"][name] ||="&nbsp"%></td><% end %>
+            <% for name in business %><td align="right"><%=number_to_currency(b[1]["business"][name] ||="&nbsp", :unit => "", :precision => 2)%></td><% end %>
+            <% for name in count %><td align="center"><%=b[1]["business"][name] ||="&nbsp"%></td><% end %>
+        <% end # if col > 2 %>
+        <%="</tr>" if n > 0 %>
+    <% end #p1%>
+  <tr bgcolor="#C3FDB8">
+      <td colspan="<%=col%>"><b><%=p[0]%> Total</b></td>
+      <% for name in action %><td align="center"><%=@total[p[0]]["action"][name] ||="0"%></td><% end %>
+      <% for name in task %><td align="center"><%=@total[p[0]]["task"][name] ||="0"%></td><% end %>
+      <% for name in business %><td align="right"><%=number_to_currency(@total[p[0]]["business"][name] ||="0.00", :unit => "", :precision => 2)%></td><% end %>
+      <% for name in count %><td align="center"><%=@total[p[0]]["business"][name] ||="0"%></td><% end %>
+  </tr>
+   <% else # if col > 1 %>
+          <% for name in action %><td align="center"><%=p[1]["action"][name] ||="&nbsp"%></td><% end %>
+          <% for name in task %><td align="center"><%=p[1]["task"][name] ||="&nbsp"%></td><% end %>
+          <% for name in business %><td align="right"><%=number_to_currency(p[1]["business"][name] ||="&nbsp", :unit => "", :precision => 2)%></td><% end %>
+          <% for name in count %><td align="center"><%=p[1]["business"][name] ||="&nbsp"%></td><% end %>
+    <% end # if col > 1 %>
+<%end%>
+  <tr bgcolor="#FFF380">
+      <td colspan="<%=col%>"><b>Grand Total</b></td>
+      <% for name in action %><td align="center"><%=@total["action"][name] ||="0"%></td><% end %>
+      <% for name in task %><td align="center"><%=@total["task"][name] ||="0"%></td><% end %>
+      <% for name in business %><td align="right"><%=number_to_currency(@total["business"][name] ||="0.00", :unit => "", :precision => 2)%></td><% end %>
+      <% for name in count %><td align="center"><%=@total["business"][name] ||="0"%></td><% end %>
+  </tr>
+</table>

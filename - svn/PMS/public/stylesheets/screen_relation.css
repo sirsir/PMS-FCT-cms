@@ -1,0 +1,75 @@
+/* 
+    Document   : screen_relation
+    Created on : Sep 20, 2009, 4:22:37 AM
+    Author     : Danzler.S
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+.screen_relation {
+    padding: 10px;
+    border-style: solid;
+    border-width: 1px;
+    background-color:white;
+}
+
+.screen_relation .screen_relation {
+    padding: 0px;
+    border-style: none;
+}
+
+.screen_relation .node,
+.screen_relation .node_center,
+.screen_relation .node_menu_group_screen{
+    padding:5px;
+    margin:0px 5px;
+    border-width:2px;
+    border-style:solid;
+    border-color:black;
+    cursor:pointer;
+    font-weight:bold;
+    font-size:16px;
+    text-align:center;
+}
+
+.screen_relation .node {
+    background-color:#001D85;
+    color:#FFFFFF;
+}
+
+.screen_relation .node_center {
+    background-color:#00CCFF;
+    color:#000000;
+}
+
+.screen_relation .node_menu_group_screen {
+    background-color: #FFFFFF;
+    color: #001D85;
+}
+
+.screen_relation .blank {
+    width:47%;
+}
+
+.screen_relation .blank,
+.screen_relation .left_down,
+.screen_relation .right_down,
+.screen_relation .down_left,
+.screen_relation .down_right {
+    height:23px;
+    border:0px;
+}
+
+.screen_relation .top_line,
+.screen_relation .bottom_line {
+    height:23px;
+    width:50%;
+}
+
+.screen_relation .top_line {
+    background-image:url(/images/screen_relations/top_line.gif);
+}
+
+.screen_relation .bottom_line {
+    background-image:url(/images/screen_relations/bottom_line.gif);
+}

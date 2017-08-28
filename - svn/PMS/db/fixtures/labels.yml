@@ -1,0 +1,319 @@
+ 
+label_3: 
+  name: G_Name
+  updated_at: 2008-12-26 03:57:47 Z
+  id: 3
+  created_at: 2008-12-26 03:57:47 Z
+ 
+label_9: 
+  name: S_Setting
+  updated_at: 
+  id: 9
+  created_at: 
+ 
+label_12: 
+  name: S_Report
+  updated_at: 
+  id: 12
+  created_at: 
+ 
+label_13: 
+  name: S_Report_Requests
+  updated_at: 
+  id: 13
+  created_at: 
+ 
+label_14: 
+  name: S_Preference
+  updated_at: 
+  id: 14
+  created_at: 
+ 
+label_15: 
+  name: S_Security
+  updated_at: 
+  id: 15
+  created_at: 
+ 
+label_18: 
+  name: S_Languages
+  updated_at: 
+  id: 18
+  created_at: 
+ 
+label_19: 
+  name: S_Labels
+  updated_at: 
+  id: 19
+  created_at: 
+ 
+label_22: 
+  name: S_Screen
+  updated_at: 
+  id: 22
+  created_at: 
+ 
+label_25: 
+  name: S_Users
+  updated_at: 
+  id: 25
+  created_at: 
+ 
+label_28: 
+  name: S_User_Information
+  updated_at: 
+  id: 28
+  created_at: 
+ 
+label_30: 
+  name: G_List
+  updated_at: 2009-01-05 18:25:44 Z
+  id: 30
+  created_at: 2009-01-05 18:25:44 Z
+ 
+label_34: 
+  name: S_Custom_Field
+  updated_at: 
+  id: 34
+  created_at: 
+ 
+label_35: 
+  name: G_Creation
+  updated_at: 2009-01-13 18:43:38 Z
+  id: 35
+  created_at: 2009-01-13 18:43:38 Z
+ 
+label_36: 
+  name: G_Modification
+  updated_at: 2009-01-13 18:44:11 Z
+  id: 36
+  created_at: 2009-01-13 18:44:11 Z
+ 
+label_37: 
+  name: G_Available
+  updated_at: 2009-01-13 19:09:35 Z
+  id: 37
+  created_at: 2009-01-13 19:09:35 Z
+ 
+label_38: 
+  name: G_Assigned
+  updated_at: 2009-01-13 19:09:56 Z
+  id: 38
+  created_at: 2009-01-13 19:09:56 Z
+ 
+label_69: 
+  name: G_Option
+  updated_at: 2009-01-21 23:18:57 Z
+  id: 69
+  created_at: 2009-01-21 23:18:57 Z
+ 
+label_129: 
+  name: G_Code
+  updated_at: 2009-02-05 10:16:33 Z
+  id: 129
+  created_at: 2009-02-05 10:16:33 Z
+ 
+label_144: 
+  name: G_Descr
+  updated_at: 2009-02-06 03:40:41 Z
+  id: 144
+  created_at: 2009-02-06 03:39:35 Z
+ 
+label_149: 
+  name: G_CONFIRM
+  updated_at: 2009-02-12 07:55:14 Z
+  id: 149
+  created_at: 2009-02-12 07:55:14 Z
+ 
+label_235: 
+  name: G_Visit
+  updated_at: 2009-08-18 03:08:12 Z
+  id: 235
+  created_at: 2009-08-18 03:08:12 Z
+ 
+label_238: 
+  name: G_Other
+  updated_at: 2009-08-18 03:09:31 Z
+  id: 238
+  created_at: 2009-08-18 03:09:31 Z
+ 
+label_249: 
+  name: G_Password
+  updated_at: 2009-08-26 04:32:20 Z
+  id: 249
+  created_at: 2009-08-26 04:32:20 Z
+ 
+label_250: 
+  name: G_Search
+  updated_at: 2009-08-28 00:00:00 Z
+  id: 250
+  created_at: 2009-08-28 00:00:00 Z
+ 
+label_293: 
+  name: G_Field
+  updated_at: 2009-09-12 15:17:54 Z
+  id: 293
+  created_at: 2009-09-12 15:17:54 Z
+ 
+label_294: 
+  name: S_Roles
+  updated_at: 
+  id: 294
+  created_at: 2009-09-16 15:17:54 Z
+ 
+label_300: 
+  name: S_Permissin
+  updated_at: 
+  id: 300
+  created_at: 
+ 
+label_301: 
+  name: S_Role_Screen
+  updated_at: 
+  id: 301
+  created_at: 
+ 
+label_302: 
+  name: S_Role_Field
+  updated_at: 
+  id: 302
+  created_at: 
+ 
+label_303: 
+  name: S_User_Screen
+  updated_at: 
+  id: 303
+  created_at: 
+ 
+label_304: 
+  name: S_User_Field
+  updated_at: 
+  id: 304
+  created_at: 
+ 
+label_305: 
+  name: S_Grant
+  updated_at: 
+  id: 305
+  created_at: 
+ 
+label_306: 
+  name: S_Revoke
+  updated_at: 
+  id: 306
+  created_at: 
+ 
+label_307: 
+  name: S_Operation
+  updated_at: 
+  id: 307
+  created_at: 
+ 
+label_310: 
+  name: G_Confirm_Password
+  updated_at: 2009-09-23 07:09:56 Z
+  id: 310
+  created_at: 2009-09-23 07:09:56 Z
+ 
+label_333: 
+  name: G_ASSEMBLY_TECH_10
+  updated_at: 2010-09-20 09:00:14 Z
+  id: 333
+  created_at: 2010-09-20 09:00:14 Z
+ 
+label_334: 
+  name: G_METALEX_10
+  updated_at: 2010-09-20 09:00:14 Z
+  id: 334
+  created_at: 2010-09-20 09:00:14 Z
+ 
+label_344: 
+  name: G_COMPONENT
+  updated_at: 2010-12-07 08:32:52 Z
+  id: 344
+  created_at: 2010-12-07 08:32:52 Z
+ 
+label_345: 
+  name: G_Required_Search
+  updated_at: 2010-12-07 08:32:54 Z
+  id: 345
+  created_at: 2010-12-07 08:32:52 Z
+ 
+label_363: 
+  name: G_Description
+  updated_at: 2011-01-06 10:13:46 Z
+  id: 363
+  created_at: 2011-01-06 10:13:46 Z
+ 
+label_408: 
+  name: G_Form
+  updated_at: 2011-01-09 20:37:46 Z
+  id: 408
+  created_at: 2011-01-09 20:37:46 Z
+ 
+label_590: 
+  name: G_HeaderList
+  updated_at: 2011-03-28 12:06:22 Z
+  id: 590
+  created_at: 2011-03-28 12:06:22 Z
+
+label_1349: 
+  name: S_SCR_MAINTENANCE
+  updated_at: 2011-08-29 05:38:34 Z
+  id: 1349
+  created_at: 2011-08-29 05:38:34 Z
+ 
+label_1350: 
+  name: S_SCR_VERSION
+  updated_at: 2011-08-29 05:38:34 Z
+  id: 1350
+  created_at: 2011-08-29 05:38:34 Z
+ 
+label_1351: 
+  name: S_SCR_SERVICE
+  updated_at: 2011-08-29 05:38:34 Z
+  id: 1351
+  created_at: 2011-08-29 05:38:34 Z
+ 
+label_1352: 
+  name: S_SCR_DATA_LOG
+  updated_at: 2011-08-29 05:38:34 Z
+  id: 1352
+  created_at: 2011-08-29 05:38:34 Z
+ 
+label_1353: 
+  name: S_SCR_SYSTEM_LOG
+  updated_at: 2011-08-29 05:38:34 Z
+  id: 1353
+  created_at: 2011-08-29 05:38:34 Z
+ 
+label_1354: 
+  name: S_SCR_BACKUP
+  updated_at: 2011-08-29 05:38:34 Z
+  id: 1354
+  created_at: 2011-08-29 05:38:34 Z
+ 
+label_1355: 
+  name: S_SCR_RESTORE
+  updated_at: 2011-08-29 05:38:34 Z
+  id: 1355
+  created_at: 2011-08-29 05:38:34 Z
+ 
+label_1356: 
+  name: S_SCR_RESTART
+  updated_at: 2011-08-29 05:38:34 Z
+  id: 1356
+  created_at: 2011-08-29 05:38:34 Z
+ 
+label_1357: 
+  name: S_SCR_FIRMWARE
+  updated_at: 2011-08-29 05:38:34 Z
+  id: 1357
+  created_at: 2011-08-29 05:38:34 Z
+ 
+label_1663: 
+  name: G_Memory
+  updated_at: 2012-10-10 08:52:52 Z
+  id: 1663
+  created_at: 2012-10-10 08:52:52 Z
+ 

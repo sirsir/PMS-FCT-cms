@@ -1,0 +1,14 @@
+<%= stylesheet_link_tag "error" %>
+<%= stylesheet_link_tag "table" %>
+
+<table style="position: absolute; width:100%; height:100%; top: 0px;left: 0px">
+  <tr style="height: 50%"><td></td></tr>
+  <tr>
+    <td align="center" valign="center">
+      <% form_tag :action => 'login' do %>
+        <%=group_tag render(:partial => "system_title"), render(:partial => 'login', :locals => {:screen => @screen, :rows => @rows}), :blindable => false %>
+      <% end %>
+    </td>
+  </tr>
+  <tr style="height: 50%"><td></td></tr>
+</table>

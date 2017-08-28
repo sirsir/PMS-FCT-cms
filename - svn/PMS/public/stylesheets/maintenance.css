@@ -1,0 +1,46 @@
+/* 
+    Document   : maintenance
+    Created on : Sep 15, 2011, 10:15:09 AM
+    Author     : Danzler.S
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+
+
+/* Maintenance */
+
+/*
+1xx Informational
+2xx Success
+3xx Redirection
+4xx Client Error
+5xx Server Error
+*/
+
+.http_1xx, .http_4xx {
+    color: black;
+}
+
+.http_1xx {
+    background-color: #CCC;
+}
+
+.http_2xx {
+}
+
+.http_3xx {
+    color: red;
+    background-color: #FF9;
+}
+
+.http_4xx {
+    color: black;
+    background-color: #FC5;
+}
+
+.http_5xx {
+    color: white;
+    background-color: red;
+}
+

@@ -1,0 +1,26 @@
+<table>
+  <!-- WARNING!!! The first list must be the table start tag -->
+
+  <%
+  child_ids = @report_request_row.new_record? ? [] : @report_request_row.visible_child_ids
+  background_colors = ReportRequest.background_colors_24bit[:data]
+  style_background_color = "background-color: #{background_colors[@report_request_row.new_record? ? 0 : @report_request_row.level]};"
+  style_display = "display: #{'none' unless @report_request_row.parent.nil?};"
+
+  reference_screen_indexes = @report_request_row.report_request.report.visible_reference_screen_indexes
+  level = @report_request_row.reference_screen_index ? reference_screen_indexes.index(@report_request_row.reference_screen_index) : -1
+  %>
+  <tr id="report_request_row_<%=@report_request_row.id %>_replacement" style="<%=style_background_color %><%=style_display %>"
+      report_request_row_state_level="<%=level %>" >
+    <td class='td_cell' id='<%=@report_request_row.id%>_fetch_rows' style='<%="display: none;" unless @report_request_row.report_request.report.hide_row_columns? %>'>
+      <% if child_ids.empty? || @report_request_row.new_record? %>
+      &nbsp;
+      <% else %>
+      <a id="report_request_row_group_button_<%=@report_request_row.id%>" style="text-decoration: none;" status="closed"
+         onclick="fncToogleReportRequestRows(this); return false;" child_report_request_row_ids="<%=@report_request_row.child_ids.join(",") %>"
+         href="#" title="<%=@report_request_row.child_ids.size %> item(s)">+</a>
+      <% end %>
+    </td>
+    <%= render :partial => "report_request_row" %>
+   </tr>
+</table>

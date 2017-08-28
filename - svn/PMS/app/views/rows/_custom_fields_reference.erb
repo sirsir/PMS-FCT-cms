@@ -1,0 +1,247 @@
+<%
+cf = field.custom_field
+cf_id = field.custom_field_id
+field_id = field.id
+name_prefix ||= ''
+ref_id = ""
+name = "#{name_prefix}cells[#{cf_id}][row_id]"
+input_id = sanitize_to_id(name)
+cell_div_id = "cells_div_#{cf_id}"
+
+#~ Display as control, wrap with table to keep controls in-line
+%>
+<table>
+  <tr>
+    <td id ='<%=cell_div_id %>' width="143px">
+<%
+  on_change = update_ref_att_javascript(field)
+  on_change << js_update_field_flag_value("flag_field_#{field_id}")
+   
+  if readonly
+  %>
+    <%=cell.to_html %>
+    <%=hidden_field_tag("#{name}", CustomFields::Reference.cell_ref_row_id(cell.value)) %>
+  <%
+  else
+    search_value = nil
+    flt_ref = @filtered_reference[cf_id.to_s]
+    unless flt_ref.nil?
+      search_value_id = CustomFields::Reference.cell_ref_row_id(flt_ref)
+      search_value = Row.find(search_value_id) if search_value_id > 0
+      ref_id = flt_ref[:row_id].to_i
+    end
+
+  if cf.searchable_text?
+    #~ Display as a searchable text box
+    operation_url_option = url_for(:controller => "rows",
+      :action=>"quick_search",
+      :id=>0,
+      :screen_id=>cf.screen_id,
+      :text=>"JAVASCRIPT_VAR_TEXT",
+      :input_id=>"JAVASCRIPT_VAR_ID",
+      :result_row_id =>"JAVASCRIPT_VAR_RESULT_ROW_ID",
+      :field_id => field_id)
+    related_to = (field.value.nil? || field.value['relate_to'] =="") ? "" :  field.value['relate_to']
+
+    if (@action_source == "relations") && (cf.name == "Customer_REF") && (params[:action] == "new")
+      value = retrieve_cell_cf(ref_id, cf_id)
+      quick_search_text = retrieve_nonmulti_result(value).gsub("&nbsp;","") if value
+    else
+      row_id = CustomFields::Reference.cell_ref_row_id(cell.value) 
+      ref_row = Row.find(row_id) unless row_id == 0
+      ref_row = search_value if ref_row.nil?
+      value = ref_row.nil? ? nil : ref_row.id
+
+      quick_search_text = if ref_row.nil?
+        ""
+      else
+        ref_row.create_description_by_custom_field_ids(cf.custom_field_ids)
+        ref_row.dynamic_description_by_custom_field_ids
+      end
+    end
+
+    suggest_disp_div_id = "_suggest_disp_edit_screen_#{cell_div_id}"
+
+    if related_to == ""
+      screen_quick_search_onkeyup = <<JAVASCRIPT
+fncQuickSearch("#{suggest_disp_div_id}", "#{operation_url_option}", this, "#{input_id}");
+JAVASCRIPT
+
+      screen_quick_search_onblur = <<JAVASCRIPT
+//fncResetQuickSearchText("#{suggest_disp_div_id}", this, "#{input_id}");
+JAVASCRIPT
+
+    else
+      screen_quick_search_onkeyup = <<JAVASCRIPT
+fncQuickSearchRef("#{suggest_disp_div_id}", "#{operation_url_option}", this, "#{cf_id}", "#{related_to}");
+JAVASCRIPT
+    end
+%>
+
+          <%=text_field_tag("screen_quick_search_text_#{cf_id}", quick_search_text, :onkeyup => screen_quick_search_onkeyup, :onblur => screen_quick_search_onblur, :size => 45, :autocomplete => :off) %>
+          <%=hidden_field_tag("#{name}", value) %>
+          <%=hidden_field_tag("field_ids_of_searchable[]", cf_id) %>
+          <div id='<%= suggest_disp_div_id %>' class='suggest_disp_hidden'></div>
+          <%= field_descr_tag :descr => cf.descr %>
+
+<%
+elsif cf.is_separate_controls?
+  uniq_fields = cf.screen.fields.select{|f| f.is_unique? }
+  uniq_field_ids = uniq_fields.collect{|f| f.id }.join(",")
+  uniq_custom_field_ids = uniq_fields.collect{|f| f.custom_field_id }.join(",")
+  div_id = "Div_Flag_Field_#{field_id}"
+  cell_name = "cells[#{cf_id}][row_id]"
+  cell_id = sanitize_to_id(cell_name)
+  onclick = <<JAVASCRIPT
+fncModelLookUp('#{div_id}_result', '#{url_for(:controller => 'rows', :action => 'model_look_up', :id => 0, :screen_id => cf.screen.id, :cell_id => cell_id, :div_id => div_id)}', '#{uniq_field_ids}', '#{uniq_custom_field_ids}')
+JAVASCRIPT
+%>
+    <%= hidden_field_tag cell_name, cell.to_key_value %>
+    <%= js_trigger_tag div_id, "", :onclick => onclick %>
+    <%= js_trigger_tag "#{cell_id}_post", "", :onclick => on_change %>
+    <div id="<%= div_id %>_result"></div>
+   </td></tr></table> 
+   </td></tr>
+    <%= render :partial => "/rows/field", :collection => uniq_fields, :locals => {:row => row, :readonly => readonly, :name_prefix => name_prefix, :seperate_ctrls_id => field_id } %>
+   <tr><th></th><td>
+   <table><tr><td>
+<%
+else
+  #~ Display as drop down combo box
+
+  related_from = CustomFields::Reference.field_related_from(field.value)
+  related_to = CustomFields::Reference.field_related_to(field.value)
+
+  if (related_to != 0 || (related_from == 0 && related_to == 0))
+    if (field_id == @staff_ref_field_id && @staff_row)
+      #~ Display control as fixed text, staff's name
+      ref_control = label_tag("name_ref_of_#{cf_id}", @staff_row.description)
+      ref_control << hidden_field_tag("#{name}", @staff_row.id)
+    else
+      combo_box_options = cell.select_value_options()
+      combo_box_options[:assigned_options] << search_value if combo_box_options[:assigned_options].empty? && !search_value.nil?
+      if (cf.name == "Production_Type_REF" && params[:action] == "new" && @staff_row )
+        combo_box_options[:assigned_options] = cf.get_default_product_type(@staff_row.id.to_s)
+      end
+
+      #~ Display control as drop down, for data? why?
+      ref_control = screen_collection_select_tag(
+        :assigned_options => combo_box_options[:assigned_options],
+        :all_options => combo_box_options[:all_options],
+        :name => "#{name}",
+        :value_method => :id,
+        :text_method => :dynamic_description_by_custom_field_ids,
+        :related_from => related_from,
+        :related_to => related_to,
+        :from_cf_id => cf_id,
+        :include_blank => true,
+        :on_change => on_change )
+
+    end
+  else
+    if params[:action] == "new"
+      if @action_source == "relations"
+
+        combo_box_options = cell.select_value_relation_options(related_from,ref_id)
+        combo_box_options[:assigned_options] << search_value if combo_box_options[:assigned_options].empty? && !search_value.nil?
+
+        #~ Display control as drop down, HARD CODED!!! Serie_REF CustomField
+        ref_control = screen_collection_select_tag(
+          :assigned_options => combo_box_options[:assigned_options],
+          :all_options => combo_box_options[:all_options],
+          :name => "#{name}",
+          :value_method => "row_id",
+          :text_method => "value",
+          :include_blank => true,
+          :on_change => on_change )
+
+      else
+        #~ Display an emmpty drop down
+        # when it is "new" mode, but not the "Series_REF" CustomField
+        # nor the during a relation action
+        #
+        # Will wait for the ajax loading call?
+        if related_from != 0 then
+          related_from_row_id = 0
+          related_from_cf = CustomField.find(related_from.to_i) # CASE Relate from have default value
+          sibling_row = Field.relation_row_by_related(@row, related_from_cf)
+          related_from_row_id = CustomFields::Reference.cell_ref_row_id(sibling_row.cell(related_from).value) unless sibling_row.nil? || sibling_row.cell(related_from).nil?
+          unless @filtered_reference[related_from_cf.id.to_s].nil?
+            related_from_row_id = CustomFields::Reference.cell_ref_row_id(@filtered_reference[related_from_cf.id.to_s])
+          end
+          if related_from_row_id == 0 then
+             ref_control = "<select id=\"cells_#{cf_id}\" name=\"#{name}\"></select>"
+          else
+            combo_box_options = cell.select_value_options(related_from, related_from_row_id)
+            combo_box_options[:assigned_options] << search_value if combo_box_options[:assigned_options].empty? && !search_value.nil?
+
+            #~ Display control as drop down, and select its current value
+            ref_control = screen_collection_select_tag(
+              :assigned_options => combo_box_options[:assigned_options],
+              :all_options => combo_box_options[:all_options],
+              :name => "#{name}",
+              :value_method => :id,
+              :text_method => :description,
+              :include_blank => true,
+              :on_change => on_change )
+          end
+        else 
+          ref_control = "<select id=\"cells_#{cf_id}\" name=\"#{name}\"></select>"
+        end
+
+      end
+    else
+      #~ In case not "new" mode, "edit"?
+
+      #~ Get the option based on if it is related from some one, or not
+      related_from_row_id = 0
+      if related_from == 0 then
+      else
+        related_from_cf = CustomField.find(related_from.to_i) # CASE Relate from have default value
+        sibling_row = Field.relation_row_by_related(cell.row, related_from_cf)
+        related_from_row_id = CustomFields::Reference.cell_ref_row_id(sibling_row.cell(related_from).value) unless sibling_row.nil? || sibling_row.cell(related_from).nil?
+      end
+      if related_from == 0 then
+        ref_control = "<select id=\"cells_#{cf_id}\" name=\"#{name}\"></select>"
+      else
+        combo_box_options = cell.select_value_options(related_from, related_from_row_id)
+        combo_box_options[:assigned_options] << search_value if combo_box_options[:assigned_options].empty? && !search_value.nil?
+
+        #~ Display control as drop down, and select its current value
+        ref_control = screen_collection_select_tag(
+          :assigned_options => combo_box_options[:assigned_options],
+          :all_options => combo_box_options[:all_options],
+          :name => "#{name}",
+          :value_method => :id,
+          :text_method => :description,
+          :include_blank => true,
+          :on_change => on_change )
+      end
+    end
+  end
+
+  #~ Get the quick add button, if supported
+  if (related_from == 0 || related_to != 0) && cell.custom_field.screen.allow_action?("quick_add")
+    if cf.searchable_text?
+      operation_url_option = url_for(:controller => "rows", :action=>"quick_add",:id => cell.id ||=0,:screen_id=>cell.custom_field.screen_id,:value=>'JAVASCRIPT_VAR_NAME',:result_row_id =>"#{name}")
+    else
+      operation_url_option = url_for(:controller => "rows", :action=>"quick_add",:id => cell.id ||=0,:custom_field_id =>cf_id,:screen_id=>cell.custom_field.screen_id,:value=>'JAVASCRIPT_VAR_NAME')
+    end
+
+  #~ ToDo: Make quick add screen that allows inputing all required fields
+  #screen_quick_add_btn = <<HTML_TAG
+#<input type="button" value="+" name="quick_add" onClick='fncQuickAdd("#{cell_div_id}","#{operation_url_option}");' style='height:16;width:16;font-size:8' />
+#<span id = "quick_add_#{field.custom_field_id}"></span>
+#HTML_TAG
+  screen_quick_add_btn = ""
+    end
+%>
+          <%=ref_control %>&nbsp;<%=screen_quick_add_btn %>
+          <%=field_descr_tag :descr => cf.descr %>
+<%
+  end
+  end
+%>
+    </td>        
+  </tr>
+</table>

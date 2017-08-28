@@ -1,0 +1,37 @@
+﻿# 2011/08/10 # SUSBKK - SMS - Report Test List
+[+] 2011/08/10 Annually New Customer
+[?] 2011/08/10 Annually Part Order vs Part List [Can't show Office by Part Order/List, Filtered 'Province' but still shows all provinces]
+[+] 2011/08/10 Annually Sale Achievement Overall [Can't show formula in Grand Total]
+[+] 2011/08/10 Annually Sale Achievement by Branch [Can't show formula in Grand Total]
+[+] 2011/08/10 Annually Sale Achievement by Product Type [Can't show formula in Grand Total]
+[+] 2011/08/10 Annually Sales Customer Quantity 
+[+] 2011/08/10 Annually Sales Target
+[+] 2011/08/10 Half-Year Sales Amount by Business Type
+[+] 2011/08/10 Half-Year Sales Amount by Country
+[+] 2011/08/10 Half-Year Sales Amount by Estate
+[+] 2011/08/10 Half-Year Sales Amount by Nation 
+[+] 2011/08/10 Half-Year Sales Amount by Province
+[+] 2011/08/10 Half-Year Sales Amount by Province & Customer
+[+] 2011/08/10 Half-Year Sales Amount by Province & Estate
+[+] 2011/08/10 Half-Year Sales Customer Count by Province and Estate
+[+] 2011/08/10 Individual Sales Plan by Product Type
+[+] 2011/08/10 Monthly Customer Transaction Over All
+[+] 2011/08/10 Monthly Customer Transaction by Branch
+[?] 2011/08/10 Monthly Sale Amount by Area [Lack of OnHand numaric format]  
+[?] 2011/08/10 Monthly Sale Amount by Area & Sales [Lack of OnHand numaric format]  
+[?] 2011/08/10 Monthly Sale Amount by Sales [Lack of OnHand numaric format]  
+[+] 2011/08/10 Monthly Sales Amount
+[+] 2011/08/10 Monthly Sales Amount by Branch 
+[+] 2011/08/10 Monthly Sales Amount by Business Type 
+[+] 2011/08/10 Monthly Sales Amount by Country 
+[+] 2011/08/10 Monthly Sales Amount by Estate 
+[+] 2011/08/10 Monthly Sales Amount by Nation 
+[+] 2011/08/10 Monthly Sales Amount by Province
+[ ] 2011/08/10 New report: "SALES AMOUNT BY PRODUCTS updated 31AUG'10.xls"
+
+Legend
+[ ] Open Items
+[?] Pending Items
+[-] In Progress Items
+[+] Complete Items
+[/] Unscheduled

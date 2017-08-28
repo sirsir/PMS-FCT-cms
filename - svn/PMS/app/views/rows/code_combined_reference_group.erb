@@ -1,0 +1,12 @@
+
+<%= render :partial => "/rows/code_combined_reference_group" ,
+  :locals => {:field => @field,
+  :scr_row => @scr_row,
+  :sub_scr_row => @sub_scr_row,
+  :available_options => @available_options,
+  :selected_values => @selected_values + [[]],
+  :input_name => @input_name,
+  :ccr_result_id_prefix => @ccr_result_id_prefix,
+  :screen_id => @screen_id,
+  :next_ccr_result_id => @next_ccr_result_id
+} %>

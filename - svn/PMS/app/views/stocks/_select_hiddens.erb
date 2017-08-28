@@ -1,0 +1,18 @@
+<%
+form_id = "frm_stock_setting_#{@stock.id}"
+%>
+
+<% form_tag url_for(:action => 'update', :id =>@stock.id, :step => :hiddens ), :onSubmit => "fncPrepareFormForSubmit(this);", :method=>:put, :id => form_id, :target=>"tmp_frame" do %>
+  <table id ="table_content_<%@stock.id%>" class="table_data_content" cellspacing="0">
+    <tr class='tr_header'>
+      <% ["&nbsp;", "Stock Keys", "Default Value", "&nbsp;"].each do |h| %>
+        <th class='th_col_header'><%= (h =~ /&nbsp;/) ? h : h.to_s.titleize %></th>
+      <% end %>
+    </tr>
+    <%=render :partial => "select_hidden", :collection => (0..@stock_keys_no_reference.length-1).to_a %>
+  </table>
+
+  <hr />
+
+  <%= group_button() %>
+<% end %>

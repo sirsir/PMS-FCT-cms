@@ -1,0 +1,26 @@
+<td class='td_cell'><%= screen.menu_icon.nil? ? '&nbsp;' : image_tag("menu/#{screen.menu_icon}.png", :class => :menu_icon) %></td>
+<td class='td_cell' align="right"><%= h screen.id unless screen.new_record? %>&nbsp;</td>
+
+<%
+empty_cell = <<HTML_TAG
+<td class='td_cell' width='10'>&nbsp;</td>
+HTML_TAG
+%>
+<%= empty_cell * (screen.level - 2) %>
+
+<td class='td_cell' colspan='<%= @max_level-screen.level+2 %>' style='width: <%= 150-(10*(screen.level-2)) %>; white-space: nowrap;'><%= h screen.name %></td>
+<td class='td_cell' style='white-space: nowrap;'><%= h screen.label_descr %>&nbsp;</td>
+<td class='td_cell'><%= h screen.class.to_s.gsub(/screen/i, '') %>&nbsp;</td>
+<td class='td_cell' align="center"><%= check_box_image_tag screen.system? %></td>
+<td class='td_cell'><%= h screen.alias_screen_name %></td>
+<td class='td_cell'><%= h screen.relate_screen_name %></td>
+<td class='td_cell'><%= check_box_image_tag(screen.control_revision?) if screen.is_a?(RevisionScreen) %>&nbsp;</td>
+<td class='td_cell'><%= image_tag("menu/#{screen.page_layout}.png", :class => :menu_icon) + h(screen.page_size) unless screen.system? %>&nbsp;</td>
+<%
+options = {:confirm => true}
+options[:onclick] = "fncTrDelete(this.href, #{screen.id});"
+options[:object] = screen
+options[:controller] = :screens
+
+%>
+<td class='td_cell' id='<%= screen.id %>_destroy'><%= link_to_destroy(options) unless screen.system? %>&nbsp;</td>

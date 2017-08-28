@@ -1,0 +1,37 @@
+<tr>
+  <%
+  unempty_fields = []
+
+  output = [full_log.action.to_s, full_log.user.to_s, full_log.created_at.to_s[0,19]]
+  output += custom_fields.collect do |cf|
+    cf_id = cf.is_a?(CustomField) ? cf.id : cf
+
+    if full_log.value[cf_id].to_s.strip.empty?
+      if unempty_fields.include?(cf_id)
+        unempty_fields.delete(cf_id)
+        
+        "{clear}"
+      else
+        "&nbsp;"
+      end
+    else
+      unempty_fields << cf_id
+      unempty_fields.uniq!
+
+      full_log.value[cf_id]
+    end
+  end
+  %>
+  
+  <% output.each do |item| %>
+    <td align="center">
+    <% if item.is_a?(Array) %>
+      <% item.each do |i| %>
+      <li><%= i %></li>
+      <% end %>
+    <% else %>
+      <%= item %>
+    <% end %>
+    </td>
+  <% end %>
+</tr>

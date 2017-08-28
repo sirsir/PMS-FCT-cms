@@ -1,0 +1,65 @@
+<%
+name_prefix ||= ''
+style_display = "display: none;" unless field.display_in_form?
+%>
+
+<tr id="fields_reference_attribute_<%=row.id %>_<%=field.id %>" style="<%= style_display %>">
+  <th class="th_row_header">
+    <%
+    if field.is_mandatory?
+      mandatory_content = "*".to_html
+      mandatory_title = "Must specify #{field.descr}"
+    end
+    if field.is_unique?
+      unique_class = "unique"
+      unique_fields = field.screen.fields.collect{|f|
+        f.descr if f.is_unique?
+      }.compact.join(", ")
+      unique_title = "#{unique_fields} must be unique"
+    end
+  %>
+    <span class="mandatory" title="<%=mandatory_title %>"><%=mandatory_content %></span>
+    <span class="<%=unique_class %>" title="<%=unique_title %>"><%= label_tag "", "#{field.full_descr}" %></span>
+    :
+  </th>
+  <td> 
+    <div id ="ref_att_<%=field.id %>">
+      <%
+      name = "#{name_prefix}cells[#{field.reference_custom_field_id.to_s}][#{field.id.to_s}]"
+      value = row.id.nil? ? "" : field.evaluate_value(row)
+      %>
+      <% if field.read_only? || readonly %>
+        <%= field.evaluate_text(row) %>
+      <% elsif field.source_custom_field.is_a?(CustomFields::TextArea) %>
+
+        <%
+        cf = field.source_custom_field
+        cf_options = cf.option
+
+        isLower_Char = cf_options[:alphabet] == "all" || cf_options[:alphabet] == "lower_case"
+        isUpper_Char = cf_options[:alphabet] == "all" || cf_options[:alphabet] == "upper_case"
+        symbols = cf_options[:symbols].collect{|s| s.symbol}.join("\",\"")
+        symbols = symbols.empty? ? "[ ]" : "[\"" + symbols + "\"]"
+
+        field_options = {}
+        field_options[:name] = name
+        field_options[:cell_value] = value.gsub("<br />", "\n")
+        field_options[:maxlength] = cf_options[:length][:max] unless cf_options[:length][:max].nil?
+        field_options[:onKeyPress] = "return fncCheckKeyInput(event, #{cf_options[:numeric]}, #{isLower_Char}, #{isUpper_Char}, #{symbols});"
+        field_options[:onKeyUp] = "this.value = #{isLower_Char ? "this.value.toLowerCase()" : "this.value.toUpperCase()"};" unless (isLower_Char == isUpper_Char)
+        %>
+        <%= screen_text_area_tag(field_options) %>
+      <% else %>
+        <%=text_field_tag name, value, :readonly => field.read_only? %>
+      <% end %>
+    </div>
+    <%
+    descr = field.source_custom_field.descr unless field.source_custom_field.nil?
+    %>
+    <%= field_descr_tag :descr => descr.to_s, :break => false %>
+  </td>
+</tr>
+
+
+
+

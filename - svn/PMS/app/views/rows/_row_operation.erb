@@ -1,0 +1,28 @@
+    <td class='td_cell' id='<%= row.id %>_last_update' style="white-space: nowrap">
+      <%
+      if row.updated_at.nil?
+        updated_at = '&nbsp;'
+      else
+        updated_at = time_ago_in_words(row.updated_at)
+      end
+
+      %>
+      <%=updated_at %>
+    </td>
+ <%
+
+allow_delete = (row.screen.allow_action?('destroy')) && (@action_source != 'relations') && !@readonly
+
+if allow_delete
+  options = {:confirm => true}
+  options[:onclick] = "fncTrDelete(this.href, #{row.id});"
+  options[:object] = row
+  options[:controller] = :rows
+
+  content = link_to_destroy(options)
+else
+  onclick_method = ''
+  content = '&nbsp;'
+end
+%>
+    <td class='td_cell' id='<%= row.id %>_destroy' <%=onclick_method %>><%=content %></td>

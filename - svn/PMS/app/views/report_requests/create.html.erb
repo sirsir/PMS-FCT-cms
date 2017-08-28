@@ -1,0 +1,16 @@
+<%=javascript_include_tag "prototype" %>
+<%=javascript_include_tag "application" %>
+<%=javascript_include_tag "dialog" %>
+<%=javascript_include_tag "fr" %>
+<script type="text/javascript">
+<% if @report_request.errors.empty? %>
+    fncAppendTrToTableContent('', <%=@report_request.id %>);
+
+  <% ajax_url = url_for(:controller => :field_filters, :action => :edit, :id => @report_request.id)  %>
+    fncSetOperationContent("operation_area", "<%=ajax_url %>");
+<% else %>
+    fncSetError('<%=error_messages_for(:object => @report_request).to_s.gsub(/'/, "&rsquo\;") %>');
+<% end %>
+
+  fncLoadTempFrame();
+</script>

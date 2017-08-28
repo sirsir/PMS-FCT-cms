@@ -1,0 +1,32 @@
+<%
+screen = screen_record
+operation_area ||= ""
+operation_url = url_for(:action => :edit, :id => screen.id)
+relation_area ||= ""
+relation_url = url_for(:controller => :screens, :action => :relations, :id => screen.id)
+field_area ||= ""
+field_url = url_for(:controller=>"fields", :action=>"index", :id => screen.id, :hide_screen_selection => true)
+
+if screen.system?
+  tr_class = "disabled"
+else
+  tr_class = screens.index(screen) % 2 == 0 ? "even" : "odd"
+end
+%>
+<tr class='tr_<%= tr_class %>' id='<%=screen.id%>'
+    operation_area='<%= operation_area %>' operation_url='<%= operation_url %>'
+    relation_area='<%=  relation_area  %>' relation_url='<%= relation_url %>'
+    field_area='<%=  field_area  %>' field_url='<%= field_url %>'
+    handleonclick='true'>
+  <%= render :partial => "screen", :locals => { :screen => screen } %>
+</tr>
+
+<% if screen.childs.size > 0 && screen.transaction_childs.empty? %>
+  <%= render :partial => "screen_record", :collection => screen.childs,
+            :locals=> {
+                :screens => screen.childs,
+                :operation_area => operation_area,
+                :relation_area => relation_area,
+                :field_area => field_area
+              } %>
+<% end %>

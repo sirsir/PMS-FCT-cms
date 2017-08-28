@@ -1,0 +1,580 @@
+/* 
+    Document   : print
+    Created on : Feb 02, 2011, 3:28:06 AM
+    Author     : Surapong.P
+    Description:
+        Purpose of the stylesheet follows.
+*/
+body {
+    background-color: #FFFFFF;
+    color: #000000;
+    font-family: tahoma;
+    font-size: 2.2mm;
+    width: 100%;
+    text-align: left;
+    margin-top: 0mm;
+}
+
+table.table_header, table.table_ov_detail, table.table_footer {
+    font-size: 2.2mm;
+    width: 180mm;
+    margin-left: 0mm;
+}
+table.table_header_2 {
+    border-collapse: collapse;
+    font-size: 2.2mm;
+    width: 30mm;
+    margin-left: 0mm;
+}
+
+table.table_footer_2 {
+    font-size: 2.2mm;
+    margin-left: 0mm;
+}
+
+table.table_lc_detail {
+    font-size: 2.0mm;
+    width: 180mm;
+    margin-left: 0mm;
+}
+
+table.table_header,table.table_footer,table.table_lc_detail, table.table_ov_detail {
+    font-family: tahoma;
+}
+
+table.table_customer{
+    width: 80mm;
+    margin-left: 0mm;
+}
+table.table_customer_2{
+    width: 50mm;
+    margin-left: 0mm;
+}
+
+table.table_staff{
+    width: 55mm;
+    margin-left: 0mm;
+}
+
+table.table_header {
+    margin-top: 0mm;
+}
+
+table.table_ov_detail, table.table_lc_detail {
+    border-collapse: collapse;
+    margin-top: 5mm;
+}
+
+table.table_ov_detail th, table.table_ov_detail td, table.table_lc_detail th, table.table_lc_detail td {
+    border-style: solid;
+    border-color: Black;
+    border-width: 0.18mm ;
+    color:Black;
+}
+
+table.table_header td,table.table_footer td {
+    font-size:2.0mm;
+    border-width: 0.3mm;
+    border-spacing: 2mm;
+}
+
+table.table_header td,table.table_ov_detail td ,table.table_lc_detail td{
+    text-align:center;
+}
+
+table.table_header td {
+    text-align:left;
+}
+
+table.table_footer th {
+    border-width: 0mm 0mm 0.18mm 0mm;
+    text-align:left;
+    border-color: Black;
+}
+
+.td_staff{
+    vertical-align: top;
+    text-align: right!important;
+}
+.td_customer{
+    vertical-align: top;
+    text-align: left!important;
+}
+
+.td_logo_company {
+    text-align:left!important;
+    font-weight:bold!important;
+    font-size:7.4mm!important;
+    width:45mm!important;
+    font-family: times, serif;
+    padding-left: 3mm;
+}
+
+.td_name_company {
+    text-align:center!important;
+    font-weight:bold!important;
+    font-size:3.5mm!important;
+    font-family: times, serif;
+}
+
+.td_process{
+    background-color:Gray!important;
+    font-family: 'Courier New'!important;
+    font-size:2.5mm;
+    font-weight: bold;
+    width:15mm;
+}
+
+.td_item_no{
+    background-color:Gray!important;
+    font-family: 'Courier New'!important;
+    font-size:2.5mm;
+    font-weight: bold;
+    width:50mm;
+}
+
+.td_item_name{
+    background-color:Gray!important;
+    font-family: 'Courier New'!important;
+    font-size:2.5mm;
+    font-weight: bold;
+    width:52mm!important;
+}
+.td_L{
+    background-color:Gray!important;
+    font-family: 'Courier New'!important;
+    font-size:2.5mm;
+    font-weight: bold;
+    width:13mm;
+}
+
+.td_address_company {
+    text-align:center!important;
+    font-size:1.8mm!important;
+    padding-bottom: 3mm;
+    font-family: arial;
+}
+
+.td_name_company,.td_address_company {
+    width:100mm!important;
+}
+
+.td_quotation_header {
+    text-align:center!important;
+    font-weight:bold!important;
+    font-size:4.2mm!important;
+    font-family: Garamond;
+    font-style:italic;
+    height:10mm;
+    width:190mm;
+    border-style: double;
+    border-color: Black;
+    border-width: 0.6mm 0mm 0mm 0mm!important;
+}
+
+.td_title_header {
+    text-align:right!important;
+    width:10mm!important;
+    font-family: arial;
+    white-space: nowrap;
+}
+
+.td_text_customer {
+    text-align:left!important;
+    border-style: solid;
+    border-width: 0mm 0mm 0.18mm 0mm!important;
+    border-color: Black;
+    font-family: tahoma;
+    white-space: nowrap;
+}
+.td_text_customer2 {
+    text-align:left!important;
+    border-style: solid;
+    border-width: 0mm 0mm 0.18mm 0mm!important;
+    border-color: Black;
+    font-family: tahoma;
+}
+
+.td_text_customer, .td_address_customer {
+    width:70mm!important;
+}
+.td_text_customer2{
+    width:40mm!important;
+}
+
+.td_text_staff {
+    text-align:left!important;
+    border-style: solid;
+    border-width: 0mm 0mm 0.18mm 0mm!important;
+    border-color: Black;
+    font-family: tahoma;
+}
+
+.td_text_staff  {
+    width:45mm!important;
+}
+
+.td_text_customer,.td_text_staff{
+    font-size:2.5mm!important;
+}
+
+.td_free1_header {
+    width:45mm!important;
+}
+
+.td_address_customer {
+    text-align:left!important;
+    border-style: solid;
+    border-width: 0mm 0mm 0.18mm 0mm!important;
+    border-color: Black;
+    line-height:2.3mm;
+    padding-top: 1mm;
+    padding-bottom: 1mm;
+}
+
+.td_address_customer,.td_address_staff  {
+    font-size:2.2mm!important;
+    font-family: arial;
+}
+
+.td_number_detail,.td_total_detail,.td_middle_nbsp {
+    text-align:right!important;
+    border-width: 0.14mm 0.3mm 0.14mm 0.3mm!important;
+    font-size: 2.5mm;
+}
+
+.td_amount_detail {
+    text-align:right!important;
+    border-width: 0.3mm 0.3mm 0.3mm 0.3mm!important;
+}
+
+.td_text_detail {
+    text-align:left!important;
+    border-width: 0.14mm 0.3mm 0.14mm 0.3mm!important;
+    padding-left: 1mm;
+    font-size: 2.5mm;
+}
+
+.td_L_detail {
+    text-align:center!important;
+    border-width: 0.14mm 0.3mm 0.14mm 0.3mm!important;
+    padding-left: 1mm;
+    font-size: 2.5mm;
+}
+
+.td_top_nbsp {
+    border-width: 0.3mm 0.3mm 0.14mm 0.3mm!important;
+}
+
+.td_bottom_nbsp {
+    border-width: 0.14mm 0.3mm 0.3mm 0.3mm!important;
+}
+
+.td_free_detail {
+    border-width:  0.3mm 0mm 0mm 0mm!important;
+}
+
+.td_total_detail{
+    border-width: 0.6mm 0.6mm 0.6mm 0.6mm!important;
+}
+
+.tr_display_none{
+    display: none;
+}
+
+.td_item_ov_detail, .td_qty_ov_detail {
+    width:8mm!important;
+}
+
+.td_item_lc_detail, .td_qty_lc_detail {
+    width:11mm!important;
+}
+
+.td_model_ov_detail{
+    width:78mm!important;
+}
+
+.td_model_lc_detail{
+    width:43mm!important;
+}
+
+
+.td_model_lc_detail_2{
+    text-align: center!important;
+    border-style: solid;
+    border-color: Black;
+    line-height:1.5mm;
+    width:43mm!important;
+    background-color:Gray!important;
+}
+
+
+.td_description_ov_detail {
+    width:54mm!important;
+}
+
+.td_description_lc_detail {
+    width:52mm!important;
+}
+
+.td_unit_ov_detail, .td_amount_ov_detail {
+    width:21mm!important;
+}
+
+.td_unit_lc_detail {
+    width:40mm!important;
+}
+
+.td_unit_value_lc_detail {
+    width:14mm!important;
+}
+
+.td_unit_discount_lc_detail {
+    width:11mm!important;
+}
+
+.td_unit_total_lc_detail {
+    width:15mm!important;
+}
+
+.td_amount_lc_detail {
+    width:15mm!important;
+}
+
+.td_amount_value_lc_detail {
+    width:14mm!important;
+}
+
+.td_amount_discount_lc_detail {
+    width:12mm!important;
+}
+
+.td_amount_total_lc_detail {
+    width:18mm!important;
+}
+
+.td_item_ov_detail, .td_qty_ov_detail, .td_item_lc_detail, .td_qty_lc_detail, .td_model_ov_detail, .td_model_lc_detail, .td_description_ov_detail, .td_description_lc_detail, .td_unit_ov_detail, .td_usd_ov_detail, .td_amount_ov_detail, .td_unit_lc_detail, .td_unit_value_lc_detail , .td_unit_discount_lc_detail, .td_unit_total_lc_detail, .td_amount_lc_detail, .td_amount_value_lc_detail, .td_amount_discount_lc_detail, .td_amount_total_lc_detail{
+    background-color:Gray!important;
+    font-family: 'Courier New'!important;
+    font-size:2.5mm;
+    font-weight: bold;
+}
+
+.td_head_footer {
+    width:20mm!important;
+    font-size:2.2mm!important;
+    vertical-align: top;
+    white-space: nowrap;
+}
+
+.td_free_footer {
+    width:90mm!important;
+}
+
+.td_cell_footer {
+    width:170mm!important;
+    text-align:left!important;
+    vertical-align:top;
+    font-size:2.1mm!important;
+}
+
+.td_name_footer {
+    text-align:center!important;
+    border-style: solid;
+    border-width: 0.18mm 0mm 0mm 0mm!important;
+    border-color: Black;
+    font-weight:bold;
+    width:50mm!important;
+    font-size: 2.5mm!important;
+    font-family: tahoma;
+}
+.td_name_footer_2 {
+    text-align:center!important;
+    font-weight:bold;
+    width:50mm!important;
+    height: 15mm;
+    font-size: 2.5mm!important;
+    font-family: tahoma;
+}
+
+.td_signature_footer {
+    width:50mm!important;
+    text-align:center!important;
+    vertical-align:bottom!important;
+    font-family: "Freestyle Script", cursive!important;
+    margin-bottom: 0mm;
+}
+
+.text_italic {
+    font-style:italic;
+    font-size:1.6mm;
+    text-align: left!important;
+}
+
+.page_inline {
+    display:inline-block;
+}
+
+.page_break {
+    page-break-before: always;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.td_number_detail_with_frame {
+    border-style: solid;
+    border-color: Black;
+    border-width: thin;
+    width:10mm!important;
+    text-align:right!important;
+    border-spacing: 0mm;
+}
+
+.td_number_detail_with_frame_2 {
+    border-style: solid;
+    border-color: Black;
+    border-width: thin;
+    text-align:center!important;
+}
+
+.table_border{
+    border-style: solid;
+    border-color: Black;
+    border-width: thin;
+}
+
+.td_valign_top{
+    vertical-align: top;
+}
+
+
+
+
+
+table.table_cost_summary{
+    border-collapse: collapse;
+}
+
+.td_cost_summary_amount {
+    border-style: solid;
+    border-color: Black;
+    line-height:1.5mm;
+    text-align:right!important;
+}
+
+.td_cost_summary_item {
+    border-style: solid;
+    border-color: Black;
+    line-height:1.5mm;
+    text-align:left!important;
+}
+
+.td_cost_summary_header {
+    border-style: solid;
+    border-color: Black;
+    line-height:1.5mm;
+    text-align:center!important;
+}
+.td_cost_summary_header_2 {
+    border-style: solid;
+    border-color: Black;
+    border-width: 0.18mm 0.18mm 0.18mm 0.18mm!important;
+/*    line-height:1.5mm;*/
+/*    text-align:center!important;*/
+}
+
+.td_total_summary_amount{
+    width:30mm!important;
+    text-align:right!important;
+    border-style: solid;
+    border-width: 0mm 0mm 0.18mm 0mm!important;
+}
+
+.td_free_detail_no_border {
+    border-width: 0mm 0mm 0mm 0mm!important;
+}
+
+.td_grand_header {
+    text-align:left !important;
+    font-size: 2.5mm;
+    border-width: 0.6mm 0.6mm 0.6mm 0.6mm!important;
+}
+
+
+
+
+.td_report_name {
+    width:80mm!important;
+    text-align:center!important;
+    border-style: solid;
+    border-color: Black;
+    line-height:1.5mm;
+    padding-top: 0.5mm;
+    padding-bottom: 0.5mm;
+    font-weight:bold;
+    font-size: 2.5mm!important;
+    font-family: times, serif;
+}
+
+.td_title_header2{
+    text-align:right!important;
+    width:50mm!important;
+    font-family: arial;
+    white-space: nowrap;
+}
+
+.td_text_robo_equation {
+    text-align:left!important;
+    width:80mm!important;
+    font-family: tahoma;
+    white-space: nowrap;
+}
+
+.td_numeric_with_frame {
+    border-style: solid;
+    border-color: Black;
+    border-width: thin;
+    width:10mm!important;
+    text-align:right!important;
+    border-spacing: 0mm;
+}
+.td_numeric_with_frame2 {
+    border-style: solid;
+    border-color: Black;
+    border-width: thin;
+    width:50mm!important;
+    text-align:right!important;
+    border-spacing: 0mm;
+}
+.td_numeric_with_frame3 {
+    border-style: solid;
+    border-color: Black;
+    border-width: thin;
+    width:10mm!important;
+    text-align:center!important;
+    border-spacing: 0mm;
+}

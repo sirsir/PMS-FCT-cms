@@ -1,0 +1,104 @@
+﻿#2011/05/18# SUSBKK - SMS - Task List
+
+---- Tesk ----
+Functions
+    ---PG---
+[+] 11/06/13 Create new "Monthly Input" user control (for monthy target)
+[+] 11/06/16 Report sorting order
+[-] 11/06/17 Show "FullDescr" in chart labels
+[+] 11/06/17 Print Friendly version for screen list
+[-] 11/06/24 Print Friendly version for report
+    ---SE---
+[-] 11/06/10 Export to Excel
+[ ] 11/06/13 Fixed value Criteria, for filtering reports
+[ ] 11/06/14 Outer join Criteria, for displaying data with no relation (N/A)
+[ ] 11/06/15 Created report with no header record
+[ ] 11/06/16 Show all months in report cols
+[ ] 11/07/11 Add criteria for checking columns relations
+[ ] 11/07/11 Display all columns, even though the total amount is 0
+[+] 11/06/24 Add 'Show' (readonly) view for user with out edit priviledge
+[+] 11/06/24 Remove file path from UploadImage control
+[ ] 11/06/27 Make DatePicker use Date control's format
+[ ] 11/06/27 Auto fill in Revision Parameter Values in Header Screen
+[ ] 11/07/28 Review deleting Header/Revisio/Detail Row
+[/] --/--/-- Display charts by col levels
+[/] --/--/-- Add cofiguration to set where to show bar's legend
+
+Import Legacy Data
+[ ] 11/06/21 Varify Model Relations for Migrated Data
+[-] 11/06/30 Fully Cross Check Imported Model Prices by TSE
+[-] 11/06/24 Sampling Cross Check Imported Model Prices by SUSBKK
+
+Quotation Screen
+    ---SE---
+[-] 11/06/24 Modify Model Relation screen to support using sub patterns to pair items
+[ ] 11/06/24 Modify Model Option screen to display options from the sup patterns
+[ ] 11/06/24 Modify Quotation screen to support using sub patterns and display options from the sup patterns
+[+] 11/06/20 Modify Quotation screen to input model spec as 'Free Text"
+[ ] 11/06/29 Allow keyin for Model's Description
+[ ] 11/06/29 Show Customer's Payment term, in Quotation Revision
+[/] --/--/-- Create new screen "Amount Approval Staff" parameter screen [AmountFrom(Num), AmountTo(Num), Staff(Ref), Position(RefAtt)]
+[/] --/--/-- Use "Amount Approval Staff" for "Approved by :" value, filter by "Grand Total Amount"
+
+Sales Output Report
+    ---SE---
+[ ] 11/06/13 In "Half-Year Customer Count...", filter only the Business Record with Invoice Amount greater then 0
+[ ] 11/06/24 Fetch Budget/Target for the correct Month
+[ ] 11/06/27 Add new "Part Order Amount" and "Part List Amount" fields to Business Record screen
+[ ] 11/06/27 Configure the "Annually Part Order vs Part List" report
+[?] 11/06/29 Separated New and Existing Customers
+[?] 11/07/06 Summarize On-Hand (P/O w/o Delivery) and Invoice (P/O w/ Delivery) amounts
+[?] 11/07/07 Show summarized On-Hand and Invoice amounts in "Monthy Sale Amount by Item"
+[ ] 11/07/12 Review all report configuration and test result
+[ ] 11/07/13 Review all report format and values
+[/] --/--/-- New report: "SALES AMOUNT BY PRODUCTS updated 31AUG'10.xls"
+[/] --/--/-- New report: "AP & IAI Rank of 2005-2010 (Aug).xls"
+[/] --/--/-- Recreate all action reports with new Report design (to remove all hard codings)
+
+Business Record Screen
+[-] 11/07/08 Check if the numeric fields (amount) values are stored correctly and have the correct value.
+
+Action Screen
+[/] --/--/-- Merge the Action and Task screens, buy moving the Task fields to the Action screen
+[/] --/--/-- Migrate the Task data to the Action screen
+
+Master Data Screen
+(no remaining items)
+
+Service
+(no remaining items))
+
+---- Legend ----
+[ ] Open Items
+[?] Pending Items
+[-] In Progress Items
+[+] Complete Items
+[/] Unscheduled
+
+---- History ----
+[+] 11/04/28 Add Saleman field to Sale Target screen
+[+] 11/04/28 Initial Business Record's Delivery Province to Customer's Province
+[+] 11/04/28 Initial Customer's Country to "Thailand", for items with Province
+[+] 11/04/28 Set Branch/Customer/Sale Target date format to Month
+[+] 11/04/28 Set fields to display in chart
+[+] 11/04/28 Virtical Summary
+[+] 11/05/01 Load rows in blocks
+[+] 11/05/05 Set field header label
+[+] 11/05/06 Group sub screens
+[+] 11/05/10 Add Reference source to ReferenceAttribute
+[+] 11/05/10 Cache ReportRequest Cell values
+[+] 11/05/12 Add control to collapse and expand all row, for each level
+[+] 11/05/12 Export to CSV
+[+] 11/05/12 Reload cached association values, after the report request have been rebuilt
+[+] 11/05/12 Show data relation
+[+] 11/05/20 Create report template for Quotation's Calculation Sheet
+[+] 11/05/20 Modify Model Serie screen to support sub patterns and delimiter settings
+[+] 11/05/23 Display Image valid size and file extension infomation, near the user control
+[+] 11/05/23 Display the "Item No." and "Description" for the Quotation Details, in the report template for Quotation.
+[+] 11/05/23 Modify Model Specification screen to support assigning sub patterns and display delimiters
+[+] 11/05/27 Modify migration scripts to support sub patterns
+[+] 11/05/30 Import Controller Model setting
+[+] 11/06/01 Reinstall system on new server
+[+] 11/06/09 Set Default values for "Approval By/Position"
+[+] 11/07/01 Set amount display format for report's fields (1,XXX -> 1(K))
+[+] 11/07/01 Set report's field formats

@@ -1,0 +1,15 @@
+
+<%=render :partial => "refresh_now", :locals => { :ajax_result_id => "report_area" } %>
+
+<% unless @report_request.last_run_when =~ /never/i %>
+  <% if !@report_request.has_data? %>
+    No Data
+  <% else %>
+    <%=render :partial => 'graph' if @report_request.report.display_chart? %>
+
+    <%=render :partial => 'table', :locals => {:expand_all_level => false}%>
+
+    <%=render :partial => "refresh_now", :locals => { :ajax_result_id => "report_area" } %>
+    <div id ="operation_area_<%=@report_request.id%>"></div>
+  <% end %>
+<% end %>

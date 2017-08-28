@@ -1,0 +1,7 @@
+<%=javascript_include_tag "application" %>
+<%=javascript_include_tag "dialog" %>
+<%=javascript_include_tag "fr" %>
+<script type="text/javascript">
+  fncSetDivContent("combined_formula_result", '<%=@formula_text.gsub(/(')/, '\\\\\1') %>', '<%=@formula_yaml.gsub("\n","^n")%>');
+  fncLoadTempFrame();
+</script>

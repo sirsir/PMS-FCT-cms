@@ -1,0 +1,27 @@
+<table class="table_data_content" cellspacing="0" style="margin: -10">
+  <tr class="tr_header">
+    <th class="th_col_header">Field</th>
+    <th class="th_col_header" title="Row Field">R</th>
+    <th class="th_col_header" title="Value Field">x</th>
+    <th class="th_col_header" title="Column Field">C</th>
+  </tr>
+  <%
+  all_fields = []
+  
+  reference_fields.each do |rf|
+    all_fields += [rf]
+    cf = rf.custom_field
+    case cf
+    when CustomFields::Calendar
+      df = []
+      df += cf.detail_screen.fields
+      all_fields += df if !df.empty?
+    end
+    
+  end
+  reference_fields = [nil] + all_fields
+
+  #reference_fields = [nil] + reference_fields
+  %>
+<%=render(:partial => 'reference_field', :collection => reference_fields, :locals => {:reference_fields => reference_fields, :reference_screen_index => reference_screen_index }) %>
+</table>

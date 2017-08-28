@@ -1,0 +1,9 @@
+<%
+html_tag = ""
+row_class = cols.index(label_selector) % 2 == 0 ? "even" : "odd"
+selected_ids = @field_report_filter.nil? ? [] : @field_report_filter.filter
+
+html_tag = "<tr class='tr_data_#{row_class}'><td class='td_cell' > #{check_box_tag("#{name_tag}[]", label_selector.id, selected_ids.include?(label_selector.id))} </td>" +
+           "<td class='td_cell' > #{label_selector.descr}</td>"
+%>
+<%= html_tag %>

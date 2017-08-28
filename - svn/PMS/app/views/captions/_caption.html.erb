@@ -1,0 +1,20 @@
+<%
+label = caption
+%>
+<td class='td_cell' style="vertical-align: top"><%= anchor(label.name_initial) %></td>
+<td class='td_cell'><%= h label.id %></td>
+<td class='td_cell'><%= h label.name %></td>
+<% @languages.each do |l| %>
+  <td class='td_cell' style='white-space: nowrap'>
+    <% caption_descr_by_lang = label.descr_by_lang(l.name)  %>
+    <%= (caption_descr_by_lang.to_s == '') ? "&nbsp;" : h(caption_descr_by_lang) %>
+  </td>
+<% end %>
+<%
+options = {:confirm => true}
+options[:onclick] = "fncTrDelete(this.href, #{label.id});"
+options[:object] = label
+options[:controller] = :captions
+
+%>
+<td class='td_cell' id='<%= label.id %>_destroy'><%= link_to_destroy(options) %></td>

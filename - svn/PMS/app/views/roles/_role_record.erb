@@ -1,0 +1,12 @@
+<%
+role = role_record
+operation_area ||= ""
+operation_url = url_for(:action => :edit, :id => role.id)
+%>
+
+<tr class='tr_<%= @roles.index(role) % 2 == 0 ? "even" : "odd" %>' id='<%= role.id %>'
+    operation_area='<%=operation_area%>' operation_url='<%=operation_url%>'
+    relation_area='' relation_url=''
+    handleonclick='true'>
+  <%= render :partial => "role", :locals => { :role => role } %>
+</tr>

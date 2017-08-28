@@ -1,0 +1,19 @@
+<%
+html_operation_tags ||= ""
+operation_url_options ||= {}
+relation_url_options ||= {}
+row_count = number_with_precision(@row_count, :precision => 0, :delimiter => ',')
+case @screen
+when ListScreen, HeaderScreen
+  row_count = "#{row_count} of #{number_with_precision(@screen.rows.size, :precision => 0, :delimiter => ',')}"
+end
+%>
+<%= report_template_link @screen %>
+<%=html_operation_tags %>
+<%=group_tag @screen, render(:partial => '/rows/rows',
+    :locals => {:screen => @screen, :rows => @rows,
+                :operation_url_options => operation_url_options, :relation_url_options => relation_url_options}),
+            :descr_postfix => @row_count.nil? ? nil : " (<span id='record_count_#{@screen.id}'>#{row_count}</span> records)" %>
+<%=html_operation_tags %>
+
+<hr />

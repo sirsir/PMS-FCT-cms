@@ -1,0 +1,16 @@
+    <td class='td_cell' id='<%= row.id %>_select'><%= (check_box_tag "select[#{row.screen.id}][#{row.id}]", false, false, {:onclick => "fncHandle(#{row.id}, #{row.screen.id});"}) %></td>
+    <td class='td_cell' id='<%= row.id %>_state'><%=row_state_img_tag(row) %></td>
+    <%if row.screen.is_a?(RevisionScreen) && row.screen.control_revision? %>
+      <td class='td_cell' id='<%= row.id %>_rev_no'><%=row.rev_no %></td>
+      <td class='td_cell' id='<%= row.id %>_rev_date'><%=row.rev_date.strftime('%d/%m/%Y') %></td>
+    <%end%>
+    <%= render :partial => "rows/column", :collection =>row.screen.fields, :locals => {:row=>row} %>
+    <%if row.screen.is_a?(HeaderScreen) %>
+      <% if row.screen.revision_screen.control_revision? %>
+        <td class='td_cell' id=<%= row.id %>_latest_rev_no'><%=row.latest_revision_no %></td>
+      <% end %>
+      <%= render :partial => "rows/column", :collection =>row.screen.revision_screen.fields.select{|f| f.display_in_header_list? }, :locals => {:row => row.latest_revision || RevisionRow.new } %>
+    <%end%>
+    <td class='td_cell' id='<%= row.id %>_remark'>
+      <pre class="td_cell_remark"><%=full_text_toogler_tag("#{row.id}_remark", row.remark.to_s.empty? ? "&nbsp;" : row.remark, row.id)%></pre>
+    </td>

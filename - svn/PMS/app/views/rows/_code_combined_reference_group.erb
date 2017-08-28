@@ -1,0 +1,49 @@
+<%
+if @multiplier_row.nil?
+%>
+  <%=render :partial => '/rows/screen_combined_reference_group', :locals => { :scr_row => scr_row } %>
+<%
+else
+  count = @multiplier_row.select_multiple_counter_from_descr
+
+  scr_row_cell_value = scr_row.screen_combined_cell.value
+
+  parts = CustomFields::ScreenCombindedReference.cell_parts(scr_row_cell_value)
+  group_index = CustomFields::ScreenCombindedReference.group_index(scr_row_cell_value)
+
+
+  (0...count).each do |i|
+    if i == count - 1
+      next_postfix = "#{(group_index == parts.size - 1) ? 'ccr_option' : (group_index + 1)}"
+    else
+      next_postfix = "#{group_index}_#{i+1}_0"
+    end
+    parent_selected_values = YAML.load(selected_values[0...selected_values.size-1].to_yaml)
+    parent_selected_values << YAML.load(selected_values.last[0...i].to_yaml) unless selected_values.empty?
+    parent_selected_values << [] if parent_selected_values.empty?
+
+    local_vars = {
+      :screen_id => screen_id,
+      :input_name => "#{input_name}[groups][#{i}]",
+      :new_record => (@row.nil? || true) || @row.new_record? || false,
+      :parent_scr_row => scr_row,
+      :scr_row => sub_scr_row,
+      :sub_scr_row => nil,
+      :field => field,
+      :available_options => available_options[i] || {},
+      :parent_selected_values => parent_selected_values,
+      :selected_values => (selected_values.last || [])[i] || [],
+      :ccr_result_id_prefix => "#{ccr_result_id_prefix}_#{group_index}_#{i}",
+      :parent_ccr_result_id => next_ccr_result_id,
+      :next_ccr_result_id => "#{ccr_result_id_prefix}_#{next_postfix}"
+    }
+  %>
+    <% unless i == 0 %>
+      <hr />
+    <% end %>
+    <%= render :partial => "/rows/code_combined_reference", :locals => local_vars %>
+  <% end %>
+  <%= hidden_field_tag("#{input_name}[selecteds][#{group_index}][group]", count) %>
+<%
+end
+%>

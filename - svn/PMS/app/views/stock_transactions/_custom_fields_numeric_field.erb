@@ -1,0 +1,20 @@
+<%
+cf_options = custom_field.option
+cell_value = custom_field.default_value
+
+options = {}
+options[:name] = "#{name}"
+options[:cell_value] = custom_field.text(cell_value)
+options[:precision] = cf_options[:precision] unless cf_options[:precision].nil?
+options[:separator] = cf_options[:separator] unless cf_options[:separator].to_s.empty?
+options[:delimiter] = cf_options[:delimiter] unless cf_options[:delimiter].to_s.empty?
+options[:disabled] = readonly
+%>
+
+<div name="<%=transaction%>_custom_field_numeric">
+  <%=screen_numeric_field_tag(options) %>
+  <%=field_descr_tag %>
+  <%=hidden_field_tag "precision", options[:precision].nil? ? "" : options[:precision] %>
+  <%=hidden_field_tag "separator", options[:separator].nil? ? "" : options[:separator] %>
+  <%=hidden_field_tag "delimiter", options[:delimiter].nil? ? "" : options[:delimiter] %>
+</div>

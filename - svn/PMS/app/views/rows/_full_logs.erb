@@ -1,0 +1,62 @@
+<%
+first_log = @row.full_logs.first
+if !first_log.nil?
+  last_log = @row.full_logs.last
+  summary = "Created by #{first_log.user} on #{(first_log.created_at.to_s)[0,10]}"
+  if first_log != last_log
+    summary << ", Updated by #{last_log.user} on #{(last_log.created_at.to_s)[0,10]}"
+  end
+%>
+  <%= "#{summary}" %>
+  <%
+  on_click_detail =<<JAVASCRIPT
+fncChangeClass('full_log_detail', "hide", "display");
+fncChangeClass('details_link', "display", "hide");
+return false;
+JAVASCRIPT
+  on_click_close =<<JAVASCRIPT
+fncChangeClass('full_log_detail', "display", "hide");
+fncChangeClass('details_link', "hide", "display");
+return false;
+JAVASCRIPT
+  %>
+  <div id="details_link" class="display_link"><%= link_to "[Details]", "#", :onclick => on_click_detail %></div>
+  <div id="full_log_detail" class="hide_link">
+    <%= link_to "[Close]", "#", :onclick => on_click_close %>
+    <table class="full_log_detail" cellspacing='0' border="1">
+      <tr>
+        <th> Action </th>
+        <th> User </th>
+        <th> When </th>
+        <%
+        custom_field_ids = @row.full_logs.collect {|fl| fl.value.keys }.flatten.uniq
+        custom_fields = custom_field_ids.collect {|cf_id| CustomField.exists?(cf_id) ? CustomField.find(cf_id) : cf_id }
+
+        custom_field_descrs = {}
+        custom_fields.each {|cf|
+          if cf.is_a?(CustomField)
+            field = cf.field(@screen.id)
+            custom_field_descrs[cf.id] = field.nil? ? cf.label_descr :  field.descr({:string => true})
+          else
+            custom_field_descrs[cf] = CustomField::missing_msg(cf)
+          end
+        }
+
+        custom_fields.sort! do |a, b|
+          a_id = a.is_a?(CustomField) ? a.id : a
+          b_id = b.is_a?(CustomField) ? b.id : b
+          custom_field_descrs[a_id] <=> custom_field_descrs[b_id]
+        end
+
+        custom_fields.each do |cf|
+          cf_id = cf.is_a?(CustomField) ? cf.id : cf
+        %>
+          <th><%= custom_field_descrs[cf_id] %></th>
+        <% end %>
+      </tr>
+      <%=  render :partial => 'full_log', :collection => @row.full_logs, :locals => {:custom_fields => custom_fields} %>
+    </table>
+  </div>
+<% else %>
+  No log for this row.
+<% end %>

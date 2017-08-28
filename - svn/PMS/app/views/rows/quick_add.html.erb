@@ -1,0 +1,23 @@
+<% if @result_row_id.nil? %>
+  <% combo_box_options = @cell.select_value_options()  %>
+  <%= screen_collection_select_tag(
+	:assigned_options => combo_box_options[:assigned_options],
+	:all_options => combo_box_options[:all_options],
+	:name => "cells[#{@custom_field_id}]",
+	:value_method => :id,
+	:text_method => :description,
+	:include_blank => true ) %>
+<% else %>
+  <% operation_url_option = url_for(:controller => "rows",
+              :action=>"quick_search",
+              :id=>0,
+              :screen_id=>@screen,
+              :text=>"JAVASCRIPT_VAR_TEXT",
+              :input_id=>"JAVASCRIPT_VAR_ID",
+              :result_row_id =>"JAVASCRIPT_VAR_RESULT_ROW_ID",
+              :field_id => @field.id)%>
+  <% result_row_id = sanitize_to_id(@result_row_id) %>
+  <%= text_field_tag("#{@result_row_id.gsub("cells","screen_quick_search_text_")}", "#{@name_value}",:onkeyup=>"fncQuickSearch(\"_suggest_disp_edit_screen\",\"#{operation_url_option}\", this, \"#{result_row_id}\");") %>
+  <%= hidden_field_tag("#{@result_row_id}", @cell.value)  %>
+  <div id='_suggest_disp_edit_screen' class='suggest_disp_hidden'></div>
+<% end %>

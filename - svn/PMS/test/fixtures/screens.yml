@@ -1,0 +1,81 @@
+ 
+screens_71: 
+  name: Quotation
+  updated_at: 2009-02-05 12:40:11 Z
+  display_seq: 2
+  type: HeaderScreen
+  system: 0
+  action: show
+  id: 71
+  label_id: 141
+  controller: screens
+  screen_id: 37
+  created_at: 2009-02-05 11:10:08 Z
+ 
+screens_80: 
+  name: Quotation detail
+  updated_at: 2009-02-06 03:32:28 Z
+  display_seq: 5
+  type: DetailScreen
+  system: 0
+  action: show
+  id: 80
+  label_id: 142
+  controller: screens
+  screen_id: 71
+  created_at: 2009-02-06 03:32:28 Z
+  
+screens_78: 
+  name: Issue Tracking
+  updated_at: 2009-02-05 12:45:45 Z
+  display_seq: 5
+  type: ListScreen
+  system: 0
+  action: show
+  id: 78
+  label_id: 138
+  controller: screens
+  screen_id: 37
+  created_at: 2009-02-05 12:44:44 Z
+ 
+screens_82: 
+  name: Person in charge
+  updated_at: 2009-02-11 07:58:42 Z
+  display_seq: 6
+  type: HeaderScreen
+  system: 0
+  action: show
+  id: 82
+  label_id: 130
+  controller: screens
+  screen_id: 37
+  created_at: 2009-02-11 07:56:30 Z
+  
+screens_69: 
+  name: customer
+  updated_at: 
+  display_seq: 1
+  type: DetailScreen
+  system: 0
+  action: show
+  id: 69
+  label_id: 16
+  controller: screens
+  screen_id: 82
+  created_at: 
+
+ 
+screens_76: 
+  name: P/O
+  updated_at: 2009-02-06 03:06:08 Z
+  display_seq: 4
+  type: DetailScreen
+  system: 0
+  action: show
+  id: 76
+  label_id: 134
+  controller: screens
+  screen_id: 82
+  created_at: 2009-02-05 12:34:05 Z
+ 
+

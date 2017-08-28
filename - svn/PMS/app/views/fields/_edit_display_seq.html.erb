@@ -1,0 +1,18 @@
+<%
+row_no = edit_display_seq.screen.fields.index( edit_display_seq ) + 1
+%>
+<tr class='tr_data_<%= (@fields.index(edit_display_seq)+1) % 2 == 0 ? "even" : "odd" %>' id ='row_<%=row_no%>'
+    upper_row='<%=row_no-1%>' lower_row='<%=row_no+1%>'
+    handleonclick="false">
+  <td class="td_cell">
+    <%=h edit_display_seq.descr %>
+    <input type = hidden id = 'sequence_<%=row_no%>' name = 'sequences[]' value ='<%=edit_display_seq.id%>' />
+  </td>
+  <td class="td_cell">
+    <a href="#" onclick="fncMmoveReportField(this, true);return false;"><%=image_tag "arrow_up.gif", :size => "16x16", :border => 0 %></a>
+  </td>
+  <td class="td_cell">
+    <a href="#" onclick="fncMmoveReportField(this, false);return false;"><%=image_tag "arrow_down.gif", :size => "16x16", :border => 0 %></a>
+  </td>
+</tr>
+

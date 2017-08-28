@@ -1,0 +1,100 @@
+<h1>View System Logs</h1>
+
+<div class="memo">
+  <p>
+    Current Log File Size: <%=number_to_human_size(@file_size) %>
+    <br/>
+    Download :
+    <% [1, 5, 10].each do |n| %>
+    <% if n != 1 %> | <% end %>
+    <%
+    size = n *(2**20)
+    %>
+    <%= link_to number_to_human_size(size), {:action => :download_system_log, :id => session.active_screen.id, :size => size, :authenticity_token => form_authenticity_token} %>
+    <% end %>
+  </p>
+</div>
+<table class="table_data_content" cellspacing='0'>
+  <tr class="tr_header">
+    <th class="th_col_header">Date</th>
+    <th class="th_col_header">Time</th>
+    <th class="th_col_header">Client</th>
+    <th class="th_col_header">Controller</th>
+    <th class="th_col_header">Action</th>
+    <th class="th_col_header">Method</th>
+    <th class="th_col_header">Exec</th>
+    <th class="th_col_header">Result</th>
+    <th class="th_col_header">&nbsp;</th>
+  </tr>
+<%
+  b = true
+  @logs.each_with_index do |l, i|
+    alter = (b ^= true) ? 'odd' : 'even'
+
+    tr_class = l[:header][:http_status_code] == 2 ? "tr_data_#{alter}" : "http_#{l[:header][:http_status_code]}xx "
+
+    tr_id = "syslog_#{i}"
+    tr_onclick = <<JAVASCRIPT
+$('syslog_dtls').innerHTML = $('#{tr_id}_dtls').innerHTML;
+document.location = '#a_syslog_dtls';
+JAVASCRIPT
+%>
+  <tr id="<%=tr_id %>" class="<%=tr_class %>" style="cursor: pointer" onclick="<%=tr_onclick %>">
+    <% [:date, :time, :for, :controller, :action, :method, :execution_time, :result].each do |h| %>
+    <td class="td_cell" style="text-align: center">
+      <%=l[:header][h].to_s.strip.empty? ? '&nbsp;' : l[:header][h] %>
+      <% if h == :result %>
+      <div id="<%=tr_id %>_dtls" style="display: none">
+        <pre><% l[:details].each{|d|%><%=d %><% } %></pre>
+        <hr />
+      </div>
+      <% end %>
+    </td>
+    <% end %>
+    <td class="td_cell" style="text-align: center">
+      <%
+      if ['Error', 'Warning'].include?(l[:header][:result])
+        first_src = l[:details].select{|d| d=~ /#{Regexp.escape(RAILS_ROOT)}/i}.first
+
+        head = first_src.nil? ? 5 : 3
+        tail = 10 - head
+
+        mail_body = l[:details][0...head]
+
+        if first_src.nil?
+          log_to = l[:details].size - 1
+        else
+          first_src_index = l[:details].index(first_src)
+
+          log_to = first_src_index + (tail.to_f/2).to_i
+        end
+
+        log_to = [log_to, l[:details].size - 1].min
+        log_from = [head, log_to - tail].max
+
+        mail_body << "...\n" if log_from > head
+        mail_body += l[:details][log_from..log_to] if log_from <= log_to
+      %>
+        <%= support_mail_tag(:body => mail_body.join, :subject => 'System Log') %>
+      <% else %>
+        &nbsp;
+      <% end %>
+    </td>
+  </tr>
+<% end %>
+</table>
+<hr />
+
+<a name="a_syslog_dtls" ></a>
+<div id="syslog_dtls">
+</div>
+<% form_remote_tag :url => url_for(:action => 'clear_system_log', :id => session.active_screen.id, :authenticity_token => form_authenticity_token) do %>
+  <%
+  onclick = <<JAVASCRIPT
+  fncShowDialog(null, "pop_box", "<img src='/images/progress.gif' />");
+JAVASCRIPT
+  %>
+  <%=submit_tag 'Clear', :onclick => onclick  %>
+<% end %>
+
+<%=flash_messages %>

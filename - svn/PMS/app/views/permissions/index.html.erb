@@ -1,0 +1,17 @@
+<%= screen_name_list_tag @screen %>
+
+<%
+operation_area = "operation_area_#{@screen.id}"
+%>
+
+<%= group_tag @screen, render(:partial => "permissions",
+                              :locals => { :operation_area => operation_area }) %>
+
+<hr />
+
+<%= anchor("permission_area") %>
+<div id ='permission_area'></div>
+
+<div id ='error_area_<%= @screen.id %>'></div>
+<%= anchor(operation_area) %>
+<div id ='<%= operation_area %>' ></div>

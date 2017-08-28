@@ -1,0 +1,114 @@
+<%
+display_menu_ids = menu_item.menu_sublings_ids.collect {|id| "menu_item_#{id}"}.inspect
+select_menu_ids = menu_item.path_ids.collect {|id| "menu_item_#{id}"}.inspect
+
+operations = []
+unless menu_item.parent.is_a?(MenuGroupScreen) && menu_item.parent.name == 'Reports'
+  operations << :new unless menu_item.has_required_search?
+  operations << :find
+end
+
+if (menu_item.display_in_menu? and access(menu_item) and menu_item.has_child_display_in_menu?)
+  if menu_item.display_as_menu_item?
+    if menu_item.class.to_s != "ReportScreen" or menu_item.system?
+      screen_id = menu_item.alias_screen.nil? ? menu_item.id : menu_item.alias_screen
+      action_url_options = {
+        :controller => menu_item.controller,
+        :action => menu_item.action,
+        :id => screen_id,
+        :type => menu_item.class.name,
+        :quick_operation => 'index'
+      }
+
+      search_url_options = {
+        :controller => menu_item.controller.gsub(/header_/i, ''),
+        :action=>'search',
+        :id => screen_id,
+        :type => menu_item.class.name
+      }
+    %>
+    <div class='menu_item' id='menu_item_<%=menu_item.id%>'
+        state='opened' always_show='<%= Screen.root_screen_ids.include?(menu_item.id) %>'>
+      <div class="menu_empty_cell">
+      <% (2...menu_item.level).each do %>
+        &ensp;&ensp;
+      <% end %>
+      </div>
+      <%
+      url_main = url_for(action_url_options)
+      url_search = url_for(search_url_options)
+      on_click = <<JAVASCRIPT
+fncLoadAjaxByScreenId("#{url_main}", "#{url_search}");
+fncSetSelectedMenuItem(#{select_menu_ids});
+JAVASCRIPT
+      %>
+      <div class="menu_icon menu_link menu_empty_cell" id="icon_menu_item_<%= menu_item.id %>"
+          title="Open <%= menu_item.label_descr %>"
+          onClick='<%= on_click %>'>
+        <%= image_tag "menu/#{menu_item.menu_icon}.png" %>
+      </div>
+      <div class="menu_link menu_empty_cell menu_descr" id="descr_menu_item_<%= menu_item.id %>"
+          style="width: <%= 200 - 16*menu_item.path_ids.size %>px;"
+          title="Open <%= menu_item.label_descr %>"
+          onClick='<%= on_click %>'>
+        <%= menu_item.label_descr %>
+      </div>
+      <% operations.each do |o| %>
+        <% if menu_item.system? || ![ListScreen, HeaderScreen].include?(menu_item.class) %>
+        &nbsp;
+        <% else %>
+        <%
+        url_main = url_for(action_url_options.update(:quick_operation => o))
+        if o == :find
+        on_click = <<JAVASCRIPT
+fncLoadAjaxByScreenIdFind("#{url_main}", "#{url_search}");
+fncSetSelectedMenuItem(#{select_menu_ids});
+JAVASCRIPT
+        else
+          on_click = <<JAVASCRIPT
+fncLoadAjaxByScreenId("#{url_main}", "#{url_search}");
+fncSetSelectedMenuItem(#{select_menu_ids});
+JAVASCRIPT
+        end
+        %>
+      <div class="menu_icon menu_link menu_empty_cell" id="<%= o %>_menu_item_<%= menu_item.id %>"
+          title="<%= o.to_s.titleize %> <%= menu_item.label_descr %>"
+          onClick='<%= on_click %>'
+          width="16">
+        <%= image_tag "menu/#{o}.png", :class => :menu_operation %>
+      </div>
+        <% end %>
+      <% end %>
+    </div>
+    <%
+    end
+  else
+  %>
+    <div class='menu_item' id='menu_item_<%= menu_item.id.to_s%>'
+        state='opened' always_show='<%= Screen.root_screen_ids.include?(menu_item.id) %>'>
+      <div class="menu_empty_cell">
+      <% (2...menu_item.level).each do %>
+        &ensp;&ensp;
+      <% end %>
+      </div>
+      <div class="menu_state menu_link menu_empty_cell"
+        onClick='fncSetSubMenu(<%= display_menu_ids %>, <%= select_menu_ids %>); return false;'>&ensp;&ensp;</div>
+      <div class="menu_link menu_empty_cell menu_descr"
+        style="width: <%= 200 - 16*menu_item.path_ids.length %>px;"
+        onClick='fncSetSubMenu(<%= display_menu_ids %>, <%= select_menu_ids %>); return false;'>
+          <%=  menu_item.label_descr %>
+      </div>
+
+      <% operations.each do |o| %>
+      &nbsp;
+      <% end %>
+    </div>
+    <%
+    if !menu_item.childs.empty?
+    %>
+      <%=render :partial=>"menu_item", :collection => menu_item.childs.select{|s| s.allow_action?('index') } %>
+    <%
+    end
+  end
+end
+%>

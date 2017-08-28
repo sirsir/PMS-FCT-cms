@@ -1,0 +1,9 @@
+<%
+form_id = "frm_show_#{@row.screen_id.to_s}"
+%>
+<%= hidden_field_tag "row[id]", @row.id %>
+<%= hidden_field_tag "action_source", @action_source %>
+<%= hidden_field_tag "pageno", @pageno %>
+<%= screen_show_tag @row.description, render(:partial => 'form', :locals => {:row => @row, :readonly => @readonly, :area_id => (@action_source == "relations") ? @row.screen_id.to_s : nil}), "#{form_id}_content" %>
+<%=  render :partial => 'full_logs' %>
+<hr />

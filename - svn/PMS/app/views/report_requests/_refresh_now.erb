@@ -1,0 +1,11 @@
+<div class="operation_container">
+  <%=link_to "Refresh", "#", { :onclick => "fncReloadReportResult('#{ajax_result_id}'); return false;" } %>
+
+  <% unless @report_request.last_run_when =~ /never/i || !@report_request.has_data? %>
+  |
+  <%
+    operation_url_option = url_for( :action => :select_output_format, :id => @report_request.id )
+  %>
+  <%=link_to "Export", "#", { :onclick => "fncClearErr();fncLoadTempFrame();fncAjaxUpdater('operation_area_#{@report_request.id}','#{operation_url_option}');return false;" } %>
+  <% end %>
+</div>

@@ -1,0 +1,82 @@
+<%
+screen_id = @screen.id if @screen
+menu_group_screens = @screens.select{|s| s.is_a?(MenuGroupScreen) && s.childs.any?{|c| !c.is_a?(MenuGroupScreen)} }.sort_by{|s| s.name }
+
+reserved_screen_classes = [MenuGroupScreen, RevisionScreen, DetailScreen]
+
+root_screens = @screens.select{|s| s.parent.system? && !reserved_screen_classes.include?(s.class) }.sort_by{|s| s.name }
+
+screen_options = options_from_collection_for_select(root_screens, :id, :label_descr_with_name, screen_id)
+
+screen_options << "<optgroup label='#{"-"*60}'></optgroup>"
+
+screen_options << option_groups_from_collection_for_select(
+   menu_group_screens,
+  "childs.select{|s| !s.system? && !s.is_a?(MenuGroupScreen) }.sort_by{|s| s.name }",
+  "name + ' Menu Group'", :id, :label_descr_with_name, screen_id)
+
+reserved_screen_classes.delete(MenuGroupScreen)
+
+reserved_screen_classes.each do |screen_model|
+  screen_options << "<optgroup label='#{"-"*60}'></optgroup>"
+
+  screens = screen_model.find(:all).sort{|a, b| a.name <=> b.name }
+
+  screen_options << <<HTML_TAG
+<optgroup label="#{screen_model.name.titleize}">
+  #{options_from_collection_for_select(screens, :id, :label_descr_with_name, screen_id) }
+</optgroup>
+HTML_TAG
+
+end
+screen_ajax_url = url_for(
+  :action=>:index,
+  :id=>"JAVASCRIPT_VAR_VALUE_01")
+screen_onchange = "fncAjaxUpdaterWithReplacement(\"main\",\"#{screen_ajax_url}\", [\"JAVASCRIPT_VAR_VALUE_01\", this.value]); "
+%>
+
+<% unless params[:hide_screen_selection] %>
+<%= label_tag "screen_id" %> : <%= select_tag "screen_id", screen_options, {:onchange => screen_onchange} %>
+<hr />
+<% end %>
+
+<%
+operation_area = "operation_area_#{@screen_self.id}"
+operation_url_new = url_for(:action=>:new, :id => @screen.id)
+on_click_new = <<JAVASCRIPT
+fncAjaxUpdater("#{operation_area}", "#{operation_url_new}");
+return false;
+JAVASCRIPT
+operation_url_display_seq = url_for(:action=>:edit_display_seq, :id=>@screen)
+on_click_display_seq =<<JAVASCRIPT
+fncAjaxUpdater("#{operation_area}","#{operation_url_display_seq}");
+return false;
+JAVASCRIPT
+%>
+
+<%= operation_tag( [:new, :display_seq], {:actions => { :new => :new }},
+                                         {
+                                           :new => { :onClick => on_click_new },
+                                           :display_seq => { :onClick => on_click_display_seq }
+                                       } ) unless !@screen.nil? && @screen.is_a?(RevisionScreen) && !@screen.control_revision? %>
+
+<%= group_tag @screen, render(:partial => 'fields',
+                              :locals => { :operation_area => operation_area }),
+                      :descr_postfix => " Fields" %>
+
+<% if !@screen.nil? && @screen.is_a?(RevisionScreen) && !@screen.control_revision? %>
+<p>
+This RevisionScreen doesn't control revision. Fields are not allowed to be added to it.
+</p>
+<% else %>
+<%= operation_tag( [:new, :display_seq], {:actions => { :new => :new }},
+                                         {
+                                           :new => { :onClick => on_click_new },
+                                           :display_seq => { :onClick => on_click_display_seq }
+                                         } ) %>
+<% end %>
+<hr />
+
+<div id ='error_area_<%= @screen_self.id %>'></div>
+<%= anchor(operation_area) %>
+<div id ='<%= operation_area %>' ></div>

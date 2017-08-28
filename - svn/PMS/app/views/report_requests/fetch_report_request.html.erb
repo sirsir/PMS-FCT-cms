@@ -1,0 +1,31 @@
+<table>
+  <!-- WARNING!!! The first list must be the table start tag -->
+
+  <tr id="<%=@report_request.id %>_replacement" readonly='<%=@readonly %>'>
+    <td class='td_cell'>&nbsp;</td>
+    <td class='td_cell'><%=h @report_request.name %></td>
+    <td class='td_cell'><%=h @report_request.report.description %></td>
+    <td class='td_cell'><%=RAILS_ENV =~ /development/ ? h(@report_request.refresh_interval.to_s.titleize) : '&nbsp;' %></td>
+    <td class='td_cell'><%=h @report_request.last_run_when %></td>
+    <td class='td_cell'><%=RAILS_ENV =~ /development/ ? h(@report_request.next_run_when) : '&nbsp;' %></td>
+    <td class='td_cell'><pre class="td_cell_remark"><%= (@report_request.remark.to_s.empty?) ? "&nbsp;" : @report_request.remark %></pre></td>
+
+<%
+img_alt = "Show #{@report_request.name}".capitalize
+show_button = image_tag("show.png", :alt => img_alt, :border => 0)
+ajax_url = url_for(:action => :show, :id => params[:id], :authenticity_token => form_authenticity_token)
+content = link_to(show_button, "#", {:onclick => " fncTrShow('#{ajax_url}', 'operation_area', '#{@report_request.id}');return false;"})
+%>
+    <td class='td_cell' id='<%="#{@report_request.id}_show"%>'><%=content %></td>
+
+<%
+
+options = {:confirm => true}
+options[:onclick] = "fncTrDelete(this.href, '#{@report_request.id}');"
+options[:object] = @report_request
+
+content = link_to_destroy(options)
+%>
+    <td class='td_cell' id='<%="#{@report_request.id}_destroy"%>'><%=content %></td>
+  </tr>
+</table>

@@ -1,0 +1,22 @@
+<h1>Listing fields_reports</h1>
+
+<table class='table_content' id='table_content' cellspacing='0'>
+  <tr class='tr_header'>
+  </tr>
+
+  <% @fields_reports.each do |fields_report| %>
+    <% i = @fields_reports.index(fields_report) %>
+    <tr class='tr_<%= i % 2 == 0 ? "even" : "odd" %>' id='<%=i%>'
+        operation_area='' operation_url=''
+        relation_area='' relation_url=''
+        handleonclick='true'>
+      <td class='td_cell'><%= link_to 'Show', fields_report %></td>
+      <td class='td_cell'><%= link_to 'Edit', edit_fields_report_path(fields_report) %></td>
+      <td class='td_cell'><%= link_to 'Destroy', fields_report, :confirm => 'Are you sure?', :method => :delete %></td>
+    </tr>
+  <% end %>
+</table>
+
+<br />
+
+<%= link_to 'New fields_report', new_fields_report_path %>

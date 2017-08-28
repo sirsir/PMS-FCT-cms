@@ -1,0 +1,9 @@
+<%
+index = @stock.stock_keys.index(transaction_key_value)
+name = "stock_item[stock_key_id_#{index}]"
+%>
+
+<td id="td_stock_item_stock_key_id_<%=index%>"class="td_cell" style="white-space: nowrap">
+  <%=hidden_field_tag name, "" %>
+  <span id="span_stock_item_stock_key_id_<%=index%>"></span>
+</td>

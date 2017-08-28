@@ -1,0 +1,25 @@
+<%
+permission = permission_record
+operation_area ||= ""
+
+if partial == 'screen' && 
+    (permission.new_record? || (@permission_type.name =~ /Field/ && permission.fields.empty?))
+  tr_class = 'disabled'
+  handleonclick = false
+else
+  collection = (partial == 'screen') ? @screens : @fields
+  tr_class = collection.index(permission).to_i % 2 == 0 ? "even" : "odd"
+  handleonclick = true
+end
+%>
+
+<tr class='tr_<%= tr_class %>' id='<%= "#{@screen.id}_#{permission.id}" %>'
+    operation_area='' operation_url=''
+    relation_area='' relation_url=''
+    handleonclick='<%= handleonclick %>'>
+  <%= render :partial => partial,
+              :locals => {
+                :"#{partial}" => permission,
+                :operation_area => operation_area
+              } %>
+</tr>

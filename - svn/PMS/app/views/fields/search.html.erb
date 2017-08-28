@@ -1,0 +1,80 @@
+<%  if @screen.allow_action?("index") %>
+  <% action_str = (@screen.name != "Special Search") ? "search" : "special_search" %>
+  <%action = url_for(:controller => "rows", :action => action_str, :id => params[:id])%>
+  <form id="frm_search_<%= @screen.id %>" action='<%=action%>' target='tmp_frame'>
+
+    <div id='content_search_<%=params[:id] %>' align='left' style='font-size: 11px;'>
+      <hr />
+   
+      <% if @screen.name == "Special Search" || !@screen.fields.empty? %>
+      <%= search_button()%>
+     <hr />
+        <% if @screen.name != "Special Search" %>
+          <%= check_box_tag("include_other_user_#{@screen.id}_top", true, false, {:onclick => "fncChk(this,'include_other_user');"})%>
+          <%=label_tag "include_other_user_#{@screen.id}_top", "Include other user"%>?<br />
+          <%= check_box_tag("include_old_data_#{@screen.id}_top", true, false, {:onclick => "fncChk(this,'include_old_data');"})%>
+          <%=label_tag "include_old_data_#{@screen.id}_top", 'Include old data'%>?<br />
+              <%
+              data_fields = @screen.data_fields
+              data_fields += @screen.revision_screen.data_fields if (@screen.is_a?(HeaderScreen))
+              data_fields += @screen.revision_screen.detail_screens.collect{|s| s.data_fields }.flatten if (@screen.is_a?(HeaderScreen))
+
+              date_fields = data_fields.select{|f| f.custom_field.is_a?(CustomFields::DateTimeField) && f.display_in_search? }
+              issue_tacking_fields = data_fields.select{|f| f.custom_field.is_a?(CustomFields::IssueTracking) && f.display_in_search? }
+
+              issue_tacking_options = []
+
+              methods = [:created_date, :due_date, :completed_date]
+
+              issue_tacking_fields.each do |f|
+                methods.each do |m|
+                  issue_tacking_options << [m.to_s.titleize, "#{f.id}_#{m.to_s.capitalize}"]
+                end
+              end
+
+              view_options = <<HTML_TAG
+<option value="-1" selected>List</option>
+<optgroup label="Calendar">
+  #{options_from_collection_for_select(date_fields, :id, :label_descr) }
+  #{options_for_select(issue_tacking_options)}
+</optgroup>
+HTML_TAG
+                %>
+               <% unless date_fields.empty? %>
+          View : <%= select_tag 'view_mode_top', view_options, {:onchange => "fncSelectView(this,'view_mode');"} %><br />
+              <% end %>
+        <hr />
+        <% end %>
+      
+     <% end %>
+     
+      <table class="table_search">
+        <% if @screen.name != 'Special Search' %>
+          <tr>
+            <% @fields.each do |f| %>
+              <!-- view_cache('field_search', f){}-->
+              <%= render :partial => 'field_search', :locals => { :field => f } %>
+            <% end %>
+            </tr>
+        <% else %>
+          <tr><%= render :partial => "special_searches", :collection => @screen.get_releted_screens_for_special_search %></tr>
+        <% end %>
+          </table>
+      <% if @screen.name == 'Special Search' || !@screen.fields.empty? %>
+        <% if @screen.name != 'Special Search' %>
+        <hr />        
+          <%= check_box_tag('include_other_user', true, false, {:onclick => "fncChk(this,'include_other_user_#{@screen.id}_top');"}) %>
+          <%= label_tag 'include_other_user', 'Include other user' %>?<br />
+          <%= check_box_tag('include_old_data', true, false, {:onclick => "fncChk(this,'include_old_data_#{@screen.id}_top');"})%>
+          <%= label_tag 'include_old_data', 'Include old data' %>?<br />
+
+               <% unless date_fields.empty? %>
+          View : <%= select_tag 'view_mode', view_options, {:onchange => "fncSelectView(this,'view_mode_top');"} %><br />
+        <% end %>
+        <% end %>
+        <hr />
+        <%= search_button()%>
+      <% end %>
+    </div>
+  </form>
+<% end %>

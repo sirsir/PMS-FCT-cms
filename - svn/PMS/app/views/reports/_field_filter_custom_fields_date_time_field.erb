@@ -1,0 +1,16 @@
+<%
+  date_formats = []
+  date_formats << [:long_date]
+  date_formats << [:long_month, :quarter_year, :half_year, :year]
+  date_options = CustomFields::DateTimeFormat.date_options_collection.select{|dt| dt if date_formats.flatten.include?(dt.name)}
+  date_option_selected = @field_report_filter.nil? ? nil : CustomFields::DateTimeFormat.find_by_name(@field_report_filter.filter)
+  %>
+<tr>
+  <td class="th_row_header"><%= label_tag "", "Format:" %></td>
+  <td>
+    <% date_options.each_with_index do |dt, i| %>
+      <%= radio_button_tag(name_tag, dt.name, date_option_selected.nil? ? i == 0 : dt.name == @field_report_filter.filter) + "#{dt.descr}" %>
+      <%= "</BR>" unless date_options.last == i %>
+    <% end %>
+   </td>
+</tr>

@@ -1,0 +1,48 @@
+<% form_tag url_for(:action => 'rank_history_report'), :target => "_blank" do %>
+<%= hidden_field_tag("date_to", params[:date_to]) %>
+<%= hidden_field_tag("date_from", params[:date_from]) %>
+<%= hidden_field_tag("export", "yes") %>
+<%= submit_tag("Export") %>
+<% end if @screen.allow_action?("export")%>
+
+<table border=1  align="Left">
+<tr class='table_content'>
+  <th rowspan=2 align="Center">Customer</th>
+  <% for year in @from_year..@to_year %>
+    <th colspan=<%=@product_type_names.size * 2%> align="Center"><%=year%></th>
+  <%  end %>
+</tr>
+<tr class='table_content'>
+  <%  for year in @from_year..@to_year %>
+    <% @product_type_names.each_value do |product_type_name| %>
+      <th align="Center" colspan=2><%= product_type_name %></th>
+    <%  end %>
+  <%  end %>
+</tr>
+  <%
+  @customer_names.each_with_index do |customer,i|
+    customer_id = customer[0].to_i
+    customer_name = customer[1]
+  %>
+    <tr bgcolor='<%=((i%2)==0)?"#CEE7FF" : "#F5F8FD"%>'>
+      <td><%=customer_name%></td>
+      <%
+      for year in @from_year..@to_year
+        @product_type_names.each_key do |product_type_id|
+          product_type_id = product_type_id.to_i
+          if @report_data[customer_id] != nil &&
+              @report_data[customer_id]["#{year}"] != nil &&
+              @report_data[customer_id]["#{year}"][product_type_id] != nil
+       %>
+            <td align="center"><%=number_to_currency(@report_data[customer_id]["#{year}"][product_type_id],:unit => "", :precision => 2)%></td>
+            <td align="center"><%= get_name_for_rank_value(@report_data[customer_id]["#{year}"][product_type_id],@rank_names) %></td>
+        <% else %>
+            <td>&nbsp;</td><td>&nbsp;</td>
+        <%
+          end
+        end
+      end
+      %>
+    </tr>
+  <% end %>
+</table>

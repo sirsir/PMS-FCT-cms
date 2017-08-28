@@ -1,0 +1,32 @@
+ <%
+    labels = Field.display_simple_comparison_control_options
+    selected_operator = (@field.value).nil? ? "" : @field.value['comparison']['operator']
+    labels.each  do |label,index|
+      if (@field.id.nil?)
+      %>
+        <%= radio_button_tag('field[value][comparison][operator]', label[:key],(label[:key] == "==") ? true : false) %> <%="#{label[:name]}, #{index}" %>   <br />
+      <%  else%>
+        <%= radio_button_tag('field[value][comparison][operator]', label[:key],(label[:key] == selected_operator) ? true : false) %> <%="#{label[:name]}, #{index}" %>   <br />
+      <%
+      end
+    end
+  %>
+        <%= field_descr_tag %>
+
+
+          <tr>
+    <th class="th_row_header">Comparer:</th>
+    <td>
+      <%  selected_label = (@field.value).nil? ? nil : @field.value['comparison']['comparer']
+      if !(selected_label.nil?) %>
+        <%=select_tag("field[value][comparison][comparer]", options_from_collection_for_select(@screen.comparable_fields, :id, :descr,@field.value['comparison']['comparer'].to_i )) %>
+        <%= field_descr_tag %>
+      <%else%>
+
+        <%= select_tag('field[value][comparison][comparer]',
+              "<option value=''>Please select</option>"  + options_from_collection_for_select(@screen.comparable_fields, :id, :descr)) %>
+      <%end %>
+    </td>
+  </tr>
+
+

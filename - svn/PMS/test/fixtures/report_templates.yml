@@ -1,0 +1,21 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+
+one:
+
+  screen_id: 1
+
+  name: MyString
+
+  view: MyString
+
+
+two:
+
+  screen_id: 1
+
+  name: MyString
+
+  view: MyString
+
+

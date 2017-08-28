@@ -1,0 +1,7 @@
+<br>
+<h1>Rank History Report</h1><br>
+<%= hidden_field_tag("screen_id", @screen["id"]) %>
+Date <%= field_date_search_without_status("date_from","date_to") %> &nbsp;&nbsp;
+<input type="button" onClick="fncLoadRankHistoryReport();" value ="search">
+<hr>
+<div id ='report_area'></div>

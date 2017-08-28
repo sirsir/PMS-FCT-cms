@@ -1,0 +1,10 @@
+<%=left_to_right_tag(
+  :descr => "Field",
+  :name =>  @name,
+  :assigned_options => @assigned_options,
+  :all_options => @all_options,
+  :value_method => "id",
+  :text_method => @text_method,
+  :sort => (@sort or false)
+)
+%>

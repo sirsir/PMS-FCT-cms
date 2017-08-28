@@ -1,0 +1,77 @@
+<tr>
+  <th class="th_row_header">Screen:</th>
+  <td>
+    <%
+    operation_url = url_for(:controller => "custom_fields",
+      :action=>"parameter",
+      :id=>0,
+      :screen_id=>"JAVASCRIPT_VAR_VALUE")
+    selected_field = (@custom_field.value).nil? ? nil : Field.find(:first,:conditions => [" id = ?", @custom_field.value['field_id']])
+    selected_screen = if selected_field.nil?
+      (@custom_field.value).nil? ? nil : Screen.find(@custom_field.value['screen_id'])
+    else
+      (@custom_field.value).nil? ? nil : selected_field.screen
+    end
+
+    if (@custom_field.id.nil?)
+      html_tag = select_tag("custom_field[value][screen_id]",
+        options_from_collection_for_select_tag(@screens, :id, :label_descr, nil,
+          {:include_blank =>true}),
+        {:onchange=>"fncAjaxUpdaterWithReplacement(\"combined_result\",\"#{operation_url}\", [\"JAVASCRIPT_VAR_VALUE\", this.value] );"})
+    else
+      html_tag = select_tag("custom_field[value][screen_id]",
+        options_from_collection_for_select_tag(@screens, :id, :name, selected_screen.id ,
+          {:include_blank =>true}),
+        {:onchange=>"fncAjaxUpdaterWithReplacement(\"combined_result\",\"#{operation_url}\", [\"JAVASCRIPT_VAR_VALUE\", this.value] );"})
+    end
+  %>
+    <%= html_tag %>
+    <p><%= Screen.missing_msg(@custom_field.value['screen_id']) if selected_screen.nil? && !(@custom_field.value).nil? %></p>
+    <%= field_descr_tag %>
+
+    <div id='combined_result'>
+      <%if !(selected_screen.nil?) %>
+        <table>
+          <tr>
+            <th class="th_row_header">From DT:</th>
+            <td>
+              <%=select_tag("custom_field[value][date_from_id]", options_from_collection_for_select(selected_screen.date_fields, :id, :descr, @custom_field.value['date_from_id'].to_i)) %>
+              <%= field_descr_tag %>
+            </td>
+          </tr>
+          <tr>
+            <th class="th_row_header">To DT:</th>
+            <td>
+              <%=select_tag("custom_field[value][date_to_id]", options_from_collection_for_select(selected_screen.date_fields, :id, :descr, @custom_field.value['date_to_id'].to_i)) %>
+              <%= field_descr_tag %>
+            </td>
+          </tr>
+          <tr>
+            <th class="th_row_header">Parameter Field:</th>
+
+            <td>              
+              <%=select_tag("custom_field[value][field_id]", options_from_collection_for_select(selected_screen.fields, :id, :descr, @custom_field.value['field_id'].to_i)) %>
+              <%= Field.missing_msg(@custom_field.value['field_id']) if selected_field.nil? && !selected_screen.nil? %>
+              <%= field_descr_tag %>
+
+            </td>
+          </tr>
+        </table>
+      <%end %>
+    </div>
+  </td>
+</tr>
+<tr>
+  <th class="th_row_header">Default Value:</th>
+  <td>
+    <%
+    select_current_date = (@custom_field.default_value == "current_date") ? true : false
+    %>
+    <%= radio_button_tag("custom_field[value][default_value]", 'current_date', select_current_date) %>
+    <%= label_tag("custom_field[value][default_value][current_date]", 'Current Date') %>
+    <br />
+    <%= radio_button_tag("custom_field[value][default_value]",'empty', !select_current_date) %>
+    <%= label_tag("custom_field[value][default_value][empty]", 'Empty') %>
+    <%= field_descr_tag %>
+  </td>
+</tr>

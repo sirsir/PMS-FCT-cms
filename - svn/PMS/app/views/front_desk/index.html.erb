@@ -1,0 +1,12 @@
+<html >
+  <head>
+    <meta content="text/html;charset=UTF-8" http-equiv="content-type" />
+    <title><%=render(:partial => "system_title", :locals => { :format => :title } ) %></title>
+    <link type="image/x-icon" href="/images/pms.ico" rel="shortcut icon" />
+  </head>
+
+  <frameSet cols="*,0" rows="*" NAME="top_frame" id="top_frame" <%="border='0'" unless RAILS_ENV =~ /development/%>>
+    <frame src="<%=@base_url%>/front_desk/welcome" NAME="main_frame" id="main_frame">
+    <frame src="<%=@base_url%>/blank.html" NAME="tmp_frame" id="tmp_frame" <%="NORESIZE" unless RAILS_ENV =~ /development/%>>
+  </frameset>
+</html>

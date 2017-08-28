@@ -1,0 +1,15 @@
+<% 
+form_tag url_for(:action => "create", :id => @row.screen_id ),
+  :onSubmit => "fncPrepareFormForSubmit(this);",
+  :enctype => 'multipart/form-data',
+  :method => :put,
+  :id => "frm_new_#{@row.screen_id.to_s}",
+  :target => "tmp_frame" do
+%>
+  <%= hidden_field_tag("screen_id", @row.screen_id) %>
+  <%= hidden_field_tag("type", @row.class.to_s) %>
+  <%= hidden_field_tag("user", @user) %>
+  <%= screen_creation_tag(@screen, render(:partial => "/rows/form", :locals => {:row => @row, :readonly => false, :area_id => @row.screen_id.to_s}), "frm_new_#{@row.screen_id.to_s}_content") %>
+<% end %>
+
+<hr />

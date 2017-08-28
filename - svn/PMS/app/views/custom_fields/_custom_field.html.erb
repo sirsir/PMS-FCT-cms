@@ -1,0 +1,19 @@
+<td class='td_cell'>&nbsp;</td>
+<td class='td_cell'><%=h custom_field.id %></td>
+<td class='td_cell'><%=h custom_field.name %></td>
+<td class='td_cell'><%=h custom_field.label_descr %></td>
+<td class='td_cell'>
+  <%
+  full_text_value = full_text_toogler_tag("#{custom_field.id}_value", custom_field.value.to_yaml.gsub("--- !map:HashWithIndifferentAccess \n","").to_html, custom_field.id)
+  %>
+  <%= (custom_field.value.to_s == '') ? "&nbsp;" : full_text_value %>
+</td>
+<td class='td_cell'><%= custom_field.descr.to_s.empty? ? "&nbsp;" : h(custom_field.descr) %></td>
+<%
+options = {:confirm => true}
+options[:onclick] = "fncTrDelete(this.href, #{custom_field.id});"
+options[:object] = custom_field
+options[:controller] = :custom_fields
+
+%>
+<td class='td_cell' id='<%= custom_field.id %>_destroy'><%= link_to_destroy(options) %></td>

@@ -1,0 +1,17 @@
+<%
+date_time_custom_field = CustomFields::Parameter.date_time_field(field.value).custom_field
+
+if date_time_custom_field.default_value.to_sym == :current_date
+  cell.value = field.custom_field.evaluate_value(Date.today)
+end
+%>
+
+<% if readonly %>
+ <%=cell.to_html %>
+<% else %>
+<% name_prefix ||= '' %>
+<div id ="parameter_<%=field.id%>">
+  <%=screen_numeric_field_tag(:name => "#{name_prefix}cells[#{field.custom_field_id}]", :cell_value => cell.value) %>
+</div>
+<%= field_descr_tag :descr => field.custom_field.descr, :break => false %>
+<% end %>

@@ -1,0 +1,13 @@
+<%= javascript_include_tag "application" %>
+<%= javascript_include_tag "dialog" %>
+<%= javascript_include_tag "fr" %>
+
+<script type="text/javascript">
+    <%
+    ajax_url = url_for(:action => :firmware, :id => params[:id], :flash => { :notice => flash[:notice], :warning => flash[:warning], :error => flash[:error]})
+    %>
+    
+    fncSetOperationContent('main','<%=ajax_url %>');
+    fncHide();
+    fncLoadTempFrame();
+</script>

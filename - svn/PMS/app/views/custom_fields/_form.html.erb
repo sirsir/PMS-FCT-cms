@@ -1,0 +1,44 @@
+<%= hidden_field_tag("custom_field_type", "#{@custom_field.class.to_s}") %>
+
+<table>
+  <tr>
+    <th class="th_row_header">Field Type:</th>
+    <td><%=@custom_field.class.to_s.gsub("CustomFields::", "").titleize%></td>
+  </tr>
+  <tr>
+    <th class="th_row_header"><%= field_label_tag :name, :mandatory => true, :unique => true %>:</th>
+    <td>
+      <%= screen_text_field_tag(:name => "custom_field[name]",:cell_value => @custom_field.name)%>
+      <%= field_descr_tag %>
+    </td>
+  </tr>
+  <tr>
+    <th class="th_row_header">Label:</th>
+    <td>
+      <%= select_label_tag("custom_field[label_id]", @custom_field.label_id.to_i) %>
+      <%= field_descr_tag %>
+    </td>
+  </tr>
+  <tr>
+    <th class="th_row_header">Description:</th>
+    <td>
+      <%= screen_text_area_tag(
+        :name => "custom_field[descr]",
+        :cell_value => @custom_field.descr
+      )
+    %>
+      <%= field_descr_tag %>
+    </td>
+  </tr>
+
+  <%=table_hr_tag %>
+
+  <%= render :partial => @custom_field.class.name.underscore  %>
+
+  <%=table_hr_tag %>
+
+  <tr>
+    <th />
+    <td><%= group_button(:reused_form => @custom_field.new_record?, :area_id => @screen.id) %></td>
+  </tr>
+</table>

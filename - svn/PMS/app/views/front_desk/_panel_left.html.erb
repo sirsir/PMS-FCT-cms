@@ -1,0 +1,9 @@
+<!------------------------------- Left Panel Start------------------------------------------------->
+<!-- 1 --> <td style='background-color:#7185CF; width:0%' rowspan='4'  width='0%'>
+<!-- 1 -->
+<%= view_cache("menu_items", ApplicationController.current_user, :cache_expiration => 60*60) {
+  render :partial=>"menu_items"
+} %>
+<!-- 1 --> 
+<!-- 1 --> </td>  
+<!------------------------------- Left Panel End------------------------------------------------->

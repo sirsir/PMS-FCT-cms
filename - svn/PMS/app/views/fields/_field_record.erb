@@ -1,0 +1,14 @@
+<%
+field = field_record
+operation_area ||= ""
+operation_url = url_for(:action => :edit, :id => field.id)
+
+tr_id = "#{field.screen_id}_#{field.id}"
+%>
+
+<tr class='tr_<%= @fields.index(field) % 2 == 0 ? "even" : "odd" %>' id='<%= tr_id %>'
+    operation_area='<%=operation_area%>' operation_url='<%=operation_url%>'
+    relation_area='' relation_url=''
+    handleonclick='true'>
+  <%= render :partial => "field", :locals => { :field => field } %>
+</tr>

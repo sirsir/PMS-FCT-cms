@@ -1,0 +1,32 @@
+<%
+cell_id = "#{report_request_row_id}_#{report_request_col_id}_#{cell_field_report.id}"
+
+summary = :grand_total if report_request_row_id == 0 || report_request_col_id == 0
+
+align = "right"
+
+cell_field_report_format = cell_field_report.format[:format]
+cell_field_report_option = cell_field_report.format[:option]
+
+cell_field_report_option[:precision] = cell_field_report_option[:precision].to_i if !cell_field_report_option.nil?
+
+##(cell_field_report.summarize == :cnt) ? 0 : 2, :delimiter => ","}
+
+cell_values.each do |cell_value|
+  value = [ReportRequestCell.evaluate(cell_value)].flatten
+  cf = cell_field_report.field.custom_field unless cell_field_report.field_type == :formula
+
+  cell_field_report_option[:precision] = 2 if cell_value.is_a?(Hash) && cell_value[:summarize].to_sym == :per
+
+  if cf.is_a?(CustomFields::NumericField) || cell_field_report.field_type == :formula
+    value.collect!{|v| CustomFields::NumericField.apply_format_option(v.to_f, cell_field_report_format.to_sym, cell_field_report_option) unless v.nil? }
+  end
+  content = value.collect{|v| v.nil? ? '&nbsp;' : v }.join(', ')
+%>
+    <td class='td_cell' id='<%=cell_id%>' align='<%=align%>'
+        style='white-space: nowrap;<%= " font-weight: bold;" if summary != :cell %><%= " font-style: italic;" if summary == :grand_total %>'
+        title="<%=title %>">
+  <%=content %>
+    </td>
+
+<% end %>

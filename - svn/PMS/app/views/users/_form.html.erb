@@ -1,0 +1,58 @@
+<table>
+  <tr>
+    <th class="th_row_header"><%= field_label_tag :login, :mandatory => true, :unique => true %>:</th>
+    <td>
+      <% if @from_user_info %>
+        <%= label_tag("name", @user.login)%>
+        <%= hidden_field_tag "user[login]" , @user.login %>
+      <% else %>
+        <%= text_field_tag "user[login]" , @user.login  %>
+      <% end %>
+      <%
+      min_length = User.default_login_length.begin
+      max_length = User.default_login_length.end
+      %>
+      <%= field_descr_tag :descr => "#{min_length} - #{max_length} characters" %>
+    </td>
+  </tr>
+
+  <tr>
+    <th class="th_row_header">Rows per Page:</th>
+    <td>
+      <%= text_field_tag "user[per_page]" , @user.per_page || User.default_rows_per_page %>
+      <%= field_descr_tag %>
+    </td>
+  </tr>
+
+  <tr>
+    <th class="th_row_header">Language:</th>
+    <td>
+      <%= select("user", "language_id", Language.find(:all).collect {|p| [ p.name, p.id ] }) %>
+      <%= field_descr_tag %>
+    </td>
+  </tr>
+
+<%=table_hr_tag %>
+
+  <%=render :partial => 'password' %>
+  
+  <% if !@from_user_info %>
+    <tr>
+      <th class="th_row_header">Disabled:</th>
+      <td>
+        <%= check_box_tag("user[disabled_flag]", true, @user.disabled_flag ) %><%= label_tag "user[disabled_flag]", "Select the check box to prevent the user from accessing the system" %>
+        <%= hidden_field_tag 'user[disabled_flag]', false %>
+        <%= field_descr_tag %>
+      </td>
+    </tr>
+
+    <%=table_hr_tag %>
+  <% end %>
+
+  <tr>
+    <th />
+    <td colspan="2">
+      <%= group_button(:reused_form => true, :area_id => @screen.id) %>
+    </td>
+  </tr>
+</table>

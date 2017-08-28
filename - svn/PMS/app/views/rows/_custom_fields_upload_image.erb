@@ -1,0 +1,33 @@
+<%
+img_path = File.join('/', 'attachments', cell.value)
+
+unless File.exist?(File.join(RAILS_ROOT, 'public', img_path)) && File.file?(File.join(RAILS_ROOT, 'public', img_path))
+  img_path = ""
+  CustomFields::UploadImage.image_templates.each do |default, dimensions|
+    img_path = File.join('/', 'images', 'default', "#{default.to_s}.png") if field.custom_field.dimensions == dimensions
+  end
+end
+img_id = "image_#{field.custom_field_id}"
+img_options = {
+  :id => img_id,
+  :border => 0
+}
+img_options[:size] = field.custom_field.dimensions unless field.custom_field.dimensions == CustomFields::UploadImage.image_templates[:free_size]
+link_attib = <<HTML_TAG
+href="#" onclick="fncCallImageForm('#{url_for(:controller => "upload", :action => "save_image_form", :screen_id => field.screen_id, :cf_id => field.custom_field_id)}'); return false;"
+HTML_TAG
+%>
+
+<div style="vertical-align: top">
+  <a <%=link_attib unless readonly %>><%=image_tag(img_path, img_options ) %></a>
+    <%= hidden_field_tag("cells[#{field.custom_field_id}]", cell.value) %>
+    
+<% unless readonly %>
+    <% unless row.new_record? %>
+  <br />
+  <%=check_box_tag "remove_image[#{field.custom_field_id}]", true %>
+  <%=label_tag "remove_image[#{field.custom_field_id}]", "Remove image"%>
+    <% end %>
+    <%= field_descr_tag :descr => field.custom_field.descr %>
+<% end %>
+  </div>

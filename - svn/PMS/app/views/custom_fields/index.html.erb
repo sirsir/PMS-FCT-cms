@@ -1,0 +1,33 @@
+<%= screen_name_list_tag @screen %>
+
+<%
+operation_area = "operation_area_#{@screen.id}"
+operation_url_new = url_for(:action=>:new)
+on_click_new = <<JAVASCRIPT
+fncAjaxUpdater("#{operation_area}", "#{operation_url_new}");
+return false;
+JAVASCRIPT
+%>
+
+<div class="operation_container" style="width: 100%">
+<%
+cf_class_names = @custom_fields.collect{|cf| cf.class.name.gsub(/CustomFields::/, '') }.uniq
+cf_class_links = cf_class_names.collect{|cf_class_name| link_to cf_class_name.gsub(/^(.).*CombindedReference$/, '\1CR'), ("##{sanitize_to_id(cf_class_name)}_anchor") }
+%>
+
+<%= cf_class_links.join(' | ') %>
+
+</div>
+
+<%= operation_tag([:new], {:actions => {:new => :new}}, {:new => {:onClick => on_click_new}} )%>
+
+<%= group_tag @screen, render(:partial => 'custom_fields',
+                              :locals => { :operation_area => operation_area }) %>
+
+<%= operation_tag([:new], {:actions => {:new => :new}}, {:new => {:onClick => on_click_new}} )%>
+
+<hr />
+
+<div id ='error_area'></div>
+<%= anchor(operation_area) %>
+<div id ='<%= operation_area %>'></div>

@@ -1,0 +1,9 @@
+<%=render(:partial => 'stock_step', :locals => { :step => @stock_detail.transaction_type.to_sym }) %>
+
+<%
+form_id = "frm_stock_#{@stock_detail}_setting_#{@stock.id}"
+%>
+
+<% form_tag url_for(:action => 'setting_stock_detail', :id => @stock.id, :transaction_type => @stock_detail.transaction_type ), :onSubmit => "fncPrepareFormForSubmit(this);", :method=>:put, :id => form_id, :target=>"tmp_frame" do %>
+  <%=group_tag("Stock #{@stock_detail.transaction_type.singularize.titleize} Setting", render(:partial => 'setting'), {:type => "form", :blindable => false} ) %>
+<% end %>

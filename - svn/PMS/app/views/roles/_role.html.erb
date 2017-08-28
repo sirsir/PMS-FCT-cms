@@ -1,0 +1,11 @@
+<td class='td_cell'>&nbsp;</td>
+<td class='td_cell'><%=h role.name %></td>
+<td class='td_cell'><%=h role.descr %>&nbsp;</td>
+<%
+tr_id = role.id
+options = {:confirm => true}
+options[:onclick] = "fncTrDelete(this.href, '#{tr_id}');"
+options[:object] = role
+options[:controller] = :roles
+%>
+<td class='td_cell' id='<%= tr_id %>_destroy'><%= link_to_destroy(options) %></td>

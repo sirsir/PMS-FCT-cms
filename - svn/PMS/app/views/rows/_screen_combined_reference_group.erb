@@ -1,0 +1,20 @@
+<%
+scr_row_cell_value = scr_row.screen_combined_cell.value
+multiplier_screen_id = CustomFields::ScreenCombindedReference.cell_screen_ids(scr_row_cell_value).inject(-1) do |m_s_id, s_id|
+  CustomFields::ScreenCombindedReference.is_screen_used_as_multiply_count?(scr_row_cell_value, s_id) ? s_id : m_s_id
+end
+%>
+
+<p>
+  <% if multiplier_screen_id.nil? %>
+    <span class="error_message">No Multiplier Specified</span>
+  <%
+  else
+    sub_scr_row_id = CustomFields::ScreenCombindedReference.group_row_id(scr_row_cell_value)
+    sub_scr_row = Row.find(sub_scr_row_id)
+
+    sub_screens = sub_scr_row.screen_combined_screens.collect{|s| "'#{s.label_descr}'" }.join(', ')
+  %>
+    Please select '<%= multiplier_screen_id == -1 ? 'Code' : Screen.find(multiplier_screen_id).label_descr %>' to see <%= sub_screens %>...
+  <% end %>
+</p>

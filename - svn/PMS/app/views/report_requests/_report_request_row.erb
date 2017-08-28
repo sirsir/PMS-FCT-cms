@@ -1,0 +1,60 @@
+<%
+report = @report_request_row.report_request.report
+%>
+<%=render :partial => 'row_field_report', :collection => report.row_fields_reports %>
+
+<% if report.cell_location == :row %>
+  <td class="td_cell" style="border: 0px; padding: 0px">
+    <table class="table_data_content" cellspacing="0" border="0" style="border: 0px;width: 100%" width="100%">
+        <% report.cell_fields_reports.each do |cfr| %>
+          <tr class="tr_header" style="vertical-align: text-top">
+            <th class="th_col_header" title="<%=cfr.descr %>" style="text-align: right;white-space: nowrap">
+              <%=cfr.descr %>
+            </th>
+          </tr>
+        <% end %>
+      </table>
+  </td>
+<% end %>
+
+  <%
+col_field = report.col_fields_reports.first
+
+if col_field
+  rrc_groups = @report_request_row.report_request.col_report_request_cols(col_field)
+
+  @vm = VirtualMemory.load(:report_request, @report_request_row.report_request_id)
+%>
+  <%=render :partial => 'cell_report_request_cols', :collection => rrc_groups[0] %>
+  <%  if report.col_fields_reports.first == col_field && report.display_grand_totals.include?(:col)
+        if report.cell_location == :row %>
+          <td class="td_cell" style="border: 0px; padding: 0px">
+            <table class="table_data_content" cellspacing="0" border="0" style="border: 0px;width: 100%" width="100%">
+            <% (0..report.cell_fields_reports.size-1).each do |i| %>
+              <tr>
+              <%=render :partial => "sub_total_report_request_cell", :collection => report.cell_fields_reports[i..i], :locals => {:report_request_col_id => nil, :show_percentage => false} %>
+              </tr>
+            <% end %>
+            </table>
+          </td>
+          <% if report.has_percentage_weight? %>
+            <td class="td_cell" style="border: 0px; padding: 0px">
+              <table class="table_data_content" cellspacing="0" border="0" style="border: 0px;width: 100%" width="100%">
+              <% (0..report.cell_fields_reports.size-1).each do |i| %>
+                <tr>
+                <%=render :partial => "sub_total_report_request_cell", :collection => report.cell_fields_reports[i..i], :locals => {:report_request_col_id => nil, :show_percentage => true} %>
+                </tr>
+              <% end %>
+              </table>
+          </td>
+          <%end%>
+        <%
+        else
+        %>
+          <%=render :partial => "sub_total_report_request_cell", :collection => report.cell_fields_reports, :locals => {:report_request_col_id => nil} %>
+        <%
+        end
+      end
+      VirtualMemory.store(:report_request, @report_request_row.report_request_id, @vm)
+    end
+  %>

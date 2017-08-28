@@ -1,0 +1,508 @@
+<table class="table_header">  
+  <tr>
+    <td><table>
+        <tr>
+          <td class="td_title_header">TO:</td>
+          <th class="td_text_customer"><%= Field.value_by_field_name("AP Ovs To",@revision_row) %>&nbsp;</th>
+        </tr>
+        <tr>
+          <td class="td_title_header">ATTN.:</td>
+          <th class="td_text_customer">
+            <%= Field.value_by_field_name("Attn Title",@revision_row) %>
+            <%= Field.value_by_field_name("Attn Name",@revision_row) %>
+            <% attn_position = Field.value_by_field_name("Attn Position",@revision_row) %>
+            <%= " / #{attn_position}" unless attn_position.empty? %>
+            &nbsp;
+          </th>
+        </tr>
+        <tr>
+          <td class="td_title_header">Set :</td>
+          <td class="td_numeric_with_frame2"><%= Field.value_by_field_name("Set",@revision_row) %>&nbsp;</td>
+          <td>SET</td>
+        </tr>
+      </table></td>
+    <td class="td_top_nbsp">&nbsp;</td>
+    <td><table>
+        <tr>
+          <td class="td_numeric_with_frame3">Type</td>
+          <td class="td_numeric_with_frame3">Domestic Customer</td>
+        </tr>
+      </table></td>
+    <td><table>
+        <tr>
+          <td class="td_title_header">REF:</td>
+          <td class="td_text_staff"><%= Field.value_by_field_name("Quotation No.",@revision_row) %><%= "#R#{@revision_row.rev_no}" if @revision_row.rev_no > 0 %>&nbsp;</td>
+        </tr>
+        <tr>
+          <td class="td_title_header">DWG:</td>
+          <td class="td_text_staff"><%= Field.value_by_field_name("Drawing No.",@revision_row) %>&nbsp;</td>
+        </tr>
+      </table></td>
+    <td><table>
+        <tr>
+          <td class="td_numeric_with_frame3">Bargain rate :</td>
+          <td class="td_numeric_with_frame3"><%= Field.value_by_field_name("Bargain Rate",@revision_row) %>&nbsp;</td>
+        </tr>
+      </table></td>
+    <td><table class="table_cost_summary">
+        <tr>
+          <td class="td_cost_summary_header">Term</td>
+          <td class="td_cost_summary_header">Payment</td>
+          <td class="td_cost_summary_header">Frame Calu</td>
+          <td class="td_cost_summary_header">Acc Calu</td>
+          <td class="td_cost_summary_header">Ship by</td>
+        </tr>
+        <tr>
+          <td class="td_cost_summary_header"><%= Field.value_by_field_name("Quotation Term",@revision_row) %>&nbsp;</td>
+          <td class="td_cost_summary_header"><%= Field.value_by_field_name("Payment RefAttr",@revision_row) %>&nbsp;</td>
+          <td class="td_cost_summary_header">&nbsp;</td>
+          <td class="td_cost_summary_header">&nbsp;</td>
+          <td class="td_cost_summary_header">&nbsp;</td>
+        </tr>
+      </table></td>
+    <td class="td_top_nbsp">&nbsp;</td>    
+  </tr>
+</table>
+<%
+current_page = 0
+total_page = (@detail_rows.size/20.0).ceil
+%>
+<table class="table_lc_detail">
+  <% item = 0 %>
+  <% @detail_rows.each_with_index do |dr, i| %>
+    <% if i/20>0 and i%20==0 %>
+    </table>
+    <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+    <p><%= current_page += 1 %> of <%= total_page %></p>
+    <div class="page_break"></div>
+    <table class="table_lc_detail">
+    <% end %>
+    <%= render :file => "/revision_rows/ap_calculate_column_header" if (i/20>0 and i%20==0) or i == 0%>
+    <tr>
+      <% item = i + 1 %>
+      <td class="td_middle_nbsp"><%= item %>&nbsp;</td>
+      <td class="td_text_detail"><%= Field.value_by_field_name("Old Model Code REF",dr) %>&nbsp;</td>
+      <td class="td_text_detail"><%= Field.value_by_field_name("New Model Code",dr) %>&nbsp;</td>
+      <%
+      model_process_cost = Field.value_by_field_name("Model Process Cost REF",dr)
+      model_process_cost = model_process_cost.split
+      item_no = model_process_cost.first
+      model_process_cost.delete_at(0)
+      l = Field.value_by_field_name("L=",dr)
+    %>
+      <td class="td_text_detail"><%= (item_no =~ /^SX/).nil? ? item_no : item_no.sub("SX","SF") %>&nbsp;</td>
+      <td class="td_text_detail"><%= Field.value_by_field_name("Description",dr) %>&nbsp;</td>
+      <td class="td_text_detail"><%= model_process_cost.join(" ") %>&nbsp;</td>
+      <td class="td_text_detail"><%= Field.value_by_field_name("Part Segment",dr) %>&nbsp;</td>
+      <td class="td_text_detail"><%=l%>&nbsp;</td>
+      <td class="td_number_detail"><%= l.blank? ? "" : Field.value_by_field_name("Length",dr) %>&nbsp;</td>
+      <td class="td_number_detail"><%= Field.value_by_field_name("Qty",dr) %>&nbsp;</td>
+      <td class="td_number_detail"><%= Field.value_by_field_name("Total",dr) %>&nbsp;</td>
+      <td class="td_number_detail"><%= Field.value_by_field_name("Round Up",dr) %>&nbsp;</td>
+      <td class="td_number_detail"><%= Field.value_by_field_name("Price List",dr) %>&nbsp;</td>
+      <td class="td_number_detail"><%= Field.value_by_field_name("Price List - Length (mm)",dr) %>&nbsp;</td>
+      <td class="td_number_detail"><%= Field.value_by_field_name("Price List - Process Fee (THB)",dr) %>&nbsp;</td>
+      <td class="td_number_detail"><%= Field.value_by_field_name("Cost Unit (THB)",dr) %>&nbsp;</td>
+      <td class="td_number_detail"><%= Field.value_by_field_name("Cost - Amount (THB)",dr) %>&nbsp;</td>
+      <td class="td_number_detail"><%= Field.value_by_field_name("Price - Unit (THB)",dr) %>&nbsp;</td>
+      <td class="td_number_detail"><%= Field.value_by_field_name("Price - Amount (THB)",dr) %>&nbsp;</td>
+      <td class="td_number_detail"><%= Field.value_by_field_name("Volume Discount - Amount (THB)",dr) %>&nbsp;</td>
+      <td class="td_number_detail"><%= Field.value_by_field_name("Net Amount - Amount (THB)",dr) %>&nbsp;</td>
+      <td class="td_number_detail"><%= Field.value_by_field_name("Weigth - Amount (Kg)",dr) %>&nbsp;</td>
+    </tr>
+  <% end %>
+  <% if Field.value_by_field_name("SFV1 In-House assy - Service Cost In-House Budget",@revision_row).to_f > 0 %>
+    <tr>
+      <td class="td_middle_nbsp"><%= item += 1 %>&nbsp;</td>
+      <td class="td_bottom_nbsp">&nbsp;</td>
+      <td class="td_bottom_nbsp">&nbsp;</td>
+      <td class="td_bottom_nbsp">SFV1</td>
+      <td class="td_bottom_nbsp">SF-In-House Assembly Fee</td>
+      <td class="td_bottom_nbsp">&nbsp;</td>
+      <td class="td_bottom_nbsp">Assembly Fee</td>
+      <td class="td_bottom_nbsp">&nbsp;</td>
+      <td class="td_bottom_nbsp">&nbsp;</td>
+      <td class="td_bottom_nbsp">&nbsp;</td>
+      <% sfv1_price = number_with_precision(Field.value_by_field_name("SFV1 In-House assy - Sales Price PRICE",@revision_row).delete(","), :precision => 2) %>
+      <td class="td_bottom_nbsp">&nbsp;</td>
+      <td class="td_bottom_nbsp">&nbsp;</td>
+      <td class="td_number_detail"><%= sfv1_price %>&nbsp;</td>
+      <td class="td_bottom_nbsp">&nbsp;</td>
+      <td class="td_bottom_nbsp">&nbsp;</td>
+      <td class="td_number_detail"><%= number_with_precision(Field.value_by_field_name("SFV1 In-House assy - Service Cost Cost",@revision_row).delete(","), :precision => 2) %>&nbsp;</td>
+      <td class="td_bottom_nbsp">&nbsp;</td>
+      <td class="td_number_detail"><%= sfv1_price %>&nbsp;</td>
+      <td class="td_number_detail"><%= sfv1_price %>&nbsp;</td>
+      <td class="td_bottom_nbsp">&nbsp;</td>
+      <td class="td_number_detail"><%= sfv1_price %>&nbsp;</td>
+      <td class="td_bottom_nbsp">&nbsp;</td>
+    </tr>
+  <% end %>
+  <% if Field.value_by_field_name("SFV2 Out-site assy - Service Cost In-House Budget",@revision_row).to_f > 0 %>
+    <tr>
+      <td class="td_middle_nbsp"><%= item += 1 %></td>
+      <td class="td_bottom_nbsp">&nbsp;</td>
+      <td class="td_bottom_nbsp">&nbsp;</td>
+      <td class="td_bottom_nbsp">SFV2</td>
+      <td class="td_bottom_nbsp">SF-Outsite Assembly Fee</td>
+      <td class="td_bottom_nbsp">&nbsp;</td>
+      <td class="td_bottom_nbsp">Assembly Fee</td>
+      <td class="td_bottom_nbsp">&nbsp;</td>
+      <td class="td_bottom_nbsp">&nbsp;</td>
+      <td class="td_bottom_nbsp">&nbsp;</td>
+      <% sfv2_price = number_with_precision(Field.value_by_field_name("SFV2 Out-site assy - Sales Price PRICE",@revision_row).delete(","), :precision => 2) %>
+      <td class="td_bottom_nbsp">&nbsp;</td>
+      <td class="td_bottom_nbsp">&nbsp;</td>
+      <td class="td_number_detail"><%= sfv2_price %>&nbsp;</td>
+      <td class="td_bottom_nbsp">&nbsp;</td>
+      <td class="td_bottom_nbsp">&nbsp;</td>
+      <td class="td_number_detail"><%= number_with_precision(Field.value_by_field_name("SFV2 Out-site assy - Service Cost Cost",@revision_row).delete(","), :precision => 2) %>&nbsp;</td>
+      <td class="td_bottom_nbsp">&nbsp;</td>
+      <td class="td_number_detail"><%= sfv2_price %>&nbsp;</td>
+      <td class="td_number_detail"><%= sfv2_price %>&nbsp;</td>
+      <td class="td_bottom_nbsp">&nbsp;</td>
+      <td class="td_number_detail"><%= sfv2_price %>&nbsp;</td>
+      <td class="td_bottom_nbsp">&nbsp;</td>
+    </tr>
+  <% end %>
+  <% if Field.value_by_field_name("Include SUK Transportation",@revision_row) == "True" %>
+    <tr>
+      <td class="td_middle_nbsp"><%= item += 1 %>&nbsp;</td>
+      <td class="td_bottom_nbsp">&nbsp;</td>
+      <td class="td_bottom_nbsp">&nbsp;</td>
+      <td class="td_bottom_nbsp">SUK</td>
+      <td class="td_bottom_nbsp">Transportation Fee</td>
+      <td class="td_bottom_nbsp">&nbsp;</td>
+      <td class="td_bottom_nbsp">Transportation</td>
+      <td class="td_bottom_nbsp">&nbsp;</td>
+      <td class="td_bottom_nbsp">&nbsp;</td>
+      <td class="td_bottom_nbsp">&nbsp;</td>
+      <% suk_price = number_with_precision(Field.value_by_field_name("SUK Transportation ASSEMBLY - Sales Price UNIT PRICE",@revision_row), :precision => 2) %>
+      <td class="td_bottom_nbsp">&nbsp;</td>
+      <td class="td_bottom_nbsp">&nbsp;</td>
+      <td class="td_number_detail"><%= suk_price %>&nbsp;</td>
+      <td class="td_bottom_nbsp">&nbsp;</td>
+      <td class="td_bottom_nbsp">&nbsp;</td>
+      <td class="td_number_detail"><%= number_with_precision(Field.value_by_field_name("SUK Transportation PARTS ORDER & ASSEMBLY - Service Cost In-House Budget",@revision_row).delete(","), :precision => 2) %>&nbsp;</td>
+      <td class="td_bottom_nbsp">&nbsp;</td>
+      <td class="td_number_detail"><%= suk_price %>&nbsp;</td>
+      <td class="td_number_detail"><%= suk_price %>&nbsp;</td>
+      <td class="td_bottom_nbsp">&nbsp;</td>
+      <td class="td_number_detail"><%= suk_price %>&nbsp;</td>
+      <td class="td_bottom_nbsp">&nbsp;</td>
+    </tr>
+  <% end %>
+  <% itemNo = Field.value_by_field_name("SFO Discount",@revision_row)
+  unless itemNo =~ /None/i
+    itemNo = itemNo.split("-").collect{|e| e.lstrip}
+  %>
+    <tr>
+      <td class="td_middle_nbsp"><%= item+1 %>&nbsp;</td>
+      <td class="td_text_detail">&nbsp;</td>
+      <td class="td_text_detail">&nbsp;</td>
+      <td class="td_text_detail"><%= itemNo[0] %>&nbsp;</td>
+      <td class="td_text_detail"><%= itemNo[1] %>&nbsp;</td>
+      <td class="td_text_detail">&nbsp;</td>
+      <td class="td_text_detail"><%= itemNo[1] %>&nbsp;</td>
+      <td class="td_number_detail">&nbsp;</td>
+      <td class="td_number_detail">&nbsp;</td>
+      <td class="td_number_detail">&nbsp;</td>
+      <td class="td_number_detail">&nbsp;</td>
+      <td class="td_number_detail">0</td>
+      <td class="td_number_detail"><%= Field.value_by_field_name("SFO Discount Value",@revision_row) %>&nbsp;</td>
+      <td class="td_number_detail">&nbsp;</td>
+      <td class="td_number_detail">&nbsp;</td>
+      <td class="td_number_detail">&nbsp;</td>
+      <td class="td_number_detail">&nbsp;</td>
+      <td class="td_number_detail"><%= Field.value_by_field_name("SFO Discount Price Amount (THB)",@revision_row) %>&nbsp;</td>
+      <td class="td_number_detail"><%= Field.value_by_field_name("SFO Discount Price Amount (THB)",@revision_row) %>&nbsp;</td>
+      <td class="td_number_detail">&nbsp;</td>
+      <td class="td_number_detail"><%= Field.value_by_field_name("SFO Discount Price Amount (THB)",@revision_row) %>&nbsp;</td>
+      <td class="td_number_detail">&nbsp;</td>
+    </tr>
+  <% end %>
+  <% if @detail_rows.length < 22 %>
+    <% for n in @detail_rows.length+1..22 %>
+      <tr title="Double-Click to remove" onDblClick="this.parentNode.removeChild(this)">
+        <% (0...22).each do |c| %>
+          <td class="td_middle_nbsp">&nbsp;</td>
+        <% end %>
+      </tr>
+    <% end %>
+  <% end %>
+  <tr>
+    <td class="td_bottom_nbsp">&nbsp;</td>
+    <td class="td_bottom_nbsp">&nbsp;</td>
+    <td class="td_bottom_nbsp">&nbsp;</td>
+    <td class="td_bottom_nbsp">&nbsp;</td>
+    <td class="td_bottom_nbsp">&nbsp;</td>
+    <td class="td_bottom_nbsp">&nbsp;</td>
+    <td class="td_bottom_nbsp">&nbsp;</td>
+    <td class="td_bottom_nbsp">&nbsp;</td>
+    <td class="td_bottom_nbsp">&nbsp;</td>
+    <td class="td_bottom_nbsp">&nbsp;</td>
+    <td class="td_bottom_nbsp">&nbsp;</td>
+    <td class="td_bottom_nbsp">&nbsp;</td>
+    <td class="td_bottom_nbsp">&nbsp;</td>
+    <td class="td_bottom_nbsp">&nbsp;</td>
+    <td class="td_bottom_nbsp">&nbsp;</td>
+    <td class="td_bottom_nbsp">&nbsp;</td>
+    <td class="td_bottom_nbsp">&nbsp;</td>
+    <td class="td_bottom_nbsp">&nbsp;</td>
+    <td class="td_bottom_nbsp">&nbsp;</td>
+    <td class="td_bottom_nbsp">&nbsp;</td>
+    <td class="td_bottom_nbsp">&nbsp;</td>
+    <td class="td_bottom_nbsp">&nbsp;</td>
+  </tr>
+  <tr>
+    <td class="td_amount_detail">&nbsp;</td>
+    <td colspan="8"class="td_text_factor">Service cost</td>
+    <td class="td_amount_detail">&nbsp;</td>
+    <td class="td_amount_detail">&nbsp;</td>
+    <td class="td_amount_detail">&nbsp;</td>
+    <td class="td_amount_detail">&nbsp;</td>
+    <td class="td_amount_detail">&nbsp;</td>
+    <td class="td_amount_detail">&nbsp;</td>
+    <td class="td_amount_detail"><%= Field.value_by_field_name("Total Service - Service Cost Cost",@revision_row) %>&nbsp;</td>
+    <td class="td_amount_detail"><%= Field.value_by_field_name("Total Service - Service Cost Cost",@revision_row) %>&nbsp;</td>
+    <td class="td_amount_detail">&nbsp;</td>
+    <td class="td_amount_detail">&nbsp;</td>
+    <td class="td_amount_detail">&nbsp;</td>
+    <td class="td_amount_detail">&nbsp;</td>
+    <td class="td_amount_detail">&nbsp;</td>
+  </tr>
+  <tr>
+    <td class="td_amount_detail">&nbsp;</td>
+    <td colspan="8" class="td_text_factor">Factory cost***D/L,O/H Fee</td>
+    <td class="td_amount_detail">&nbsp;</td>
+    <td class="td_amount_detail">&nbsp;</td>
+    <td class="td_amount_detail">&nbsp;</td>
+    <td class="td_amount_detail">&nbsp;</td>
+    <td class="td_amount_detail">&nbsp;</td>
+    <td class="td_amount_detail">&nbsp;</td>
+    <td class="td_amount_detail"><%= Field.value_by_field_name("Factory cost***D/L,O/H Fee",@revision_row) %>&nbsp;</td>
+    <td class="td_amount_detail"><%= Field.value_by_field_name("Factory cost***D/L,O/H Fee",@revision_row) %>&nbsp;</td>
+    <td class="td_amount_detail">&nbsp;</td>
+    <td class="td_amount_detail">&nbsp;</td>
+    <td class="td_amount_detail">&nbsp;</td>
+    <td class="td_amount_detail">&nbsp;</td>
+    <td class="td_amount_detail">&nbsp;</td>
+  </tr>
+  <tr>
+    <td colspan="12" class="td_text_factor">TOTAL</td>
+    <td class="td_amount_detail"><%= Field.value_by_field_name("Grand Price List - Price List (THB)",@revision_row) %>&nbsp;</td>
+    <td class="td_amount_detail">&nbsp;</td>
+    <td class="td_amount_detail">&nbsp;</td>
+    <td class="td_amount_detail">&nbsp;</td>
+    <td class="td_amount_detail"><%= Field.value_by_field_name("Total - Cost Amount (THB)",@revision_row) %>&nbsp;</td>
+    <td class="td_amount_detail">&nbsp;</td>
+    <td class="td_amount_detail"><%= Field.value_by_field_name("Grand Price - Amount (THB)",@revision_row) %>&nbsp;</td>
+    <td class="td_amount_detail"><%= Field.value_by_field_name("Grand Volumn Discount - Amount (THB)",@revision_row) %>&nbsp;</td>
+    <td class="td_amount_detail"><%= Field.value_by_field_name("Grand Net Amount (THB)",@revision_row) %>&nbsp;</td>
+    <td class="td_amount_detail"><%= Field.value_by_field_name("Grand Weight - Amount (Kg)",@revision_row) %>&nbsp;</td>
+  </tr>
+</table>
+
+<table class="table_footer">
+  <tr>
+    <td>
+      <table class="table_cost_summary">
+        <tr>
+          <td colspan="2" class="td_cost_summary_header">Gross Profit </td>
+          <td colspan="5"class="td_cost_summary_header"><%= Field.value_by_field_name("Gross Profit",@revision_row) %>&nbsp;</td>
+        </tr>
+        <tr>
+          <td colspan="2" class="td_cost_summary_header">Profit rate</td>
+          <td colspan="5"class="td_cost_summary_header"><%= Field.value_by_field_name("Profit Rate %",@revision_row) %>&nbsp;</td>
+        </tr>
+        <tr>
+          <td colspan="2" class="td_cost_summary_header">Term payment</td>
+          <td colspan="5"class="td_cost_summary_header"><%= Field.value_by_field_name("Payment RefAttr",@revision_row) %>&nbsp;</td>
+        </tr>
+        <tr>
+          <td class="td_cost_summary_header">Segment</td>
+          <td class="td_cost_summary_header">Material Cost</td>
+          <td class="td_cost_summary_header">PRICE</td>
+          <td class="td_cost_summary_header">Marginal P</td>
+          <td class="td_cost_summary_header">M/P R</td>
+          <td rowspan="4" class="td_cost_summary_header">→</td>
+          <td class="td_cost_summary_header">PRICE</td>
+          <td class="td_cost_summary_header">Material Cost</td>
+          <td class="td_cost_summary_header">M/P R</td>
+        </tr>
+        <tr>
+          <td class="td_cost_summary_header">Frame</td>
+          <td class="td_cost_summary_amount"><%= Field.value_by_field_name("Frame - Material Cost",@revision_row) %>&nbsp;</td>
+          <td class="td_cost_summary_amount"><%= Field.value_by_field_name("Frame - PRICE",@revision_row) %>&nbsp;</td>
+          <td class="td_cost_summary_amount"><%= Field.value_by_field_name("Frame - Marginal P",@revision_row) %>&nbsp;</td>
+          <td class="td_cost_summary_amount"><%= Field.value_by_field_name("Frame - M/P R",@revision_row) %>&nbsp;</td>
+          <td rowspan="3" class="td_cost_summary_amount"><%= Field.value_by_field_name("Frame & Parts & Local Parts - PRICE",@revision_row) %>&nbsp;</td>
+          <td rowspan="3" class="td_cost_summary_amount"><%= Field.value_by_field_name("Frame & Parts & Local Parts - Material Cost",@revision_row) %>&nbsp;</td>
+          <td rowspan="3" class="td_cost_summary_amount"><%= Field.value_by_field_name("Frame & Parts & Local Parts - M/P R",@revision_row) %>&nbsp;</td>
+        </tr>
+        <tr>
+          <td class="td_cost_summary_header">Parts</td>
+          <td class="td_cost_summary_amount"><%= Field.value_by_field_name("Parts - Material Cost",@revision_row) %>&nbsp;</td>
+          <td class="td_cost_summary_amount"><%= Field.value_by_field_name("Parts - PRICE",@revision_row) %>&nbsp;</td>
+          <td class="td_cost_summary_amount"><%= Field.value_by_field_name("Parts - Marginal P",@revision_row) %>&nbsp;</td>
+          <td class="td_cost_summary_amount"><%= Field.value_by_field_name("Parts - M/P R",@revision_row) %>&nbsp;</td>
+        </tr>
+        <tr>
+          <td class="td_cost_summary_header">Local Parts</td>
+          <td class="td_cost_summary_amount"><%= Field.value_by_field_name("Local Parts - Material Cost",@revision_row) %>&nbsp;</td>
+          <td class="td_cost_summary_amount"><%= Field.value_by_field_name("Local Parts - PRICE",@revision_row) %>&nbsp;</td>
+          <td class="td_cost_summary_amount"><%= Field.value_by_field_name("Local Parts - Marginal P",@revision_row) %>&nbsp;</td>
+          <td class="td_cost_summary_amount"><%= Field.value_by_field_name("Local Parts - M/P R",@revision_row) %>&nbsp;</td>
+        </tr>
+        <tr>
+          <td class="td_cost_summary_header">Discount</td>
+          <td class="td_cost_summary_amount">Amount</td>
+          <td class="td_cost_summary_amount"><%= Field.value_by_field_name("Discount Amount - PRICE",@revision_row) %>&nbsp;</td>
+          <td class="td_cost_summary_amount">Ratio</td>
+          <td class="td_cost_summary_amount"><%= Field.value_by_field_name("Discount Ratio - M/P R",@revision_row) %>&nbsp;</td>
+          <td class="td_cost_summary_header">→</td>
+          <td class="td_cost_summary_amount"><%= Field.value_by_field_name("Grand - Price",@revision_row) %>&nbsp;</td>
+          <td class="td_cost_summary_amount"><%= Field.value_by_field_name("Frame & Parts & Local Parts - Material Cost",@revision_row) %>&nbsp;</td>
+          <td class="td_cost_summary_amount"><%= Field.value_by_field_name("Grand - M/P R",@revision_row) %>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>&nbsp;</td>
+          <td>&nbsp;</td>
+          <td>&nbsp;</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td colspan="5"class="td_cost_summary_header">Service Cost </td>
+          <td >&nbsp;</td>
+          <td colspan="2"class="td_cost_summary_header">Sales Price</td>
+        </tr>
+        <tr>
+          <td colspan="2"class="td_cost_summary_header">Detail</td>
+          <td class="td_cost_summary_header">In-House Budget</td>
+          <td class="td_cost_summary_header">UNIT COST</td>
+          <td class="td_cost_summary_header">Cost</td>
+          <td class="td_cost_summary_header">Q'ty</td>
+          <td class="td_cost_summary_header">UNIT PRICE</td>
+          <td class="td_cost_summary_header">PRICE</td>
+        </tr>
+        <tr>
+          <td class="td_cost_summary_header">SFV1</td>
+          <td class="td_cost_summary_header">In-House assy</td>
+          <td class="td_cost_summary_header"><%= Field.value_by_field_name("SFV1 In-House assy - Service Cost In-House Budget",@revision_row) %>&nbsp;</td>
+          <td class="td_cost_summary_header"><%= Field.value_by_field_name("SFV1 In-House assy - Service Cost UNIT COST",@revision_row) %>&nbsp;</td>
+          <td class="td_cost_summary_header"><%= Field.value_by_field_name("SFV1 In-House assy - Service Cost COST",@revision_row) %>&nbsp;</td>
+          <td class="td_cost_summary_header"><%= Field.value_by_field_name("SFV1 In-House assy - Qty",@revision_row) %>&nbsp;</td>
+          <td class="td_cost_summary_header"><%= Field.value_by_field_name("SFV1 In-House assy - Sales Price UNIT PRICE",@revision_row) %>&nbsp;</td>
+          <td class="td_cost_summary_header"><%= Field.value_by_field_name("SFV1 In-House assy - Sales Price PRICE",@revision_row) %>&nbsp;</td>
+        </tr>
+        <tr>
+          <td class="td_cost_summary_header">SFV2</td>
+          <td class="td_cost_summary_header">Out-site assy</td>
+          <td class="td_cost_summary_header"><%= Field.value_by_field_name("SFV2 Out-site assy - Service Cost In-House Budget",@revision_row) %>&nbsp;</td>
+          <td class="td_cost_summary_header"><%= Field.value_by_field_name("SFV2 Out-site assy - Service Cost UNIT COST",@revision_row) %>&nbsp;</td>
+          <td class="td_cost_summary_header"><%= Field.value_by_field_name("SFV2 Out-site assy - Service Cost Cost",@revision_row) %>&nbsp;</td>
+          <td class="td_cost_summary_header"><%= Field.value_by_field_name("SFV2 Out-site assy - Qty",@revision_row) %>&nbsp;</td>
+          <td class="td_cost_summary_header"><%= Field.value_by_field_name("SFV2 Out-site assy - Sales Price UNIT PRICE",@revision_row) %>&nbsp;</td>
+          <td class="td_cost_summary_header"><%= Field.value_by_field_name("SFV2 Out-site assy - Sales Price PRICE",@revision_row) %>&nbsp;</td>
+        </tr>
+        <tr>
+          <td rowspan="2"class="td_cost_summary_header">SUK  Transportation</td>
+          <td class="td_cost_summary_header">PARTS ORDER</td>
+          <td rowspan="2"class="td_cost_summary_header"><%= Field.value_by_field_name("SUK Transportation PARTS ORDER & ASSEMBLY - Service Cost In-House Budget",@revision_row) %>&nbsp;</td>
+          <td rowspan="2"class="td_cost_summary_header"><%= Field.value_by_field_name("SUK Transportation PARTS ORDER & ASSEMBLY - Service Cost In-House Budget",@revision_row) %>&nbsp;</td>
+          <td rowspan="2"class="td_cost_summary_header"><%= Field.value_by_field_name("SUK Transportation PARTS ORDER & ASSEMBLY - Service Cost In-House Budget",@revision_row) %>&nbsp;</td>
+          <td rowspan="2"class="td_cost_summary_header"><%= Field.value_by_field_name("Set",@revision_row) %>&nbsp;</td>
+          <td class="td_cost_summary_header">Free</td>
+          <td class="td_cost_summary_header">Free</td>
+        </tr>
+        <tr>
+          <td class="td_cost_summary_header">ASSEMBLY</td>
+          <td class="td_cost_summary_header"><%= Field.value_by_field_name("SUK Transportation ASSEMBLY - Sales Price UNIT PRICE",@revision_row) %>&nbsp;</td>
+          <td class="td_cost_summary_header"><%= Field.value_by_field_name("SUK Transportation ASSEMBLY - Sales Price UNIT PRICE",@revision_row) %>&nbsp;</td>
+        </tr>
+        <tr>
+          <td colspan="4"class="td_cost_summary_header">Total Service</td>
+          <td class="td_cost_summary_header"><%= Field.value_by_field_name("Total Service - Service Cost Cost",@revision_row) %>&nbsp;</td>
+          <td class="td_cost_summary_header">&nbsp;</td>
+          <td class="td_cost_summary_header">Total Price</td>
+          <td class="td_cost_summary_header"><%= Field.value_by_field_name("Total Price - Sales Price PRICE",@revision_row) %>&nbsp;</td>
+        </tr>
+        <tr>
+          <td colspan="7"class="td_cost_summary_header">Discount description</td>
+        </tr>
+        <tr>
+          <td class="td_cost_summary_header">ITEM No</td>
+          <td class="td_cost_summary_header">Segment</td>
+          <td class="td_cost_summary_header">Setting</td>
+          <td colspan="3"class="td_cost_summary_header">Remark</td>
+          <td class="td_cost_summary_header">Discount Price</td>
+        </tr>
+        <tr>
+          <td class="td_cost_summary_header">SFO</td>
+          <td class="td_cost_summary_header">Discount</td>
+          <td class="td_cost_summary_header">Freely Setting</td>
+          <td colspan="3"class="td_cost_summary_header">In case of adjusting price</td>
+          <td class="td_cost_summary_header"><%= Field.value_by_field_name("SFO - Discount Price",@revision_row) %>&nbsp;</td>
+        </tr>
+        <tr>
+          <td class="td_cost_summary_header">SFO1</td>
+          <td class="td_cost_summary_header">Special Discount</td>
+          <td class="td_cost_summary_header">5%</td>
+          <td colspan="3"class="td_cost_summary_header">Need to be approved by Nomy</td>
+          <td class="td_cost_summary_header"><%= Field.value_by_field_name("SFO1 - Discount Price",@revision_row) %>&nbsp;</td>
+        </tr>
+        <tr>
+          <td class="td_cost_summary_header">SFO2</td>
+          <td class="td_cost_summary_header">VIP Discount</td>
+          <td class="td_cost_summary_header">10%</td>
+          <td colspan="3"class="td_cost_summary_header">Need to be approved by Nomy</td>
+          <td class="td_cost_summary_header"><%= Field.value_by_field_name("SFO2 - Discount Price",@revision_row) %>&nbsp;</td>
+        </tr>
+      </table>
+    </td>
+    <td class="td_valign_top">
+      <table>       
+        <tr>
+          <td>
+            <table class="table_cost_summary">
+              <tr>
+                <td colspan="2"class="td_cost_summary_header">Sales by :</td>
+                <td class="td_cost_summary_header"><%= Field.value_by_field_name("QSB Staff First Name",@revision_row) %>&nbsp;</td>
+              </tr>
+              <tr>
+                <td colspan="2"class="td_cost_summary_header">Product Group :</td>
+                <td class="td_cost_summary_header"><%= Field.value_by_field_name("Business Type",@revision_row) %>&nbsp;</td>
+              </tr>
+              <tr>
+                <td colspan="2"class="td_cost_summary_header">Marketing code :</td>
+                <td class="td_cost_summary_header"><%= Field.value_by_field_name("Marketing Type",@revision_row) %>&nbsp;</td>
+              </tr>
+              <tr>
+                <td colspan="2"class="td_cost_summary_header">Support to :</td>
+                <td class="td_cost_summary_header"><%= Field.value_by_field_name("Support to",@revision_row) %>&nbsp;</td>
+              </tr>
+              <tr>
+                <td colspan="2"class="td_cost_summary_header">Nation :</td>
+                <td class="td_cost_summary_header"><%= Field.value_by_field_name("Nation",@revision_row) %>&nbsp;</td>
+              </tr>
+              <tr>
+                <td colspan="2"class="td_cost_summary_header">Foreign name :</td>
+                <td class="td_cost_summary_header"><%= Field.value_by_field_name("Foreign name",@revision_row) %>&nbsp;</td>
+              </tr>
+              <tr>
+                <td colspan="2"class="td_cost_summary_header">First Marketing by :</td>
+                <td class="td_cost_summary_header"><%= Field.value_by_field_name("First Maketing by",@revision_row) %>&nbsp;</td>
+              </tr>
+              <tr>
+                <td colspan="2"class="td_cost_summary_header">Repeat contact by :</td>
+                <td class="td_cost_summary_header"><%= Field.value_by_field_name("Repeat contact by",@revision_row) %>&nbsp;</td>
+              </tr>              
+            </table>
+          </td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+</table>
+<br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+<p><%= current_page + 1 %> of <%= total_page %></p>

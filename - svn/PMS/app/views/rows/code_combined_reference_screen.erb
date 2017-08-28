@@ -1,0 +1,17 @@
+<%= render :partial => '/rows/code_combined_reference_screen',
+  :locals => {
+  :screen_id => @screen_id,
+  :index => @selected_index + 1,
+  :parent_scr_row => @parent_scr_row,
+  :scr_row => @scr_row,
+  :sub_scr_row => @sub_scr_row,
+  :field => @field,
+  :input_name => @input_name,
+  :ccr_result_id_prefix => @ccr_result_id_prefix,
+  :parent_ccr_result_id => @parent_ccr_result_id,
+  :next_ccr_result_id => @next_ccr_result_id,
+  :ccr_group_result_id => @ccr_group_result_id,
+  :available_options => @available_options,
+  :selected_values => @selected_values + [nil]
+}
+%>

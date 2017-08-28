@@ -1,0 +1,34 @@
+<p>
+  <b>Name:</b>
+  <%=h @custom_field.name %>
+</p>
+
+<p>
+  <b>Field type:</b>
+  <%=h @custom_field.field_type.name %>
+</p>
+
+<p>
+  <b>Descr:</b>
+  <%=h @custom_field.descr %>
+</p>
+
+<p>
+  <b>Label:</b>
+  <%=h @custom_field.label.name %>
+</p>
+
+<p>
+<b>Value:</b>
+<%=h @custom_field.value %>
+</p>
+
+<p>
+<b>Display:</b>
+List <%=h ((@custom_field.display_flags[:list]) ? "Yes" : "No") %>, 
+Search <%=h ((@custom_field.display_flags[:search]) ? "Yes" : "No") %>
+</p>
+
+
+<%= link_to 'Edit', edit_custom_field_path(@custom_field) %> |
+<%= link_to 'Back', custom_fields_path %>

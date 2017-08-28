@@ -1,0 +1,80 @@
+<%
+reference_row_id = CustomFields::Reference.cell_ref_row_id(options[:value])
+reference_row = reference_row_id == 0 ? nil : Row.find(reference_row_id)
+
+unless custom_field.searchable_text?
+  cell = Cell.new(:field_id=>custom_field.id)
+  related_from = CustomFields::Reference.field_related_from(field.value)
+  combo_box_options = cell.select_value_options(reference_row_id == 0 ? 0 : related_from)
+else
+  combo_box_options = { :all_options => [] }
+end
+
+if custom_field.searchable_text? || combo_box_options[:all_options].size > 50
+  reference_row_descr = reference_row.nil?  ? '' : reference_row.description
+  operation_url_option = url_for(:controller => 'rows',
+              :action=>'quick_search',
+              :id=>0,
+              :screen_id=>custom_field.screen_id,
+              :text=>'JAVASCRIPT_VAR_TEXT',
+              :input_id=>'JAVASCRIPT_VAR_ID',
+              :result_row_id =>"#{input_id}_row_id",
+              :field_id => field.id)
+
+   onkeyup = <<JAVASCRIPT
+fncQuickSearch("_suggest_disp_#{input_id}","#{operation_url_option}", this, "#{input_id}_row_id");
+JAVASCRIPT
+
+  onblur = <<JAVASCRIPT
+fncResetQuickSearchText("_suggest_disp_#{input_id}", this, "#{input_id}_row_id");
+JAVASCRIPT
+
+  input_txt = text_field_tag("search_quick_search_text_#{input_id}", reference_row_descr, :onkeyup => onkeyup, :autocomplete => :off, :class => :search_input_full)
+  input_hdn = hidden_field_tag("#{input_name}[row_id]", reference_row.nil? ? '' : reference_row.id)
+%>
+
+<%= <<HTML_TAG
+#{input_txt} #{input_hdn}
+<div id='_suggest_disp_#{input_id}' class='suggest_disp_hidden'></div>
+HTML_TAG
+%>
+
+<% else
+
+      assigned_options = (reference_row.nil? ? [] : [reference_row])
+      all_options = combo_box_options[:all_options]
+      name = "#{input_name}[row_id]"
+      value_method = :id
+      text_method = :description
+      include_blank = true
+
+      assinged_option = assigned_options[0][value_method] || '' unless assigned_options.empty?
+      available_collection = all_options
+      available_collection = available_collection.select{|o| txt = o.send(text_method).to_s
+        !txt.empty? && txt !~ /missing_implementation/
+        } unless Rails.env =~ /development/
+
+      relate_to = options[:relate_to] || ''
+      from_cf_id = options[:from_cf_id] || ''
+      on_change = options[:on_change] || ''
+
+      option_tag = ''
+      option_tag << "<option value=''></option>" if include_blank
+      option_tag << options_from_collection_for_select( available_collection, value_method, text_method, assinged_option )
+
+      if relate_to == '' || relate_to == 0
+%>
+        <%= select_tag(name, option_tag,:onchange=>on_change, :class => 'search_input_full') %>
+      <% else %>
+        <%= select_tag(name, option_tag, :onchange=>"fncReloadComboRef('#{relate_to}', this, '#{from_cf_id}');" + on_change, :class => 'search_input_full') %>
+      <% end %>
+
+<!-- screen_collection_select_tag(
+              :assigned_options => reference_row.nil? ? [] : [reference_row],
+              :all_options => combo_box_options[:all_options],
+              :name => "#{input_name}[row_id]",
+              :value_method => :id,
+              :text_method => :description,
+              :include_blank => true )
+-->
+<% end %>

@@ -1,0 +1,55 @@
+--- 
+:html: |
+  <table>
+    <tr>
+      <td>Access Database</td>
+      <td><img src='/images/permissions/grant_all.gif' title='' />
+    </tr>
+    <tr>
+      <td>Session Table</td>
+      <td><img src='/images/permissions/grant_all.gif' title='' />
+    </tr>
+    <tr>
+      <td>Caption Table</td>
+      <td><img src='/images/permissions/grant_all.gif' title='' />
+    </tr>
+    <tr>
+      <td>Custom Field Table</td>
+      <td><img src='/images/permissions/grant_all.gif' title='' />
+    </tr>
+    <tr>
+      <td>Field Table</td>
+      <td><img src='/images/permissions/grant_all.gif' title='' />
+    </tr>
+    <tr>
+      <td>Fields Report Table</td>
+      <td><img src='/images/permissions/grant_all.gif' title='' />
+    </tr>
+    <tr>
+      <td>Field Report Filter Table</td>
+      <td><img src='/images/permissions/grant_all.gif' title='' />
+    </tr>
+    <tr>
+      <td>Label Table</td>
+      <td><img src='/images/permissions/grant_all.gif' title='' />
+    </tr>
+    <tr>
+      <td>Language Table</td>
+      <td><img src='/images/permissions/grant_all.gif' title='' />
+    </tr>
+    <tr>
+      <td>Report Table</td>
+      <td><img src='/images/permissions/grant_all.gif' title='' />
+    </tr>
+    <tr>
+      <td>Screen Table</td>
+      <td><img src='/images/permissions/grant_all.gif' title='' />
+    </tr>
+    <tr>
+      <td>Adminitrator User</td>
+      <td><img src='/images/permissions/grant_all.gif' title='' />
+    </tr>
+  
+  </table>
+
+:valid: true

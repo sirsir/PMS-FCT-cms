@@ -1,0 +1,8 @@
+<%  ff = @report_request.field_filter(field_report_filter.reference_screen_index, field_report_filter.field_id)
+    options = ff.value if ff
+%>
+<table>
+<tr>
+<%= field_for_search(field_report_filter.field,{:value => options, :count => 1, :fields_per_line => 1, :name => :field_filter,:screen_index => field_report_filter.reference_screen_index, :read_only => read_only}) %>
+</tr>
+</table>

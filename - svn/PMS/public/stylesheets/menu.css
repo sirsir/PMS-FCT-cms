@@ -1,0 +1,115 @@
+/*
+ul, li{margin:0; border:0; padding:0; list-style:none;}
+*/
+#left_panel_tab_menu_content{
+    color: #ccf;
+    background-color: #78d;
+    font-weight: bold;
+    height: auto;
+    padding: 0px;
+    text-align: left;
+}
+
+#left_panel_tab_menu_content .menu {
+    height:auto;
+    padding:0px;
+    margin: 0px;
+    width: 100%;
+}
+
+#left_panel_tab_menu_content .menu_content{
+    background-color: #029;
+    border-left-style: solid;
+    border-left-color: #000;
+    border-left-width: 1px;
+    width: 100%;
+    margin: 0px;
+    padding-left: 10px;
+}
+
+#left_panel_tab_menu_content .menu_item, .menu_item_hover, .menu_item_selected {
+    width: 100%;
+    margin: 0px;
+    white-space: nowrap;
+    list-style-type: none;
+    font-size: 11px;
+    line-height: 15px;
+    border-style: solid;
+    border-color: #000;
+    border-width: 1px  1px 0px 1px ;
+}
+
+#left_panel_tab_menu_content .menu_item {
+    color: #ccf;
+}
+
+#left_panel_tab_menu_content .menu_item_selected {
+    color: #fff;
+}
+
+#left_panel_tab_menu_content .menu_item,
+#left_panel_tab_menu_content .menu_item_selected,
+#left_panel_tab_menu_content .menu_item_hover{
+    background-color: #029;
+}
+
+#left_panel_tab_menu_content .menu_state,
+#left_panel_tab_menu_content .menu_icon {
+    width: 16px;
+}
+
+#left_panel_tab_menu_content .menu_item .menu_state,
+#left_panel_tab_menu_content .menu_item_hover .menu_state {
+    background-image: url(/images/menu/closed.png);
+}
+
+#left_panel_tab_menu_content .menu_item_selected .menu_state {
+    background-image: url(/images/menu/opened.png);
+}
+
+#left_panel_tab_menu_content .menu_item_hover {
+    color: #eef;
+}
+
+#left_panel_tab_menu_content .menu_item .menu_operation,
+#left_panel_tab_menu_content .menu_item_selected .menu_operation {
+    display: none;
+}
+#left_panel_tab_menu_content .menu_item_hover .menu_operation {
+    margin: 0px;
+    width: 16px;
+    display: inline;
+}
+
+#left_panel_tab_menu_content .menu_link {
+    cursor: pointer;
+}
+
+#left_panel_tab_menu_content .menu_empty_cell {
+    display: inline
+}
+
+#left_panel_tab_menu_content .menu_item .menu_descr,
+#left_panel_tab_menu_content .menu_item_selected .menu_descr,
+#left_panel_tab_menu_content .menu_item_hover .menu_descr {
+    overflow: hidden;
+}
+#left_panel_tab_menu_content .menu_item_hover .menu_descr {
+
+}
+#menu_btn, #filter_btn{
+    background-color: #029;
+    font-weight: bold;
+    height: auto;
+    padding: 1px;
+    text-align: center;
+    width: 100px;
+    cursor: pointer;
+
+}
+.menu_filter{
+    color: #ccf;
+}
+.menu_filter_hover, .menu_filter_selected{
+    color: #eef;
+}

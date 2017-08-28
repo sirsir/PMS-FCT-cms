@@ -1,0 +1,7 @@
+<td class='td_cell'>&nbsp;</td>
+<td class='td_cell'><%=h user.login %></td>
+<td class='td_cell'>
+  <%= h user.roles.sort_by{|r| r.name }.collect{|r| r.name }.join(', ') %>&nbsp;
+</td>
+<td class='td_cell' align="center"><%=check_box_image_tag user.disabled_flag? %></td>
+<td class='td_cell'>&nbsp</td>

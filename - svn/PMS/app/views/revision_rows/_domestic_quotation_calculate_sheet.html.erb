@@ -1,0 +1,287 @@
+<table class="table_header">
+  <tr>
+    <td colspan="7" class="td_report_name"><b>IAI CALCULATION SHEET (Industrial Robot)</b></td>
+  </tr>
+  <tr>
+    <td><table>
+        <tr>
+          <td class="td_title_header">To :</td>
+          <td class="td_text_customer"><%= Field.value_by_field_name("QSB To",@revision_row) %>&nbsp;</td>
+        </tr>
+        <tr>
+          <td class="td_title_header">Attn :</td>
+          <td class="td_text_customer"><%= Field.value_by_field_name("QSB Attn Name",@revision_row) %>&nbsp;</td>
+        </tr>
+      </table></td>
+    <td class="td_top_nbsp">&nbsp;</td>
+    <td><table>
+        <tr>
+          <td class="td_title_header">RC</td>
+          <td class="td_top_nbsp">&nbsp;</td>
+          <td class="td_text_robo_equation">Sale Price = JPN STD Price(YEN) X 1.15/Exchange Rate</td>
+        </tr>
+        <tr>
+          <td class="td_title_header">IA</td>
+          <td class="td_top_nbsp">&nbsp;</td>
+          <td class="td_text_robo_equation">Sale Price = (CIF Cost + Duty + Factory Cost)/0.65/Exchange Rate</td>
+        </tr>
+      </table></td>
+    <td class="td_top_nbsp">&nbsp;</td>
+    <td>
+      <table>
+        <tr>
+          <td class="td_title_header2">Sale Exchange Rate</td>
+          <td class="td_numeric_with_frame"><%= Field.value_by_field_name("Domestic Sale Exchange Rate J2T",@revision_row) %>&nbsp;</td>
+        </tr>
+        <tr>
+          <td class="td_title_header2">Cost Exchange Rate</td>
+          <td class="td_numeric_with_frame"><%= Field.value_by_field_name("Domestic Cost Exchange Rate J2T",@revision_row) %>&nbsp;</td>
+        </tr>
+      </table>
+    </td>
+    <td class="td_top_nbsp">&nbsp;</td>
+    <td>
+      <table>
+        <tr>
+          <td class="td_title_header2">Factor for Robo Cylnder</td>
+          <td class="td_numeric_with_frame"><%= Field.value_by_field_name("QSB Factor For Robo Cylnder",@revision_row) %>&nbsp;</td>
+        </tr>
+        <tr>
+          <td class="td_title_header2">Factor for Industrial Robot</td>
+          <td class="td_numeric_with_frame"><%= Field.value_by_field_name("QSB Factor For Industrial Robot",@revision_row) %>&nbsp;</td>
+        </tr>
+        <tr>
+          <td class="td_title_header2">FOB to CIF Rate</td>
+          <td class="td_numeric_with_frame"><%= Field.value_by_field_name("QSB FOB to CIF Rate",@revision_row) %>&nbsp;</td>
+        </tr>
+        <tr>
+          <td class="td_title_header2">Company Cost Rate</td>
+          <td class="td_numeric_with_frame"><%= Field.value_by_field_name("QSB Company Cost Rate",@revision_row) %>&nbsp;</td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+</table>
+<%
+current_page = 0
+total_page =(@detail_rows.size/20.0).ceil
+%>
+<table class="table_lc_detail">
+  <% item = 0 %>
+  <% @detail_rows.each_with_index do |dr, i| %>
+    <% if i/20>0 and i%20==0 %>
+    </table>
+    <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+    <p><%= current_page += 1 %> of <%= total_page %></p>
+    <div class="page_break"></div>
+    <table class="table_lc_detail">
+    <% end %>
+    <%= render :file => "/revision_rows/iai_calculate_column_header" if (i/20>0 and i%20==0) or i == 0%>
+    <%
+    tmp_1 = dr.screen.fields.select{|f| f.name == "599"}.first.value['source_field_id']
+    tmp_2 = Field.find(tmp_1).screen.rows
+    tmp_2.select do |r|
+      r.cells.select do |c|
+        if c.custom_field_id == Field.find(Field.find(tmp_1).value['comparison']['field_id']).custom_field_id
+          c.id
+        end
+      end
+    end
+  %>
+    <tr>
+      <td class="td_middle_nbsp"><%=i+1 %></td>
+      <td class="td_text_detail"><%= Field.value_by_field_name("604",dr) %>&nbsp;</td>
+      <td class="td_text_detail"><%= Field.value_by_field_name("QSB Item",dr) %>&nbsp;</td>
+      <td class="td_text_detail"><%= Field.value_by_field_name("QSB Description",dr) %>&nbsp;</td>
+      <td class="td_number_detail"><%= Field.value_by_field_name("QSB Qty",dr) %>&nbsp;</td>
+      <td class="td_number_detail"><%= Field.value_by_field_name("542",dr) %>&nbsp;</td>
+      <td class="td_number_detail"><%= Field.value_by_field_name("582",dr) %>&nbsp;</td>
+      <td class="td_number_detail"><%= Field.value_by_field_name("584",dr) %>&nbsp;</td>
+      <td class="td_number_detail"><%= Field.value_by_field_name("585",dr) %>&nbsp;</td>
+      <td class="td_number_detail"><%= Field.value_by_field_name("586",dr) %>&nbsp;</td>
+      <td class="td_number_detail"><%= Field.value_by_field_name("583",dr) %>&nbsp;</td>
+      <td class="td_number_detail"><%= Field.value_by_field_name("589",dr) %>&nbsp;</td>
+      <td class="td_number_detail"><%= Field.value_by_field_name("590",dr) %>&nbsp;</td>
+      <td class="td_number_detail"><%= Field.value_by_field_name("592",dr) %>&nbsp;</td>
+      <td class="td_number_detail"><%= Field.value_by_field_name("593",dr) %>&nbsp;</td>
+      <td class="td_number_detail"><%= Field.value_by_field_name("QSB Selling Price Unit(THB)",dr) %>&nbsp;</td>
+      <td class="td_number_detail"><%= Field.value_by_field_name("QSB Selling Price Amount(THB)",dr) %>&nbsp;</td>
+      <td class="td_number_detail"><%= Field.value_by_field_name("543",dr) %>&nbsp;</td>
+      <td class="td_number_detail"><%= Field.value_by_field_name("607",dr) %>&nbsp;</td>
+    </tr>
+  <% end %>
+  <% if @detail_rows.length < 20 %>
+    <% for n in @detail_rows.length+1..20 %>
+      <tr title="Double-Click to remove" onDblClick="this.parentNode.removeChild(this)">
+        <% (0...19).each do |c| %>
+          <td class="td_middle_nbsp">&nbsp;</td>
+        <% end %>
+      </tr>
+    <% end %>
+  <% end %>
+  <tr>
+    <td class="td_bottom_nbsp">&nbsp;</td>
+    <td class="td_bottom_nbsp">&nbsp;</td>
+    <td class="td_bottom_nbsp">&nbsp;</td>
+    <td class="td_bottom_nbsp">&nbsp;</td>
+    <td class="td_bottom_nbsp">&nbsp;</td>
+    <td class="td_bottom_nbsp">&nbsp;</td>
+    <td class="td_bottom_nbsp">&nbsp;</td>
+    <td class="td_bottom_nbsp">&nbsp;</td>
+    <td class="td_bottom_nbsp">&nbsp;</td>
+    <td class="td_bottom_nbsp">&nbsp;</td>
+    <td class="td_bottom_nbsp">&nbsp;</td>
+    <td class="td_bottom_nbsp">&nbsp;</td>
+    <td class="td_bottom_nbsp">&nbsp;</td>
+    <td class="td_bottom_nbsp">&nbsp;</td>
+    <td class="td_bottom_nbsp">&nbsp;</td>
+    <td class="td_bottom_nbsp">&nbsp;</td>
+    <td class="td_bottom_nbsp">&nbsp;</td>
+    <td class="td_bottom_nbsp">&nbsp;</td>
+    <td class="td_bottom_nbsp">&nbsp;</td>
+  </tr>
+  <tr>
+    <td class="td_amount_detail">&nbsp;</td>
+    <td colspan="3" class="td_amount_detail">TOTAL</td>
+    <td class="td_amount_detail">&nbsp;</td>
+    <td class="td_amount_detail">&nbsp;</td>
+    <td class="td_amount_detail">&nbsp;</td>
+    <td class="td_amount_detail"><%= Field.value_by_field_name("QSB Robot Cost(CIF) Total(JPY)",@revision_row) %>&nbsp;</td>
+    <td class="td_amount_detail">&nbsp;</td>
+    <td class="td_amount_detail"><%= Field.value_by_field_name("QSB Robot Cost(CIF) Total(THB)",@revision_row) %>&nbsp;</td>
+    <td class="td_amount_detail">&nbsp;</td>
+    <td class="td_amount_detail">&nbsp;</td>
+    <td class="td_amount_detail"><%= Field.value_by_field_name("QSB Duty Total(JPY)",@revision_row) %>&nbsp;</td>
+    <td class="td_amount_detail">&nbsp;</td>
+    <td class="td_amount_detail"><%= Field.value_by_field_name("QSB Factory Cost Total(JPY)",@revision_row) %>&nbsp;</td>
+    <td class="td_amount_detail">&nbsp;</td>
+    <th class="td_amount_detail"><%= Field.value_by_field_name("QSB Grand Selling Price Amount(THB)",@revision_row) %>&nbsp;</th>
+    <td colspan="2" class="td_text_factor">&nbsp;</td>
+  </tr>
+  <tr>
+    <td colspan="15" class="td_text_factor" style="text-align: right;">Total Sale</td>
+    <td class="td_text_factor">&nbsp;</td>
+    <td class="td_amount_detail"><%= Field.value_by_field_name("QSB Grand Selling Price Amount(THB)",@revision_row) %></td>
+    <td colspan="2" class="td_text_factor">&nbsp;</td>
+  </tr>
+  <tr>
+    <td colspan="15" class="td_text_factor" style="text-align: right;">Discount</td>
+    <td class="td_amount_detail"><%= Field.value_by_field_name("QSB Grand Discount Percent",@revision_row)%></td>
+    <td class="td_amount_detail"><%= Field.value_by_field_name("QSB Grand Discount Amount(THB)",@revision_row)%></td>
+    <td colspan="2" class="td_text_factor">&nbsp;</td>
+  </tr>
+  <tr>
+    <td colspan="15" class="td_text_factor" style="text-align: right;">Grand Total Sale</td>
+    <td class="td_text_factor">&nbsp;</td>
+    <td class="td_amount_detail"><%= Field.value_by_field_name("QSB Grand Total Amount(THB)",@revision_row) %></td>
+    <td colspan="2" class="td_text_factor">&nbsp;</td>
+  </tr>
+</table>
+
+<table class="table_footer">
+  <tr>
+    <td>
+      <table class="table_cost_summary">
+        <tr>
+          <td colspan="2" class="td_cost_summary_header">Cost</td>
+          <td class="td_cost_summary_header">THB</td>
+          <td class="td_cost_summary_header">JPY</td>
+        </tr>
+        <tr>
+          <td class="td_cost_summary_header">1</td>
+          <td class="td_cost_summary_item">Robot Cost(CIF)</td>
+          <td class="td_cost_summary_amount">&nbsp;<%= Field.value_by_field_name("QSB Robot Cost(CIF) Total(THB)",@revision_row) %>&nbsp;</td>
+          <td class="td_cost_summary_amount">&nbsp;<%= Field.value_by_field_name("QSB Robot Cost(CIF) Total(JPY)",@revision_row) %>&nbsp;</td>
+        </tr>
+        <tr>
+          <td class="td_cost_summary_header">2</td>
+          <td class="td_cost_summary_item">Duty</td>
+          <td class="td_cost_summary_amount">&nbsp;<%= Field.value_by_field_name("QSB Duty Total(THB)",@revision_row) %>&nbsp;</td>
+          <td class="td_cost_summary_amount">&nbsp;<%= Field.value_by_field_name("QSB Duty Total(JPY)",@revision_row) %>&nbsp;</td>
+        </tr>
+        <tr>
+          <td class="td_cost_summary_header">3</td>
+          <td class="td_cost_summary_item">Factory Cost</td>
+          <td class="td_cost_summary_amount">&nbsp;<%= Field.value_by_field_name("QSB Factory Cost Total(THB)",@revision_row) %>&nbsp;</td>
+          <td class="td_cost_summary_amount">&nbsp;<%= Field.value_by_field_name("QSB Factory Cost Total(JPY)",@revision_row) %>&nbsp;</td>
+        </tr>
+        <tr>
+          <td class="td_cost_summary_header">4</td>
+          <td class="td_cost_summary_item">Discount from SUS Crop</td>
+          <td class="td_cost_summary_amount">&nbsp;<%= Field.value_by_field_name("Total Discount from SUS (THB)",@revision_row) %>&nbsp;</td>
+          <td class="td_cost_summary_amount">&nbsp;<%= Field.value_by_field_name("Total Discount from SUS (JPY)",@revision_row) %>&nbsp;</td>
+        </tr>
+        <tr>
+          <td class="td_cost_summary_header">&nbsp;</td>
+          <td class="td_cost_summary_item">&nbsp;</td>
+          <td class="td_cost_summary_amount">&nbsp;</td>
+          <td class="td_cost_summary_amount">&nbsp;</td>
+        </tr>
+        <tr>
+          <td colspan="2" class="td_number_detail">Total Cost</td>
+          <td class="td_total_summary_amount">&nbsp;<%= Field.value_by_field_name("QSB Total Cost(THB)",@revision_row) %>&nbsp</td>
+          <td class="td_total_summary_amount">&nbsp;<%= Field.value_by_field_name("QSB Total Cost(JPY)",@revision_row) %>&nbsp</td>
+        </tr>
+        <tr>
+          <td>&nbsp;</td>
+          <td>&nbsp;</td>
+          <td>&nbsp;</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td colspan="2" class="td_number_detail_with_frame">Gross Profit (THB)</td>
+          <td class="td_number_detail">&nbsp;<%= Field.value_by_field_name("QSB Gross Profit(THB)",@revision_row) %>&nbsp</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td colspan="2" class="td_number_detail_with_frame">Profit rate</td>
+          <td class="td_number_detail">&nbsp;<%= Field.value_by_field_name("QSB Profit Rate Percent",@revision_row) %>&nbsp;</td>
+          <td>&nbsp;</td>
+        </tr>
+      </table>
+    </td>
+    <td class="td_valign_top">
+      <table>
+        <tr>
+          <td>Project Information</td>
+        </tr>
+        <tr>
+          <td>
+            <table class="table_border">
+              <tr>
+                <td class="td_header_title2">Sale Name:</td>
+                <td class="td_header_text_underscore">&nbsp;</td>
+                <td class="td_header_title2">Project Name/Application:</td>
+                <td class="td_header_text_underscore">&nbsp;</td>
+                <td class="td_header_text">&nbsp;</td>
+              </tr>
+              <tr>
+                <td class="td_header_title2">Business Type:</td>
+                <td class="td_header_text"><%= Field.value_by_field_name("Customer Business Type",@revision_row) %></td>
+                <td class="td_header_title2">Nationality:</td>
+                <td class="td_header_text"><%= Field.value_by_field_name("Customer Nationality",@revision_row) %></td>
+                <td class="td_header_text">&nbsp;</td>
+              </tr>
+              <tr>
+                <td class="td_header_title2">Source:</td>
+                <td class="td_header_text"><%= Field.value_by_field_name("QSB Source",@revision_row) %></td>
+                <td class="td_header_title2">Type of project:</td>
+                <td class="td_header_text"><%= Field.value_by_field_name("QSB Type of project",@revision_row) %></td>
+                <td class="td_header_text">&nbsp;</td>
+              </tr>
+              <tr>
+                <td class="td_header_title2">End User:</td>
+                <td class="td_header_text_underscore">&nbsp;</td>
+                <td class="td_header_title2">Assembly Date:</td>
+                <td class="td_header_text_underscore">&nbsp;</td>
+                <td class="td_header_text">&nbsp;</td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+      </table>
+    </td>
+  </tr>   
+</table>
+<br/><br/>
+<p><%= current_page+1 %> of <%= total_page %></p>

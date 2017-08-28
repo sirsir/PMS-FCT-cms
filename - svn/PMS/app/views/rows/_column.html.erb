@@ -1,0 +1,168 @@
+<% if column.display_in_list? && !column.is_a?(Fields::Grouping) %>
+<%
+field = column
+custom_field = field.custom_field
+
+cell = row.cell(custom_field.id) unless custom_field.nil?
+
+cell_id = "#{row.id}_#{field.id}"
+cell_id << "_#{cell.id}" if cell
+
+align = "left"
+nobr = false
+title = ""
+toogler = false
+raw_data = []
+raw_data << "Cell Value: #{cell.value.class.to_s} = #{cell.value.to_yaml}" unless cell.nil?
+raw_data << "CustomField Value: #{custom_field.value.class.to_s} = #{custom_field.value.to_yaml}" unless custom_field.nil?
+raw_data << "Field Value: #{field.value.class.to_s} = #{field.value.to_yaml}"
+
+contents = ["
+<span class='missing_implementation'>
+Defind how to display '#{field.class.to_s}' - '#{field.custom_field.class.to_s}' in #{ __FILE__.gsub(RAILS_ROOT, "")}.
+<pre>#{raw_data.join("\n")}</pre>
+</span>"]
+
+#~ Types
+#~ Fields::Data
+#~ Fields::HeaderInfo
+#~ Fields::DetailInfo
+#~ Fields::Fomula
+#~ Fields::Accumulated
+#~ Fields::ReferenceAttribute
+#~ Fields::CodeCombindedReferenceAttribute
+#~
+case field
+when Fields::Data
+  defined_custom_field = true
+
+  case custom_field
+  when CustomFields::Reference
+    nobr = true
+  when CustomFields::LeftRight
+    nobr = true
+  when CustomFields::ListBox
+    nobr = true
+  when CustomFields::TextField
+    nobr = true
+    toogler = true
+  when CustomFields::TextArea
+    nobr = true
+    toogler = true
+  when CustomFields::DateTimeField
+    nobr = true
+  when CustomFields::NumericField
+    align = "right"
+    nobr = true
+  when CustomFields::IssueTracking
+  when CustomFields::CheckBox
+    align = "center"
+    nobr = !field.custom_field.new_line?
+    toogler = !field.custom_field.multi_value?
+  when CustomFields::ComboBox
+    nobr = true
+  when CustomFields::RadioButton
+    nobr = true
+  when CustomFields::UploadImage
+    align = "center"
+  when CustomFields::UploadFile
+  when CustomFields::LoginField
+  when CustomFields::Password
+    nobr = true
+  when CustomFields::ScreenCombindedReference
+    nobr = true
+    toogler = true
+  when CustomFields::OptionCombindedReference
+    nobr = true
+    title = cell.to_text
+    toogler = true
+  when CustomFields::CodeCombindedReference
+    nobr = true
+    toogler = true
+  when CustomFields::AutoNumbering
+    nobr = true
+  when CustomFields::Parameter
+    align = "right"
+    nobr = true
+  when CustomFields::Calendar
+    align = "left"
+    nobr = true
+  when CustomFields::DateTimeRange
+    align = "left"
+    nobr = true
+  else
+    defined_custom_field = false
+  end
+    contents = (cell.nil? ? ["&nbsp;"] : [cell.to_html].flatten ) if defined_custom_field
+    if custom_field.is_a?(CustomFields::Calendar) && cell.nil?
+      cells = 12
+      cells += 1 if Date.null_date.month > 1
+      contents = (0..cells).to_a.collect{|i| "&nbsp;" }
+    end
+
+when Fields::HeaderInfo
+  nobr = true
+  contents = [field.evaluate_value(row)]
+when Fields::DetailInfo
+  field_detail_screen_value = field.get_detail_screen_value(row.screen,row)
+  detail_screen_value = field_detail_screen_value.size == 0 ? nil : field_detail_screen_value.join("<br>")
+  nobr = true
+  contents = [detail_screen_value]
+when Fields::Formula
+  align = field.data_type == :number ? "right" : "left"
+  nobr = true
+  contents = [field.html(field.evaluate_value(row))]
+when Fields::Accumulation
+  align = "right"
+  nobr = true
+  contents = [field.html(field.evaluate_value(row))]
+when Fields::ReferenceAttribute, Fields::CodeCombindedReferenceAttribute
+  source_field = field.source_field
+  if source_field.is_a?(Fields::Accumulation) || source_field.is_a?(Fields::Formula) || (source_field.is_a?(Fields::Data) && source_field.custom_field.is_a?(CustomFields::NumericField))
+    align = "right"
+  end
+  contents = [source_field.html(field.evaluate_value(row))]
+when Fields::Comparison
+  contents = [field.evaluate_text(row)]
+when Fields::Grouping
+  nobr = true
+  contents = [field.evaluate_value(row)]
+when Fields::Separator
+  extra_styles = 'background-color:lightgray'
+  contents = ['%nbsp;']
+end
+
+contents.collect!{|c| c.to_s.strip.empty? ? "&nbsp;" : toogler ? full_text_toogler_tag(cell_id, c, row.id) : c }
+%>
+
+  <% contents.each do |c| %>
+    <td class='td_cell' id='<%=cell_id%>' align='<%=align%>' title="<%=title%>" style='<%="white-space: nowrap;" if nobr%><%= extra_styles %>'><%=c%>
+
+      <% #~ Test code to show cell's absolute_value and text %>
+      <% if RAILS_ENV =~ /development/ && false %>
+        
+        <% if cell.nil? %>
+        <pre style="font-size: 10px; color: red; text-align: left">{NULL}</pre>
+        <% else %>
+        <pre style="font-size: 10px; color: red; text-align: left">Cell:
+VAL : <%=cell.value.to_yaml %>
+ABS : <%=cell.absolute_value.to_yaml %>
+TXT : <%=cell.to_text %>
+HTM : <%=cell.to_html %></pre>
+        <% end  %>
+        <% unless custom_field.nil? %>
+        
+        <pre style="font-size: 10px; color: red; text-align: left">CustomField: <%=custom_field.name %>
+TYP : <%=custom_field.class.to_s %>
+VAL : <%="#{custom_field.value.to_yaml}" %></pre>
+        <% end %>
+        <% unless custom_field.nil? %>
+        
+        <pre style="font-size: 10px; color: red; text-align: left">Field:
+TYP : <%=field.class.to_s %>
+VAL : <%="#{field.value.to_yaml}" %></pre>
+        <% end %>
+      <% end %>
+    </td>
+  <% end %>
+<% end %>

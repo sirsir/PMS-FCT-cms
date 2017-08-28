@@ -1,0 +1,20 @@
+# Logfile created on Thu Jun 16 14:10:26 +0700 2016
+
+Processing FrontDeskController#index (for 127.0.0.1 at 2016-06-16 14:11:03) [GET]
+  Session ID: 197bbb44d5034ade3e012844438a8810
+  Parameters: {"action"=>"index", "controller"=>"front_desk"}
+  [4;36;1mSession Columns (2.0ms)[0m   [0;1mSHOW FIELDS FROM `sessions`[0m
+  [4;35;1mSession Load (10.0ms)[0m   [0mSELECT * FROM `sessions` [0m
+Redirected to actionlogincontrollerfront_desk
+Filter chain halted as [:authorize] rendered_or_redirected.
+Completed in 55ms (DB: 39) | 302 Found [http://localhost/]
+
+
+Processing FrontDeskController#login (for 127.0.0.1 at 2016-06-16 14:11:04) [GET]
+  Session ID: 197bbb44d5034ade3e012844438a8810
+  Parameters: {"action"=>"login", "controller"=>"front_desk"}
+Rendering template within layouts/standard-layout
+Rendering front_desk/login
+Rendered front_desk/_system_title (15.0ms)
+Rendered front_desk/_login (1.0ms)
+Completed in 635ms (View: 173, DB: 5) | 200 OK [http://localhost/front_desk/login]

@@ -1,0 +1,8 @@
+<%= javascript_include_tag "application" %>
+<%= javascript_include_tag "dialog" %>
+
+<script type="text/javascript">
+  var cf_id = "<%= @cf_id %>";
+  var image_name = "<%= @image_name %>";
+  fncCopyImageAndNameToMain(cf_id,image_name)
+</script>

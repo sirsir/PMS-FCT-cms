@@ -1,0 +1,14 @@
+<%
+assigned_value = CustomFields::RadioButton.cell_label_ids(options[:value])
+all_combo = custom_field.label_ids.collect{|c| Label.find("#{c}") }
+selected_combo = nil
+custom_value = [all_combo, selected_combo]
+
+custom_value[0].each_with_index do |c,count|
+%>
+<span class="field_search_half" >
+<%= check_box_tag("#{input_name}[#{c.id}]", true, assigned_value.include?(c.id.to_s)) %>
+<%= label_tag "#{input_name}[#{c.id}]", c.descr %>
+</span>
+<%= '<br>' if (count % 2 == 1) %>
+<% end %>

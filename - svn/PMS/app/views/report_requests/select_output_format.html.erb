@@ -1,0 +1,7 @@
+<% form_tag url_for(:action => :export, :id => @report_request_id), :target => "_blank" do %>
+<%
+output_format_options = options_for_select(ReportRequest.export_formats.collect{|k, v| [v, k]}, :xls)
+%>
+  <%= select_tag(:output_format, output_format_options)%>
+  <%= submit_tag("Download") %>
+<% end %>

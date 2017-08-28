@@ -1,0 +1,15 @@
+<%
+url = gen_url_for_pagination(@pageno, @screen.id, "page_" + @action_source.gsub("page_",""), @row_pattern.nil? ? nil : @row_pattern.id, header[:field_id])
+onclick = <<JAVASCRIPT
+fncAjaxAbort();
+fncAjaxUpdater("main","#{url}"); return false;
+JAVASCRIPT
+%>
+<th class='th_col_header'
+  <% if header[:col_span].to_i > 1 %> colspan='<%= header[:col_span] %>'  <% end %>
+  <% if header[:row_span].to_i > 1 %> rowspan='<%= header[:row_span] %>'  <% end %>
+  <% if header[:allow_sort] %>        onclick='<%= onclick %>'            <% end %>
+    >
+<%= (header[:descr] == "&nbsp;" || header[:descr] =~ /<input/i ) ? header[:descr] : header[:descr].to_s.titleize %>
+<%= "<img src=/images/#{Row.sorting_order(@sort_field_id_order)}.png></img>" if header[:allow_sort] && @sort_field_id_order.first.to_i.abs == header[:field_id] %>
+</th>

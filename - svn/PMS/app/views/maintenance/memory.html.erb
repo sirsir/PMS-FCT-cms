@@ -1,0 +1,23 @@
+<h1>System Memory</h1>
+<table class="table_data_content" cellspacing='0'>
+<%=render :partial => 'memory_system', :locals => { :filter => 'physical' } %>
+<%=render :partial => 'memory_system', :locals => { :filter => 'virtual' } %>
+</table>
+
+<h1>Task List</h1>
+<table class="table_data_content" cellspacing='0'>
+<%=render :partial => 'memory_task_list' %>
+<%=render :partial => 'memory_task_allocation' %>
+</table>
+
+<h1>Allocated Object (on Port <%= request.port %>)</h1>
+<table class="table_data_content" cellspacing='0'>
+<%=render :partial => 'memory_object_count' %>
+<%=render :partial => 'memory_object_allocation' %>
+</table>
+
+<h1>Cache</h1>
+<%=render :partial => 'memory_cache' %>
+
+<%=flash_messages %>
+

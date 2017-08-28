@@ -1,0 +1,46 @@
+<tr>
+  <th class="th_row_header">Reference Screen:</th>
+  <td>
+    <%
+    operation_url_option = url_for(:controller => "fields",
+      :action=>"selector",
+      :source => 'custom_fields',
+      :id=>0,
+      :screen_id=>"JAVA_SCRIPTION_VAR_SCREEN_ID",
+      :name=>"custom_field[value][custom_field_ids]")
+    option_tag = @custom_field.screen_id == 0 ? "<option>Please Select</option>" : ''
+    option_tag << options_from_collection_for_select(@screens, :id, :label_descr_with_name, @custom_field.screen_id)
+    %>
+    <%= select_tag "custom_field[value][screen_id]", option_tag,
+      {:onChange => "fncAjaxUpdater(\"custom_field_description_selector\",\"#{operation_url_option}\".replace(\"JAVA_SCRIPTION_VAR_SCREEN_ID\", this.value));"}
+  %>
+    <%= field_descr_tag %>
+  </td>
+</tr>
+<tr>
+  <th class="th_row_header">Control Type:</th>
+  <td>
+    <% %w(combo_box searchable_text separate_controls).each do |control_type| %>
+      <%= radio_button_tag("custom_field[value][control_type]", control_type, @custom_field.send(:"is_#{control_type}?")) %>
+      <%= label_tag("custom_field[value][control_type][#{control_type}]", control_type.titleize) %>
+      <br />
+    <% end %>
+    <%= field_descr_tag :break => false%>
+  </td>
+</tr>
+<tr>
+  <th class="th_row_header">Ref Description:</th>
+  <td id='custom_field_description_selector'>
+    <%=left_to_right_tag(
+      :descr => "Field",
+      :name =>  "custom_field[value][custom_field_ids]",
+      :assigned_options => @custom_field.custom_fields,
+      :all_options => @custom_field.screen ? @custom_field.screen.fields.collect{|f| f.custom_field if f.is_a?(Fields::Data) } : [],
+      :value_method => "id",
+      :text_method => 'label_descr',
+      :sort => false
+    )
+    %>
+    <%= field_descr_tag %>
+  </td>
+</tr>

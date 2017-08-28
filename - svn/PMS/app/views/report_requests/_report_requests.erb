@@ -1,0 +1,16 @@
+<table class='table_content' id='table_content_' cellspacing='0'>
+  <tr class='tr_header'>
+    <% ["&nbsp;", "Name", "Report", "Interval", "Last Run", "Next Run", "Remark", "&nbsp;", "&nbsp;"].each do |h| %>
+      <th class='th_col_header'><%= (h =~ /&nbsp;/) ? h : h.to_s.titleize %></th>
+    <% end %>
+  </tr>
+  <%
+  row_groups = []
+  row_groups << [ReportRequest.new()] #~ Template
+  row_groups << @report_requests      #~ Rows
+
+  row_groups.each do |rg|
+  %>
+  <%= render :partial => "loading_report_request", :collection => rg, :locals => {:report_requests => rg, :row_type=>:list} %>
+  <% end %>
+</table>

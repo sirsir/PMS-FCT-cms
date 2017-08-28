@@ -1,0 +1,25 @@
+<%=javascript_include_tag "prototype" %>
+<%=javascript_include_tag "application" %>
+<%=javascript_include_tag "dialog" %>
+<%=javascript_include_tag "fr" %>
+<script type="text/javascript">
+<%
+if @role.errors.empty?
+  if @from_role_info
+    ajax_url = url_for(:action => :edit, :id => @role.id)
+  %>
+    fncSetOperationContent("main", "<%= ajax_url %>");
+  <% else %>
+    fncUpdateTrToTableContent(<%= @screen.id %>, <%= @role.id %>);
+  <% unless @form_content_reuse %>
+      var main_doc = fncGetMainDocument();
+      var div = main_doc.getElementById("operation_area_<%= @screen.id.to_s %>");
+      fncClearDiv(div);
+  <% end %>
+<% end %>
+<% else %>
+    fncSetError('<%=error_messages_for(:object => @role).to_s.gsub(/'/, "&rsquo\;") %>');
+<% end %>
+
+  fncLoadTempFrame();
+</script>

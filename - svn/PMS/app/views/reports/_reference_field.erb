@@ -1,0 +1,65 @@
+<%
+field_report_template = "field_report_template_#{reference_screen_index}_#{reference_field.nil? ? 'id' : reference_field.id}"
+fields_name = "report[fields][]"
+summarize_fields_name = "#{fields_name}[summarize]"
+tr_class = (reference_fields.index(reference_field) % 2 == 0 ? "odd" : "even")
+
+cross_tab_compatible_col = reference_field.is_a?(Fields::Data) && (
+    reference_field.custom_field.is_a?(CustomFields::ComboBox) ||
+    reference_field.custom_field.is_a?(CustomFields::ListBox) ||
+    reference_field.custom_field.is_a?(CustomFields::RadioButton) ||
+    reference_field.custom_field.is_a?(CustomFields::Reference) ||
+    reference_field.custom_field.is_a?(CustomFields::LoginField) ||
+    reference_field.custom_field.is_a?(CustomFields::DateTimeField) ||
+    reference_field.custom_field.is_a?(CustomFields::Calendar)
+  )
+
+cross_tab_compatible_col ||= reference_field.nil?
+# ToDo: Allow check box with single value to be used as a cross tab column
+#cross_tab_compatible_col ||= reference_field.custom_field.is_a?(CustomFields::CheckBox) && reference_field.custom_field.single_value?
+# Check MultiSelect on the ListBox too
+
+cross_tab_compatible_row = !reference_field.nil?
+cross_tab_compatible_cell = !reference_field.nil?
+%>
+<tr class="tr_data_<%=tr_class %>">
+  <td class="td_cell" width="100%" style="width:100%">
+    <%= reference_field.nil? ? 'Id' : reference_field.descr %>
+    <table style="display: none;">
+      <tbody>
+        <%
+        field_report = FieldsReport.new(
+          :report_id => @report.id,
+          :field_id => reference_field.nil? ? -1 : reference_field.id,
+          :location => FieldsReport.locations[0],
+          :reference_screen_index => reference_screen_index,
+          :field_type => :field
+        )
+        %>
+        <%=render(:partial => 'field_report', :collection => [field_report], :locals => {:id => field_report_template, :fields_name => fields_name }) %>
+      </tbody>
+    </table>
+  </td>
+  <td class="td_cell" title="Add to Row Fields">
+    <% if cross_tab_compatible_row %>
+      <a href="#" onclick='fncAddReportField("<%=field_report_template %>", "row", "<%=summarize_fields_name %>");return false;'>&raquo;</a>
+    <% else %>
+      &nbsp;
+    <% end %>
+  </td>
+  <td class="td_cell" title="Add to Cell Fields">
+    <% if cross_tab_compatible_cell %>
+      <a href="#" onclick='fncAddReportField("<%=field_report_template %>", "cell", "<%=summarize_fields_name %>");return false;'>&raquo;</a>
+    <% else %>
+      &nbsp;
+    <% end %>
+  </td>
+  <td class="td_cell" title="Add to Column Fields">
+    <% if cross_tab_compatible_col %>
+      <a href="#" onclick='fncAddReportField("<%=field_report_template %>", "col", "<%=summarize_fields_name %>");return false;'>&raquo;</a>
+    <% else %>
+      &nbsp;
+    <% end %>
+  </td>
+</tr>
+  

@@ -1,0 +1,145 @@
+<%
+def to_period(date, period)
+  case period
+  when :quarter_year
+     date == 0 ? 0 : CustomFields::DateTimeField.quarter_year(date)
+  when :half_year
+    date == 0 ? 0 : CustomFields::DateTimeField.half_year(date)
+  end
+end
+
+options[:value] ||= {}
+options[:value][:from] ||= Date.null_date
+options[:value][:to] ||= Date.null_date
+
+field_name = input_name
+screen_id = options[:screen_id]
+option_name = options[:name]
+default_value_from = options[:value][:from]
+default_value_to = options[:value][:to]
+is_already_set = options[:value][:status]
+format = options[:value][:format]
+is_range = options[:range]
+
+field_from_name = "#{field_name}[from]"
+field_to_name = "#{field_name}[to]"
+field_from_id = sanitize_to_id(field_from_name)
+field_to_id = sanitize_to_id(field_to_name)
+default_value_from = (default_value_from.nil? || default_value_from == Date.null_date) ? nil : default_value_from.to_date.strftime("%d-%b-%Y")
+default_value_to = (default_value_to.nil? || default_value_to == Date.null_date) ? nil : default_value_to.to_date.strftime("%d-%b-%Y")
+date_format = format.nil? ? CustomField.find(field.custom_field_id).format_date : format
+
+radio_name = "#{field_name}[status][set]"
+radio_id = sanitize_to_id(radio_name)
+onset_radio_already_set = "javascript:fncAlreadySetRadio('#{radio_id}');"
+
+case date_format
+when :half_year then
+  label_describe = ' (Half)'
+when :quarter_year then
+  label_describe = ' (Quarter)'
+else
+  label_describe = ''
+end
+%>
+<b><%= label_tag('', "#{field.descr}#{label_describe}:") %></b>
+<% if field.required_search? %>
+  <span class='required_field'>&nbsp;*&nbsp;</span>
+<% end %>
+<div style="white-space: nowrap;">
+<%
+    case date_format
+    when :short_date, :long_date then
+        onclear = "javascript:ResetTextBox('#{field_from_id}');
+                   javascript:ResetTextBox('#{field_to_id}');"
+        calendar_name = option_name == :field_filter ? "calendar_#{field.id}_value" : (screen_id.nil?) ? "calendar_#{field.custom_field_id}" : "calendar_#{screen_id}_#{field.custom_field_id}"
+%>
+<%= text_field_tag(field_from_name, default_value_from, :readonly=>true, :size=>7) %>
+
+<img id="<%=calendar_name%>_from" src="/images/cal.gif" width="16" height="16" alt="Pick a date" border="0" onClick="javascript:NewCssCal('<%=field_from_id%>','ddmmmyyyy'); <%=onset_radio_already_set%>" />
+<% if is_range %>
+    <B> ~ </B>
+    <%= text_field_tag(field_to_name, default_value_to, :readonly=>true, :size=>7) %>
+       
+    <img id="<%=calendar_name%>_to" src="/images/cal.gif" width="16" height="16" alt="Pick a date" border="0" onClick="javascript:NewCssCal('<%=field_to_id%>','ddmmmyyyy'); <%=onset_radio_already_set%>" />
+    <%end%>
+    <img src="/images/cal_close.gif" width="11" height="11" alt="Reset date" border="0" onClick="<%=onclear%>" />
+
+<%  else
+        start_year = (Time.now.year)-10
+        end_year = (Time.now.year)+5
+
+        field_from_month = "#{field_from_name}_month"
+        field_from_year = "#{field_from_name}_year"
+        field_to_month = "#{field_to_name}_month"
+        field_to_year = "#{field_to_name}_year"
+
+        onchange_from = "fncSetDate('#{date_format}','#{sanitize_to_id("date[#{field_from_month}]")}','#{sanitize_to_id("date[#{field_from_year}]")}','#{field_from_id}',true, '#{Date.null_date}');"
+        onchange_from << "fncSetDate('#{date_format}','#{sanitize_to_id("date[#{field_from_month}]")}','#{sanitize_to_id("date[#{field_from_year}]")}','#{field_to_id}',false, '#{Date.null_date}');" unless is_range
+
+        onchange_to = "fncSetDate('#{date_format}','#{sanitize_to_id("date[#{field_to_month}]")}','#{sanitize_to_id("date[#{field_to_year}]")}','#{field_to_id}',false, '#{Date.null_date}');" if is_range
+
+        onclear = "javascript:fncClearComboBoxDateFormat('#{date_format}','#{sanitize_to_id("date[#{field_from_month}]")}','#{sanitize_to_id("date[#{field_from_year}]")}','#{field_from_id}','#{default_value_from}');
+  javascript:fncClearComboBoxDateFormat('#{date_format}','#{sanitize_to_id("date[#{field_to_month}]")}','#{sanitize_to_id("date[#{field_to_year}]")}','#{field_to_id}','#{default_value_to}');
+  javascript:fncClearInvalidSearch('#{field.custom_field_id}');"
+        case date_format
+        when :year then
+         %>
+            <%= select_year(default_value_from,{:field_name => field_from_year, :start_year => start_year, :end_year => end_year, :include_blank => true},{:onchange => onchange_from, :onclick => onset_radio_already_set}) %>
+            <%= '<B> ~ </B>' if is_range %>
+            <%= select_year(default_value_to,{:field_name => field_to_year, :start_year => start_year,:end_year => end_year,:include_blank => true},{:onchange => onchange_to, :onclick => onset_radio_already_set}) if is_range %>
+        <%
+        else
+            case date_format
+            when :short_month, :long_month then
+              use_month_numbers = (date_format == :short_month)
+              use_short_month = (date_format == :long_month)
+                
+              %>
+              <%= select_month(default_value_from, {:field_name => field_from_month, :use_short_month => use_short_month, :use_month_numbers => use_month_numbers, :include_blank => true}, {:onchange => onchange_from, :onclick => onset_radio_already_set}) %>
+              <%= select_year(default_value_from, {:field_name => field_from_year, :start_year => start_year  , :end_year => end_year, :include_blank => true}, {:onchange => onchange_from, :onclick => onset_radio_already_set}) %>
+              <%= '<B> ~ </B>' if is_range %>
+              <%= select_month(default_value_to, {:field_name => field_to_month, :use_short_month => use_short_month, :use_month_numbers => use_month_numbers, :include_blank => true}, {:onchange => onchange_to, :onclick => onset_radio_already_set}) if is_range %>
+              <%= select_year(default_value_to, {:field_name => field_to_year, :start_year => start_year  , :end_year => end_year, :include_blank => true}, {:onchange => onchange_to, :onclick => onset_radio_already_set}) if is_range %>
+            <%
+            when :half_year, :quarter_year then
+                null_date = Date.null_date
+                month_from = default_value_from.nil? ? 0 : null_date == default_value_from ? 0 : default_value_from.month
+                month_to =  default_value_to.nil? ? 0 : null_date == default_value_to ? 0 : default_value_to.month
+                if date_format == :half_year
+                  options = ['','1st','2nd']
+                else
+                  options = ['','1st','2nd','3rd','4th']
+                end
+                period_from = to_period(month_from, date_format)
+                period_to = to_period(month_to, date_format)
+                    
+                options_from = options.collect{|o| selected = (options.index(o) == period_from) ? 'selected="selected"': '' unless default_value_from.nil?
+                           "<option value='#{options.index(o)}' #{selected} >#{o}</option>"}
+                options_to = options.collect{|o| selected = (options.index(o) == period_to) ? 'selected="selected"': '' unless default_value_to.nil?
+                           "<option value='#{options.index(o)}' #{selected} >#{o}</option>"}
+                %>
+                <%= select_tag(sanitize_to_id("date[#{field_from_month}]"), options_from, {:onchange => onchange_from, :onclick => onset_radio_already_set, :include_blank => true}) %>
+                <%= select_year(default_value_from, {:field_name => field_from_year, :start_year => start_year  , :end_year => end_year, :include_blank => true}, {:onchange => onchange_from, :onclick => onset_radio_already_set}) %>
+                <%= '<B> ~ </B>' if is_range %>
+                <%= select_tag(sanitize_to_id("date[#{field_to_month}]"), options_to, {:onchange => onchange_to, :include_blank => true, :onclick => onset_radio_already_set}) if is_range %>
+                <%= select_year(default_value_to, {:field_name => field_to_year, :start_year => start_year  , :end_year => end_year, :include_blank => true}, {:onchange => onchange_to, :onclick => onset_radio_already_set}) if is_range %>
+            <%end%>
+        <%end%>
+        <!----- Adding image for reset date ----->
+        <img src="/images/cal_close.gif" width="11" height="11" alt="Reset date" border="0" onClick="<%=onclear%>" />
+        <%= hidden_field_tag(field_from_name, default_value_from) %>
+        <%= hidden_field_tag(field_to_name, default_value_to) %>
+   <%end%>
+    
+</div>
+    <!----- Adding radio box----->
+<%    is_already_set ||= true %>
+<span class="field_search_half">
+<%= radio_button_tag("#{field_name}[status]", 'set',      is_already_set, {:onpropertychange => "fncCheckStatusDateTime(#{field.custom_field_id},'#{screen_id}');"                      }) %>
+<%= label_tag  "#{field_name}[status][set]", 'Already Set' %>
+</span>
+<span class="field_search_half">
+<%= radio_button_tag("#{field_name}[status]", 'not_set',  !is_already_set,{:onpropertychange => "fncCheckStatusDateTime(#{field.custom_field_id},'#{screen_id}');", :onclick => onclear }) %>
+<%= label_tag  "#{field_name}[status][not_set]", 'Not Set' %>
+</span>

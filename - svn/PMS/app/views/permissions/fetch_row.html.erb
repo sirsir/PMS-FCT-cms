@@ -1,0 +1,13 @@
+<table>
+  <!-- WARNING!!! The first list must be the table start tag -->
+  <%
+  tr_id = "#{@screen.id}_#{@permission.id}"
+  %>
+  <tr id="<%= tr_id %>_replacement" readonly='<%= @readonly %>'>
+    <%= render :partial => @partial,
+        :locals => {
+          :"#{@partial}" => @permission,
+          :operation_area => "operation_area_#{@screen.id}"
+        } %>
+  </tr>
+</table>

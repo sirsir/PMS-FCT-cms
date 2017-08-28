@@ -1,0 +1,18 @@
+<p>
+  <b>Label:</b>
+  <%=h @caption.label.name %>
+</p>
+
+<p>
+  <b>Language:</b>
+  <%=h @caption.language.name %>
+</p>
+
+<p>
+  <b>Name:</b>
+  <%=h @caption.name %>
+</p>
+
+
+<%= link_to 'Edit', edit_caption_path(@caption) %> |
+<%= link_to 'Back', captions_path %>

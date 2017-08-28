@@ -1,0 +1,101 @@
+<div style="display: none;">
+  <%= hidden_field(:field, :screen_id) %>
+  <%= hidden_field(:field, :type) %>
+</div>
+
+<table>
+  <tr>
+    <th class="th_row_header"><%= field_label_tag :name, :mandatory => true, :unique => true %>:</th>
+    <td>
+      <%= text_field_tag("field[name]", @field.name.to_s) %>
+      <%= field_descr_tag %>
+    </td>
+  </tr>
+  
+  <tr>
+    <th class="th_row_header"><%= field_label_tag :label, :mandatory => true %>:</th>
+    <td>
+      <%= select_label_tag("field[label_id]", @field.label_id) %>
+      <%= field_descr_tag %>
+    </td>
+  </tr>
+
+  <%=table_hr_tag  %>
+
+  <%= render :partial => @field.class.name.underscore %>
+  
+  <%=table_hr_tag  %>
+
+  <% if @field.writable? %>
+  <tr>
+    <th class="th_row_header">Read Only:</th>
+    <td>
+      <%= check_box_tag('field[value][read_only]', '1', @field.id.nil? ? false : @field.read_only?) %>
+      <%= hidden_field_tag 'field[value][read_only]', 0 %>
+    </td>
+  </tr>
+  <% end %>
+  
+  <tr>
+    <th class="th_row_header">Display:</th>
+    <td>
+      <% labels = Field.display_flags_language_control_options.select{|l| @field.screen.is_a?(RevisionScreen) || l.name != "G_HeaderList" } %>
+      <%= check_box_collection_tag(
+        :check_box_options => labels,
+        :assigned_label_id => @field.display_flags,
+        :name => "field[display_flags]")
+    %>
+      <%= field_descr_tag :break => false %>
+    </td>
+  </tr>
+
+  <tr>
+    <th class="th_row_header">Group:</th>
+    <td>
+      <%
+      field_options = "<option value=''>Please select</option>"
+      field_options += options_from_collection_for_select( @grouping_fields, :id, :descr, @field.id.nil? ? nil : @field.field_id  )
+      %>
+      <%= select_tag("field[field_id]", field_options) %>
+      <%= field_descr_tag %>
+    </td>
+  </tr>
+
+  <tr>
+    <th class="th_row_header">Order By:</th>
+    <td>
+      <%
+      sorting_orders = Field.display_sorting_orders.collect{|d| [d.to_s.titleize, d.to_s]}
+      sorting_order_options = options_for_select(sorting_orders, @field.sorting_order.to_s)
+      %>
+      <%= select_tag "field[sorting_order]", sorting_order_options %>
+      <%= field_descr_tag %>
+    </td>
+  </tr>
+
+  <tr >
+    <th />
+    <td><%= group_button(:reused_form => @field.new_record?, :save_as => !@field.new_record?, :area_id => @screen_self.id) %></td>
+  </tr>
+
+  <% unless @field.new_record? %>
+
+  <%=table_hr_tag  %>
+  
+  <tr>
+    <th class="th_row_header">New Screen:</th>
+    <td>
+      <%= screen_collection_select_tag(
+        :assigned_options => [@field.screen.nil? ? @screen : @field.screen],
+        :all_options => @screens,
+        :name => "field[new_screen_id]",
+        :value_method => "id",
+        :text_method => "name",
+        :group_method => Screen.select_group_method,
+        :group_label_method => "name",
+        :include_blank => false ) %>
+      <%= field_descr_tag :descr => "For saving as a new record, select the new screen to copy to" %>
+    </td>
+  </tr>
+  <% end %>
+</table>

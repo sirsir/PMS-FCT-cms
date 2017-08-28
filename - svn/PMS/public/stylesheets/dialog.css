@@ -1,0 +1,17 @@
+#pop_box {
+    text-align: center;
+    vertical-align: middle;
+    font-size: xx-large;
+    font-weight: bold;
+    font-style:italic;
+    display:none;
+    position:absolute;
+    z-index: 1000;
+    background-color: white;
+    opacity: 0.50; /*for IE >= 9.0 and other browsers*/
+    filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=50); /*for IE < 9.0 */
+    top: expression(this.offsetParent.scrollTop + 'px');
+    left: expression(this.offsetParent.scrollLeft + 'px');
+    height: 110%;
+    width: 110%;
+}

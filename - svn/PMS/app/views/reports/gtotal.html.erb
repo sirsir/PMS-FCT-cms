@@ -1,0 +1,27 @@
+<br>
+<h1>Grand Total Report</h1><br>
+<%= hidden_field_tag("screen_id", @screen["id"]) %>
+Invoice date <%= field_date_search_without_status("invoice_from","invoice_to") %><br>
+<table border="0">
+<tr nowrap><td>Report Type
+<select id ="filter1" onchange="fncReloadComboReport(this)">
+  <option value="">Please select one</option>
+  <option value="309">Potential Rank</option>
+  <option value="245">Nation</option>
+  <option value="215">Business Type</option>
+  <option value="214">Area</option>
+  <option value="292">Province</option>
+  <option value="319">Industrial Estate</option>
+  <option value="246">Product Type</option>
+  <option value="218">Sales Office</option>
+  <option value="bill">Bill Count</option>
+</select> &nbsp; &nbsp;</td>
+<td id="filter_by" name="filter_by">
+  <select id ="filter2">
+  <option value=""></option>
+  </select></td>
+  <td> &nbsp; &nbsp;<input type="button" onClick="fncLoadGTotalReport();" value ="Search"></td>
+</tr>
+</table>
+<hr>
+<div id ='report_area'></div>

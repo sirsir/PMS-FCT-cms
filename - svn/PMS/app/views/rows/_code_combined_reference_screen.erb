@@ -1,0 +1,247 @@
+<%
+self_ccr_result_id = "#{ccr_result_id_prefix}_#{index}"
+
+scr_row_cell_value = scr_row.cell(field.ocr_field.scr_field.custom_field_id).value
+parts = CustomFields::ScreenCombindedReference.cell_parts(scr_row_cell_value).select{|p| p[:type] != :option }
+
+used_as_multiply_count = CustomFields::ScreenCombindedReference.is_screen_used_as_multiply_count?(scr_row_cell_value, parts[index][:screen_id]) if index < parts.size
+multiplier_index = CustomFields::ScreenCombindedReference.cell_multiplier_index(scr_row_cell_value)
+
+multiplier_row_id = @multiplier_row.id unless @multiplier_row.nil?
+
+unless sub_scr_row.nil?
+  sub_scr_row_id = sub_scr_row.id
+  sub_scr_row_cell_value = sub_scr_row.cell(field.ocr_field.scr_field.custom_field_id).value
+  sub_parts = CustomFields::ScreenCombindedReference.cell_parts(sub_scr_row_cell_value).select{|p| p[:type] != :option }
+end
+
+scr_screen_count = parts.size
+
+if ccr_result_id_prefix =~ /(_\d+){2}$/
+  self_prefix = ccr_result_id_prefix.split(/_(\d+)$/).first
+  self_group_index = ccr_result_id_prefix.split(/_(\d+)$/).last.to_i
+else
+  self_prefix = ccr_result_id_prefix
+  self_group_index = -1
+end
+
+count = @multiplier_row.select_multiple_counter_from_descr unless @multiplier_row.nil?
+
+if parent_scr_row.nil?
+  group_index = CustomFields::ScreenCombindedReference.group_index(scr_row_cell_value)
+  
+  push_level = (index + 1 == group_index)
+else
+  parent_scr_row_id = parent_scr_row.id unless parent_scr_row.nil?
+
+  parent_scr_row_cell_value = parent_scr_row.cell(field.ocr_field.scr_field.custom_field_id).value
+  group_index = CustomFields::ScreenCombindedReference.group_index(parent_scr_row_cell_value)
+  parent_parts = CustomFields::ScreenCombindedReference.cell_parts(parent_scr_row_cell_value).select{|p| p[:type] != :option }
+
+
+  pop_level = (index + 1 == scr_screen_count) && (self_group_index + 1 == count)
+end
+
+if push_level
+  if used_as_multiply_count
+    o_parent_scr_row_id = parent_scr_row_id
+    o_scr_row_id = scr_row.id
+    o_sub_scr_row_id = sub_scr_row_id
+    o_ccr_result_id_prefix = ccr_result_id_prefix
+    o_input_name = input_name
+    o_parent_ccr_result_id = parent_ccr_result_id
+    o_next_ccr_result_id = next_ccr_result_id
+
+    result_id = ccr_group_result_id
+  else
+    o_parent_scr_row_id = scr_row.id
+    o_scr_row_id = sub_scr_row_id
+    o_sub_scr_row_id = nil
+    o_ccr_result_id_prefix = "#{ccr_result_id_prefix}_#{group_index}_0"
+    o_input_name = "#{input_name}[groups][0]"
+    o_parent_ccr_result_id = next_ccr_result_id
+    o_next_ccr_result_id = nil
+
+    result_id = "#{o_ccr_result_id_prefix}_0"
+  end
+
+  o_selected_index = -1
+elsif pop_level
+  o_parent_scr_row_id = nil
+  o_scr_row_id = parent_scr_row_id
+  o_sub_scr_row_id = scr_row.id
+  o_selected_index = group_index
+  o_ccr_result_id_prefix = ccr_result_id_prefix.gsub(/(_\d+){2}$/, '')
+  o_input_name = input_name.split(/\[groups\]/).first
+  o_parent_ccr_result_id = nil
+  o_next_ccr_result_id = parent_ccr_result_id
+
+  ccr_result_id_prefix = o_ccr_result_id_prefix
+  result_id = "#{ccr_result_id_prefix}_#{group_index+1}"
+else
+  o_parent_scr_row_id = parent_scr_row_id
+  o_scr_row_id = scr_row.id
+  o_sub_scr_row_id = sub_scr_row_id
+  if (index + 1) == scr_screen_count
+    o_selected_index = -1
+    if parent_scr_row_id.nil?
+      o_ccr_result_id_prefix = ccr_result_id_prefix
+      o_input_name = input_name
+      result_id = next_ccr_result_id
+    else
+      o_ccr_result_id_prefix = "#{self_prefix}_#{self_group_index.to_i + 1}"
+      o_input_name = "#{input_name.split(/\[(\d+)\]$/).first}[#{self_group_index.to_i + 1}]"
+
+      ccr_result_id_prefix = o_ccr_result_id_prefix
+      result_id = "#{ccr_result_id_prefix}_#{0}"
+    end
+  else
+    o_selected_index = index
+    o_ccr_result_id_prefix = ccr_result_id_prefix
+    o_input_name = input_name
+
+    result_id = "#{ccr_result_id_prefix}_#{index+1}"
+  end
+  o_parent_ccr_result_id = parent_ccr_result_id
+  o_next_ccr_result_id = next_ccr_result_id
+end
+
+selected_options = selected_values.flatten
+
+a_value = selected_values.last
+b_value = a_value.last if a_value.is_a?(Array)
+selected_options << nil if b_value == []
+
+url_options = {
+  :controller => "rows",
+  :action => "code_combined_reference",
+  :id => 0,
+  :parent_scr_row_id => o_parent_scr_row_id,
+  :scr_row_id => o_scr_row_id,
+  :sub_scr_row_id => o_sub_scr_row_id,
+  :field_id => field.id,
+  :screen_id => screen_id,
+  :input_name => o_input_name,
+  :selected_index => o_selected_index,
+  :ccr_result_id_prefix => o_ccr_result_id_prefix,
+  :parent_ccr_result_id => o_parent_ccr_result_id,
+  :next_ccr_result_id => o_next_ccr_result_id,
+  :ccr_group_result_id => ccr_group_result_id,
+  :multiplier_row_id => multiplier_row_id,
+  :selected_options => selected_options[0...selected_options.size-1],
+  :selected_value => "JAVASCRIPT_VAR_VALUE_01"
+}
+
+case
+when used_as_multiply_count
+  url_options[:action] << '_group'
+when index + 1 == scr_screen_count then
+  url_options[:action] << (result_id =~ /_ccr_options$/ ? '_options' : '_screen')
+when parts[index + 1][:type] != :option then
+  url_options[:action] << '_screen'
+end
+
+url = url_for(url_options)
+
+js_set_selectable_values = <<JAVASCRIPT
+fncAjaxUpdaterWithReplacement("#{result_id}", "#{url}", ["JAVASCRIPT_VAR_VALUE_01", this.value]);
+JAVASCRIPT
+
+js_reset_selected_values = ""
+
+def check_point_level(check_point)
+  parts = check_point.split(/_(\d+)/).select{|b| !b.empty? }
+  "#{parts[0]}#{'_%04d'*4}" % [parts[1].to_i, parts[2].to_i, parts[3].to_i, parts[4].to_i]
+end
+
+idx = (index+1 == scr_screen_count) && !parent_scr_row.nil? ? group_index : index
+id_prefix = ccr_result_id_prefix.gsub(/(_\d+){2}$/, '')
+if index+1 == scr_screen_count && ccr_result_id_prefix =~ /(_\d+){3}$/
+  check_point = "#{self_prefix}_#{self_group_index.to_i + 1}_0_0"
+else
+  check_point = "#{ccr_result_id_prefix}_#{idx+1}"
+end
+
+check_point = check_point_level(check_point)
+
+opt_ids = []
+scr_parts = parent_parts || parts
+scr_parts.each_with_index do |p, i|
+  case p[:type]
+  when :screen
+    ccr_result_id = "#{id_prefix}_#{i}"
+
+    opt_ids << "\"#{ccr_result_id}\"" if check_point < check_point_level(ccr_result_id) && result_id != ccr_result_id
+  when :group
+    unless parent_scr_row.nil? && count.nil?
+      sub_screens = (sub_parts || parts).size
+      (0...count).each do |j|
+        (0...sub_screens).each do |k|
+          ccr_result_id = "#{id_prefix}_#{i}_#{j}_#{k}"
+          opt_ids << "\"#{ccr_result_id}\"" if check_point < check_point_level(ccr_result_id) && result_id != ccr_result_id
+        end
+      end
+    end
+  end
+
+end
+
+unless opt_ids.empty?
+  js_reset_selected_values << <<JAVASCRIPT
+fncClearSelectOption([#{opt_ids.join(",")}], #{field.wildcard? ? 2 : 1});
+JAVASCRIPT
+end
+
+if parent_scr_row_id.nil? && index < group_index.to_i && index < multiplier_index && result_id != ccr_group_result_id
+  js_reset_selected_values << <<JAVASCRIPT
+fncClearContent(["#{ccr_group_result_id}"]);
+JAVASCRIPT
+end
+
+unless result_id =~ /_ccr_options$/
+  js_reset_selected_options = <<JAVASCRIPT
+fncClearContent(["#{parent_ccr_result_id || next_ccr_result_id}"]);
+JAVASCRIPT
+end
+
+if result_id =~ /_ccr_options$/
+  ccr_attribute_fields = field.wildcard? ? [] : field.code_combined_reference_attribute_fields
+  js_ccr_ref_attrib_fields = ccr_attribute_fields.collect do |f|
+    reference_att_url = url_for(
+        :controller => "rows",
+        :action => "reference_attribute",
+        :id => 0,
+        :row_id => scr_row.id,
+        :field_id => f.id,
+        :active_field_id => field.id,
+        :source_field_id => f.source_field.id,
+        :selected_options => selected_options[0...selected_options.size-1],
+        :selected_value => "JAVASCRIPT_VAR_VALUE_01"
+      )
+
+    <<JAVASCRIPT
+fncAjaxUpdaterWithReplacement("ref_att_#{f.id}", "#{reference_att_url}", ["JAVASCRIPT_VAR_VALUE_01", this.value]);
+JAVASCRIPT
+   end.join
+else
+  js_ccr_ref_attrib_fields = js_reset_ccr_ref_attrib_fields(field, input_name.gsub(/\[groups\]\[\d+\]$/, ''))
+end
+
+onchange = <<JAVASCRIPT
+#{js_set_selectable_values}
+#{js_reset_selected_values}
+#{js_ccr_ref_attrib_fields}
+#{js_reset_selected_options}
+$('flag_field_#{field.id}').value = "";
+JAVASCRIPT
+%>
+<%= code_combined_collection_for_select_tag("#{input_name}[selecteds][#{index}][row_id]",
+  available_options, :id, :description,  selected_values.flatten.last,
+  {
+    :include_blank => true,
+    :include_all => field.wildcard? && !available_options.empty? && !used_as_multiply_count,
+    :onchange => onchange }
+)
+%>
+<!--pre><%= self_ccr_result_id %> >> <%= result_id %>
+<%=onchange%></pre-->

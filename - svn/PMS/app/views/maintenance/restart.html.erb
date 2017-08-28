@@ -1,0 +1,21 @@
+<h1>System Reboot</h1>
+
+<div class="memo">
+  <p>
+    Click Restart to have the server perform a service restart.
+    There will be a pop-up displayed as the system restarts, saying 'Restarting Services...'
+    and then the pop-up will display an error page if the system has shutdown successfully.
+    Wait a minute before logging into the device again.
+  </p>
+</div>
+
+<% form_remote_tag :url => url_for(:action => 'reboot', :id => session.active_screen.id, :authenticity_token => form_authenticity_token) do %>
+  <%
+  onclick = <<JAVASCRIPT
+  fncShowDialog(null, "pop_box", "<img src='/images/progress.gif' />");
+JAVASCRIPT
+  %>
+  <%=submit_tag 'Restart', :onclick => onclick  %>
+<% end %>
+
+<%=flash_messages %>

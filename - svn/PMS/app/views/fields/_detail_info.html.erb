@@ -1,0 +1,54 @@
+<tr>
+  <th class="th_row_header">Reference to:</th>
+  <td>
+    <%=
+    operation_url_option = url_for(:controller => "fields",
+      :action=>"selector",
+      :source => 'fields',
+      :id=>0,
+      :screen_id=>"JAVA_SCRIPTION_VAR_SCREEN_ID",
+      :name=>"field[value][detail_screen_field_ids]")
+    onChange = <<JAVASCRIPT
+fncAjaxUpdater("field_description_selector","#{operation_url_option}".replace("JAVA_SCRIPTION_VAR_SCREEN_ID", this.value));
+JAVASCRIPT
+    screens = @screen.dependencies
+    if @screen.is_a?(HeaderScreen)
+      screens << @screen.revision_screen
+      screens += @screen.revision_screen.detail_screens
+    elsif @screen.is_a?(RevisionScreen)
+      screens += @screen.detail_screens
+    end
+    collection_select("field[value]", :dependency_screen_id,
+      screens, :id, :name,
+      {:prompt => true} ,
+      {:onChange => onChange})
+  %>
+    <%= field_descr_tag %>
+  </td>
+</tr>
+<tr>
+  <th class="th_row_header">Field:</th>
+  <td id='field_description_selector'>
+    <%
+    screen = @field.detail_screen unless @field.new_record?
+    all_options = []
+    all_options += screen.header_screen.fields if screen.is_a?(RevisionScreen)
+    all_options += screen.fields if screen
+    all_options += screen.revision_screen.fields if screen.is_a?(HeaderScreen)
+
+    detail_screen_field_ids = (@field.value || {})[:detail_screen_field_ids] || []
+    assigned_options = Field.find(detail_screen_field_ids.select{|f_id| f_id.to_i > 0 && Field.exists?(f_id.to_i) })
+    %>
+    <%=left_to_right_tag(
+      :descr => "Field",
+      :name =>  "field[value][detail_screen_field_ids]",
+      :assigned_options => assigned_options,
+      :all_options => all_options.sort_by{|f| f.label_descr },
+      :value_method => "id",
+      :text_method => 'label_descr',
+      :sort => false
+    )
+    %>
+    <%= field_descr_tag %>
+  </td>
+</tr>

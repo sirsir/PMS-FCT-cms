@@ -1,0 +1,29 @@
+<% currency = @template_name =~ /domestic/ ? "THB" : "USD" %>
+<tr>
+  <td rowspan="2" class="td_item_ov_detail char_3">Item</td>
+  <td rowspan="2" class="td_model_ov_detail char_n">Model</td>
+  <td rowspan="2" class="td_description_ov_detail char_m">Description</td>
+  <td rowspan="2" class="td_qty_ov_detail char_6">Qty</td>
+  <td colspan="3" class="td_unit_lc_detail">Unit Price(<%= currency %>)</td>
+  <td colspan="3" class="td_amount_lc_detail">Amount(<%= currency %>)</td>
+</tr>
+<tr>
+  <td class="td_unit_value_lc_detail">&nbsp;</td>
+  <td class="td_unit_discount_lc_detail">Discount</td>
+  <td class="td_unit_total_lc_detail">Total</td>
+  <td class="td_amount_value_lc_detail">&nbsp;</td>
+  <td class="td_amount_discount_lc_detail">Discount</td>
+  <td class="td_amount_total_lc_detail">Total</td>
+</tr>
+<tr>
+  <td class="td_top_nbsp">&nbsp;</td>
+  <td class="td_top_nbsp">&nbsp;</td>
+  <td class="td_top_nbsp">&nbsp;</td>
+  <td class="td_top_nbsp">&nbsp;</td>
+  <td class="td_top_nbsp">&nbsp;</td>
+  <td class="td_top_nbsp">&nbsp;</td>
+  <td class="td_top_nbsp">&nbsp;</td>
+  <td class="td_top_nbsp">&nbsp;</td>
+  <td class="td_top_nbsp">&nbsp;</td>
+  <td class="td_top_nbsp">&nbsp;</td>
+</tr>

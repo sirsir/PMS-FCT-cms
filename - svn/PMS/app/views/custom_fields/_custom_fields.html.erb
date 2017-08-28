@@ -1,0 +1,14 @@
+<%
+operation_area ||= ''
+%>
+
+<table class='table_content' id='table_content_<%= @screen.id %>' cellspacing='0'>
+  <tr class='tr_header'>
+    <% ["&nbsp;","Id","Name","Label","Value","Descr","&nbsp;"].each do |h| %>
+      <% colspan = "colspan = '#{@max_level}'" if h =~ /name/i %>
+      <th class='th_col_header' <%=colspan %> > <%= (h =~ /&nbsp;/) ? h : h.to_s.titleize %></th>
+    <% end %>
+  </tr>
+  <%= render :partial => "empty_loading_row", :locals => { :operation_area => operation_area } %>
+  <%= render :partial => "custom_field_record", :collection => @custom_fields, :locals => { :operation_area => operation_area } %>
+</table>

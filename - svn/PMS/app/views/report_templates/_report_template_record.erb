@@ -1,0 +1,12 @@
+<%
+report_template = report_template_record
+operation_area ||= ""
+operation_url = url_for(:action => :edit, :id => report_template.id)
+%>
+
+<tr class='tr_<%= @report_templates.index(report_template) % 2 == 0 ? "even" : "odd" %>' id='<%= report_template.id %>'
+    operation_area='<%=operation_area%>' operation_url='<%=operation_url%>'
+    relation_area='' relation_url=''
+    handleonclick='true'>
+  <%= render :partial => "report_template", :locals => { :report_template => report_template_record } %>
+</tr>

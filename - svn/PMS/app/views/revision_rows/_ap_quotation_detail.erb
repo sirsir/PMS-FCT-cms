@@ -1,0 +1,109 @@
+<%
+detail_row ||= nil
+seq_no ||= nil
+fields ||= {}
+revision_item ||= {}
+grand_total ||= false
+grand_discount ||= false
+exchange_rate ||= 1.0
+
+grand_header_descr ||= ""
+if grand_total
+  revision_item.each do |k, v|
+    fields[k] = Field.value_by_field_name(v, @revision_row)
+  end
+elsif detail_row.nil?
+  revision_item.each do |k, v|
+    fields[:model_process_cost] = k.to_s
+    fields[:description] = case k
+    when :SFV1 then 'SF-In-House Assembly Fee'
+    when :SFV2 then 'SF-Outsite Assembly Fee'
+    when :SUK then 'Transportation Fee'
+    when :SFO1 then 'Special Discount'
+    when :SFO2 then 'VIP Discount'
+    when :SFO then 'Discount'
+    end
+    fields[:price_unit] = Field.value_by_field_name(v, @revision_row)
+    fields[:net_amt] = fields[:price_amt] = fields[:price_unit]
+    fields[:vol_discount_amt] = fields[:vol_discount_unit] = 0.0
+
+    break
+  end
+else
+  defaults = {
+    :model_process_cost => "Model Process Cost REF",
+    :description => "Description",
+    :l_sym => "L=",
+    :length => "Length",
+    :qty => "Total",
+    :price_unit => "Price - Unit (THB)",
+    :vol_discount_unit => "Volume Discount Unit (THB)",
+    :price_amt => "Price - Amount (THB)",
+    :vol_discount_amt => "Volume Discount - Amount (THB)",
+    :net_amt => "Net Amount - Amount (THB)"
+  }
+
+  fields = defaults.merge(fields)
+  fields.each do |k, v|
+    fields[k] = case
+    when detail_row.new_record?
+      nil
+    else
+      Field.value_by_field_name(v, detail_row).to_s.gsub("<br>", "\n")
+    end
+  end
+end
+
+%>
+<%
+fields[:seq_no] = seq_no.to_s
+model_process_cost = fields[:model_process_cost].to_s.split
+item_no = model_process_cost.delete_at(0).to_s
+fields[:item_no] = item_no.sub(/^SX/, "SF")
+fields[:process] = model_process_cost.join(" ")
+fields[:l_sym]= fields[:l_sym].to_i == 1 ? "L=" : ""
+fields[:length] = "" if fields[:l_sym].blank? || fields[:length].to_f == 0.0
+
+[
+  :length,
+  :qty,
+  :price_unit,
+  :vol_discount_unit,
+  :price_amt,
+  :vol_discount_amt,
+  :net_amt
+].each do |k|
+  if [:qty].include?(k)
+    precision = 0
+    ex_rat = 1.0
+  else
+    precision = 2
+    ex_rat = exchange_rate
+  end
+  value = CustomFields::NumericField.validate_value(fields[k])
+  value *= ex_rat unless value.nil?
+  fields[k] = number_with_precision(value, :delimiter => ',' , :precision => precision)
+end
+
+txt_class = grand_total ? (grand_discount ? 'td_free_detail_no_border' : 'td_free_detail') : 'td_text_detail'
+len_class = grand_total ? 'td_free_detail' : 'td_number_detail'
+amt_class = grand_total ? 'td_total_detail' : 'td_number_detail'
+%>
+<td class="<%= grand_total ? (grand_discount ? 'td_free_detail_no_border' : 'td_free_detail') : 'td_middle_nbsp' %>"><%= fields[:seq_no].to_html %></td>
+<td class="<%= txt_class %>"><%= fields[:item_no].to_html %></td>
+<td class="<%= txt_class %>">
+  <div style="width:52mm!important; margin: 0mm; padding: 0mm;">
+    <%= fields[:description].to_html %>
+  </div>
+</td>
+<td class="<%= grand_total ? 'td_grand_header' : txt_class %>" colspan=<%= grand_total ? 3 : 1%>><%= grand_total ? grand_header_descr : fields[:process].to_html %></td>
+<% if !grand_total %>
+<td class="<%= grand_total ? 'td_free_detail' : 'td_L_detail' %>"><%= fields[:l_sym].to_html %></td>
+<td class="<%= len_class %>"><%= fields[:length].to_html %></td>
+<% end %>
+<td class="<%= amt_class %>"><%= fields[:qty].to_html %></td>
+<td class="<%= amt_class %>"><%= fields[:price_unit].to_html %></td>
+<td class="<%= amt_class %>"><%= fields[:price_amt].to_html %></td>
+<td class="<%= amt_class %>"><%= fields[:vol_discount_amt].to_html %></td>
+<td class="<%= amt_class %>"><%= fields[:vol_discount_unit].to_html %></td>
+<td class="<%= amt_class %>"><%= fields[:net_amt].to_html %></td>

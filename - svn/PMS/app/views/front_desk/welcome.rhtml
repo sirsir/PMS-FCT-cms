@@ -1,0 +1,37 @@
+
+<% if @screen.nil? %>
+  <div class="memo">
+      <h3>Welcome</h3>
+  
+      <p>You are now logged into the system...</p>
+  </div>
+
+  <%= link_to "&#171; logout", :action=>"logout"%>
+
+  <script type="text/javascript">
+    fncSetSubMenu([], []);  // Close all menus
+  </script>
+
+<% else %>
+
+  <% if @error_msg != "" %>
+    <script type='text/javascript'>window.alert("<%=@error_msg%>");</script>
+  <% end %>
+
+  <% if @action_type == "new" && !@screen.relate_screen.nil? && @screen.relate_screen != "" %>
+    <% cf_id = @screen.reference_custom_field_id %>
+    <script type='text/javascript'>fncLoadNewRowScreen("<%=@screen.relate_screen%>","<%=cf_id%>","<%=@row_id%>");</script>
+    <script type='text/javascript'>fncSelectedMenuItem("<%=@screen.parent.id%>");</script>
+  <% else %>
+     <!--script type='text/javascript'>fncSelectMenuItem([<%=  @screen.path_ids.collect {|id| "\"menu_#{id}\""}.join(",") %>] );</script-->
+
+     <script type='text/javascript'>
+      <%
+      display_menu_ids = @screen.menu_sublings_ids.collect {|id| "menu_item_#{id}"}.inspect
+      select_menu_ids = @screen.path_ids.collect {|id| "menu_item_#{id}"}.inspect
+      %>
+      fncSetSubMenu(<%= display_menu_ids %>, <%= select_menu_ids %>);
+      fncSetSelectedMenuItem(<%= select_menu_ids %>);
+     </script>
+  <% end %>
+<% end %>

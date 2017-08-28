@@ -1,0 +1,312 @@
+screens_001: 
+  action: setting
+  controller: front_desk
+  created_at: "2008-12-22 07:17:52.000"
+  display_seq: 4
+  id: 1
+  label_id: 9
+  name: Setting
+  screen_id: 8
+  system: 1
+  type: MenuGroupScreen
+  updated_at: "2008-12-22 09:55:12.000"
+screens_002: 
+  action: report
+  controller: front_desk
+  created_at: "2008-12-22 07:21:47.000"
+  display_seq: 2
+  id: 4
+  label_id: 12
+  name: Reports
+  screen_id: 8
+  system: 1
+  type: MenuGroupScreen
+  updated_at: "2008-12-30 07:20:34.000"
+screens_003: 
+  action: show
+  controller: screens
+  created_at: "2008-12-22 07:24:28.000"
+  display_seq: 1
+  id: 5
+  label_id: 13
+  name: "Report Requests"
+  screen_id: 4
+  system: 1
+  type: Screen
+  updated_at: "2008-12-22 07:24:28.000"
+screens_004: 
+  action: preference
+  controller: front_desk
+  created_at: "2008-12-22 07:24:55.000"
+  display_seq: 3
+  id: 6
+  label_id: 14
+  name: Preference
+  screen_id: 8
+  system: 1
+  type: MenuGroupScreen
+  updated_at: "2008-12-22 07:24:55.000"
+screens_005: 
+  action: security
+  controller: front_desk
+  created_at: "2008-12-22 07:25:45.000"
+  display_seq: 5
+  id: 7
+  label_id: 15
+  name: Security
+  screen_id: 8
+  system: 1
+  type: MenuGroupScreen
+  updated_at: "2008-12-22 07:25:45.000"
+screens_006: 
+  action: index
+  controller: front_desk
+  created_at: "2008-12-22 08:41:35.000"
+  display_seq: 0
+  id: 8
+  label_id: ~
+  name: root
+  screen_id: ~
+  system: 1
+  type: MenuGroupScreen
+  updated_at: "2008-12-22 08:41:35.000"
+screens_007: 
+  action: index
+  controller: languages
+  created_at: ~
+  display_seq: 1
+  id: 11
+  label_id: 18
+  name: languages
+  screen_id: 1
+  system: 1
+  type: ListScreen
+  updated_at: ~
+screens_008: 
+  action: index
+  controller: labels
+  created_at: ~
+  display_seq: 2
+  id: 12
+  label_id: 19
+  name: labels
+  screen_id: 1
+  system: 1
+  type: ListScreen
+  updated_at: ~
+screens_009: 
+  action: notification
+  controller: reports
+  created_at: ~
+  display_seq: 2
+  id: 14
+  label_id: 21
+  name: Notifications
+  screen_id: 4
+  system: 1
+  type: Screen
+  updated_at: ~
+screens_010: 
+  action: index
+  controller: screens
+  created_at: ~
+  display_seq: 5
+  id: 15
+  label_id: 22
+  name: screens
+  screen_id: 1
+  system: 1
+  type: ListScreen
+  updated_at: ~
+screens_011: 
+  action: functions
+  controller: security
+  created_at: ~
+  display_seq: 2
+  id: 16
+  label_id: 23
+  name: functions
+  screen_id: 7
+  system: 1
+  type: ListScreen
+  updated_at: ~
+screens_012: 
+  action: groups
+  controller: security
+  created_at: ~
+  display_seq: 3
+  id: 17
+  label_id: 24
+  name: groups
+  screen_id: 7
+  system: 1
+  type: ListScreen
+  updated_at: ~
+screens_013: 
+  action: index
+  controller: users
+  created_at: ~
+  display_seq: 4
+  id: 18
+  label_id: 25
+  name: users
+  screen_id: 7
+  system: 1
+  type: ListScreen
+  updated_at: ~
+screens_014: 
+  action: general_info
+  controller: front_desk
+  created_at: ~
+  display_seq: 1
+  id: 19
+  label_id: 26
+  name: general
+  screen_id: 6
+  system: 1
+  type: Screen
+  updated_at: ~
+screens_015: 
+  action: company
+  controller: front_desk
+  created_at: ~
+  display_seq: 2
+  id: 20
+  label_id: 27
+  name: "Company Infomation"
+  screen_id: 6
+  system: 1
+  type: Screen
+  updated_at: ~
+screens_016: 
+  action: show
+  controller: users
+  created_at: ~
+  display_seq: 3
+  id: 21
+  label_id: 28
+  name: "User Information"
+  screen_id: 6
+  system: 1
+  type: Screen
+  updated_at: ~
+screens_017: 
+  action: notification
+  controller: users
+  created_at: ~
+  display_seq: 4
+  id: 22
+  label_id: 29
+  name: Notification
+  screen_id: 19
+  system: 1
+  type: ListScreen
+  updated_at: ~
+screens_018: 
+  action: index
+  controller: custom_fields
+  created_at: ~
+  display_seq: 4
+  id: 35
+  label_id: 34
+  name: custom_fields
+  screen_id: 1
+  system: 1
+  type: ListScreen
+  updated_at: ~
+screens_019: 
+  action: permission
+  controller: front_desk
+  created_at: ~
+  display_seq: 1
+  id: 36
+  label_id: 300
+  name: Permissions
+  screen_id: 7
+  system: 1
+  type: MenuGroupScreen
+  updated_at: ~
+screens_020: 
+  action: screen
+  controller: front_desk
+  created_at: ~
+  display_seq: 1
+  id: 37
+  label_id: 22
+  name: screens
+  screen_id: 8
+  system: 1
+  type: MenuGroupScreen
+  updated_at: ~
+screens_039: 
+  action: index
+  controller: roles
+  created_at: ~
+  display_seq: 5
+  id: 142
+  label_id: 294
+  name: Role
+  screen_id: 7
+  system: 1
+  type: ListScreen
+  updated_at: ~
+screens_043: 
+  action: index
+  controller: reports
+  created_at: "2009-09-17 14:52:39.530"
+  display_seq: 6
+  id: 147
+  label_id: 12
+  name: Report
+  screen_id: 1
+  system: 1
+  type: HeaderScreen
+  updated_at: "2009-09-24 08:08:21.563"
+screens_044: 
+  action: index_role_screen
+  controller: permissions
+  created_at: ~
+  display_seq: 1
+  id: 148
+  label_id: 301
+  name: "Role Screen"
+  screen_id: 36
+  system: 1
+  type: ListScreen
+  updated_at: ~
+screens_045: 
+  action: index_role_field
+  controller: permissions
+  created_at: ~
+  display_seq: 2
+  id: 149
+  label_id: 302
+  name: "Role Field"
+  screen_id: 36
+  system: 1
+  type: ListScreen
+  updated_at: ~
+screens_046: 
+  action: index_user_screen
+  controller: permissions
+  created_at: ~
+  display_seq: 3
+  id: 150
+  label_id: 303
+  name: "User Screen"
+  screen_id: 36
+  system: 1
+  type: ListScreen
+  updated_at: ~
+screens_047: 
+  action: index_user_field
+  controller: permissions
+  created_at: ~
+  display_seq: 4
+  id: 151
+  label_id: 304
+  name: "User Field"
+  screen_id: 36
+  system: 1
+  type: ListScreen
+  updated_at: ~

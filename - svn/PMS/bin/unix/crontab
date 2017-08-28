@@ -1,0 +1,3 @@
+# Restart all PMS projects
+0 0 * * 1-5 for f in /usr/share/www/pms/*/tmp/pids/mongrel.pid; do /usr/bin/ruby /usr/bin/mongrel_rails restart -P $f; done
+

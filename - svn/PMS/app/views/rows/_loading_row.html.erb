@@ -1,0 +1,71 @@
+<%
+row = loading_row
+if row.new_record?
+  tr_row_id = "#{row.screen_id}_empty_loading_row"
+else
+  tr_row_id = row.id
+end
+
+ajax_status = "#{'un' unless row.new_record?}loaded"
+ajax_url = url_for(:controller => :rows, :action => :fetch_row, :id => tr_row_id )
+
+operation_url_defaults = {
+  :action => :edit,
+  :id => tr_row_id,
+  :screen_id => screen.id,
+  :filtered_reference => @filtered_reference,
+  :ajax_result_id => "operation_area_#{screen.id}"
+}
+
+#~ Don't know why this value is needs to be set for the operation url.
+#~ Coz from this point forward, the details should consider what page it is on, nor
+#~ should it need to know if the list came from a page link.
+operation_url_defaults.update({ :action_source => @action_source, :pageno => @pageno }) if row.is_a?(ListRow)
+
+relation_url_defaults = {
+  :action => :relations,
+  :id => tr_row_id,
+  :screen_id => screen.id,
+  :ajax_result_id => "relation_area"
+}
+
+operation_url_options = row.operation_url_options
+relation_url_options = row.relation_url_options
+
+operation_url_options = operation_url_defaults.merge(operation_url_options)
+relation_url_options = relation_url_defaults.merge(relation_url_options)
+
+operation_area = @action_source == "relations" ? operation_url_options.delete(:ajax_relation_result_id) : operation_url_options.delete(:ajax_result_id)
+relation_area = @action_source == "relations" ? relation_url_options.delete(:ajax_relation_result_id) : relation_url_options.delete(:ajax_result_id)
+
+operation_url = url_for(operation_url_options)
+relation_url = url_for(relation_url_options)
+
+if !rows.empty?
+  case row_type
+  when :list
+    row_class = rows.index(row) % 2 == 0 ? "even" : "odd"
+  else
+    row_class = row_type.to_s
+  end
+%>
+
+  <tr class='tr_<%=row_class  %>' id='<%=tr_row_id%>' <%= "style='display: none;'" if !row.nil? && row.new_record? %>
+      operation_area='<%=operation_area%>' operation_url='<%=operation_url%>'
+      relation_area='<%=relation_area%>' relation_url='<%=relation_url%>'
+      handleonclick='true'>
+    <% if row.new_record? %>
+    <td class='td_loading' id="td_loading_<%=tr_row_id %>" colspan="99">
+      <img src='/images/loading.gif' alt="Loading..."/>&nbsp;Loading...
+
+      <div id="div_<%=tr_row_id %>" row_id="<%=tr_row_id %>" cell_id="td_loading_<%=tr_row_id %>"
+           name='on_load_row_content' ajax_status='<%=ajax_status %>' ajax_result_id='div_<%=tr_row_id %>' ajax_url='<%=ajax_url %>'>
+      </div>
+    </td>
+    <% else %>
+      <%= view_cache('rows/row', row){ render(:partial => 'rows/row', :locals => { :row => row }) } %>
+      <%= render(:partial => 'rows/row_operation', :locals => { :row => row }) %>
+    <% end %>
+  </tr>
+
+<% end %>

@@ -1,0 +1,15 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  row_id: 1
+  seq_no: 1
+  action: 
+  user: MyString
+  value: 
+
+two:
+  row_id: 1
+  seq_no: 1
+  action: 
+  user: MyString
+  value: 

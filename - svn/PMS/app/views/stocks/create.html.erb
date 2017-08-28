@@ -1,0 +1,16 @@
+<%=javascript_include_tag "prototype" %>
+<%=javascript_include_tag "application" %>
+<%=javascript_include_tag "dialog" %>
+<%=javascript_include_tag "fr" %>
+<script type="text/javascript">
+<% if @stock.errors.empty? %>
+    fncAppendTrToTableContent('', <%=@stock.id %>);
+
+    <% ajax_url = url_for(:action => :auto_bookings, :id => @stock.id)  %>
+    fncSetOperationContent("operation_area", "<%=ajax_url %>");
+<% else %>
+    fncSetError('<%=error_messages_for(:object => @stock).to_s.gsub(/'/, "&rsquo\;") %>');
+<% end %>
+  
+  fncLoadTempFrame();
+</script>

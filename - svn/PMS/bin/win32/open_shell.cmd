@@ -1,0 +1,1 @@
+cmd /K .\_set_env.bat

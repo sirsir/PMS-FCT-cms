@@ -1,0 +1,100 @@
+<% # Generate the current menu item %>
+<div id='left_panel'>
+  <% logo = image_tag '/images/logo_small.png', :style => "border-style: none;", :alt => Rails.configuration.client_code, :title => Rails.configuration.client_name %>
+  <%=link_to logo, '/', { :target => :_top } %>
+  <p />
+  <% classHover =<<JAVASCRIPT
+if (this.className != 'menu_filter_selected') this.className ='menu_filter_hover'
+JAVASCRIPT
+  %>
+  <% classOut =<<JAVASCRIPT
+if (this.className != 'menu_filter_selected') this.className ='menu_filter'
+JAVASCRIPT
+  %>
+<%
+name = 'left_panel_tab'
+selected_tab_id = sanitize_to_id("#{name}_menu")
+%>
+  <table class="tab_table" id="<%= name %>"  selected_tab="<%= selected_tab_id %>" style="width:100%; padding:0px; border-spacing:0px;">
+    <tr valign='bottom'>
+      <%
+      tab_id = "#{name}_menu"
+      %>
+      <td class='tab_button_header'>
+        <table class='tab_table' style='width:100%;padding:0px;border-spacing:0px;'>
+          <tr>
+            <td class='tab_button_top_left_selected' id='<%= tab_id %>_top_left'></td>
+            <td class='tab_button_top_selected' id='<%= tab_id %>_top'></td>
+            <td class='tab_button_top_right_selected' id='<%= tab_id %>_top_right'></td>
+          </tr>
+        </table>
+      </td>
+      <%
+      tab_id = "#{name}_filter"
+      %>
+      <td class='tab_button_header'>
+        <table class='tab_table' style='width:100%;padding:0px;border-spacing:0px;'>
+          <tr>
+            <td class='tab_button_top_left' id='<%= tab_id %>_top_left'></td>
+            <td class='tab_button_top' id='<%= tab_id %>_top'></td>
+            <td class='tab_button_top_right' id='<%= tab_id %>_top_right'></td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+
+    <!-- Tab Button Text -->
+    <tr>
+      <%
+      tab_id = "#{name}_menu"
+      %>
+      <td class = 'tab_button_selected' id = '<%= tab_id %>' onClick='fncOnCilckTab(this.id);'>
+        Menu
+      </td>
+      <%
+      tab_id = "#{name}_filter"
+      %>
+      <td class = 'tab_button' id = '<%= tab_id %>' onClick='fncOnCilckTab(this.id);'>
+        Filter
+      </td>
+    </tr>
+
+    <!-- Tab Pages -->
+    <tr class ='tab_page_background'>
+      <% tab_count = 2 %>
+      <td class = 'tab_page_body' colspan = '<%= (tab_count*3) + 1 %>' style="padding: 0px; color: white; background-color: #002299;">
+        <%
+        tab_id = "#{name}_menu"
+        %>
+        <div class='tab_content_selected' id='<%= tab_id %>_content' style="">
+    <%= render :partial=>"menu_item", :collection => @root_screen.childs.select{|s| s.allow_action?('index')} %>
+  </div>
+
+        <%
+        tab_id = "#{name}_filter"
+        %>
+        <div class='tab_content' id="<%= tab_id %>_content"  style="">filters...</div>
+      </td>
+    </tr>
+  </table>
+
+  <br />
+
+  
+  <% if RAILS_ENV =~ /development/ %>
+    <ul style="background-color: white">
+
+      <%
+      field_by_pass_ajax_url = url_for(
+        :controller => :fields,
+        :action => :index,
+        :id => 0)
+      field_by_pass_onclick =<<JAVASCRIPT
+fncAjaxUpdater("main","#{field_by_pass_ajax_url}");
+return false;
+JAVASCRIPT
+    %>
+      <li onclick='<%=field_by_pass_onclick %>' style="cursor: pointer">Fields By-Pass :D</li>
+    </ul>
+  <% end %>
+</div

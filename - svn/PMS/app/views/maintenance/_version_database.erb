@@ -1,0 +1,28 @@
+<tr class="tr_header" ><th class="group_caption_center" colspan="2">Database</th></tr>
+<tr class="tr_header"><th class="th_col_header">Name</th><th class="th_col_header">Value</th></tr>
+<%
+b = true
+
+conn = ActiveRecord::Base.connection
+conf = ActiveRecord::Base.configurations[RAILS_ENV]
+
+conf.delete('password')
+
+conf.each do |k,v|
+%>
+<tr class="tr_data_<%= (b ^= true) ? 'odd' : 'even' %>">
+  <td class="td_cell"><%=k.titleize %></td>
+  <td class="td_cell"><%=v %></td>
+</tr>
+<% end %>
+
+<tr class="tr_data_<%= (b ^= true) ? 'odd' : 'even' %>">
+  <td class="td_cell">Database Engine Version</td>
+  <td class="td_cell">
+    <%
+    case conf['adapter']
+    when 'mysql' %>
+      <%=conn.select_value("select VERSION() ")%>
+    <% end %>
+  </td>
+</tr>

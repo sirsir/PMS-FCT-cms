@@ -1,0 +1,12 @@
+<%=javascript_include_tag "prototype" %>
+<%=javascript_include_tag "application" %>
+<%=javascript_include_tag "dialog" %>
+<%=javascript_include_tag "fr" %>
+<script type="text/javascript">
+<% if  @label.errors.empty? %>
+    fncSetTrDeleted(<%= @label.id %>);
+<% else %>
+    fncSetError('<%=error_messages_for(:object => @label).to_s.gsub(/'/, '\\"') %>');
+<% end %>
+  fncLoadTempFrame();
+</script>

@@ -1,0 +1,22 @@
+<%=javascript_include_tag "prototype" %>
+<%=javascript_include_tag "application" %>
+<%=javascript_include_tag "ajax" %>
+<%=javascript_include_tag "dialog" %>
+<%=javascript_include_tag "fr" %>
+<script type="text/javascript">
+<% if @row.errors.empty? %>
+    fncAppendTrToTableContent(<%=@row.screen_id %>, <%=@row.id %>);
+
+    <% operation_url = url_for(
+          :controller => :revision_rows,
+          :action => :index,
+          :id => @row.id,
+          :screen_id => @row.screen_id) %>
+
+    fncSetOperationContent('operation_area_<%= @row.screen_id %>', '<%=operation_url %>');
+<% else %>
+    fncSetError('<%=error_messages_for(:object => @row).to_s.gsub(/'/, "&rsquo\;") %>');
+<% end %>
+
+  fncLoadTempFrame();
+</script>

@@ -1,0 +1,14 @@
+<tr>
+  <td class="th_row_header"><%= label_tag "", "Options:" %></td>
+  <td>
+    <%=hidden_field_tag "#{name_tag}[]", -1 %>
+    <table  class='table_data_content' cellspacing='0'>
+      <tr class='tr_header'>
+        <th class='th_col_header'>&nbsp;</th>
+        <th class='th_col_header'>&nbsp;</th>
+      </tr>
+      <% filter_rows = @field_report_filter.filter_rows %>
+      <%= render :partial => "reports/label_selector", :collection => filter_rows ,  :locals => {:field_report => @field_report, :cols => filter_rows, :name_tag => name_tag} %>
+    </table>
+  </td>
+</tr>

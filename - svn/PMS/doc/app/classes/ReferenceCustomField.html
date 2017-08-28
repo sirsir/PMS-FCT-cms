@@ -1,0 +1,304 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>Class: ReferenceCustomField</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Script-Type" content="text/javascript" />
+  <link rel="stylesheet" href=".././rdoc-style.css" type="text/css" media="screen" />
+  <script type="text/javascript">
+  // <![CDATA[
+
+  function popupCode( url ) {
+    window.open(url, "Code", "resizable=yes,scrollbars=yes,toolbar=no,status=no,height=150,width=400")
+  }
+
+  function toggleCode( id ) {
+    if ( document.getElementById )
+      elem = document.getElementById( id );
+    else if ( document.all )
+      elem = eval( "document.all." + id );
+    else
+      return false;
+
+    elemStyle = elem.style;
+    
+    if ( elemStyle.display != "block" ) {
+      elemStyle.display = "block"
+    } else {
+      elemStyle.display = "none"
+    }
+
+    return true;
+  }
+  
+  // Make codeblocks hidden by default
+  document.writeln( "<style type=\"text/css\">div.method-source-code { display: none }</style>" )
+  
+  // ]]>
+  </script>
+
+</head>
+<body>
+
+
+
+    <div id="classHeader">
+        <table class="header-table">
+        <tr class="top-aligned-row">
+          <td><strong>Class</strong></td>
+          <td class="class-name-in-header">ReferenceCustomField</td>
+        </tr>
+        <tr class="top-aligned-row">
+            <td><strong>In:</strong></td>
+            <td>
+                <a href="../files/app/models/custom_field/reference_custom_field_rb.html">
+                app/models/custom_field/reference_custom_field.rb
+                </a>
+        <br />
+            </td>
+        </tr>
+
+        <tr class="top-aligned-row">
+            <td><strong>Parent:</strong></td>
+            <td>
+                <a href="CustomField.html">
+                CustomField
+               </a>
+            </td>
+        </tr>
+        </table>
+    </div>
+  <!-- banner header -->
+
+  <div id="bodyContent">
+
+
+
+  <div id="contextContent">
+
+
+
+   </div>
+
+    <div id="method-list">
+      <h3 class="section-bar">Methods</h3>
+
+      <div class="name-list">
+      <a href="#M000088">custom_field_ids</a>&nbsp;&nbsp;
+      <a href="#M000089">custom_fields</a>&nbsp;&nbsp;
+      <a href="#M000090">descr_separator</a>&nbsp;&nbsp;
+      <a href="#M000087">screen</a>&nbsp;&nbsp;
+      <a href="#M000086">screen_id</a>&nbsp;&nbsp;
+      <a href="#M000085">search_value?</a>&nbsp;&nbsp;
+      <a href="#M000091">searchable_text?</a>&nbsp;&nbsp;
+      </div>
+    </div>
+
+  </div>
+
+
+    <!-- if includes -->
+
+    <div id="section">
+
+
+
+
+
+      
+
+
+    <!-- if method_list -->
+    <div id="methods">
+      <h3 class="section-bar">Public Instance methods</h3>
+
+      <div id="method-M000088" class="method-detail">
+        <a name="M000088"></a>
+
+        <div class="method-heading">
+          <a href="#M000088" class="method-signature">
+          <span class="method-name">custom_field_ids</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000088-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000088-source">
+<pre>
+    <span class="ruby-comment cmt"># File app/models/custom_field/reference_custom_field.rb, line 22</span>
+22:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">custom_field_ids</span>
+23:     <span class="ruby-keyword kw">self</span>[<span class="ruby-identifier">:value</span>][<span class="ruby-identifier">:custom_field_ids</span>].<span class="ruby-identifier">collect</span>{<span class="ruby-operator">|</span><span class="ruby-identifier">cf_id</span><span class="ruby-operator">|</span> <span class="ruby-identifier">cf_id</span>.<span class="ruby-identifier">to_i</span>}
+24:   <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000089" class="method-detail">
+        <a name="M000089"></a>
+
+        <div class="method-heading">
+          <a href="#M000089" class="method-signature">
+          <span class="method-name">custom_fields</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000089-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000089-source">
+<pre>
+    <span class="ruby-comment cmt"># File app/models/custom_field/reference_custom_field.rb, line 26</span>
+26:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">custom_fields</span>
+27:     <span class="ruby-constant">CustomField</span>.<span class="ruby-identifier">find</span>(<span class="ruby-identifier">:all</span>, <span class="ruby-identifier">:conditions</span> =<span class="ruby-operator">&gt;</span> [<span class="ruby-value str">&quot;id in (?) &quot;</span>,<span class="ruby-identifier">custom_field_ids</span>])
+28:   <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000090" class="method-detail">
+        <a name="M000090"></a>
+
+        <div class="method-heading">
+          <a href="#M000090" class="method-signature">
+          <span class="method-name">descr_separator</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000090-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000090-source">
+<pre>
+    <span class="ruby-comment cmt"># File app/models/custom_field/reference_custom_field.rb, line 30</span>
+30:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">descr_separator</span>
+31:     <span class="ruby-value str">&quot; - &quot;</span>
+32:   <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000087" class="method-detail">
+        <a name="M000087"></a>
+
+        <div class="method-heading">
+          <a href="#M000087" class="method-signature">
+          <span class="method-name">screen</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000087-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000087-source">
+<pre>
+    <span class="ruby-comment cmt"># File app/models/custom_field/reference_custom_field.rb, line 18</span>
+18:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">screen</span>
+19:     <span class="ruby-constant">Screen</span>.<span class="ruby-identifier">find</span>(<span class="ruby-identifier">screen_id</span>)
+20:   <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000086" class="method-detail">
+        <a name="M000086"></a>
+
+        <div class="method-heading">
+          <a href="#M000086" class="method-signature">
+          <span class="method-name">screen_id</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000086-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000086-source">
+<pre>
+    <span class="ruby-comment cmt"># File app/models/custom_field/reference_custom_field.rb, line 14</span>
+14:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">screen_id</span>
+15:     <span class="ruby-keyword kw">self</span>[<span class="ruby-identifier">:value</span>][<span class="ruby-identifier">:screen_id</span>].<span class="ruby-identifier">to_i</span>
+16:   <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000085" class="method-detail">
+        <a name="M000085"></a>
+
+        <div class="method-heading">
+          <a href="#M000085" class="method-signature">
+          <span class="method-name">search_value?</span><span class="method-args">(value, filter)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+belongs_to :<a href="ReferenceCustomField.html#M000087">screen</a>,
+:foreign_key =&gt; self[:value][:<a
+href="ReferenceCustomField.html#M000086">screen_id</a>]
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000085-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000085-source">
+<pre>
+    <span class="ruby-comment cmt"># File app/models/custom_field/reference_custom_field.rb, line 3</span>
+ 3:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">search_value?</span>(<span class="ruby-identifier">value</span>, <span class="ruby-identifier">filter</span>)
+ 4:     <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">filter</span>.<span class="ruby-identifier">nil?</span>
+ 5:       <span class="ruby-identifier">result</span> = <span class="ruby-keyword kw">true</span>
+ 6:     <span class="ruby-keyword kw">elsif</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">searchable_text?</span>
+ 7:       <span class="ruby-identifier">result</span> = (<span class="ruby-constant">Row</span>.<span class="ruby-identifier">find</span>(<span class="ruby-identifier">value</span>.<span class="ruby-identifier">to_i</span>).<span class="ruby-identifier">description</span>.<span class="ruby-identifier">include?</span>(<span class="ruby-identifier">filter</span>))
+ 8:     <span class="ruby-keyword kw">else</span>
+ 9:       <span class="ruby-identifier">result</span> = (<span class="ruby-identifier">value</span>.<span class="ruby-identifier">to_i</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">filter</span>.<span class="ruby-identifier">to_i</span>)
+10:     <span class="ruby-keyword kw">end</span>
+11:     <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">result</span>
+12:   <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000091" class="method-detail">
+        <a name="M000091"></a>
+
+        <div class="method-heading">
+          <a href="#M000091" class="method-signature">
+          <span class="method-name">searchable_text?</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000091-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000091-source">
+<pre>
+    <span class="ruby-comment cmt"># File app/models/custom_field/reference_custom_field.rb, line 34</span>
+34:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">searchable_text?</span>
+35:     <span class="ruby-keyword kw">self</span>[<span class="ruby-identifier">:value</span>][<span class="ruby-identifier">:control_type</span>].<span class="ruby-identifier">include?</span>(<span class="ruby-value str">&quot;searchable_text&quot;</span>)
+36:   <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+
+
+  </div>
+
+
+<div id="validator-badges">
+  <p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>
+</div>
+
+</body>
+</html>

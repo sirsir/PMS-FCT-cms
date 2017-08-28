@@ -1,0 +1,30 @@
+<%
+options[:value] ||= {}
+options[:value][:from] ||= ''
+options[:value][:to] ||= ''
+
+field_name = input_name
+cf_id = custom_field.id
+value = @value
+
+field_from_name = "#{field_name}[from]"
+field_to_name = "#{field_name}[to]"
+cf_options = CustomField.find(cf_id).option
+
+options = {:size => 12,
+          :onKeyPress => "return checkNumber(event, true, true, '#{cf_options[:separator]}', '#{cf_options[:delimiter]}');",
+          :onBlur => "this.value = fncSetNumericFormat(this.value, #{cf_options[:precision].to_i}, '#{cf_options[:separator]}', '#{cf_options[:delimiter]}', true, true);"}
+value ||= {}
+value_from = value[:from]
+value_to = value[:to]
+%>
+<div name='custom_field_numeric'>
+<%= text_field_tag(field_from_name, value_from, options) %> ~
+<%= text_field_tag(field_to_name, value_to, options)%>
+<%= hidden_field_tag("precision", cf_options[:precision].nil? ? '' : cf_options[:precision])%>
+<%= hidden_field_tag("separator", cf_options[:separator].nil? ? '' : cf_options[:separator])%>
+<%= hidden_field_tag("delimiter", cf_options[:delimiter].nil? ? '' : cf_options[:delimiter])%>
+</div>
+
+ 
+

@@ -1,0 +1,68 @@
+<%
+cf = @custom_field
+cf_options = cf.option
+%>
+
+<tr>
+  <th class="th_row_header">Max size:</th>
+  <td>
+    <div name="custom_field_numeric">
+      <%= screen_numeric_field_tag(:name => "custom_field[value][option][max_size]",
+                                   :cell_value => cf_options[:max_size],
+                                   :isFloat => false,
+                                   :isMinus => false) %> KB. <br/>
+      <%= hidden_field_tag "precision", 0 %>
+      <%= hidden_field_tag "separator", "." %>
+      <%= hidden_field_tag "delimiter", "," %>
+     </div>
+      <span class="missing_implementation"> Missing implement in rows method. </span> 
+      <%#= field_descr_tag %>
+  </td>
+</tr>
+
+<%
+file_type_collection = CustomFields::FileType.image_type_collection
+%>
+
+<tr>
+  <th class="th_row_header">File Type:</th>
+  <td>
+    <%= check_box_collection_tag(:check_box_options => file_type_collection,
+                                 :assigned_label_id => cf_options[:file_type],
+                                 :name => "custom_field[value][option][file_type]",
+                                 :customs_fields_id => cf.id) %>
+    <span class="missing_implementation"> Missing implement in rows method.</span>
+    <%#= field_descr_tag %>
+  </td>
+</tr>
+
+<%=table_hr_tag %>
+
+<%
+file_type_collection = CustomFields::FileType.image_type_collection
+input_name = "custom_field[value][option][dimensions]"
+%>
+
+<tr>
+  <th class="th_row_header">Dimensions :</th>
+  <td>
+    <% CustomFields::UploadImage.image_templates.keys.each do |d| %>
+      <%=radio_button_tag input_name, CustomFields::UploadImage.image_templates[d], cf_options[:dimensions] == CustomFields::UploadImage.image_templates[d] %>
+      <%=label_tag "#{input_name}[#{CustomFields::UploadImage.image_templates[d]}]", d.to_s.titleize %>
+      <br />
+    <% end %>
+      
+      <%
+      manual_dimensions_id = sanitize_to_id("#{input_name}[#{cf_options[:dimensions]}]")
+      onchange = <<JAVASCRIPT
+$("#{manual_dimensions_id}").value = this.value;
+$("#{manual_dimensions_id}").checked = true;
+JAVASCRIPT
+      %>
+    <%= radio_button_tag input_name, cf_options[:dimensions], !CustomFields::UploadImage.image_templates.values.include?(cf_options[:dimensions]) %>
+    <%= text_field_tag 'manual_dimensions', !CustomFields::UploadImage.image_templates.values.include?(cf_options[:dimensions]) ? cf_options[:dimensions] : '', {:onfocus => onchange, :onchange => onchange} %>
+    <%= field_descr_tag :descr => "Supplied as '{Width}x{Height}'" %>
+  </td>
+</tr>
+
+<%=table_hr_tag %>

@@ -1,0 +1,27 @@
+<%=javascript_include_tag "application" %>
+<%=javascript_include_tag "dialog" %>
+<%=javascript_include_tag "fr" %>
+<script type="text/javascript">
+<%
+deleted_rows = @rows.select{|row| row.errors.empty? }
+%>
+<% deleted_rows.each do |row| %>
+      fncSetTrDeleted(<%= row.id %>);
+<% end %>
+  
+<%
+  row = deleted_rows.first
+  case row
+  when DetailRow
+%>
+  fncUpdateTrToTableContent(<%= row.revision_row.screen_id %>, <%= row.revision_row.id %>);
+  fncUpdateTrToTableContent(<%= row.revision_row.header_row.screen_id %>, <%= row.revision_row.header_row.id %>);
+<% when RevisionRow %>
+  fncUpdateTrToTableContent(<%= row.header_row.screen_id %>, <%= row.header_row.id %>);
+<% end %>
+
+<% unless @result.errors.empty? %>
+    fncSetError('<%=error_messages_for(:object => @result).to_s.gsub(/'/, '\\"') %>');
+<% end %>
+  fncLoadTempFrame();
+</script>

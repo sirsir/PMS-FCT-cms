@@ -1,0 +1,14 @@
+<%= hidden_field_tag("#{input_name}[-1]", false) %>
+<%
+options[:value] ||= {}
+all_combo = custom_field.label_ids.collect{|c| Label.find("#{c}") }
+selected_combo = nil
+
+custom_value = [all_combo, selected_combo]
+custom_value[0].each do |c|
+%>
+<span class="field_search_half" >
+  <%= check_box_tag("#{input_name}[#{c.id}]", true, CustomFields::CheckBox.true_or_false?(options[:value][c.id.to_s])) %>
+  <%= label_tag "#{input_name}[#{c.id}]", c.descr %>
+</span>
+<% end %>

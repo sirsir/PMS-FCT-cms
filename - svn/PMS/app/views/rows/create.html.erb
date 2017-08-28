@@ -1,0 +1,19 @@
+<%=javascript_include_tag "prototype" %>
+<%=javascript_include_tag "application" %>
+<%=javascript_include_tag "dialog" %>
+<%=javascript_include_tag "fr" %>
+<script type="text/javascript">
+
+  <% if  @row.errors.empty? %>
+      fncAppendTrToTableContent(<%=@row.screen_id %>, <%=@row.id %>);
+  <% unless @form_content_reuse %>
+      var main_doc = fncGetMainDocument();
+      var div = main_doc.getElementById("operation_area_<%= @row.screen_id %>");
+      fncClearDiv(div);
+  <% end %>
+
+  <% else %>
+      fncSetError('<%=error_messages_for(:object => [@row, @row.cells].flatten).to_s.gsub(/'/, "&rsquo\;") %>');
+  <% end %> 
+  fncLoadTempFrame();
+</script>

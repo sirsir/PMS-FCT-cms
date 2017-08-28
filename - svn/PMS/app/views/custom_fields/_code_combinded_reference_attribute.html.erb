@@ -1,0 +1,11 @@
+<tr>
+  <%
+    cc_reference = CustomFields::CodeCombindedReference.find_all
+    field_type_optional_tag = select_tag('custom_field[value][custom_field_id]', options_from_collection_for_select_tag(cc_reference, :id, :label_descr , @custom_field.id.nil? ? nil : @custom_field.source_custom_field_id ))
+%>
+  <th class="th_row_header">Code Combined Reference Custom Field:</th>
+  <td>
+    <%=field_type_optional_tag %>
+    <%=field_descr_tag %>
+  </td>
+</tr>

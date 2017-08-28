@@ -1,0 +1,15 @@
+<%
+if custom_field.format.to_sym.eql?(:monthly)
+  current_year = Time.now.year
+%>
+<%= select_date(Date.null_date, 
+    :prefix => input_name.to_s,
+    :discard_month => true,
+    :discard_day => true,
+    :start_year => current_year - 5,
+    :end_year => current_year + 1,
+    :include_blank => true
+    ) %>
+<% else %>
+<span class=implementation_missing>Pending</span>
+<% end %>

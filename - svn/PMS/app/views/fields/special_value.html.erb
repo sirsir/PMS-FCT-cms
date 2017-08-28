@@ -1,0 +1,5 @@
+<%if @assigned_options.is_a?(String) %>
+<%= "<B><I>#{@assigned_options}</I></B>" %>
+<%elsif !@assigned_options.nil? %>
+<%= render :partial => @custom_field.class.name.gsub("CustomFields::","").underscore.to_s%>
+<%end %>

@@ -1,0 +1,32 @@
+<%
+operation_area ||= ''
+relation_area ||= ''
+field_area ||= ''
+%>
+
+<table class='table_content' id='table_content_<%= @screen_self.id %>' cellspacing='0'>
+  <tr class='tr_header'>
+    <% ["&nbsp;","id","name", "Label", "Class", "Sys", "Alias", "Relate", "Rev", "Print", "&nbsp;"].each do |h| %>
+      <% colspan = "colspan = '#{@max_level}'" if h =~ /name/i %>
+      <th class='th_col_header' <%=colspan %> > <%= (h =~ /&nbsp;/) ? h : h.to_s.titleize %></th>
+    <% end %>
+  </tr>
+  <%= render :partial => "empty_loading_row", 
+              :locals => {
+                :operation_area => operation_area,
+                :relation_area => relation_area,
+                :field_area => field_area
+              } %>
+  <%= render :partial => "screen_record", :collection => @root_screen.childs ,
+              :locals => {
+                :screens => @root_screen.childs,
+                :operation_area => operation_area, 
+                :relation_area => relation_area,
+                :field_area => field_area
+              }  %>
+  <tr class='tr_header'>
+    <th class='th_col_header' colspan="99">
+      <hr />
+    </th>
+  </tr>
+</table>

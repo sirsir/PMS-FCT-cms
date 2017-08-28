@@ -1,0 +1,15 @@
+<%=javascript_include_tag "prototype" %>
+<%=javascript_include_tag "application" %>
+<%=javascript_include_tag "ajax" %>
+<%=javascript_include_tag "dialog" %>
+<%=javascript_include_tag "fr" %>
+
+<%= report_template_link @row %>
+
+<% form_tag url_for(:action => 'update'), :onSubmit => "fncPrepareFormForSubmit(this);", :multipart => true, :method=>:put, :id=>"frm_edit_#{@row.screen_id.to_s}", :target=>"tmp_frame"  do %>
+  <%= hidden_field_tag "row[id]", @row.id %>
+  <%= hidden_field_tag "action_source", @action_source %>
+  <%= hidden_field_tag "pageno", @pageno %>
+  <%= screen_modification_tag @row.description, render(:partial => 'rows/form', :locals => {:row => @row, :readonly => @readonly, :area_id => @row.screen_id.to_s }), "frm_edit_#{@row.screen_id.to_s}_content" %>
+<% end %>
+

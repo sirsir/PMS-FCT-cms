@@ -1,0 +1,12 @@
+<%
+cell = Cell.new(:field_id => custom_field.id, :value => options[:value])
+combo_box_options = cell.select_value_combined_options(field.value[:field_id])
+%>
+<%= select_tag("#{input_name}[scr_row_id]",
+            options_from_collection_for_select_tag(
+              combo_box_options[:all_options],
+              :id,
+              :screen_combined_code,
+              combo_box_options[:assigned_options].id, {:include_blank => true,:prompt => ''})) %> :
+<%= text_field_tag("#{input_name}[text]", nil, :size=>14) %>
+<%= hidden_field_tag("#{input_name}[screen_id]", field.screen_id) %>

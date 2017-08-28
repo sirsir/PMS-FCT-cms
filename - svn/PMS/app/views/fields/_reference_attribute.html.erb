@@ -1,0 +1,49 @@
+
+<tr>
+  <th class="th_row_header">Reference Field:</th>
+  <td>
+    <%
+    onchange_javascript = <<JAVASCRIPT
+inputs = $("td_field_value_source_field_id").childNodes;
+for(var i = 0; i < inputs.length; i++) {
+input = inputs[i];
+if (input.id && input.id.indexOf("field_value_source_field_id_", 0) !=-1) {
+field_id = input.id.replace("field_value_source_field_id_", "");
+selected = (field_id == this.value);
+input.style.display = (selected) ? "" : "none";
+input.disabled = !selected;
+}
+}
+JAVASCRIPT
+
+  %>
+    <%=select_tag("field[value][reference_field_id]",
+      options_from_collection_for_select_tag( @reference_fields, :id, :descr, (@field.id.nil? ? nil : @field.reference_field_id), {:include_blank => true} ),
+      :onchange => onchange_javascript ) %>
+  </td>
+</tr>
+
+<tr>
+  <th class="th_row_header">Reference Attribute Field:</th>
+  <td id="td_field_value_source_field_id">
+    <%
+    @reference_fields.each do |rf|
+      selected = (rf.id == @field.reference_field_id)
+      screen = rf.custom_field.screen
+      screens = [screen]
+      case screen
+      when HeaderScreen
+        screens << screen.revision_screen
+      when RevisionScreen
+        screens << screen.header_screen
+      when DetailScreen
+        screens << screen.revision_screen
+        screens << screen.revision_screen.header_screen
+      end
+      var_options = option_groups_from_collection_for_select(screens, :fields, :label_descr, :id, :full_descr, (@field.id.nil? ? nil : @field.source_field_id))
+    %>
+      <%=select_tag("field[value][source_field_id]",var_options,
+        :id => "field_value_source_field_id_#{rf.id}", :disabled => !selected, :style => "display: #{"none" if !selected}" ) %>
+    <% end %>
+  </td>
+</tr>

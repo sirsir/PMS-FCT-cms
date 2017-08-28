@@ -1,0 +1,23 @@
+<%=javascript_include_tag "prototype" %>
+<%=javascript_include_tag "application" %>
+<%=javascript_include_tag "dialog" %>
+<%=javascript_include_tag "fr" %>
+
+<script type="text/javascript">
+  <%
+  ajax_url = url_for(
+    :action => :import,
+    :step => @next_step,
+    :parent_row_id => @parent_row_id,
+    :filename_hash => @filename_hash,
+    :starting_row => @starting_row,
+    :fields => @fields,
+    :allow_update => @allow_update,
+    :ajax_result_id => @operation_area_id,
+    :flash => flash
+  )
+  call_mode = (@next_step == :import_execute) ? :request : :update
+  %>
+  fncSetOperationContent("<%= @operation_area_id %>", "<%=ajax_url %>", "<%= call_mode %>")
+  fncLoadTempFrame();
+</script>

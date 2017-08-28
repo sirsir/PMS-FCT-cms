@@ -1,0 +1,9 @@
+<%=render(:partial => 'report_step', :locals => { :step => :screens }) %>
+<%
+form_id = "frm_edit_#{@screen.id}"
+%>
+<% form_tag url_for(:action => 'update'), :onSubmit => "fncPrepareFormForSubmit(this);", :method=>:put, :id=>form_id, :target=>"tmp_frame" do %>
+  <%= screen_modification_tag @report.name, render(:partial => 'form'), "#{form_id}_content" %>
+<% end %>
+
+<hr />

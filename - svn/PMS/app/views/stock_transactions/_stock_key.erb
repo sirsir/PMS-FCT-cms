@@ -1,0 +1,29 @@
+<%
+index = @stock.stock_keys.index(stock_key)
+name = "stock_key_id_#{index}"
+custom_field = stock_key
+%>
+
+<tr>
+    <th class="th_row_header"><%="#{custom_field.label.descr}:" %></th>
+    <td>
+      <% unless @stock_item.respond_to?("stock_key_id_#{index}") %>
+        <span class="missing_implementation">The reserve field 'r<%=index %>' doesn't exist in StockItem (in <%= __FILE__.gsub(RAILS_ROOT, "") %></span>
+      <% else %>
+        <% unless @stock.stock_key_ids.include?(custom_field.id) %>
+          <span class="missing_implementation"><%="#{custom_field.label.descr}"%> doesn't exist in stock keys (in <%= __FILE__.gsub(RAILS_ROOT, "") %></span>
+        <% else %>
+          <%=render(:partial => "/stock_transactions/" + custom_field.class.name.gsub("::","").underscore,
+            :locals => {
+              :index => index,
+              :name => name,
+              :custom_field => custom_field,
+              :events => events
+            }) %>
+        <% end %>
+      <% end %>
+    </td>
+</tr>
+
+
+

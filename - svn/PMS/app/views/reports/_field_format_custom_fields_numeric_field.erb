@@ -1,0 +1,52 @@
+<%
+  all_format_collection = CustomFields::NumericFormat.format_collection
+  all_options_collection = CustomFields::NumericFormat.option_collection
+
+  h_format_options = all_format_collection.collect{|f| " \"#{f.name.to_s}\": [\"" + f.option.join("\" , \"") + "\"]"}.join(",")
+%>
+
+<tr>
+  <th class="th_row_header"><%= label_tag "", "Numeric Format:" %></th>
+  <td>
+    <%= select_tag "#{name_tag}[format]",
+      options_from_collection_for_select(all_format_collection , :name, :descr, @field_report.format[:format].to_sym),
+    :onchange => "fncSetDisplayOptions({#{h_format_options}}, this.value, '#{sanitize_to_id("#{name_tag}[option]")}'  );" %>
+    <%= field_descr_tag %>
+  </td>
+</tr>
+
+<%
+  fr_options =  @field_report.format[:option]
+%>
+
+<% all_options_collection.each do |opt| %>
+  <% option_name = "#{name_tag}[option][#{opt.to_s}]" %>
+  <% isDisplay = fr_options.include?(opt) %>
+  <tr id="<%=opt.to_s%>" class="tr_display<%= (isDisplay) ? "" : "_none" %>" >
+    <th class="th_row_header"><%= label_tag option_name, "#{opt.to_s.sub("_", " ").capitalize}"":" %></th>
+    <td>
+      <% if(opt ==:unit) %>
+        <% fr_options[opt] ||= :THB %>
+        <% unit_collection = CustomFields::NumericFormat.currency_unit_collection %>
+        <% option_tags = unit_collection.collect!{|u| selected = (u[:name] == fr_options[opt].to_s) ? "selected=\"selected\"" : ''
+                                                  "<option value='#{u[:name]}' #{selected} >#{u[:descr]}</option>"} %>
+        <%= select_tag option_name, option_tags, :disabled => !isDisplay %>
+      <%  elsif(opt ==:rounding) %>
+        <% rounding_option_collection = CustomFields::NumericFormat.rounding_collection %>
+        <% option_tags = rounding_option_collection.collect!{|u| selected = (u[:name] == fr_options[opt].to_s) ? "selected=\"selected\"" : ''
+                                                  "<option value='#{u[:name]}' #{selected} >#{u[:descr]}</option>"} %>
+        <%= select_tag option_name, option_tags, :disabled => !isDisplay %>
+      <%  elsif(opt ==:prefix_multiplier) %>
+        <% prefix_multiplier_options = CustomFields::NumericFormat.prefix_multiplier_collection %>
+        <% prefix_multiplier_options.each_with_index do |dt, i| %>
+          <%= radio_button_tag(option_name, dt[:name], dt[:name].to_sym == fr_options[opt].to_sym, {:id => "#{sanitize_to_id("#{option_name}")}"}) + "#{dt[:descr]}" %>
+          <%= "</BR>" unless prefix_multiplier_options.last == i %>
+        <% end %>
+      <% else %>
+        <%= text_field_tag option_name, fr_options[opt], :disabled => !isDisplay %>
+      <% end %>
+
+      <%= field_descr_tag %>
+    </td>
+ </tr>
+<% end %>

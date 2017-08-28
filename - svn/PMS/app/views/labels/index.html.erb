@@ -1,0 +1,25 @@
+<h1>Listing labels</h1>
+
+<%= operation_tag(:new, :export, :back, :home ) %>
+
+<table class='table_content' id='table_content' cellspacing='0'>
+  <tr class='tr_header'>
+    <% ["Name"].each do |h| %>
+      <th class='th_col_header'><%= (h =~ /&nbsp;/) ? h : h.to_s.titleize %></th>
+    <% end %>
+  </tr>
+
+  <% @labels.each do |label| %>
+    <tr class='tr_<%= @labels.index(label) % 2 == 0 ? "even" : "odd" %>' id='<%label.id%>'
+        operation_area='' operation_url=''
+        relation_area='' relation_url=''
+        handleonclick='true'>
+      <td class='td_cell'><%=h label.name %></td>
+      <td class='td_cell'><%= link_to 'Show', label %></td>
+      <td class='td_cell'><%= link_to 'Edit', edit_label_path(label) %></td>
+      <td class='td_cell'><%= link_to 'Destroy', label, :confirm => 'Are you sure?', :method => :delete %></td>
+    </tr>
+  <% end %>
+</table>
+
+<br />

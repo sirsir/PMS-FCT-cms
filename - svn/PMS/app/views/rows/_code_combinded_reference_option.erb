@@ -1,0 +1,124 @@
+<% if scr_row.nil? || relate_model_rows.empty? %>
+Please select '<%= field.descr %>' to see options...
+<% else %>
+
+<%
+input_name = "cells[#{field.custom_field_id}]"
+
+name_tag = "#{input_name}[opt_row_ids][]"
+
+field_display_as = CustomFields::CodeCombindedReference.field_display_as(field.value)
+
+ocr_row_id = relate_model_rows.first.id if relate_model_rows.size == 1
+%>
+
+<%= hidden_field_tag("#{input_name}[ocr_row_id]", ocr_row_id) unless field.wildcard? %>
+<%= hidden_field_tag(name_tag, -1) unless field_display_as == :model_option %>
+
+<%
+if [:model_option, :model_for_sale].include?(field_display_as)
+  option_rows = CustomFields::ScreenCombindedReference.scr_option_rows(scr_row)
+  option_row_descriptions = option_rows.collect{|r| r.description }
+end
+
+if field_display_as == :model_option
+  options = [["Please select", -1]]
+  options += option_rows.collect do |r,i|
+    posfix_scr_name = " (#{r.screen.label_descr})" unless option_row_descriptions.index(r.description) == option_row_descriptions.rindex(r.description)
+
+    ["#{r.description}#{posfix_scr_name}", r.id]
+  end
+
+  option_tag = options_for_select(options, selected_option_row_ids.first || -1)
+%>
+  Option: <%= select_tag(name_tag, option_tag) %>
+<%
+elsif field_display_as == :model_for_sale
+  b = true
+
+  ccr_attribute_fields = field.code_combined_reference_attribute_fields
+%>
+  <table class='table_data_content' cellspacing='0'>
+    <tr class='tr_header'>
+      <th class='th_col_header'>Code</th>
+      <% ccr_attribute_fields.each do |f| %>
+        <th class='th_col_header'><%= f.full_descr %></th>
+      <% end %>
+    </tr>
+    <%
+    relate_model_rows.each do |r|
+      next if r.nil?
+    %>
+      <tr class='tr_data_<%= (b ^= true) ? 'odd' : 'even' %>'>
+      <%
+        if r.id == ocr_row_id
+          caller_clicked ||= false
+
+          ccr_text_input_id = sanitize_to_id("#{input_name}[ccr_text]")
+          cell_value = h(ccr_text)
+          cell_value << js_trigger_tag(ccr_text_input_id, ccr_text, :onclick => js_update_field_flag_value("flag_field_#{field.id}"))
+          cell_value << js_caller_tag("$('#{ccr_text_input_id}').click();", :clicked => caller_clicked)
+        else
+          cell = r.cell(field.source_field.custom_field_id)
+          title = cell.to_html.join('-')
+          relate_id = sanitize_to_id("#{input_name}[relate_model_row][#{r.id}]")
+          cell_value = full_text_toogler_tag(relate_id, title.to_s)
+        end
+      %>
+        <td class='td_cell' title='<%= title %>'><%= cell_value %></td>
+        <%
+        ccr_attribute_fields.each do |f|
+          cell = r.cell(f.source_field.custom_field_id)
+        %>
+          <td class='td_cell'><%= cell.nil? || cell.to_html.empty? ? "&nbsp;" : cell.to_html %></td>
+        <% end %>
+      </tr>
+    <% end %>
+
+    <%
+    model_options.each do |option_row, r|
+      posfix_scr_name = " (#{option_row.screen.label_descr})" unless option_row_descriptions.index(option_row.description) == option_row_descriptions.rindex(option_row.description)
+      row_descr = "#{option_row.description}#{posfix_scr_name}"
+
+      model_options[option_row] = { :row => r, :row_descr => row_descr }
+    end
+    
+    model_option_keys = model_options.keys.sort_by{|a| model_options[a][:row_descr] }
+
+    model_option_keys.each do |option_row|
+      r = model_options[option_row][:row]
+      row_descr = model_options[option_row][:row_descr]
+
+      onclick = ccr_attribute_fields.collect do |f|
+        cell = r.cell(f.source_field.custom_field_id)
+
+        unless cell.nil?
+          tagId = sanitize_to_id("#{input_name}[#{f.id}]")
+
+          <<JAVASCRIPT
+        fncReCalculateCCRAttributeValue("#{tagId}", #{cell.value.to_f}, this.checked);
+JAVASCRIPT
+        end
+      end.join unless r.nil?
+
+      selected = [selected_option_row_ids].flatten.include?(option_row.id)
+      option_id = sanitize_to_id("#{name_tag}[#{option_row.id}]")
+    %>
+      <tr class='tr_data_<%= (b ^= true) ? 'odd' : 'even' %>'>
+        <td class='td_cell'>
+          <%= check_box_tag(name_tag, option_row.id, selected ,{ :onclick=> onclick, :id => option_id }) %>
+          <%= label_tag option_id, row_descr %>
+        </td>
+        <%
+        ccr_attribute_fields.each do |f|
+          cell = r.cell(f.source_field.custom_field_id)
+        %>
+          <td class='td_cell'><%= cell.nil? || cell.to_html.empty? ? '&nbsp;' : cell.to_html %></td>
+        <% end unless r.nil? %>
+      </tr>
+    <% end %>
+  </table>
+<%
+end
+%>
+<% end %>

@@ -1,0 +1,26 @@
+<%
+field_filter = @report_request.field_filter(field_report_filter.reference_screen_index, field_report_filter.field_id)
+input_name_prefix = "field_filter[#{field_report_filter.reference_screen_index}][#{field_report_filter.field_id}][value]"
+accounting_year = DateTime.now.year
+if field_filter
+  accounting_year = field_filter.accounting_year
+
+  months = case field_report_filter.filter
+  when :long_month then (1..12).to_a
+  when :quarter_year then (13..16).to_a
+  when :half_year then (17..18).to_a
+  when :year then [19]
+  end
+  month_descriptions = months.collect{|q| [CustomFields::DateTimeField.month_description(q), q]  }
+
+  accounting_month = field_filter.accounting_month if field_filter
+  month_options = options_for_select(month_descriptions, accounting_month )
+end
+current_year = Time.now.year
+
+case field_report_filter.filter 
+when :long_month, :quarter_year, :half_year %>
+  <%= select_tag "#{input_name_prefix}[accounting_month]", month_options %>&nbsp;
+<% when :year 
+end %>
+<%= select_year(accounting_year, {:start_year => [current_year - 5, accounting_year].min, :end_year => current_year + 1, :prefix => input_name_prefix, :field_name => "accounting_year"} ) %>

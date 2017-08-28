@@ -1,0 +1,23 @@
+<h1> <%= "#{@stock.label.descr} : #{@transaction_type.titleize} Lists" %> </h1>
+
+
+<%
+operation_tags = operation_tag( [:new], {
+    :id => @stock.id,
+    :ajax_params => {
+      :transaction_type => @transaction_type
+    }
+  }
+)
+%>
+
+<%=operation_tags %>
+
+<%#= group_tag @screen, render(:partial => 'stocks') %>
+
+<%=operation_tags %>
+
+<hr />
+
+<div id ='error_area'></div>
+<div id ='operation_area'></div>

@@ -1,0 +1,22 @@
+<tr class="tr_header" ><th class="group_caption_center" colspan="2">Gems</th></tr>
+<tr class="tr_header"><th class="th_col_header">Name</th><th class="th_col_header">Version</th></tr>
+<%
+b = true
+gem_paths = Gem.path.collect{|p| p.gsub(/\:\//, "\%/").split(':') }.flatten.collect{|p| p.gsub('%/',':/')}
+loaded_gems = {}
+Gem.all_load_paths.each do |g|
+  gem_paths.each{|p| g.gsub!(p, '')}
+  g.gsub!(/^\/gems\//, '')
+  g.gsub!(/\/lib$/, '')
+
+  parts = g.gsub(/(-\d(\.\d)*)/,'|\1').split('|')
+  loaded_gems[parts[0]] ||= []
+  loaded_gems[parts[0]] << parts[1..parts.size-1].join.gsub(/^-/, '')
+end
+%>
+<% loaded_gems.keys.sort.each do |p| %>
+<tr class="tr_data_<%= (b ^= true) ? 'odd' : 'even' %>">
+  <td class="td_cell"><%=p %></td>
+  <td class="td_cell"><%=loaded_gems[p].sort.join(' / ') %></td>
+</tr>
+<% end %>

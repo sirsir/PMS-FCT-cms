@@ -1,0 +1,65 @@
+<%
+cell_report_request_col = cell_report_request_cols
+col_field = cell_report_request_col.fields_report
+
+report_request_col_ids ||= []
+
+rrc_ids = report_request_col_ids + [cell_report_request_col.id]
+
+if @report_request_row.report_request.report.col_fields_reports.last != col_field
+  #~ The plural partial is used to make a recursive call
+  %>
+    <%=render :partial => 'cell_report_request_cols', :collection => cell_report_request_col.childs, :locals => {:report_request_col_ids => rrc_ids} %>
+    <% if @report_request_row.report_request.report.cell_location == :row %>
+      <td class="td_cell" style="border: 0px; padding: 0px">
+        <table class="table_data_content" cellspacing="0" border="0" style="border: 0px;width: 100%" width="100%">
+        <% (0..@report_request_row.report_request.report.cell_fields_reports.size-1).each do |i| %>
+          <tr>
+          <%=render :partial => "sub_total_report_request_cell", :collection => @report_request_row.report_request.report.cell_fields_reports[i..i], :locals => {:report_request_col_id => rrc_ids.last, :show_percentage => false} %>
+          </tr>
+        <% end %>
+        </table>
+      </td>
+      <% if @report_request_row.report_request.report.has_percentage_weight? %>
+        <td class="td_cell" style="border: 0px; padding: 0px">
+          <table class="table_data_content" cellspacing="0" border="0" style="border: 0px;width: 100%" width="100%">
+          <% (0..@report_request_row.report_request.report.cell_fields_reports.size-1).each do |i| %>
+            <tr>
+            <%=render :partial => "sub_total_report_request_cell", :collection => @report_request_row.report_request.report.cell_fields_reports[i..i], :locals => {:report_request_col_id => rrc_ids.last, :show_percentage => true} %>
+            </tr>
+          <% end %>
+          </table>
+        </td>
+      <% end %>
+    <% else %>
+      <%=render :partial => "sub_total_report_request_cell", :collection => @report_request_row.report_request.report.cell_fields_reports, :locals => {:report_request_col_id => rrc_ids.last} %>
+    <% end unless col_field.summarize == :non %>
+<% elsif @report_request_row.report_request.report.cell_location == :row %>
+    <td class="td_cell" style="border: 0px; padding: 0px">
+      <table class="table_data_content" cellspacing="0" border="0" style="border: 0px;width: 100%" width="100%">
+      <% (0..cell_report_request_col.childs.size-1).each do |i| %>
+        <tr>
+        <%=render :partial => "cell_report_request_col", :collection => cell_report_request_col.childs[i..i], :locals => {:show_percentage => false} %>
+        </tr>
+      <% end %>
+      </table>
+    </td>
+    <% if @report_request_row.report_request.report.has_percentage_weight? %>
+      <td class="td_cell" style="border: 0px; padding: 0px">
+        <table class="table_data_content" cellspacing="0" border="0" style="border: 0px;width: 100%" width="100%">
+        <% (0..cell_report_request_col.childs.size-1).each do |i| %>
+          <tr>
+          <%=render :partial => "cell_report_request_col", :collection => cell_report_request_col.childs[i..i], :locals => {:show_percentage => true} %>
+          </tr>
+        <% end %>
+        </table>
+      </td>
+    <% end %>
+  <%
+else
+  #~ The singular partial is used generate the cells
+  %>
+    <%=render :partial => "cell_report_request_col", :collection => cell_report_request_col.childs %>
+  <%
+end
+%>

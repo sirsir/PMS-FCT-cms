@@ -1,0 +1,1533 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>Module: CustomFieldsHelper</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Script-Type" content="text/javascript" />
+  <link rel="stylesheet" href=".././rdoc-style.css" type="text/css" media="screen" />
+  <script type="text/javascript">
+  // <![CDATA[
+
+  function popupCode( url ) {
+    window.open(url, "Code", "resizable=yes,scrollbars=yes,toolbar=no,status=no,height=150,width=400")
+  }
+
+  function toggleCode( id ) {
+    if ( document.getElementById )
+      elem = document.getElementById( id );
+    else if ( document.all )
+      elem = eval( "document.all." + id );
+    else
+      return false;
+
+    elemStyle = elem.style;
+    
+    if ( elemStyle.display != "block" ) {
+      elemStyle.display = "block"
+    } else {
+      elemStyle.display = "none"
+    }
+
+    return true;
+  }
+  
+  // Make codeblocks hidden by default
+  document.writeln( "<style type=\"text/css\">div.method-source-code { display: none }</style>" )
+  
+  // ]]>
+  </script>
+
+</head>
+<body>
+
+
+
+    <div id="classHeader">
+        <table class="header-table">
+        <tr class="top-aligned-row">
+          <td><strong>Module</strong></td>
+          <td class="class-name-in-header">CustomFieldsHelper</td>
+        </tr>
+        <tr class="top-aligned-row">
+            <td><strong>In:</strong></td>
+            <td>
+                <a href="../files/app/helpers/custom_fields_helper_rb.html">
+                app/helpers/custom_fields_helper.rb
+                </a>
+        <br />
+            </td>
+        </tr>
+
+        </table>
+    </div>
+  <!-- banner header -->
+
+  <div id="bodyContent">
+
+
+
+  <div id="contextContent">
+
+
+
+   </div>
+
+    <div id="method-list">
+      <h3 class="section-bar">Methods</h3>
+
+      <div class="name-list">
+      <a href="#M000843">custom_fields_auto_numbering_path</a>&nbsp;&nbsp;
+      <a href="#M000847">custom_fields_calendar_path</a>&nbsp;&nbsp;
+      <a href="#M000824">custom_fields_check_box_path</a>&nbsp;&nbsp;
+      <a href="#M000845">custom_fields_code_combinded_reference_attribute_path</a>&nbsp;&nbsp;
+      <a href="#M000842">custom_fields_code_combinded_reference_path</a>&nbsp;&nbsp;
+      <a href="#M000825">custom_fields_combo_box_path</a>&nbsp;&nbsp;
+      <a href="#M000826">custom_fields_date_time_field_path</a>&nbsp;&nbsp;
+      <a href="#M000849">custom_fields_date_time_range_path</a>&nbsp;&nbsp;
+      <a href="#M000827">custom_fields_header_path</a>&nbsp;&nbsp;
+      <a href="#M000828">custom_fields_issue_tracking_path</a>&nbsp;&nbsp;
+      <a href="#M000829">custom_fields_left_right_path</a>&nbsp;&nbsp;
+      <a href="#M000830">custom_fields_list_box_path</a>&nbsp;&nbsp;
+      <a href="#M000831">custom_fields_login_field_path</a>&nbsp;&nbsp;
+      <a href="#M000832">custom_fields_numeric_field_path</a>&nbsp;&nbsp;
+      <a href="#M000841">custom_fields_option_combinded_reference_path</a>&nbsp;&nbsp;
+      <a href="#M000846">custom_fields_parameter_path</a>&nbsp;&nbsp;
+      <a href="#M000833">custom_fields_password_path</a>&nbsp;&nbsp;
+      <a href="#M000834">custom_fields_radio_button_path</a>&nbsp;&nbsp;
+      <a href="#M000844">custom_fields_reference_attribute_path</a>&nbsp;&nbsp;
+      <a href="#M000835">custom_fields_reference_path</a>&nbsp;&nbsp;
+      <a href="#M000840">custom_fields_screen_combinded_reference_path</a>&nbsp;&nbsp;
+      <a href="#M000848">custom_fields_stock_quantity_path</a>&nbsp;&nbsp;
+      <a href="#M000836">custom_fields_text_area_path</a>&nbsp;&nbsp;
+      <a href="#M000837">custom_fields_text_field_path</a>&nbsp;&nbsp;
+      <a href="#M000838">custom_fields_upload_file_path</a>&nbsp;&nbsp;
+      <a href="#M000839">custom_fields_upload_image_path</a>&nbsp;&nbsp;
+      <a href="#M000820">field_date</a>&nbsp;&nbsp;
+      <a href="#M000822">field_date_search_with_status</a>&nbsp;&nbsp;
+      <a href="#M000821">field_date_search_without_status</a>&nbsp;&nbsp;
+      <a href="#M000851">field_for_auto_numbering</a>&nbsp;&nbsp;
+      <a href="#M000818">field_for_edit</a>&nbsp;&nbsp;
+      <a href="#M000850">field_for_issue_tracking</a>&nbsp;&nbsp;
+      <a href="#M000815">field_for_list</a>&nbsp;&nbsp;
+      <a href="#M000817">field_for_new</a>&nbsp;&nbsp;
+      <a href="#M000816">field_for_search</a>&nbsp;&nbsp;
+      <a href="#M000819">field_for_xxx</a>&nbsp;&nbsp;
+      <a href="#M000823">field_numeric_search</a>&nbsp;&nbsp;
+      </div>
+    </div>
+
+  </div>
+
+
+    <!-- if includes -->
+
+    <div id="section">
+
+
+
+
+
+      
+
+
+    <!-- if method_list -->
+    <div id="methods">
+      <h3 class="section-bar">Public Instance methods</h3>
+
+      <div id="method-M000843" class="method-detail">
+        <a name="M000843"></a>
+
+        <div class="method-heading">
+          <a href="#M000843" class="method-signature">
+          <span class="method-name">custom_fields_auto_numbering_path</span><span class="method-args">(options)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000843-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000843-source">
+<pre>
+     <span class="ruby-comment cmt"># File app/helpers/custom_fields_helper.rb, line 601</span>
+601:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">custom_fields_auto_numbering_path</span>(<span class="ruby-identifier">options</span>)
+602:     <span class="ruby-identifier">custom_field_path</span>(<span class="ruby-identifier">options</span>)
+603:   <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000847" class="method-detail">
+        <a name="M000847"></a>
+
+        <div class="method-heading">
+          <a href="#M000847" class="method-signature">
+          <span class="method-name">custom_fields_calendar_path</span><span class="method-args">(options)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000847-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000847-source">
+<pre>
+     <span class="ruby-comment cmt"># File app/helpers/custom_fields_helper.rb, line 617</span>
+617:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">custom_fields_calendar_path</span>(<span class="ruby-identifier">options</span>)
+618:     <span class="ruby-identifier">custom_field_path</span>(<span class="ruby-identifier">options</span>)
+619:   <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000824" class="method-detail">
+        <a name="M000824"></a>
+
+        <div class="method-heading">
+          <a href="#M000824" class="method-signature">
+          <span class="method-name">custom_fields_check_box_path</span><span class="method-args">(options)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000824-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000824-source">
+<pre>
+     <span class="ruby-comment cmt"># File app/helpers/custom_fields_helper.rb, line 525</span>
+525:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">custom_fields_check_box_path</span>(<span class="ruby-identifier">options</span>)
+526:     <span class="ruby-identifier">custom_field_path</span>(<span class="ruby-identifier">options</span>)
+527:   <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000845" class="method-detail">
+        <a name="M000845"></a>
+
+        <div class="method-heading">
+          <a href="#M000845" class="method-signature">
+          <span class="method-name">custom_fields_code_combinded_reference_attribute_path</span><span class="method-args">(options)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000845-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000845-source">
+<pre>
+     <span class="ruby-comment cmt"># File app/helpers/custom_fields_helper.rb, line 609</span>
+609:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">custom_fields_code_combinded_reference_attribute_path</span>(<span class="ruby-identifier">options</span>)
+610:     <span class="ruby-identifier">custom_field_path</span>(<span class="ruby-identifier">options</span>)
+611:   <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000842" class="method-detail">
+        <a name="M000842"></a>
+
+        <div class="method-heading">
+          <a href="#M000842" class="method-signature">
+          <span class="method-name">custom_fields_code_combinded_reference_path</span><span class="method-args">(options)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000842-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000842-source">
+<pre>
+     <span class="ruby-comment cmt"># File app/helpers/custom_fields_helper.rb, line 597</span>
+597:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">custom_fields_code_combinded_reference_path</span>(<span class="ruby-identifier">options</span>)
+598:     <span class="ruby-identifier">custom_field_path</span>(<span class="ruby-identifier">options</span>)
+599:   <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000825" class="method-detail">
+        <a name="M000825"></a>
+
+        <div class="method-heading">
+          <a href="#M000825" class="method-signature">
+          <span class="method-name">custom_fields_combo_box_path</span><span class="method-args">(options)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000825-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000825-source">
+<pre>
+     <span class="ruby-comment cmt"># File app/helpers/custom_fields_helper.rb, line 529</span>
+529:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">custom_fields_combo_box_path</span>(<span class="ruby-identifier">options</span>)
+530:     <span class="ruby-identifier">custom_field_path</span>(<span class="ruby-identifier">options</span>)
+531:   <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000826" class="method-detail">
+        <a name="M000826"></a>
+
+        <div class="method-heading">
+          <a href="#M000826" class="method-signature">
+          <span class="method-name">custom_fields_date_time_field_path</span><span class="method-args">(options)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000826-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000826-source">
+<pre>
+     <span class="ruby-comment cmt"># File app/helpers/custom_fields_helper.rb, line 533</span>
+533:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">custom_fields_date_time_field_path</span>(<span class="ruby-identifier">options</span>)
+534:     <span class="ruby-identifier">custom_field_path</span>(<span class="ruby-identifier">options</span>)
+535:   <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000849" class="method-detail">
+        <a name="M000849"></a>
+
+        <div class="method-heading">
+          <a href="#M000849" class="method-signature">
+          <span class="method-name">custom_fields_date_time_range_path</span><span class="method-args">(options)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000849-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000849-source">
+<pre>
+     <span class="ruby-comment cmt"># File app/helpers/custom_fields_helper.rb, line 625</span>
+625:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">custom_fields_date_time_range_path</span>(<span class="ruby-identifier">options</span>)
+626:     <span class="ruby-identifier">custom_field_path</span>(<span class="ruby-identifier">options</span>)
+627:   <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000827" class="method-detail">
+        <a name="M000827"></a>
+
+        <div class="method-heading">
+          <a href="#M000827" class="method-signature">
+          <span class="method-name">custom_fields_header_path</span><span class="method-args">(options)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000827-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000827-source">
+<pre>
+     <span class="ruby-comment cmt"># File app/helpers/custom_fields_helper.rb, line 537</span>
+537:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">custom_fields_header_path</span>(<span class="ruby-identifier">options</span>)
+538:     <span class="ruby-identifier">custom_field_path</span>(<span class="ruby-identifier">options</span>)
+539:   <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000828" class="method-detail">
+        <a name="M000828"></a>
+
+        <div class="method-heading">
+          <a href="#M000828" class="method-signature">
+          <span class="method-name">custom_fields_issue_tracking_path</span><span class="method-args">(options)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000828-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000828-source">
+<pre>
+     <span class="ruby-comment cmt"># File app/helpers/custom_fields_helper.rb, line 541</span>
+541:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">custom_fields_issue_tracking_path</span>(<span class="ruby-identifier">options</span>)
+542:     <span class="ruby-identifier">custom_field_path</span>(<span class="ruby-identifier">options</span>)
+543:   <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000829" class="method-detail">
+        <a name="M000829"></a>
+
+        <div class="method-heading">
+          <a href="#M000829" class="method-signature">
+          <span class="method-name">custom_fields_left_right_path</span><span class="method-args">(options)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000829-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000829-source">
+<pre>
+     <span class="ruby-comment cmt"># File app/helpers/custom_fields_helper.rb, line 545</span>
+545:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">custom_fields_left_right_path</span>(<span class="ruby-identifier">options</span>)
+546:     <span class="ruby-identifier">custom_field_path</span>(<span class="ruby-identifier">options</span>)
+547:   <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000830" class="method-detail">
+        <a name="M000830"></a>
+
+        <div class="method-heading">
+          <a href="#M000830" class="method-signature">
+          <span class="method-name">custom_fields_list_box_path</span><span class="method-args">(options)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000830-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000830-source">
+<pre>
+     <span class="ruby-comment cmt"># File app/helpers/custom_fields_helper.rb, line 549</span>
+549:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">custom_fields_list_box_path</span>(<span class="ruby-identifier">options</span>)
+550:     <span class="ruby-identifier">custom_field_path</span>(<span class="ruby-identifier">options</span>)
+551:   <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000831" class="method-detail">
+        <a name="M000831"></a>
+
+        <div class="method-heading">
+          <a href="#M000831" class="method-signature">
+          <span class="method-name">custom_fields_login_field_path</span><span class="method-args">(options)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000831-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000831-source">
+<pre>
+     <span class="ruby-comment cmt"># File app/helpers/custom_fields_helper.rb, line 553</span>
+553:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">custom_fields_login_field_path</span>(<span class="ruby-identifier">options</span>)
+554:     <span class="ruby-identifier">custom_field_path</span>(<span class="ruby-identifier">options</span>)
+555:   <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000832" class="method-detail">
+        <a name="M000832"></a>
+
+        <div class="method-heading">
+          <a href="#M000832" class="method-signature">
+          <span class="method-name">custom_fields_numeric_field_path</span><span class="method-args">(options)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000832-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000832-source">
+<pre>
+     <span class="ruby-comment cmt"># File app/helpers/custom_fields_helper.rb, line 557</span>
+557:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">custom_fields_numeric_field_path</span>(<span class="ruby-identifier">options</span>)
+558:     <span class="ruby-identifier">custom_field_path</span>(<span class="ruby-identifier">options</span>)
+559:   <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000841" class="method-detail">
+        <a name="M000841"></a>
+
+        <div class="method-heading">
+          <a href="#M000841" class="method-signature">
+          <span class="method-name">custom_fields_option_combinded_reference_path</span><span class="method-args">(options)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000841-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000841-source">
+<pre>
+     <span class="ruby-comment cmt"># File app/helpers/custom_fields_helper.rb, line 593</span>
+593:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">custom_fields_option_combinded_reference_path</span>(<span class="ruby-identifier">options</span>)
+594:     <span class="ruby-identifier">custom_field_path</span>(<span class="ruby-identifier">options</span>)
+595:   <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000846" class="method-detail">
+        <a name="M000846"></a>
+
+        <div class="method-heading">
+          <a href="#M000846" class="method-signature">
+          <span class="method-name">custom_fields_parameter_path</span><span class="method-args">(options)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000846-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000846-source">
+<pre>
+     <span class="ruby-comment cmt"># File app/helpers/custom_fields_helper.rb, line 613</span>
+613:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">custom_fields_parameter_path</span>(<span class="ruby-identifier">options</span>)
+614:     <span class="ruby-identifier">custom_field_path</span>(<span class="ruby-identifier">options</span>)
+615:   <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000833" class="method-detail">
+        <a name="M000833"></a>
+
+        <div class="method-heading">
+          <a href="#M000833" class="method-signature">
+          <span class="method-name">custom_fields_password_path</span><span class="method-args">(options)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000833-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000833-source">
+<pre>
+     <span class="ruby-comment cmt"># File app/helpers/custom_fields_helper.rb, line 561</span>
+561:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">custom_fields_password_path</span>(<span class="ruby-identifier">options</span>)
+562:     <span class="ruby-identifier">custom_field_path</span>(<span class="ruby-identifier">options</span>)
+563:   <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000834" class="method-detail">
+        <a name="M000834"></a>
+
+        <div class="method-heading">
+          <a href="#M000834" class="method-signature">
+          <span class="method-name">custom_fields_radio_button_path</span><span class="method-args">(options)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000834-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000834-source">
+<pre>
+     <span class="ruby-comment cmt"># File app/helpers/custom_fields_helper.rb, line 565</span>
+565:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">custom_fields_radio_button_path</span>(<span class="ruby-identifier">options</span>)
+566:     <span class="ruby-identifier">custom_field_path</span>(<span class="ruby-identifier">options</span>)
+567:   <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000844" class="method-detail">
+        <a name="M000844"></a>
+
+        <div class="method-heading">
+          <a href="#M000844" class="method-signature">
+          <span class="method-name">custom_fields_reference_attribute_path</span><span class="method-args">(options)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000844-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000844-source">
+<pre>
+     <span class="ruby-comment cmt"># File app/helpers/custom_fields_helper.rb, line 605</span>
+605:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">custom_fields_reference_attribute_path</span>(<span class="ruby-identifier">options</span>)
+606:     <span class="ruby-identifier">custom_field_path</span>(<span class="ruby-identifier">options</span>)
+607:   <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000835" class="method-detail">
+        <a name="M000835"></a>
+
+        <div class="method-heading">
+          <a href="#M000835" class="method-signature">
+          <span class="method-name">custom_fields_reference_path</span><span class="method-args">(options)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000835-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000835-source">
+<pre>
+     <span class="ruby-comment cmt"># File app/helpers/custom_fields_helper.rb, line 569</span>
+569:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">custom_fields_reference_path</span>(<span class="ruby-identifier">options</span>)
+570:     <span class="ruby-identifier">custom_field_path</span>(<span class="ruby-identifier">options</span>)
+571:   <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000840" class="method-detail">
+        <a name="M000840"></a>
+
+        <div class="method-heading">
+          <a href="#M000840" class="method-signature">
+          <span class="method-name">custom_fields_screen_combinded_reference_path</span><span class="method-args">(options)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000840-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000840-source">
+<pre>
+     <span class="ruby-comment cmt"># File app/helpers/custom_fields_helper.rb, line 589</span>
+589:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">custom_fields_screen_combinded_reference_path</span>(<span class="ruby-identifier">options</span>)
+590:     <span class="ruby-identifier">custom_field_path</span>(<span class="ruby-identifier">options</span>)
+591:   <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000848" class="method-detail">
+        <a name="M000848"></a>
+
+        <div class="method-heading">
+          <a href="#M000848" class="method-signature">
+          <span class="method-name">custom_fields_stock_quantity_path</span><span class="method-args">(options)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000848-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000848-source">
+<pre>
+     <span class="ruby-comment cmt"># File app/helpers/custom_fields_helper.rb, line 621</span>
+621:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">custom_fields_stock_quantity_path</span>(<span class="ruby-identifier">options</span>)
+622:     <span class="ruby-identifier">custom_field_path</span>(<span class="ruby-identifier">options</span>)
+623:   <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000836" class="method-detail">
+        <a name="M000836"></a>
+
+        <div class="method-heading">
+          <a href="#M000836" class="method-signature">
+          <span class="method-name">custom_fields_text_area_path</span><span class="method-args">(options)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000836-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000836-source">
+<pre>
+     <span class="ruby-comment cmt"># File app/helpers/custom_fields_helper.rb, line 573</span>
+573:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">custom_fields_text_area_path</span>(<span class="ruby-identifier">options</span>)
+574:     <span class="ruby-identifier">custom_field_path</span>(<span class="ruby-identifier">options</span>)
+575:   <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000837" class="method-detail">
+        <a name="M000837"></a>
+
+        <div class="method-heading">
+          <a href="#M000837" class="method-signature">
+          <span class="method-name">custom_fields_text_field_path</span><span class="method-args">(options)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000837-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000837-source">
+<pre>
+     <span class="ruby-comment cmt"># File app/helpers/custom_fields_helper.rb, line 577</span>
+577:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">custom_fields_text_field_path</span>(<span class="ruby-identifier">options</span>)
+578:     <span class="ruby-identifier">custom_field_path</span>(<span class="ruby-identifier">options</span>)
+579:   <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000838" class="method-detail">
+        <a name="M000838"></a>
+
+        <div class="method-heading">
+          <a href="#M000838" class="method-signature">
+          <span class="method-name">custom_fields_upload_file_path</span><span class="method-args">(options)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000838-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000838-source">
+<pre>
+     <span class="ruby-comment cmt"># File app/helpers/custom_fields_helper.rb, line 581</span>
+581:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">custom_fields_upload_file_path</span>(<span class="ruby-identifier">options</span>)
+582:     <span class="ruby-identifier">custom_field_path</span>(<span class="ruby-identifier">options</span>)
+583:   <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000839" class="method-detail">
+        <a name="M000839"></a>
+
+        <div class="method-heading">
+          <a href="#M000839" class="method-signature">
+          <span class="method-name">custom_fields_upload_image_path</span><span class="method-args">(options)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000839-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000839-source">
+<pre>
+     <span class="ruby-comment cmt"># File app/helpers/custom_fields_helper.rb, line 585</span>
+585:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">custom_fields_upload_image_path</span>(<span class="ruby-identifier">options</span>)
+586:     <span class="ruby-identifier">custom_field_path</span>(<span class="ruby-identifier">options</span>)
+587:   <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000820" class="method-detail">
+        <a name="M000820"></a>
+
+        <div class="method-heading">
+          <a href="#M000820" class="method-signature">
+          <span class="method-name">field_date</span><span class="method-args">(id_from)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000820-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000820-source">
+<pre>
+     <span class="ruby-comment cmt"># File app/helpers/custom_fields_helper.rb, line 356</span>
+356:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">field_date</span>(<span class="ruby-identifier">id_from</span>)
+357:       <span class="ruby-identifier">text_field_tag</span>(<span class="ruby-identifier">id_from</span>, <span class="ruby-value str">&quot;&quot;</span>, <span class="ruby-identifier">:readonly=</span><span class="ruby-operator">&gt;</span><span class="ruby-keyword kw">true</span>, <span class="ruby-identifier">:size=</span><span class="ruby-operator">&gt;</span><span class="ruby-value">7</span>)  <span class="ruby-operator">+</span>
+358:         <span class="ruby-node">&quot;               &lt;a href='javascript:NewCssCal(\&quot;#{id_from}\&quot;,\&quot;yyyymmdd\&quot;)' &gt;  &quot;</span> <span class="ruby-operator">+</span>
+359:         <span class="ruby-value str">&quot;               &lt;img src='/images/cal.gif' width='16' height='16' alt='Pick a date' border='0'&gt;&lt;/a&gt;&quot;</span>
+360:   <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000822" class="method-detail">
+        <a name="M000822"></a>
+
+        <div class="method-heading">
+          <a href="#M000822" class="method-signature">
+          <span class="method-name">field_date_search_with_status</span><span class="method-args">(field_name, field, screen_id, option_name = &quot;&quot;, default_value_from = nil, default_value_to = nil, is_already_set = true, format = nil, is_range = true)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000822-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000822-source">
+<pre>
+     <span class="ruby-comment cmt"># File app/helpers/custom_fields_helper.rb, line 376</span>
+376:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">field_date_search_with_status</span>(<span class="ruby-identifier">field_name</span>, <span class="ruby-identifier">field</span>, <span class="ruby-identifier">screen_id</span>, <span class="ruby-identifier">option_name</span> = <span class="ruby-value str">&quot;&quot;</span>, <span class="ruby-identifier">default_value_from</span> = <span class="ruby-keyword kw">nil</span>, <span class="ruby-identifier">default_value_to</span> = <span class="ruby-keyword kw">nil</span>, <span class="ruby-identifier">is_already_set</span> = <span class="ruby-keyword kw">true</span>, <span class="ruby-identifier">format</span> = <span class="ruby-keyword kw">nil</span>, <span class="ruby-identifier">is_range</span> = <span class="ruby-keyword kw">true</span>)
+377:     <span class="ruby-identifier">field_from_name</span> = <span class="ruby-node">&quot;#{field_name}[from]&quot;</span>
+378:     <span class="ruby-identifier">field_to_name</span> = <span class="ruby-node">&quot;#{field_name}[to]&quot;</span>
+379:     <span class="ruby-identifier">field_from_id</span> = <span class="ruby-identifier">sanitize_to_id</span>(<span class="ruby-identifier">field_from_name</span>)
+380:     <span class="ruby-identifier">field_to_id</span> = <span class="ruby-identifier">sanitize_to_id</span>(<span class="ruby-identifier">field_to_name</span>)
+381:     <span class="ruby-identifier">default_value_from</span> = (<span class="ruby-identifier">default_value_from</span>.<span class="ruby-identifier">nil?</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">default_value_from</span> <span class="ruby-operator">==</span> <span class="ruby-constant">Date</span>.<span class="ruby-identifier">null_date</span>) <span class="ruby-operator">?</span> <span class="ruby-keyword kw">nil</span> <span class="ruby-operator">:</span> <span class="ruby-identifier">default_value_from</span>.<span class="ruby-identifier">to_date</span>.<span class="ruby-identifier">strftime</span>(<span class="ruby-value str">&quot;%d-%b-%Y&quot;</span>)
+382:     <span class="ruby-identifier">default_value_to</span> = (<span class="ruby-identifier">default_value_to</span>.<span class="ruby-identifier">nil?</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">default_value_to</span> <span class="ruby-operator">==</span> <span class="ruby-constant">Date</span>.<span class="ruby-identifier">null_date</span>) <span class="ruby-operator">?</span> <span class="ruby-keyword kw">nil</span> <span class="ruby-operator">:</span> <span class="ruby-identifier">default_value_to</span>.<span class="ruby-identifier">to_date</span>.<span class="ruby-identifier">strftime</span>(<span class="ruby-value str">&quot;%d-%b-%Y&quot;</span>)
+383:     <span class="ruby-identifier">date_format</span> = <span class="ruby-identifier">format</span>.<span class="ruby-identifier">nil?</span> <span class="ruby-value">? </span><span class="ruby-constant">CustomField</span>.<span class="ruby-identifier">find</span>(<span class="ruby-identifier">field</span>.<span class="ruby-identifier">custom_field_id</span>).<span class="ruby-identifier">format_date</span> <span class="ruby-operator">:</span> <span class="ruby-identifier">format</span>
+384:     
+385:     <span class="ruby-identifier">radio_name</span> = <span class="ruby-node">&quot;#{field_name}[status][set]&quot;</span>
+386:     <span class="ruby-identifier">radio_id</span> = <span class="ruby-identifier">sanitize_to_id</span>(<span class="ruby-identifier">radio_name</span>)
+387:     <span class="ruby-identifier">onset_radio_already_set</span> = <span class="ruby-node">&quot;javascript:fncAlreadySetRadio('#{radio_id}');&quot;</span>
+388: 
+389:     <span class="ruby-keyword kw">case</span> <span class="ruby-identifier">date_format</span>
+390:     <span class="ruby-keyword kw">when</span> <span class="ruby-identifier">:short_date</span>, <span class="ruby-identifier">:long_date</span> <span class="ruby-keyword kw">then</span>
+391:         <span class="ruby-identifier">onclear</span> = <span class="ruby-node">&quot;javascript:ResetTextBox('#{field_from_id}');
+392:                    javascript:ResetTextBox('#{field_to_id}');&quot;</span>
+393:         <span class="ruby-identifier">calendar_name</span> = <span class="ruby-identifier">option_name</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">:field_filter</span> <span class="ruby-operator">?</span> <span class="ruby-node">&quot;calendar_#{field.id}_value&quot;</span> <span class="ruby-operator">:</span> (<span class="ruby-identifier">screen_id</span>.<span class="ruby-identifier">nil?</span>) <span class="ruby-operator">?</span> <span class="ruby-node">&quot;calendar_#{field.custom_field_id}&quot;</span> <span class="ruby-operator">:</span> <span class="ruby-node">&quot;calendar_#{screen_id}_#{field.custom_field_id}&quot;</span>
+394:         <span class="ruby-identifier">html</span> = <span class="ruby-identifier">text_field_tag</span>(<span class="ruby-identifier">field_from_name</span>, <span class="ruby-identifier">default_value_from</span>, <span class="ruby-identifier">:readonly=</span><span class="ruby-operator">&gt;</span><span class="ruby-keyword kw">true</span>, <span class="ruby-identifier">:size=</span><span class="ruby-operator">&gt;</span><span class="ruby-value">7</span>)
+395:         <span class="ruby-identifier">html</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-value str">&quot;&lt;img id=\&quot;\#{calendar_name}_from\&quot; src=\&quot;/images/cal.gif\&quot; width=\&quot;16\&quot; height=\&quot;16\&quot; alt=\&quot;Pick a date\&quot; border=\&quot;0\&quot; onClick=\&quot;javascript:NewCssCal('\#{field_from_id}','ddmmmyyyy'); \#{onset_radio_already_set}\&quot;&gt;\n&quot;</span>
+396:          <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">is_range</span>
+397:           <span class="ruby-identifier">html</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-value str">&quot;&lt;B&gt; - &lt;/B&gt;&quot;</span>
+398:           <span class="ruby-identifier">html</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">text_field_tag</span>(<span class="ruby-identifier">field_to_name</span>, <span class="ruby-identifier">default_value_to</span>, <span class="ruby-identifier">:readonly=</span><span class="ruby-operator">&gt;</span><span class="ruby-keyword kw">true</span>, <span class="ruby-identifier">:size=</span><span class="ruby-operator">&gt;</span><span class="ruby-value">7</span>)
+399:           <span class="ruby-identifier">html</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-value str">&quot;    &lt;img id=\&quot;\#{calendar_name}_to\&quot; src=\&quot;/images/cal.gif\&quot; width=\&quot;16\&quot; height=\&quot;16\&quot; alt=\&quot;Pick a date\&quot; border=\&quot;0\&quot; onClick=\\\&quot;javascript:NewCssCal('\#{field_to_id}','ddmmmyyyy'); \#{onset_radio_already_set}\\\&quot;&gt;\n&quot;</span>
+400:          <span class="ruby-keyword kw">end</span>
+401: <span class="ruby-comment cmt">#</span>
+402: <span class="ruby-comment cmt">#    html &lt;&lt; &lt;&lt;IMAGE</span>
+403: <span class="ruby-comment cmt">#  &lt;img src='/images/cal_close.gif' width='16' height='16' alt='Reset date' border='0' onClick='#{onclear}'&gt;</span>
+404: <span class="ruby-comment cmt">#IMAGE</span>
+405:     <span class="ruby-keyword kw">else</span>
+406:         <span class="ruby-identifier">start_year</span> = (<span class="ruby-constant">Time</span>.<span class="ruby-identifier">now</span>.<span class="ruby-identifier">year</span>)<span class="ruby-operator">-</span><span class="ruby-value">10</span>
+407:         <span class="ruby-identifier">end_year</span> = (<span class="ruby-constant">Time</span>.<span class="ruby-identifier">now</span>.<span class="ruby-identifier">year</span>)<span class="ruby-operator">+</span><span class="ruby-value">5</span>
+408: 
+409:         <span class="ruby-identifier">field_from_month</span> = <span class="ruby-node">&quot;#{field_from_name}_month&quot;</span>
+410:         <span class="ruby-identifier">field_from_year</span> = <span class="ruby-node">&quot;#{field_from_name}_year&quot;</span>
+411:         <span class="ruby-identifier">field_to_month</span> = <span class="ruby-node">&quot;#{field_to_name}_month&quot;</span>
+412:         <span class="ruby-identifier">field_to_year</span> = <span class="ruby-node">&quot;#{field_to_name}_year&quot;</span>
+413: 
+414:         <span class="ruby-identifier">onchange_from</span> = <span class="ruby-node">&quot;fncSetDate(\&quot;#{date_format}\&quot;,\&quot;#{sanitize_to_id(&quot;date[#{field_from_month}]&quot;)}\&quot;,\&quot;#{sanitize_to_id(&quot;date[#{field_from_year}]&quot;)}\&quot;,\&quot;#{field_from_id}\&quot;,true, \&quot;#{Date.null_date}\&quot;);&quot;</span>
+415:         <span class="ruby-identifier">onchange_from</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-node">&quot;fncSetDate(\&quot;#{date_format}\&quot;,\&quot;#{sanitize_to_id(&quot;date[#{field_from_month}]&quot;)}\&quot;,\&quot;#{sanitize_to_id(&quot;date[#{field_from_year}]&quot;)}\&quot;,\&quot;#{field_to_id}\&quot;,false, \&quot;#{Date.null_date}\&quot;);&quot;</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">is_range</span>
+416: 
+417:         <span class="ruby-identifier">onchange_to</span> = <span class="ruby-node">&quot;fncSetDate(\&quot;#{date_format}\&quot;,\&quot;#{sanitize_to_id(&quot;date[#{field_to_month}]&quot;)}\&quot;,\&quot;#{sanitize_to_id(&quot;date[#{field_to_year}]&quot;)}\&quot;,\&quot;#{field_to_id}\&quot;,false, \&quot;#{Date.null_date}\&quot;);&quot;</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">is_range</span>
+418: 
+419:         <span class="ruby-identifier">onclear</span> = <span class="ruby-node">&quot;javascript:fncClearComboBoxDateFormat(\&quot;#{date_format}\&quot;,\&quot;#{sanitize_to_id(&quot;date[#{field_from_month}]&quot;)}\&quot;,\&quot;#{sanitize_to_id(&quot;date[#{field_from_year}]&quot;)}\&quot;,\&quot;#{field_from_id}\&quot;);
+420:                    javascript:fncClearComboBoxDateFormat(\&quot;#{date_format}\&quot;,\&quot;#{sanitize_to_id(&quot;date[#{field_to_month}]&quot;)}\&quot;,\&quot;#{sanitize_to_id(&quot;date[#{field_to_year}]&quot;)}\&quot;,\&quot;#{field_to_id}\&quot;);
+421:                    javascript:fncClearInvalidSearch(\&quot;#{field.custom_field_id}\&quot;);&quot;</span>
+422:     
+423:         <span class="ruby-keyword kw">case</span> <span class="ruby-identifier">date_format</span>
+424:         <span class="ruby-keyword kw">when</span> <span class="ruby-identifier">:year</span> <span class="ruby-keyword kw">then</span>
+425:             <span class="ruby-identifier">html</span> = <span class="ruby-identifier">select_year</span>(<span class="ruby-identifier">default_value_from</span>,{<span class="ruby-identifier">:field_name</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">field_from_year</span>, <span class="ruby-identifier">:start_year</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">start_year</span>, <span class="ruby-identifier">:end_year</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">end_year</span>, <span class="ruby-identifier">:include_blank</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword kw">true</span>},{<span class="ruby-identifier">:onchange</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">onchange_from</span>, <span class="ruby-identifier">:onclick</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">onset_radio_already_set</span>})
+426:             <span class="ruby-identifier">html</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-value str">&quot;&lt;B&gt; - &lt;/B&gt;&quot;</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">is_range</span>
+427:             <span class="ruby-identifier">html</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">select_year</span>(<span class="ruby-identifier">default_value_to</span>,{<span class="ruby-identifier">:field_name</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">field_to_year</span>, <span class="ruby-identifier">:start_year</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">start_year</span>,<span class="ruby-identifier">:end_year</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">end_year</span>,<span class="ruby-identifier">:include_blank</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword kw">true</span>},{<span class="ruby-identifier">:onchange</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">onchange_to</span>, <span class="ruby-identifier">:onclick</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">onset_radio_already_set</span>}) <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">is_range</span>
+428:         <span class="ruby-keyword kw">else</span>
+429:             <span class="ruby-keyword kw">case</span> <span class="ruby-identifier">date_format</span>
+430:             <span class="ruby-keyword kw">when</span> <span class="ruby-identifier">:short_month</span>, <span class="ruby-identifier">:long_month</span> <span class="ruby-keyword kw">then</span>
+431:                 <span class="ruby-identifier">use_short_month</span> = (<span class="ruby-identifier">date_format</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">:short_month</span>)
+432:                 <span class="ruby-identifier">html</span> = <span class="ruby-identifier">select_month</span>(<span class="ruby-identifier">default_value_from</span>, {<span class="ruby-identifier">:field_name</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">field_from_month</span>, <span class="ruby-identifier">:use_short_month</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">use_short_month</span>, <span class="ruby-identifier">:include_blank</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword kw">true</span>}, {<span class="ruby-identifier">:onchange</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">onchange_from</span>, <span class="ruby-identifier">:onclick</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">onset_radio_already_set</span>})
+433:                 <span class="ruby-identifier">html</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">select_year</span>(<span class="ruby-identifier">default_value_from</span>, {<span class="ruby-identifier">:field_name</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">field_from_year</span>, <span class="ruby-identifier">:start_year</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">start_year</span>  , <span class="ruby-identifier">:end_year</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">end_year</span>, <span class="ruby-identifier">:include_blank</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword kw">true</span>}, {<span class="ruby-identifier">:onchange</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">onchange_from</span>, <span class="ruby-identifier">:onclick</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">onset_radio_already_set</span>})
+434:                 <span class="ruby-identifier">html</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-value str">&quot;&lt;B&gt; - &lt;/B&gt;&quot;</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">is_range</span>
+435:                 <span class="ruby-identifier">html</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">select_month</span>(<span class="ruby-identifier">default_value_to</span>, {<span class="ruby-identifier">:field_name</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">field_to_month</span>, <span class="ruby-identifier">:use_short_month</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">use_short_month</span>, <span class="ruby-identifier">:include_blank</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword kw">true</span>}, {<span class="ruby-identifier">:onchange</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">onchange_to</span>, <span class="ruby-identifier">:onclick</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">onset_radio_already_set</span>}) <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">is_range</span>
+436:                 <span class="ruby-identifier">html</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">select_year</span>(<span class="ruby-identifier">default_value_to</span>, {<span class="ruby-identifier">:field_name</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">field_to_year</span>, <span class="ruby-identifier">:start_year</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">start_year</span>  , <span class="ruby-identifier">:end_year</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">end_year</span>, <span class="ruby-identifier">:include_blank</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword kw">true</span>}, {<span class="ruby-identifier">:onchange</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">onchange_to</span>, <span class="ruby-identifier">:onclick</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">onset_radio_already_set</span>}) <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">is_range</span>
+437:             <span class="ruby-keyword kw">when</span> <span class="ruby-identifier">:half_year</span>, <span class="ruby-identifier">:quarter_year</span> <span class="ruby-keyword kw">then</span>
+438:                 <span class="ruby-identifier">null_date</span> = <span class="ruby-constant">Date</span>.<span class="ruby-identifier">null_date</span>
+439:                 <span class="ruby-identifier">month_from</span> = <span class="ruby-identifier">default_value_from</span>.<span class="ruby-identifier">nil?</span> <span class="ruby-value">? </span><span class="ruby-value">0</span> <span class="ruby-operator">:</span> <span class="ruby-identifier">null_date</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">default_value_from</span> <span class="ruby-value">? </span><span class="ruby-value">0</span> <span class="ruby-operator">:</span> <span class="ruby-identifier">default_value_from</span>.<span class="ruby-identifier">month</span>
+440:                 <span class="ruby-identifier">month_to</span> =  <span class="ruby-identifier">default_value_to</span>.<span class="ruby-identifier">nil?</span> <span class="ruby-value">? </span><span class="ruby-value">0</span> <span class="ruby-operator">:</span> <span class="ruby-identifier">null_date</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">default_value_to</span> <span class="ruby-value">? </span><span class="ruby-value">0</span> <span class="ruby-operator">:</span> <span class="ruby-identifier">default_value_to</span>.<span class="ruby-identifier">month</span>
+441:                 <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">date_format</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">:half_year</span>
+442:                     <span class="ruby-identifier">options</span> = [<span class="ruby-value str">&quot;&quot;</span>,<span class="ruby-value str">&quot;1st Half&quot;</span>,<span class="ruby-value str">&quot;2nd Half&quot;</span>]
+443:                     <span class="ruby-identifier">period_from</span> = <span class="ruby-keyword kw">case</span> <span class="ruby-identifier">month_from</span>
+444:                              <span class="ruby-keyword kw">when</span> <span class="ruby-value">0</span> <span class="ruby-keyword kw">then</span> <span class="ruby-value">0</span>
+445:                              <span class="ruby-keyword kw">when</span> <span class="ruby-value">4</span><span class="ruby-operator">..</span><span class="ruby-value">9</span> <span class="ruby-keyword kw">then</span> <span class="ruby-value">1</span>
+446:                              <span class="ruby-keyword kw">else</span> <span class="ruby-value">2</span>
+447:                              <span class="ruby-keyword kw">end</span>
+448:                     <span class="ruby-identifier">period_to</span> = <span class="ruby-keyword kw">case</span> <span class="ruby-identifier">month_to</span>
+449:                              <span class="ruby-keyword kw">when</span> <span class="ruby-value">0</span> <span class="ruby-keyword kw">then</span> <span class="ruby-value">0</span>
+450:                              <span class="ruby-keyword kw">when</span> <span class="ruby-value">4</span><span class="ruby-operator">..</span><span class="ruby-value">9</span> <span class="ruby-keyword kw">then</span> <span class="ruby-value">1</span>
+451:                              <span class="ruby-keyword kw">else</span> <span class="ruby-value">2</span>
+452:                              <span class="ruby-keyword kw">end</span>
+453:                 <span class="ruby-keyword kw">else</span>
+454:                     <span class="ruby-identifier">options</span> = [<span class="ruby-value str">&quot;&quot;</span>,<span class="ruby-value str">&quot;1st Quarter&quot;</span>,<span class="ruby-value str">&quot;2nd Quarter&quot;</span>,<span class="ruby-value str">&quot;3rd Quarter&quot;</span>,<span class="ruby-value str">&quot;4th Quarter&quot;</span>]
+455:                     <span class="ruby-identifier">period_from</span> = <span class="ruby-keyword kw">case</span> <span class="ruby-identifier">month_from</span>
+456:                              <span class="ruby-keyword kw">when</span> <span class="ruby-value">0</span> <span class="ruby-keyword kw">then</span> <span class="ruby-value">0</span>
+457:                              <span class="ruby-keyword kw">when</span> <span class="ruby-value">4</span><span class="ruby-operator">..</span><span class="ruby-value">6</span> <span class="ruby-keyword kw">then</span> <span class="ruby-value">1</span>
+458:                              <span class="ruby-keyword kw">when</span> <span class="ruby-value">7</span><span class="ruby-operator">..</span><span class="ruby-value">9</span> <span class="ruby-keyword kw">then</span> <span class="ruby-value">2</span>
+459:                              <span class="ruby-keyword kw">when</span> <span class="ruby-value">10</span><span class="ruby-operator">..</span><span class="ruby-value">12</span> <span class="ruby-keyword kw">then</span> <span class="ruby-value">3</span>
+460:                              <span class="ruby-keyword kw">else</span> <span class="ruby-value">4</span>
+461:                              <span class="ruby-keyword kw">end</span>
+462:                     <span class="ruby-identifier">period_to</span> = <span class="ruby-keyword kw">case</span> <span class="ruby-identifier">month_to</span>
+463:                              <span class="ruby-keyword kw">when</span> <span class="ruby-value">0</span> <span class="ruby-keyword kw">then</span> <span class="ruby-value">0</span>
+464:                              <span class="ruby-keyword kw">when</span> <span class="ruby-value">4</span><span class="ruby-operator">..</span><span class="ruby-value">6</span> <span class="ruby-keyword kw">then</span> <span class="ruby-value">1</span>
+465:                              <span class="ruby-keyword kw">when</span> <span class="ruby-value">7</span><span class="ruby-operator">..</span><span class="ruby-value">9</span> <span class="ruby-keyword kw">then</span> <span class="ruby-value">2</span>
+466:                              <span class="ruby-keyword kw">when</span> <span class="ruby-value">10</span><span class="ruby-operator">..</span><span class="ruby-value">12</span> <span class="ruby-keyword kw">then</span> <span class="ruby-value">3</span>
+467:                              <span class="ruby-keyword kw">else</span> <span class="ruby-value">4</span>
+468:                              <span class="ruby-keyword kw">end</span>
+469:                 <span class="ruby-keyword kw">end</span>
+470:                 <span class="ruby-identifier">options_from</span> = <span class="ruby-identifier">options</span>.<span class="ruby-identifier">collect</span>{<span class="ruby-operator">|</span><span class="ruby-identifier">o</span><span class="ruby-operator">|</span> <span class="ruby-identifier">selected</span> = (<span class="ruby-identifier">options</span>.<span class="ruby-identifier">index</span>(<span class="ruby-identifier">o</span>) <span class="ruby-operator">==</span> <span class="ruby-identifier">period_from</span>) <span class="ruby-operator">?</span> <span class="ruby-value str">&quot;selected=\&quot;selected\&quot;&quot;</span><span class="ruby-operator">:</span> <span class="ruby-value str">&quot;&quot;</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">default_value_from</span>.<span class="ruby-identifier">nil?</span>
+471:                            <span class="ruby-node">&quot;&lt;option value='#{options.index(o)}' #{selected} &gt;#{o}&lt;/option&gt;&quot;</span>}
+472:                 <span class="ruby-identifier">options_to</span> = <span class="ruby-identifier">options</span>.<span class="ruby-identifier">collect</span>{<span class="ruby-operator">|</span><span class="ruby-identifier">o</span><span class="ruby-operator">|</span> <span class="ruby-identifier">selected</span> = (<span class="ruby-identifier">options</span>.<span class="ruby-identifier">index</span>(<span class="ruby-identifier">o</span>) <span class="ruby-operator">==</span> <span class="ruby-identifier">period_to</span>) <span class="ruby-operator">?</span> <span class="ruby-value str">&quot;selected=\&quot;selected\&quot;&quot;</span><span class="ruby-operator">:</span> <span class="ruby-value str">&quot;&quot;</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">default_value_to</span>.<span class="ruby-identifier">nil?</span>
+473:                            <span class="ruby-node">&quot;&lt;option value='#{options.index(o)}' #{selected} &gt;#{o}&lt;/option&gt;&quot;</span>}
+474: 
+475:                 <span class="ruby-identifier">html</span> = <span class="ruby-identifier">select_tag</span>(<span class="ruby-identifier">sanitize_to_id</span>(<span class="ruby-node">&quot;date[#{field_from_month}]&quot;</span>), <span class="ruby-identifier">options_from</span>, {<span class="ruby-identifier">:onchange</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">onchange_from</span>, <span class="ruby-identifier">:onclick</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">onset_radio_already_set</span>, <span class="ruby-identifier">:include_blank</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword kw">true</span>})
+476:                 <span class="ruby-identifier">html</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">select_year</span>(<span class="ruby-identifier">default_value_from</span>, {<span class="ruby-identifier">:field_name</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">field_from_year</span>, <span class="ruby-identifier">:start_year</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">start_year</span>  , <span class="ruby-identifier">:end_year</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">end_year</span>, <span class="ruby-identifier">:include_blank</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword kw">true</span>}, {<span class="ruby-identifier">:onchange</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">onchange_from</span>, <span class="ruby-identifier">:onclick</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">onset_radio_already_set</span>})
+477:                 <span class="ruby-identifier">html</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-value str">&quot;&lt;B&gt; - &lt;/B&gt;&quot;</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">is_range</span>
+478:                 <span class="ruby-identifier">html</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">select_tag</span>(<span class="ruby-identifier">sanitize_to_id</span>(<span class="ruby-node">&quot;date[#{field_to_month}]&quot;</span>), <span class="ruby-identifier">options_to</span>, {<span class="ruby-identifier">:onchange</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">onchange_to</span>, <span class="ruby-identifier">:include_blank</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword kw">true</span>, <span class="ruby-identifier">:onclick</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">onset_radio_already_set</span>}) <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">is_range</span>
+479:                 <span class="ruby-identifier">html</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">select_year</span>(<span class="ruby-identifier">default_value_to</span>, {<span class="ruby-identifier">:field_name</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">field_to_year</span>, <span class="ruby-identifier">:start_year</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">start_year</span>  , <span class="ruby-identifier">:end_year</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">end_year</span>, <span class="ruby-identifier">:include_blank</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword kw">true</span>}, {<span class="ruby-identifier">:onchange</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">onchange_to</span>, <span class="ruby-identifier">:onclick</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">onset_radio_already_set</span>}) <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">is_range</span>
+480:             <span class="ruby-keyword kw">end</span>
+481:         <span class="ruby-keyword kw">end</span>
+482:         <span class="ruby-identifier">html</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">hidden_field_tag</span>(<span class="ruby-identifier">field_from_name</span>, <span class="ruby-identifier">default_value_from</span>)
+483:         <span class="ruby-identifier">html</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">hidden_field_tag</span>(<span class="ruby-identifier">field_to_name</span>, <span class="ruby-identifier">default_value_to</span>)
+484: <span class="ruby-comment cmt">#        html &lt;&lt; &quot;&lt;img src='/images/cal_close.gif' width='16' height='16' alt='Reset date' border='0'onClick='#{onclear}'&gt; &quot;</span>
+485:     <span class="ruby-keyword kw">end</span>
+486:     <span class="ruby-comment cmt">#----- Adding image for reset date -----#</span>
+487:     <span class="ruby-identifier">html</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-node">&quot;&lt;img src=\&quot;/images/cal_close.gif\&quot; width=\&quot;16\&quot; height=\&quot;16\&quot; alt=\&quot;Reset date\&quot; border=\&quot;0\&quot; onClick=\&quot;#{onclear}\&quot;&gt;&quot;</span>
+488:   
+489:     <span class="ruby-comment cmt">#----- Adding radio box-----#</span>
+490:     <span class="ruby-identifier">html</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-value str">&quot;&lt;br&gt;&quot;</span>
+491:     <span class="ruby-identifier">is_already_set</span> <span class="ruby-operator">||=</span> <span class="ruby-keyword kw">true</span>
+492:     <span class="ruby-identifier">html</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">radio_button_tag</span>(<span class="ruby-node">&quot;#{field_name}[status]&quot;</span>, <span class="ruby-value str">&quot;set&quot;</span>,      <span class="ruby-identifier">is_already_set</span>, {<span class="ruby-identifier">:onpropertychange</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-node">&quot;fncCheckStatusDateTime(#{field.custom_field_id},'#{screen_id}');&quot;</span>                      }) <span class="ruby-operator">+</span> <span class="ruby-value str">&quot;Already Set&quot;</span>
+493:     <span class="ruby-identifier">html</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">radio_button_tag</span>(<span class="ruby-node">&quot;#{field_name}[status]&quot;</span>, <span class="ruby-value str">&quot;not_set&quot;</span>,  <span class="ruby-operator">!</span><span class="ruby-identifier">is_already_set</span>,{<span class="ruby-identifier">:onpropertychange</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-node">&quot;fncCheckStatusDateTime(#{field.custom_field_id},'#{screen_id}');&quot;</span>, <span class="ruby-identifier">:onclick</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">onclear</span> }) <span class="ruby-operator">+</span> <span class="ruby-value str">&quot;Not Set&quot;</span>
+494:   <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000821" class="method-detail">
+        <a name="M000821"></a>
+
+        <div class="method-heading">
+          <a href="#M000821" class="method-signature">
+          <span class="method-name">field_date_search_without_status</span><span class="method-args">(name_from, name_to)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000821-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000821-source">
+<pre>
+     <span class="ruby-comment cmt"># File app/helpers/custom_fields_helper.rb, line 362</span>
+362:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">field_date_search_without_status</span>(<span class="ruby-identifier">name_from</span>, <span class="ruby-identifier">name_to</span>)
+363:       <span class="ruby-identifier">id_from</span> = <span class="ruby-identifier">sanitize_to_id</span>(<span class="ruby-identifier">name_from</span>)
+364:       <span class="ruby-identifier">id_to</span> = <span class="ruby-identifier">sanitize_to_id</span>(<span class="ruby-identifier">name_to</span>)
+365:                   <span class="ruby-identifier">text_field_tag</span>(<span class="ruby-identifier">name_from</span>, <span class="ruby-value str">&quot;&quot;</span>, <span class="ruby-identifier">:readonly=</span><span class="ruby-operator">&gt;</span><span class="ruby-keyword kw">true</span>, <span class="ruby-identifier">:size=</span><span class="ruby-operator">&gt;</span><span class="ruby-value">7</span>)  <span class="ruby-operator">+</span>
+366:                                 <span class="ruby-node">&quot;           &lt;a href='javascript:NewCssCal(\&quot;#{id_from}\&quot;,\&quot;yyyymmdd\&quot;)' &gt;  &quot;</span> <span class="ruby-operator">+</span>
+367:                                 <span class="ruby-value str">&quot;           &lt;img src='/images/cal.gif' width='16' height='16' alt='Pick a date' border='0'&gt;&lt;/a&gt;&quot;</span> <span class="ruby-operator">+</span>
+368:                                 <span class="ruby-value str">&quot; ~ &quot;</span> <span class="ruby-operator">+</span>
+369:                         <span class="ruby-identifier">text_field_tag</span>(<span class="ruby-identifier">name_to</span>, <span class="ruby-value str">&quot;&quot;</span>, <span class="ruby-identifier">:readonly=</span><span class="ruby-operator">&gt;</span><span class="ruby-keyword kw">true</span>, <span class="ruby-identifier">:size=</span><span class="ruby-operator">&gt;</span><span class="ruby-value">7</span>) <span class="ruby-operator">+</span>
+370:                                 <span class="ruby-node">&quot;           &lt;a href='javascript:NewCssCal(\&quot;#{id_to}\&quot;,\&quot;yyyymmdd\&quot;)' &gt;  &quot;</span> <span class="ruby-operator">+</span>
+371:                                 <span class="ruby-value str">&quot;           &lt;img src='/images/cal.gif' width='16' height='16' alt='Pick a Date' border='0'&gt;&lt;/a&gt; &quot;</span> <span class="ruby-operator">+</span>
+372:                                 <span class="ruby-value str">&quot;           &lt;img src='/images/cal_close.gif' width='16' height='16' alt='Reset date' border='0' &quot;</span>  <span class="ruby-operator">+</span>
+373:                                 <span class="ruby-node">&quot;   onClick='javascript:ResetTextBox(\&quot;#{id_to}\&quot;);javascript:ResetTextBox(\&quot;#{id_from}\&quot;);'&gt; &quot;</span>
+374:    <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000851" class="method-detail">
+        <a name="M000851"></a>
+
+        <div class="method-heading">
+          <a href="#M000851" class="method-signature">
+          <span class="method-name">field_for_auto_numbering</span><span class="method-args">(custom_field, input_name, options)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000851-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000851-source">
+<pre>
+     <span class="ruby-comment cmt"># File app/helpers/custom_fields_helper.rb, line 682</span>
+682:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">field_for_auto_numbering</span>(<span class="ruby-identifier">custom_field</span>, <span class="ruby-identifier">input_name</span>, <span class="ruby-identifier">options</span>)
+683:     <span class="ruby-identifier">result</span> = <span class="ruby-identifier">text_field_tag</span>(<span class="ruby-identifier">input_name</span>, <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:value</span>])
+684: 
+685:     <span class="ruby-comment cmt">#~ ToDo: Get labels and control</span>
+686:     <span class="ruby-identifier">inputs</span> = <span class="ruby-identifier">custom_field</span>.<span class="ruby-identifier">reference_custom_fields</span>.<span class="ruby-identifier">collect</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">cf</span><span class="ruby-operator">|</span>
+687:       <span class="ruby-identifier">label</span> = <span class="ruby-node">&quot;#{cf.screen.label_descr.titleize} :&quot;</span>
+688:       <span class="ruby-identifier">input</span> = <span class="ruby-identifier">field_for_search</span>(<span class="ruby-identifier">cf</span>, <span class="ruby-identifier">options</span>)
+689: 
+690:       [<span class="ruby-identifier">label</span>, <span class="ruby-identifier">input</span>]
+691:     <span class="ruby-keyword kw">end</span>
+692: 
+693:     <span class="ruby-comment cmt">#~ ToDo: Gen HTML TAG for each label and control pair</span>
+694:     <span class="ruby-identifier">inputs</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">label</span>, <span class="ruby-identifier">input</span><span class="ruby-operator">|</span>
+695:       <span class="ruby-identifier">new_line</span> = <span class="ruby-value str">'&lt;/tr&gt;&lt;tr&gt;'</span> <span class="ruby-keyword kw">if</span> (<span class="ruby-identifier">options</span>[<span class="ruby-identifier">:count</span>] <span class="ruby-operator">%</span> <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:fields_per_line</span>]) <span class="ruby-operator">==</span> <span class="ruby-value">0</span>
+696: 
+697:       <span class="ruby-identifier">result</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-value str">&quot;\#{new_line}\n&lt;td class='td_search' nowrap&gt;\n  &lt;b&gt;\#{label}&lt;/b&gt;\n&lt;/td&gt;\n&lt;td class='td_search' nowrap&gt;\n  \#{input}\n&lt;/td&gt;\n&quot;</span>
+698: 
+699:       <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:count</span>] <span class="ruby-operator">+=</span> <span class="ruby-value">1</span>
+700:     <span class="ruby-keyword kw">end</span>
+701: 
+702:     <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:count</span>] <span class="ruby-operator">+=</span> <span class="ruby-value">1</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">inputs</span>.<span class="ruby-identifier">empty?</span>
+703: 
+704:     <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">result</span>, <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:count</span>]
+705:   <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000818" class="method-detail">
+        <a name="M000818"></a>
+
+        <div class="method-heading">
+          <a href="#M000818" class="method-signature">
+          <span class="method-name">field_for_edit</span><span class="method-args">(name, custom_field, options={})</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000818-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000818-source">
+<pre>
+     <span class="ruby-comment cmt"># File app/helpers/custom_fields_helper.rb, line 350</span>
+350:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">field_for_edit</span>(<span class="ruby-identifier">name</span>, <span class="ruby-identifier">custom_field</span>, <span class="ruby-identifier">options</span>={})
+351:   <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000850" class="method-detail">
+        <a name="M000850"></a>
+
+        <div class="method-heading">
+          <a href="#M000850" class="method-signature">
+          <span class="method-name">field_for_issue_tracking</span><span class="method-args">(custom_field_id,count,fields_per_line)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000850-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000850-source">
+<pre>
+     <span class="ruby-comment cmt"># File app/helpers/custom_fields_helper.rb, line 629</span>
+629:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">field_for_issue_tracking</span>(<span class="ruby-identifier">custom_field_id</span>,<span class="ruby-identifier">count</span>,<span class="ruby-identifier">fields_per_line</span>)
+630:     <span class="ruby-identifier">result</span> = <span class="ruby-value str">&quot;&quot;</span>
+631: 
+632:     <span class="ruby-identifier">date_controls</span> = [<span class="ruby-value str">&quot;Created_date&quot;</span>, <span class="ruby-value str">&quot;Dued_date&quot;</span>, <span class="ruby-value str">&quot;Completed_date&quot;</span>]
+633:     <span class="ruby-identifier">check_box_control</span> = {
+634:         <span class="ruby-identifier">:label</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">&quot;Status&quot;</span>,
+635:         <span class="ruby-identifier">:options</span> =<span class="ruby-operator">&gt;</span> [<span class="ruby-value str">&quot;Scheduled&quot;</span>,<span class="ruby-value str">&quot;Delayed&quot;</span>,<span class="ruby-value str">&quot;Dued&quot;</span>,<span class="ruby-value str">&quot;Re-Scheduled&quot;</span>,<span class="ruby-value str">&quot;Completed&quot;</span>,<span class="ruby-value str">&quot;Cancelled&quot;</span>]
+636:       }
+637: 
+638:     <span class="ruby-comment cmt">#~ ToDo: Get labels and control</span>
+639:     <span class="ruby-identifier">inputs</span> = <span class="ruby-identifier">date_controls</span>.<span class="ruby-identifier">collect</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">dc</span><span class="ruby-operator">|</span>
+640:       <span class="ruby-identifier">label</span> = <span class="ruby-identifier">dc</span>.<span class="ruby-identifier">titleize</span>
+641:       <span class="ruby-identifier">input</span> = <span class="ruby-identifier">field_date_search_without_status</span>(<span class="ruby-node">&quot;#{custom_field_id}[#{dc}_from]&quot;</span>, <span class="ruby-node">&quot;#{custom_field_id}[#{dc}_to]&quot;</span> )
+642: 
+643:       [<span class="ruby-identifier">label</span>, <span class="ruby-identifier">input</span>]
+644:     <span class="ruby-keyword kw">end</span>
+645: 
+646:     <span class="ruby-identifier">input_tags</span> = <span class="ruby-value str">&quot;&lt;table&gt;&lt;tr&gt;&quot;</span>
+647:     <span class="ruby-identifier">check_box_control</span>[<span class="ruby-identifier">:options</span>].<span class="ruby-identifier">each_with_index</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">o</span>, <span class="ruby-identifier">i</span><span class="ruby-operator">|</span>
+648:       <span class="ruby-identifier">input_tags</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-value str">&quot;&lt;/tr&gt;&lt;tr&gt;&quot;</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">i</span> <span class="ruby-operator">&gt;</span> <span class="ruby-value">0</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">i</span> <span class="ruby-operator">%</span> <span class="ruby-value">2</span> <span class="ruby-operator">==</span> <span class="ruby-value">0</span>
+649:       <span class="ruby-identifier">input_tags</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-value str">&quot;&lt;td nowrap&gt;\n\#{check_box_tag(\&quot;\#{custom_field_id}[\#{o}]\&quot;)}\n\#{label_tag(\&quot;\#{custom_field_id}[\#{o}]\&quot;, o.titleize)}\n&lt;/td&gt;\n&quot;</span>
+650:     <span class="ruby-keyword kw">end</span>
+651:     <span class="ruby-identifier">input_tags</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-value str">&quot;&lt;/tr&gt;&lt;/table&gt;&quot;</span>
+652: 
+653:     <span class="ruby-identifier">inputs</span> <span class="ruby-operator">&lt;&lt;</span> [<span class="ruby-identifier">check_box_control</span>[<span class="ruby-identifier">:label</span>], <span class="ruby-identifier">input_tags</span>]
+654: 
+655:     <span class="ruby-comment cmt">#~ ToDo: Gen HTML TAG for each label and control pair</span>
+656:     <span class="ruby-identifier">inputs</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">label</span>, <span class="ruby-identifier">input</span><span class="ruby-operator">|</span>
+657:       <span class="ruby-identifier">new_line</span> = <span class="ruby-value str">'&lt;/tr&gt;&lt;tr&gt;'</span> <span class="ruby-keyword kw">if</span> (<span class="ruby-identifier">count</span> <span class="ruby-operator">%</span> <span class="ruby-identifier">fields_per_line</span>) <span class="ruby-operator">==</span> <span class="ruby-value">0</span>
+658: 
+659:       <span class="ruby-identifier">result</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-value str">&quot;\#{new_line}\n&lt;td class='td_search' nowrap&gt;\n  &lt;b&gt;\#{label}&lt;/b&gt;\n&lt;/td&gt;\n&lt;td class='td_search' nowrap&gt;\n  \#{input}\n&lt;/td&gt;\n&quot;</span>
+660: 
+661:       <span class="ruby-identifier">count</span> <span class="ruby-operator">+=</span> <span class="ruby-value">1</span>
+662:     <span class="ruby-keyword kw">end</span>
+663: 
+664:     <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">result</span>, <span class="ruby-identifier">count</span>
+665:   <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000815" class="method-detail">
+        <a name="M000815"></a>
+
+        <div class="method-heading">
+          <a href="#M000815" class="method-signature">
+          <span class="method-name">field_for_list</span><span class="method-args">(name, cell, options={})</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000815-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000815-source">
+<pre>
+    <span class="ruby-comment cmt"># File app/helpers/custom_fields_helper.rb, line 2</span>
+ 2:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">field_for_list</span>(<span class="ruby-identifier">name</span>, <span class="ruby-identifier">cell</span>, <span class="ruby-identifier">options</span>={})
+ 3:   <span class="ruby-comment cmt">#   1. if Reference</span>
+ 4:   <span class="ruby-comment cmt">#   2. cell.value =&gt; ref_row_id</span>
+ 5:   <span class="ruby-comment cmt">#     3. ref_row_id =&gt; ref_row</span>
+ 6:   <span class="ruby-comment cmt"># *   4. ref_row.cells =&gt; [cell_of_name, cell_of_code, cell_of_date,...]</span>
+ 7:   <span class="ruby-comment cmt">#   5. cell.feild =&gt; ref_custom_field</span>
+ 8:   <span class="ruby-comment cmt"># *   6. ref_custom_field.custom_field_ids =&gt; [cf_id_of_code, cf_id_of_name]</span>
+ 9:   <span class="ruby-comment cmt">#   7.  4. x 6.</span>
+10:   <span class="ruby-comment cmt">#     a = [..., ...]</span>
+11:   <span class="ruby-comment cmt">#     a.join!(&quot; &quot;)</span>
+12:   <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000817" class="method-detail">
+        <a name="M000817"></a>
+
+        <div class="method-heading">
+          <a href="#M000817" class="method-signature">
+          <span class="method-name">field_for_new</span><span class="method-args">(name, custom_field, options={})</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000817-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000817-source">
+<pre>
+     <span class="ruby-comment cmt"># File app/helpers/custom_fields_helper.rb, line 347</span>
+347:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">field_for_new</span>(<span class="ruby-identifier">name</span>, <span class="ruby-identifier">custom_field</span>, <span class="ruby-identifier">options</span>={})
+348:   <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000816" class="method-detail">
+        <a name="M000816"></a>
+
+        <div class="method-heading">
+          <a href="#M000816" class="method-signature">
+          <span class="method-name">field_for_search</span><span class="method-args">(field_or_custom_field, options = {})</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+options
+</p>
+<pre>
+  :screen_id        :
+  :count            :
+  :fields_per_line  :
+</pre>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000816-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000816-source">
+<pre>
+     <span class="ruby-comment cmt"># File app/helpers/custom_fields_helper.rb, line 18</span>
+ 18:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">field_for_search</span>(<span class="ruby-identifier">field_or_custom_field</span>, <span class="ruby-identifier">options</span> = {})
+ 19:     <span class="ruby-keyword kw">case</span> <span class="ruby-identifier">field_or_custom_field</span>
+ 20:     <span class="ruby-keyword kw">when</span> <span class="ruby-constant">Field</span>
+ 21:       <span class="ruby-identifier">field</span> = <span class="ruby-identifier">field_or_custom_field</span>
+ 22:       <span class="ruby-keyword kw">case</span> <span class="ruby-identifier">field</span>
+ 23:       <span class="ruby-keyword kw">when</span> <span class="ruby-constant">Fields</span><span class="ruby-operator">::</span><span class="ruby-constant">Data</span> <span class="ruby-keyword kw">then</span>
+ 24:         <span class="ruby-identifier">result</span> = <span class="ruby-identifier">field_for_search</span>(<span class="ruby-identifier">field</span>.<span class="ruby-identifier">custom_field</span>, <span class="ruby-identifier">options</span>.<span class="ruby-identifier">update</span>(<span class="ruby-identifier">:field</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">field</span> ))
+ 25:       <span class="ruby-keyword kw">else</span>
+ 26:         <span class="ruby-identifier">result</span> = <span class="ruby-node">&quot;&lt;span class=implementation_missing&gt;Please define how to display the search control(s) for the '#{field.class.to_s}' in #{ __FILE__.gsub(RAILS_ROOT, &quot;&quot;)}&lt;/span&gt;&quot;</span>
+ 27:         <span class="ruby-identifier">result</span> = <span class="ruby-value str">&quot;&quot;</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-constant">RAILS_ENV</span> <span class="ruby-operator">=~</span> <span class="ruby-regexp re">/development/</span>
+ 28:       <span class="ruby-keyword kw">end</span> 
+ 29:     <span class="ruby-keyword kw">when</span> <span class="ruby-constant">CustomField</span>
+ 30:       <span class="ruby-identifier">custom_field</span> = <span class="ruby-identifier">field_or_custom_field</span>
+ 31:       <span class="ruby-identifier">field</span> = <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:field</span>]
+ 32: 
+ 33:       <span class="ruby-identifier">defaults</span> = {
+ 34:         <span class="ruby-identifier">:name</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">:custom_field</span>,
+ 35:         <span class="ruby-identifier">:screen_id</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword kw">nil</span>,
+ 36:         <span class="ruby-identifier">:count</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value">1</span>,
+ 37:         <span class="ruby-identifier">:fields_per_line</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value">1</span>,
+ 38:         <span class="ruby-identifier">:value</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword kw">nil</span>,
+ 39:         <span class="ruby-identifier">:read_only</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword kw">false</span>,
+ 40:         <span class="ruby-identifier">:range</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword kw">true</span>,
+ 41:         <span class="ruby-identifier">:screen_index</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword kw">nil</span>
+ 42:       }
+ 43: 
+ 44:       <span class="ruby-identifier">options</span> = <span class="ruby-identifier">defaults</span>.<span class="ruby-identifier">merge</span>(<span class="ruby-identifier">options</span>)
+ 45: 
+ 46:       <span class="ruby-keyword kw">case</span> <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:name</span>]
+ 47:       <span class="ruby-keyword kw">when</span> <span class="ruby-identifier">:field</span>
+ 48:         <span class="ruby-identifier">input_name</span> = <span class="ruby-value str">&quot;fields&quot;</span>
+ 49:         <span class="ruby-identifier">input_name</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-node">&quot;[#{options[:screen_id]}]&quot;</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:screen_id</span>]
+ 50:         <span class="ruby-identifier">input_name</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-node">&quot;[#{field.id}]&quot;</span>
+ 51:       <span class="ruby-keyword kw">when</span> <span class="ruby-identifier">:custom_field</span>
+ 52:         <span class="ruby-identifier">input_name</span> = <span class="ruby-value str">&quot;custom_fields&quot;</span>
+ 53:         <span class="ruby-identifier">input_name</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-node">&quot;[#{options[:screen_id]}]&quot;</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:screen_id</span>]
+ 54:         <span class="ruby-identifier">input_name</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-node">&quot;[#{custom_field.id}]&quot;</span>
+ 55:       <span class="ruby-keyword kw">when</span> <span class="ruby-identifier">:field_filter</span>
+ 56:         <span class="ruby-identifier">input_name</span> = <span class="ruby-value str">&quot;field_filter&quot;</span>
+ 57:         <span class="ruby-identifier">input_name</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-node">&quot;[#{options[:screen_index]}][#{field.id}][value]&quot;</span>
+ 58:       <span class="ruby-keyword kw">end</span>
+ 59: 
+ 60:       <span class="ruby-identifier">input_id</span> = <span class="ruby-identifier">sanitize_to_id</span>(<span class="ruby-identifier">input_name</span>)
+ 61: 
+ 62:       <span class="ruby-keyword kw">case</span> <span class="ruby-identifier">custom_field</span>
+ 63: 
+ 64:       <span class="ruby-keyword kw">when</span> <span class="ruby-constant">CustomFields</span><span class="ruby-operator">::</span><span class="ruby-constant">CheckBox</span> <span class="ruby-keyword kw">then</span>
+ 65:         <span class="ruby-identifier">result</span> = <span class="ruby-value str">&quot;&quot;</span>
+ 66:         <span class="ruby-identifier">custom_value</span> = <span class="ruby-identifier">get_all_and_selected_value</span>(<span class="ruby-identifier">custom_field</span>,<span class="ruby-keyword kw">nil</span>,<span class="ruby-keyword kw">nil</span>)
+ 67:         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:read_only</span>] <span class="ruby-keyword kw">then</span> 
+ 68:           <span class="ruby-identifier">cell</span> = <span class="ruby-constant">Cell</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">:field_id</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">custom_field</span>.<span class="ruby-identifier">id</span>, <span class="ruby-identifier">:value</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:value</span>])
+ 69:           <span class="ruby-identifier">result</span> = <span class="ruby-identifier">cell</span>.<span class="ruby-identifier">to_html</span>
+ 70:         <span class="ruby-keyword kw">else</span>
+ 71:           <span class="ruby-identifier">assigned_values</span> = <span class="ruby-constant">CustomFields</span><span class="ruby-operator">::</span><span class="ruby-constant">CheckBox</span>.<span class="ruby-identifier">cell_label_ids</span>(<span class="ruby-identifier">options</span>[<span class="ruby-identifier">:value</span>])
+ 72:           <span class="ruby-identifier">result</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">hidden_field_tag</span>(<span class="ruby-node">&quot;#{input_name}[-1]&quot;</span>, <span class="ruby-keyword kw">false</span>)
+ 73:           <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">field</span>.<span class="ruby-identifier">custom_field</span>.<span class="ruby-identifier">single_value?</span>
+ 74: <span class="ruby-comment cmt">#            result &lt;&lt; check_box_tag(&quot;#{input_name}[Check]&quot;) + &quot;Check&quot;</span>
+ 75: <span class="ruby-comment cmt">#            result &lt;&lt; check_box_tag(&quot;#{input_name}[Not_Check]&quot;) + &quot;Not Check&quot;</span>
+ 76: 
+ 77:             <span class="ruby-identifier">labels</span> = [
+ 78:               [<span class="ruby-identifier">field</span>.<span class="ruby-identifier">custom_field</span>.<span class="ruby-identifier">true_label</span>.<span class="ruby-identifier">descr</span>, <span class="ruby-value str">'0'</span>],
+ 79:               [<span class="ruby-identifier">field</span>.<span class="ruby-identifier">custom_field</span>.<span class="ruby-identifier">false_label</span>.<span class="ruby-identifier">descr</span>, <span class="ruby-value str">'-1'</span>]
+ 80:             ]
+ 81: 
+ 82:             <span class="ruby-identifier">result</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">select_tag</span>(<span class="ruby-node">&quot;#{input_name}[label_id]&quot;</span>, <span class="ruby-value str">&quot;&lt;option&gt;&lt;/option&gt;&quot;</span> <span class="ruby-operator">+</span>
+ 83:                 <span class="ruby-identifier">options_for_select</span>(<span class="ruby-identifier">labels</span>))
+ 84: 
+ 85:           <span class="ruby-keyword kw">else</span>
+ 86:             <span class="ruby-identifier">not_check_assigned_values</span> = <span class="ruby-constant">CustomFields</span><span class="ruby-operator">::</span><span class="ruby-constant">CheckBox</span>.<span class="ruby-identifier">cell_not_check</span>(<span class="ruby-identifier">options</span>[<span class="ruby-identifier">:value</span>])
+ 87:             <span class="ruby-identifier">custom_value</span>[<span class="ruby-value">0</span>].<span class="ruby-identifier">each_with_index</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">c</span>,<span class="ruby-identifier">count</span><span class="ruby-operator">|</span>
+ 88:               <span class="ruby-identifier">result</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">check_box_tag</span>(<span class="ruby-node">&quot;#{input_name}[#{c.id}]&quot;</span>, <span class="ruby-keyword kw">true</span>, <span class="ruby-identifier">assigned_values</span>[<span class="ruby-identifier">c</span>.<span class="ruby-identifier">id</span>]) <span class="ruby-operator">+</span> <span class="ruby-identifier">c</span>.<span class="ruby-identifier">descr</span>
+ 89:               <span class="ruby-identifier">result</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-value str">&quot;&lt;br&gt;&quot;</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">count</span> <span class="ruby-operator">%</span> <span class="ruby-value">2</span> <span class="ruby-operator">==</span> <span class="ruby-value">1</span>
+ 90:             <span class="ruby-keyword kw">end</span>
+ 91:             <span class="ruby-identifier">result</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">check_box_tag</span>(<span class="ruby-node">&quot;#{input_name}[Not_Check]&quot;</span>, <span class="ruby-keyword kw">true</span>, <span class="ruby-identifier">not_check_assigned_values</span>) <span class="ruby-operator">+</span> <span class="ruby-value str">&quot;Not Check&quot;</span>
+ 92:           <span class="ruby-keyword kw">end</span>
+ 93:         <span class="ruby-keyword kw">end</span>
+ 94: 
+ 95:         <span class="ruby-identifier">result</span>
+ 96: 
+ 97:       <span class="ruby-keyword kw">when</span> <span class="ruby-constant">CustomFields</span><span class="ruby-operator">::</span><span class="ruby-constant">ComboBox</span> <span class="ruby-keyword kw">then</span>
+ 98:         <span class="ruby-identifier">result</span> = <span class="ruby-value str">&quot;&quot;</span>
+ 99:         <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:value</span>] <span class="ruby-operator">||=</span> {}
+100: 
+101:         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:read_only</span>] <span class="ruby-keyword kw">then</span> 
+102:           <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:value</span>].<span class="ruby-identifier">delete</span>(<span class="ruby-value str">'-1'</span>)
+103:           <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:value</span>].<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">k</span>, <span class="ruby-identifier">v</span><span class="ruby-operator">|</span>
+104:             <span class="ruby-identifier">result</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">check_box_image_tag</span>(<span class="ruby-identifier">v</span>)
+105:             <span class="ruby-identifier">result</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-constant">Label</span>.<span class="ruby-identifier">find</span>(<span class="ruby-identifier">k</span>.<span class="ruby-identifier">to_i</span>).<span class="ruby-identifier">descr</span>
+106:           <span class="ruby-keyword kw">end</span>
+107:         <span class="ruby-keyword kw">else</span>
+108:           <span class="ruby-identifier">custom_value</span> = <span class="ruby-identifier">get_all_and_selected_value</span>(<span class="ruby-identifier">custom_field</span>,<span class="ruby-keyword kw">nil</span>,<span class="ruby-keyword kw">nil</span>)
+109: 
+110: 
+111:           <span class="ruby-identifier">result</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">hidden_field_tag</span>(<span class="ruby-node">&quot;#{input_name}[-1]&quot;</span>, <span class="ruby-keyword kw">false</span>)
+112:           <span class="ruby-identifier">custom_value</span>[<span class="ruby-value">0</span>].<span class="ruby-identifier">each_with_index</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">c</span>,<span class="ruby-identifier">count</span><span class="ruby-operator">|</span>
+113:             <span class="ruby-identifier">result</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">check_box_tag</span>(<span class="ruby-node">&quot;#{input_name}[#{c.id}]&quot;</span>, <span class="ruby-keyword kw">true</span>, <span class="ruby-constant">CustomFields</span><span class="ruby-operator">::</span><span class="ruby-constant">CheckBox</span>.<span class="ruby-identifier">true_or_false?</span>(<span class="ruby-identifier">options</span>[<span class="ruby-identifier">:value</span>][<span class="ruby-identifier">c</span>.<span class="ruby-identifier">id</span>.<span class="ruby-identifier">to_s</span>])) <span class="ruby-operator">+</span> <span class="ruby-node">&quot;#{c.descr}&quot;</span>
+114:             <span class="ruby-identifier">result</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-value str">&quot;&lt;br&gt;&quot;</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">count</span> <span class="ruby-operator">%</span> <span class="ruby-value">2</span> <span class="ruby-operator">==</span> <span class="ruby-value">1</span>
+115:           <span class="ruby-keyword kw">end</span>
+116:         <span class="ruby-keyword kw">end</span>
+117:         <span class="ruby-identifier">result</span>
+118: 
+119:       <span class="ruby-keyword kw">when</span> <span class="ruby-constant">CustomFields</span><span class="ruby-operator">::</span><span class="ruby-constant">DateTimeField</span>, <span class="ruby-constant">CustomFields</span><span class="ruby-operator">::</span><span class="ruby-constant">DateTimeRange</span> <span class="ruby-keyword kw">then</span>
+120:         <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:value</span>] <span class="ruby-operator">||=</span> {}
+121:         <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:value</span>][<span class="ruby-identifier">:from</span>] <span class="ruby-operator">||=</span> <span class="ruby-constant">Date</span>.<span class="ruby-identifier">null_date</span>
+122:         <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:value</span>][<span class="ruby-identifier">:to</span>] <span class="ruby-operator">||=</span> <span class="ruby-constant">Date</span>.<span class="ruby-identifier">null_date</span>
+123:         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:read_only</span>] <span class="ruby-keyword kw">then</span>
+124:           <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:value</span>][<span class="ruby-identifier">:from</span>] <span class="ruby-operator">==</span> <span class="ruby-constant">Date</span>.<span class="ruby-identifier">null_date</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:value</span>][<span class="ruby-identifier">:to</span>] <span class="ruby-operator">==</span> <span class="ruby-constant">Date</span>.<span class="ruby-identifier">null_date</span>
+125:             <span class="ruby-identifier">result</span> = <span class="ruby-value str">&quot;&quot;</span>
+126:           <span class="ruby-keyword kw">else</span>
+127:             <span class="ruby-identifier">result</span> = [<span class="ruby-identifier">:from</span>, <span class="ruby-identifier">:to</span>].<span class="ruby-identifier">collect</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">a</span><span class="ruby-operator">|</span> 
+128:               <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:value</span>][<span class="ruby-identifier">a</span>] <span class="ruby-operator">==</span> <span class="ruby-constant">Date</span>.<span class="ruby-identifier">null_date</span>
+129:                 <span class="ruby-identifier">result</span> = <span class="ruby-value str">&quot;&amp;hellip;&quot;</span>  
+130:               <span class="ruby-keyword kw">else</span>
+131:                 <span class="ruby-identifier">cell</span> = <span class="ruby-constant">Cell</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">:field_id</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">custom_field</span>.<span class="ruby-identifier">id</span>, <span class="ruby-identifier">:value</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:value</span>][<span class="ruby-identifier">a</span>])
+132:                 <span class="ruby-identifier">result</span> = <span class="ruby-identifier">cell</span>.<span class="ruby-identifier">to_html</span>
+133:               <span class="ruby-keyword kw">end</span>
+134:             <span class="ruby-keyword kw">end</span>.<span class="ruby-identifier">join</span>(<span class="ruby-value str">&quot; ~ &quot;</span>)
+135:           <span class="ruby-keyword kw">end</span>
+136:         <span class="ruby-keyword kw">else</span>
+137:           <span class="ruby-identifier">result</span> = <span class="ruby-identifier">field_date_search_with_status</span>(<span class="ruby-identifier">input_name</span>,<span class="ruby-identifier">field</span> ,<span class="ruby-identifier">options</span>[<span class="ruby-identifier">:screen_id</span>],<span class="ruby-identifier">options</span>[<span class="ruby-identifier">:name</span>], <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:value</span>][<span class="ruby-identifier">:from</span>],<span class="ruby-identifier">options</span>[<span class="ruby-identifier">:value</span>][<span class="ruby-identifier">:to</span>],<span class="ruby-identifier">options</span>[<span class="ruby-identifier">:value</span>][<span class="ruby-identifier">:status</span>],<span class="ruby-identifier">options</span>[<span class="ruby-identifier">:value</span>][<span class="ruby-identifier">:format</span>], <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:range</span>])
+138:         <span class="ruby-keyword kw">end</span>
+139:         <span class="ruby-identifier">result</span>
+140: 
+141:       <span class="ruby-keyword kw">when</span> <span class="ruby-constant">CustomFields</span><span class="ruby-operator">::</span><span class="ruby-constant">ListBox</span> <span class="ruby-keyword kw">then</span>
+142:         <span class="ruby-identifier">result</span> = <span class="ruby-value str">&quot;...&quot;</span>
+143: 
+144:       <span class="ruby-keyword kw">when</span> <span class="ruby-constant">CustomFields</span><span class="ruby-operator">::</span><span class="ruby-constant">RadioButton</span> <span class="ruby-keyword kw">then</span>
+145:         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:read_only</span>] <span class="ruby-keyword kw">then</span> 
+146:           <span class="ruby-identifier">cell</span> = <span class="ruby-constant">Cell</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">:field_id</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">custom_field</span>.<span class="ruby-identifier">id</span>, <span class="ruby-identifier">:value</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:value</span>])
+147:           <span class="ruby-identifier">result</span> = <span class="ruby-identifier">cell</span>.<span class="ruby-identifier">to_html</span>
+148:         <span class="ruby-keyword kw">else</span>
+149:           <span class="ruby-identifier">assigned_value</span> = <span class="ruby-constant">CustomFields</span><span class="ruby-operator">::</span><span class="ruby-constant">RadioButton</span>.<span class="ruby-identifier">cell_label_ids</span>(<span class="ruby-identifier">options</span>[<span class="ruby-identifier">:value</span>])
+150:           <span class="ruby-identifier">custom_value</span> = <span class="ruby-identifier">get_all_and_selected_value</span>(<span class="ruby-identifier">custom_field</span>, <span class="ruby-keyword kw">nil</span>, <span class="ruby-keyword kw">nil</span>)
+151:           <span class="ruby-identifier">result</span> = <span class="ruby-value str">&quot;&quot;</span>
+152:           <span class="ruby-identifier">custom_value</span>[<span class="ruby-value">0</span>].<span class="ruby-identifier">each_with_index</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">c</span>,<span class="ruby-identifier">count</span><span class="ruby-operator">|</span>
+153:             <span class="ruby-identifier">result</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">check_box_tag</span>(<span class="ruby-node">&quot;#{input_name}[#{c.id}]&quot;</span>, <span class="ruby-keyword kw">true</span>, <span class="ruby-identifier">assigned_value</span>.<span class="ruby-identifier">include?</span>(<span class="ruby-identifier">c</span>.<span class="ruby-identifier">id</span>.<span class="ruby-identifier">to_s</span>)) <span class="ruby-operator">+</span> <span class="ruby-node">&quot;#{c.descr}&quot;</span>
+154:             <span class="ruby-identifier">result</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-value str">&quot;&lt;br&gt;&quot;</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">count</span> <span class="ruby-operator">%</span> <span class="ruby-value">2</span> <span class="ruby-operator">==</span> <span class="ruby-value">1</span>
+155:           <span class="ruby-keyword kw">end</span>
+156:         <span class="ruby-keyword kw">end</span>
+157: 
+158:         <span class="ruby-identifier">result</span>
+159: 
+160:       <span class="ruby-keyword kw">when</span> <span class="ruby-constant">CustomFields</span><span class="ruby-operator">::</span><span class="ruby-constant">Reference</span> <span class="ruby-keyword kw">then</span>
+161:         <span class="ruby-identifier">reference_row_id</span>  = <span class="ruby-constant">CustomFields</span><span class="ruby-operator">::</span><span class="ruby-constant">Reference</span>.<span class="ruby-identifier">cell_ref_row_id</span>(<span class="ruby-identifier">options</span>[<span class="ruby-identifier">:value</span>])
+162:         <span class="ruby-identifier">reference_row</span> = <span class="ruby-identifier">reference_row_id</span> <span class="ruby-operator">==</span> <span class="ruby-value">0</span> <span class="ruby-operator">?</span> <span class="ruby-keyword kw">nil</span> <span class="ruby-operator">:</span> <span class="ruby-constant">Row</span>.<span class="ruby-identifier">find</span>(<span class="ruby-identifier">reference_row_id</span>)
+163:         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:read_only</span>] <span class="ruby-keyword kw">then</span>
+164:           <span class="ruby-identifier">result</span> = <span class="ruby-identifier">reference_row</span>.<span class="ruby-identifier">nil?</span> <span class="ruby-value">? </span><span class="ruby-value str">&quot;-&quot;</span> <span class="ruby-operator">:</span> <span class="ruby-identifier">reference_row</span>.<span class="ruby-identifier">description</span>
+165:         <span class="ruby-keyword kw">else</span>
+166:           <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">custom_field</span>.<span class="ruby-identifier">searchable_text?</span>
+167:             <span class="ruby-identifier">reference_row_descr</span> = <span class="ruby-identifier">reference_row</span>.<span class="ruby-identifier">nil?</span>  <span class="ruby-value">? </span><span class="ruby-value str">&quot;&quot;</span> <span class="ruby-operator">:</span> <span class="ruby-identifier">reference_row</span>.<span class="ruby-identifier">description</span>
+168:             <span class="ruby-identifier">operation_url_option</span> = <span class="ruby-identifier">url_for</span>(<span class="ruby-identifier">:controller</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">&quot;rows&quot;</span>,
+169:               <span class="ruby-identifier">:action=</span><span class="ruby-operator">&gt;</span><span class="ruby-value str">&quot;quick_search&quot;</span>,
+170:               <span class="ruby-identifier">:id=</span><span class="ruby-operator">&gt;</span><span class="ruby-value">0</span>,
+171:               <span class="ruby-identifier">:screen_id=</span><span class="ruby-operator">&gt;</span><span class="ruby-identifier">custom_field</span>.<span class="ruby-identifier">screen_id</span>,
+172:               <span class="ruby-identifier">:text=</span><span class="ruby-operator">&gt;</span><span class="ruby-value str">&quot;JAVASCRIPT_VAR_TEXT&quot;</span>,
+173:               <span class="ruby-identifier">:input_id=</span><span class="ruby-operator">&gt;</span><span class="ruby-value str">&quot;JAVASCRIPT_VAR_ID&quot;</span>,
+174:               <span class="ruby-identifier">:result_row_id</span> =<span class="ruby-operator">&gt;</span><span class="ruby-node">&quot;#{input_id}_row_id&quot;</span>,
+175:               <span class="ruby-identifier">:field_id</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">field</span>.<span class="ruby-identifier">id</span>)
+176: 
+177:             <span class="ruby-identifier">onkeyup</span> = <span class="ruby-value str">&quot;fncQuickSearch(\&quot;_suggest_disp_\#{input_id}\&quot;,\&quot;\#{operation_url_option}\&quot;, this, \&quot;\#{input_id}\&quot;);\n&quot;</span>
+178: 
+179:             <span class="ruby-identifier">onblur</span> = <span class="ruby-value str">&quot;fncResetQuickSearchText(\&quot;_suggest_disp_\#{input_id}\&quot;, this, \&quot;\#{input_id}\&quot;);\n&quot;</span>
+180: 
+181:             <span class="ruby-identifier">input_txt</span> = <span class="ruby-identifier">text_field_tag</span>(<span class="ruby-node">&quot;search_quick_search_text_#{input_id}&quot;</span>, <span class="ruby-identifier">reference_row_descr</span>, <span class="ruby-identifier">:onkeyup</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">onkeyup</span>, <span class="ruby-identifier">:autocomplete</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">:off</span>)
+182:             <span class="ruby-identifier">input_hdn</span> = <span class="ruby-identifier">hidden_field_tag</span>(<span class="ruby-node">&quot;#{input_name}[row_id]&quot;</span>, <span class="ruby-identifier">reference_row</span>.<span class="ruby-identifier">nil?</span> <span class="ruby-value">? </span><span class="ruby-value str">&quot;&quot;</span> <span class="ruby-operator">:</span> <span class="ruby-identifier">reference_row</span>.<span class="ruby-identifier">id</span>)
+183:             <span class="ruby-identifier">result</span> = <span class="ruby-value str">&quot;\#{input_txt} \#{input_hdn}\n&lt;br&gt;\n&lt;div id='_suggest_disp_\#{input_id}' class='suggest_disp_hidden'&gt;&lt;/div&gt;\n&quot;</span>
+184:           <span class="ruby-keyword kw">else</span>
+185: 
+186:             <span class="ruby-identifier">cell</span> = <span class="ruby-constant">Cell</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">:field_id=</span><span class="ruby-operator">&gt;</span><span class="ruby-identifier">custom_field</span>.<span class="ruby-identifier">id</span>)
+187:             <span class="ruby-identifier">related_from</span> = <span class="ruby-constant">CustomFields</span><span class="ruby-operator">::</span><span class="ruby-constant">Reference</span>.<span class="ruby-identifier">field_related_from</span>(<span class="ruby-identifier">field</span>.<span class="ruby-identifier">value</span>)
+188:             <span class="ruby-identifier">combo_box_options</span> = <span class="ruby-identifier">cell</span>.<span class="ruby-identifier">select_value_options</span>(<span class="ruby-identifier">related_from</span>)
+189: 
+190:             <span class="ruby-identifier">result</span> = <span class="ruby-identifier">screen_collection_select_tag</span>(
+191:               <span class="ruby-identifier">:assigned_options</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">reference_row</span>.<span class="ruby-identifier">nil?</span> <span class="ruby-value">? </span>[] <span class="ruby-operator">:</span> [<span class="ruby-identifier">reference_row</span>],
+192:               <span class="ruby-identifier">:all_options</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">combo_box_options</span>[<span class="ruby-identifier">:all_options</span>],
+193:               <span class="ruby-identifier">:name</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-node">&quot;#{input_name}[row_id]&quot;</span>,
+194:               <span class="ruby-identifier">:value_method</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">:id</span>,
+195:               <span class="ruby-identifier">:text_method</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">:description</span>,
+196:               <span class="ruby-identifier">:include_blank</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword kw">true</span> )
+197:           <span class="ruby-keyword kw">end</span>
+198:         <span class="ruby-keyword kw">end</span>
+199: 
+200:       <span class="ruby-keyword kw">when</span> <span class="ruby-constant">CustomFields</span><span class="ruby-operator">::</span><span class="ruby-constant">TextField</span> <span class="ruby-keyword kw">then</span>
+201:         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:read_only</span>] <span class="ruby-keyword kw">then</span>
+202:           <span class="ruby-identifier">cell</span> = <span class="ruby-constant">Cell</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">:field_id</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">custom_field</span>.<span class="ruby-identifier">id</span>, <span class="ruby-identifier">:value</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:value</span>])
+203:           <span class="ruby-identifier">result</span> = <span class="ruby-identifier">cell</span>.<span class="ruby-identifier">to_html</span>
+204:         <span class="ruby-keyword kw">else</span>
+205:           <span class="ruby-identifier">result</span> = <span class="ruby-identifier">text_field_tag</span>(<span class="ruby-identifier">input_name</span>, <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:value</span>])
+206:         <span class="ruby-keyword kw">end</span>
+207:       <span class="ruby-keyword kw">when</span> <span class="ruby-constant">CustomFields</span><span class="ruby-operator">::</span><span class="ruby-constant">LoginField</span> <span class="ruby-keyword kw">then</span>
+208:         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:read_only</span>] <span class="ruby-keyword kw">then</span>
+209:           <span class="ruby-identifier">cell</span> = <span class="ruby-constant">Cell</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">:field_id</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">custom_field</span>.<span class="ruby-identifier">id</span>, <span class="ruby-identifier">:value</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:value</span>])
+210:           <span class="ruby-identifier">result</span> = <span class="ruby-identifier">cell</span>.<span class="ruby-identifier">to_html</span>
+211:         <span class="ruby-keyword kw">else</span>
+212:           <span class="ruby-identifier">result</span> = <span class="ruby-identifier">text_field_tag</span>(<span class="ruby-identifier">input_name</span>, <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:value</span>])
+213:         <span class="ruby-keyword kw">end</span>
+214:       <span class="ruby-keyword kw">when</span> <span class="ruby-constant">CustomFields</span><span class="ruby-operator">::</span><span class="ruby-constant">NumericField</span> <span class="ruby-keyword kw">then</span>
+215:         <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:value</span>] <span class="ruby-operator">||=</span> {}
+216:         <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:value</span>][<span class="ruby-identifier">:from</span>] <span class="ruby-operator">||=</span> <span class="ruby-value str">&quot;&quot;</span>
+217:         <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:value</span>][<span class="ruby-identifier">:to</span>] <span class="ruby-operator">||=</span> <span class="ruby-value str">&quot;&quot;</span>
+218:         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:read_only</span>] <span class="ruby-keyword kw">then</span>
+219:           <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:value</span>][<span class="ruby-identifier">:from</span>].<span class="ruby-identifier">empty?</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:value</span>][<span class="ruby-identifier">:to</span>].<span class="ruby-identifier">empty?</span>
+220:             <span class="ruby-identifier">result</span> = <span class="ruby-value str">&quot;&quot;</span>
+221:           <span class="ruby-keyword kw">else</span>
+222:             <span class="ruby-identifier">result</span> = [<span class="ruby-identifier">:from</span>, <span class="ruby-identifier">:to</span>].<span class="ruby-identifier">collect</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">a</span><span class="ruby-operator">|</span> 
+223:               <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:value</span>][<span class="ruby-identifier">a</span>].<span class="ruby-identifier">empty?</span>
+224:                 <span class="ruby-identifier">result</span> = <span class="ruby-value str">&quot;&amp;hellip;&quot;</span>
+225:               <span class="ruby-keyword kw">else</span>
+226:                 <span class="ruby-identifier">cell</span> = <span class="ruby-constant">Cell</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">:field_id</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">custom_field</span>.<span class="ruby-identifier">id</span>, <span class="ruby-identifier">:value</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:value</span>][<span class="ruby-identifier">a</span>])
+227:                 <span class="ruby-identifier">result</span> = <span class="ruby-identifier">cell</span>.<span class="ruby-identifier">to_html</span>
+228:               <span class="ruby-keyword kw">end</span>
+229:             <span class="ruby-keyword kw">end</span>.<span class="ruby-identifier">join</span>(<span class="ruby-value str">&quot; ~ &quot;</span>)
+230:           <span class="ruby-keyword kw">end</span>
+231:         <span class="ruby-keyword kw">else</span>
+232:           <span class="ruby-identifier">result</span> = <span class="ruby-identifier">field_numeric_search</span>(<span class="ruby-identifier">input_name</span>, <span class="ruby-identifier">custom_field</span>.<span class="ruby-identifier">id</span>, <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:value</span>])
+233:         <span class="ruby-keyword kw">end</span>
+234:       <span class="ruby-keyword kw">when</span> <span class="ruby-constant">CustomFields</span><span class="ruby-operator">::</span><span class="ruby-constant">TextArea</span> <span class="ruby-keyword kw">then</span>
+235:         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:read_only</span>] <span class="ruby-keyword kw">then</span>
+236:           <span class="ruby-identifier">cell</span> = <span class="ruby-constant">Cell</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">:field_id</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">custom_field</span>.<span class="ruby-identifier">id</span>, <span class="ruby-identifier">:value</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:value</span>])
+237:           <span class="ruby-identifier">result</span> = <span class="ruby-identifier">cell</span>.<span class="ruby-identifier">to_html</span>
+238:         <span class="ruby-keyword kw">else</span>
+239:           <span class="ruby-identifier">result</span> = <span class="ruby-identifier">text_field_tag</span>(<span class="ruby-identifier">input_name</span>, <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:value</span>])
+240:         <span class="ruby-keyword kw">end</span>
+241:       <span class="ruby-keyword kw">when</span> <span class="ruby-constant">CustomFields</span><span class="ruby-operator">::</span><span class="ruby-constant">UploadImage</span> <span class="ruby-keyword kw">then</span>
+242:         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:read_only</span>] <span class="ruby-keyword kw">then</span>
+243:           <span class="ruby-identifier">cell</span> = <span class="ruby-constant">Cell</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">:field_id</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">custom_field</span>.<span class="ruby-identifier">id</span>, <span class="ruby-identifier">:value</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:value</span>])
+244:           <span class="ruby-identifier">result</span> = <span class="ruby-identifier">cell</span>.<span class="ruby-identifier">to_html</span>
+245:         <span class="ruby-keyword kw">else</span>
+246:           <span class="ruby-identifier">result</span> = <span class="ruby-identifier">radio_button_tag</span>(<span class="ruby-identifier">input_name</span>,<span class="ruby-value str">&quot;uploaded&quot;</span>,<span class="ruby-keyword kw">false</span>) <span class="ruby-operator">+</span> <span class="ruby-value str">&quot;Uploaded &quot;</span>
+247:           <span class="ruby-identifier">result</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">radio_button_tag</span>(<span class="ruby-identifier">input_name</span>,<span class="ruby-value str">&quot;notuploaded&quot;</span>,<span class="ruby-keyword kw">false</span>) <span class="ruby-operator">+</span> <span class="ruby-value str">&quot;Not uploaded&quot;</span>
+248:         <span class="ruby-keyword kw">end</span>
+249:       <span class="ruby-keyword kw">when</span> <span class="ruby-constant">CustomFields</span><span class="ruby-operator">::</span><span class="ruby-constant">UploadFile</span> <span class="ruby-keyword kw">then</span>
+250:         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:read_only</span>] <span class="ruby-keyword kw">then</span>
+251:           <span class="ruby-identifier">result</span> = <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:value</span>]
+252:         <span class="ruby-keyword kw">else</span>
+253:           <span class="ruby-identifier">result</span> = <span class="ruby-identifier">radio_button_tag</span>(<span class="ruby-identifier">input_name</span>,<span class="ruby-value str">&quot;uploaded&quot;</span>,<span class="ruby-keyword kw">false</span>) <span class="ruby-operator">+</span> <span class="ruby-value str">&quot;Uploaded &quot;</span>
+254:           <span class="ruby-identifier">result</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">radio_button_tag</span>(<span class="ruby-identifier">input_name</span>,<span class="ruby-value str">&quot;notuploaded&quot;</span>,<span class="ruby-keyword kw">false</span>) <span class="ruby-operator">+</span> <span class="ruby-value str">&quot;Not uploaded&quot;</span>
+255:         <span class="ruby-keyword kw">end</span>
+256:       <span class="ruby-keyword kw">when</span> <span class="ruby-constant">CustomFields</span><span class="ruby-operator">::</span><span class="ruby-constant">IssueTracking</span> <span class="ruby-keyword kw">then</span>
+257:         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:read_only</span>] <span class="ruby-keyword kw">then</span>
+258:           <span class="ruby-identifier">cell</span> = <span class="ruby-constant">Cell</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">:field_id</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">custom_field</span>.<span class="ruby-identifier">id</span>, <span class="ruby-identifier">:value</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:value</span>])
+259:           <span class="ruby-identifier">result</span> = <span class="ruby-identifier">cell</span>.<span class="ruby-identifier">to_html</span>
+260:         <span class="ruby-keyword kw">else</span>
+261:           <span class="ruby-identifier">result</span> = <span class="ruby-identifier">field_for_issue_tracking</span>(<span class="ruby-identifier">input_name</span>,<span class="ruby-identifier">options</span>[<span class="ruby-identifier">:count</span>],<span class="ruby-identifier">options</span>[<span class="ruby-identifier">:fields_per_line</span>])
+262:         <span class="ruby-keyword kw">end</span>
+263:       <span class="ruby-keyword kw">when</span> <span class="ruby-constant">CustomFields</span><span class="ruby-operator">::</span><span class="ruby-constant">ScreenCombindedReference</span> <span class="ruby-keyword kw">then</span>
+264:         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:read_only</span>] <span class="ruby-keyword kw">then</span>
+265:           <span class="ruby-identifier">cell</span> = <span class="ruby-constant">Cell</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">:field_id</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">custom_field</span>.<span class="ruby-identifier">id</span>, <span class="ruby-identifier">:value</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:value</span>])
+266:           <span class="ruby-identifier">result</span> = <span class="ruby-identifier">cell</span>.<span class="ruby-identifier">to_html</span>
+267:         <span class="ruby-keyword kw">else</span>
+268:           <span class="ruby-identifier">result</span> = <span class="ruby-identifier">text_field_tag</span>(<span class="ruby-identifier">input_name</span>, <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:value</span>])
+269:         <span class="ruby-keyword kw">end</span>
+270:       <span class="ruby-keyword kw">when</span> <span class="ruby-constant">CustomFields</span><span class="ruby-operator">::</span><span class="ruby-constant">OptionCombindedReference</span> <span class="ruby-keyword kw">then</span>
+271:         <span class="ruby-identifier">cell</span> = <span class="ruby-constant">Cell</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">:field_id</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">custom_field</span>.<span class="ruby-identifier">id</span>, <span class="ruby-identifier">:value</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:value</span>])
+272:         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:read_only</span>] <span class="ruby-keyword kw">then</span>
+273:           <span class="ruby-identifier">result</span> = <span class="ruby-identifier">cell</span>.<span class="ruby-identifier">to_html</span>
+274:         <span class="ruby-keyword kw">else</span> 
+275:           <span class="ruby-identifier">combo_box_options</span> = <span class="ruby-identifier">cell</span>.<span class="ruby-identifier">select_value_combined_options</span>(<span class="ruby-identifier">field</span>.<span class="ruby-identifier">value</span>[<span class="ruby-identifier">:field_id</span>])
+276:           <span class="ruby-identifier">result</span> = <span class="ruby-identifier">select_tag</span>(<span class="ruby-identifier">input_name</span>,
+277:             <span class="ruby-identifier">options_from_collection_for_select_tag</span>(
+278:               <span class="ruby-identifier">combo_box_options</span>[<span class="ruby-identifier">:all_options</span>],
+279:               <span class="ruby-identifier">:id</span>,
+280:               <span class="ruby-identifier">:screen_combined_code</span>,
+281:               <span class="ruby-identifier">combo_box_options</span>[<span class="ruby-identifier">:assigned_options</span>].<span class="ruby-identifier">id</span>, {<span class="ruby-identifier">:include_blank</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword kw">true</span>,<span class="ruby-identifier">:prompt</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">''</span>}))
+282:         <span class="ruby-keyword kw">end</span>
+283:       <span class="ruby-keyword kw">when</span> <span class="ruby-constant">CustomFields</span><span class="ruby-operator">::</span><span class="ruby-constant">CodeCombindedReference</span> <span class="ruby-keyword kw">then</span>
+284:         <span class="ruby-identifier">cell</span> = <span class="ruby-constant">Cell</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">:field_id</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">custom_field</span>.<span class="ruby-identifier">id</span>, <span class="ruby-identifier">:value</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:value</span>])
+285:         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:read_only</span>] <span class="ruby-keyword kw">then</span>
+286:           <span class="ruby-identifier">result</span> = <span class="ruby-identifier">cell</span>.<span class="ruby-identifier">to_html</span>
+287:         <span class="ruby-keyword kw">else</span>
+288:           <span class="ruby-identifier">source_field</span> = <span class="ruby-constant">Field</span>.<span class="ruby-identifier">find</span>(<span class="ruby-identifier">field</span>.<span class="ruby-identifier">value</span>[<span class="ruby-identifier">:field_id</span>].<span class="ruby-identifier">to_i</span>)
+289:           <span class="ruby-identifier">combo_box_options</span> = <span class="ruby-identifier">cell</span>.<span class="ruby-identifier">select_value_combined_options</span>(<span class="ruby-identifier">source_field</span>.<span class="ruby-identifier">value</span>[<span class="ruby-identifier">:field_id</span>])
+290:           <span class="ruby-identifier">result</span> = <span class="ruby-identifier">select_tag</span>(<span class="ruby-identifier">input_name</span>,
+291:             <span class="ruby-identifier">options_from_collection_for_select_tag</span>(
+292:               <span class="ruby-identifier">combo_box_options</span>[<span class="ruby-identifier">:all_options</span>],
+293:               <span class="ruby-identifier">:id</span>,
+294:               <span class="ruby-identifier">:screen_combined_code</span>,
+295:               <span class="ruby-identifier">combo_box_options</span>[<span class="ruby-identifier">:assigned_options</span>].<span class="ruby-identifier">id</span>, {<span class="ruby-identifier">:include_blank</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword kw">true</span>,<span class="ruby-identifier">:prompt</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">''</span>}))
+296:         <span class="ruby-keyword kw">end</span>
+297:       <span class="ruby-keyword kw">when</span> <span class="ruby-constant">CustomFields</span><span class="ruby-operator">::</span><span class="ruby-constant">AutoNumbering</span> <span class="ruby-keyword kw">then</span>
+298:         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:read_only</span>] <span class="ruby-keyword kw">then</span>
+299:           <span class="ruby-identifier">cell</span> = <span class="ruby-constant">Cell</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">:field_id</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">custom_field</span>.<span class="ruby-identifier">id</span>, <span class="ruby-identifier">:value</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:value</span>])
+300:           <span class="ruby-identifier">result</span> = <span class="ruby-identifier">cell</span>.<span class="ruby-identifier">to_html</span>
+301:         <span class="ruby-keyword kw">else</span>
+302:           <span class="ruby-identifier">result</span> = <span class="ruby-identifier">field_for_auto_numbering</span>(<span class="ruby-identifier">custom_field</span>, <span class="ruby-identifier">input_name</span>, <span class="ruby-identifier">options</span>)
+303:         <span class="ruby-keyword kw">end</span>
+304:       <span class="ruby-keyword kw">when</span> <span class="ruby-constant">CustomFields</span><span class="ruby-operator">::</span><span class="ruby-constant">Parameter</span> <span class="ruby-keyword kw">then</span>
+305:         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:read_only</span>] <span class="ruby-keyword kw">then</span>
+306:           <span class="ruby-identifier">cell</span> = <span class="ruby-constant">Cell</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">:field_id</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">custom_field</span>.<span class="ruby-identifier">id</span>, <span class="ruby-identifier">:value</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:value</span>])
+307:           <span class="ruby-identifier">result</span> = <span class="ruby-identifier">cell</span>.<span class="ruby-identifier">to_html</span>
+308:         <span class="ruby-keyword kw">else</span>
+309:           <span class="ruby-identifier">result</span> = <span class="ruby-identifier">text_field_tag</span>(<span class="ruby-identifier">input_name</span>, <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:value</span>])
+310:         <span class="ruby-keyword kw">end</span>
+311:       <span class="ruby-keyword kw">when</span> <span class="ruby-constant">CustomFields</span><span class="ruby-operator">::</span><span class="ruby-constant">Calendar</span> <span class="ruby-keyword kw">then</span>
+312:         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:read_only</span>] <span class="ruby-keyword kw">then</span>
+313:           <span class="ruby-identifier">cell</span> = <span class="ruby-constant">Cell</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">:field_id</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">custom_field</span>.<span class="ruby-identifier">id</span>, <span class="ruby-identifier">:value</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:value</span>])
+314:           <span class="ruby-identifier">result</span> = <span class="ruby-identifier">cell</span>.<span class="ruby-identifier">to_html</span>
+315:         <span class="ruby-keyword kw">else</span>
+316:           <span class="ruby-identifier">result</span> = <span class="ruby-identifier">text_field_tag</span>(<span class="ruby-identifier">input_name</span>, <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:value</span>])
+317:           <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">custom_field</span>.<span class="ruby-identifier">format</span>.<span class="ruby-identifier">to_sym</span>.<span class="ruby-identifier">eql?</span>(<span class="ruby-identifier">:monthly</span>)
+318:             <span class="ruby-identifier">current_year</span> = <span class="ruby-constant">Time</span>.<span class="ruby-identifier">now</span>.<span class="ruby-identifier">year</span>
+319: <span class="ruby-comment cmt">#            result = field_date_search_with_status(&quot;#{input_name}&quot;, field, options[:screen_id], &quot;&quot;, nil, nil, true, :year, false)</span>
+320:             <span class="ruby-identifier">result</span> = <span class="ruby-identifier">select_date</span>(<span class="ruby-constant">Date</span>.<span class="ruby-identifier">null_date</span>, <span class="ruby-identifier">:prefix</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-node">&quot;#{input_name}&quot;</span>, <span class="ruby-identifier">:discard_month</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword kw">true</span>, <span class="ruby-identifier">:discard_day</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword kw">true</span>, <span class="ruby-identifier">:start_year</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">current_year</span> <span class="ruby-operator">-</span> <span class="ruby-value">5</span>, <span class="ruby-identifier">:end_year</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">current_year</span> <span class="ruby-operator">+</span> <span class="ruby-value">1</span>, <span class="ruby-identifier">:include_blank</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword kw">true</span>)
+321:           <span class="ruby-keyword kw">else</span>
+322:             <span class="ruby-identifier">result</span> = <span class="ruby-value str">&quot;&lt;span class=implementation_missing&gt;Pending&lt;/span&gt;&quot;</span>
+323:           <span class="ruby-keyword kw">end</span>
+324:         <span class="ruby-keyword kw">end</span>
+325:       <span class="ruby-keyword kw">else</span>
+326:         <span class="ruby-identifier">result</span> = <span class="ruby-node">&quot;&lt;span class=implementation_missing&gt;Please define how to display the search control(s) for the '#{custom_field.class.to_s}' in #{ __FILE__.gsub(RAILS_ROOT, &quot;&quot;)}&lt;/span&gt;&quot;</span>
+327:         <span class="ruby-identifier">result</span> = <span class="ruby-value str">&quot;&quot;</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-constant">RAILS_ENV</span> <span class="ruby-operator">=~</span> <span class="ruby-regexp re">/development/</span>
+328:       <span class="ruby-keyword kw">end</span>     
+329:     <span class="ruby-keyword kw">end</span>
+330: 
+331:     <span class="ruby-identifier">result</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-value str">&quot;&lt;span class='required_field'&gt;&amp;nbsp;*&amp;nbsp;&lt;/span&gt;&quot;</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">field</span>.<span class="ruby-identifier">required_search?</span>
+332: 
+333:     <span class="ruby-identifier">result</span>
+334:   <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000819" class="method-detail">
+        <a name="M000819"></a>
+
+        <div class="method-heading">
+          <a href="#M000819" class="method-signature">
+          <span class="method-name">field_for_xxx</span><span class="method-args">(name, xxx, options={})</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000819-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000819-source">
+<pre>
+     <span class="ruby-comment cmt"># File app/helpers/custom_fields_helper.rb, line 353</span>
+353:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">field_for_xxx</span>(<span class="ruby-identifier">name</span>, <span class="ruby-identifier">xxx</span>, <span class="ruby-identifier">options</span>={})
+354:   <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000823" class="method-detail">
+        <a name="M000823"></a>
+
+        <div class="method-heading">
+          <a href="#M000823" class="method-signature">
+          <span class="method-name">field_numeric_search</span><span class="method-args">(field_name, cf_id, value = {})</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000823-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000823-source">
+<pre>
+     <span class="ruby-comment cmt"># File app/helpers/custom_fields_helper.rb, line 502</span>
+502:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">field_numeric_search</span>(<span class="ruby-identifier">field_name</span>, <span class="ruby-identifier">cf_id</span>, <span class="ruby-identifier">value</span> = {})
+503:     <span class="ruby-identifier">field_from_name</span> = <span class="ruby-node">&quot;#{field_name}[from]&quot;</span>
+504:     <span class="ruby-identifier">field_to_name</span> = <span class="ruby-node">&quot;#{field_name}[to]&quot;</span>
+505:     <span class="ruby-identifier">cf_options</span> = <span class="ruby-constant">CustomField</span>.<span class="ruby-identifier">find</span>(<span class="ruby-identifier">cf_id</span>).<span class="ruby-identifier">option</span>
+506: 
+507:    <span class="ruby-identifier">options</span> = {<span class="ruby-identifier">:size</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value">10</span>,
+508:                <span class="ruby-identifier">:onKeyPress</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-node">&quot;return checkNumber(event, true, true, '#{cf_options[:separator]}', '#{cf_options[:delimiter]}');&quot;</span>,
+509:                <span class="ruby-identifier">:onBlur</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-node">&quot;this.value = fncSetNumericFormat(this.value, #{cf_options[:precision].to_i}, '#{cf_options[:separator]}', '#{cf_options[:delimiter]}', true, true);&quot;</span>}
+510:     <span class="ruby-identifier">value</span> <span class="ruby-operator">||=</span> {}
+511:     <span class="ruby-identifier">value_from</span> = <span class="ruby-identifier">value</span>[<span class="ruby-identifier">:from</span>]
+512:     <span class="ruby-identifier">value_to</span> = <span class="ruby-identifier">value</span>[<span class="ruby-identifier">:to</span>]
+513: 
+514:     <span class="ruby-value str">&quot;&lt;div name='custom_field_numeric'&gt;&quot;</span> <span class="ruby-operator">+</span>
+515:     <span class="ruby-identifier">text_field_tag</span>(<span class="ruby-identifier">field_from_name</span>, <span class="ruby-identifier">value_from</span>, <span class="ruby-identifier">options</span>) <span class="ruby-operator">+</span> <span class="ruby-value str">&quot; ~ &quot;</span> <span class="ruby-operator">+</span>
+516:     <span class="ruby-identifier">text_field_tag</span>(<span class="ruby-identifier">field_to_name</span>, <span class="ruby-identifier">value_to</span>, <span class="ruby-identifier">options</span>) <span class="ruby-operator">+</span>
+517:     <span class="ruby-identifier">hidden_field_tag</span>(<span class="ruby-value str">&quot;precision&quot;</span>, <span class="ruby-identifier">cf_options</span>[<span class="ruby-identifier">:precision</span>].<span class="ruby-identifier">nil?</span> <span class="ruby-value">? </span><span class="ruby-value str">&quot;&quot;</span> <span class="ruby-operator">:</span> <span class="ruby-identifier">cf_options</span>[<span class="ruby-identifier">:precision</span>]) <span class="ruby-operator">+</span>
+518:     <span class="ruby-identifier">hidden_field_tag</span>(<span class="ruby-value str">&quot;separator&quot;</span>, <span class="ruby-identifier">cf_options</span>[<span class="ruby-identifier">:separator</span>].<span class="ruby-identifier">nil?</span> <span class="ruby-value">? </span><span class="ruby-value str">&quot;&quot;</span> <span class="ruby-operator">:</span> <span class="ruby-identifier">cf_options</span>[<span class="ruby-identifier">:separator</span>]) <span class="ruby-operator">+</span>
+519:     <span class="ruby-identifier">hidden_field_tag</span>(<span class="ruby-value str">&quot;delimiter&quot;</span>, <span class="ruby-identifier">cf_options</span>[<span class="ruby-identifier">:delimiter</span>].<span class="ruby-identifier">nil?</span> <span class="ruby-value">? </span><span class="ruby-value str">&quot;&quot;</span> <span class="ruby-operator">:</span> <span class="ruby-identifier">cf_options</span>[<span class="ruby-identifier">:delimiter</span>]) <span class="ruby-operator">+</span>
+520:     <span class="ruby-value str">&quot;&lt;/div&gt;&quot;</span>
+521: <span class="ruby-comment cmt">#    text_field_tag(id_from, &quot;&quot;, :size=&gt;10, :onKeyPress=&gt;'checkNumber(event, this, true);') + &quot; ~ &quot; +</span>
+522: <span class="ruby-comment cmt">#    text_field_tag(id_to, &quot;&quot;, :size=&gt;10, :onKeyPress=&gt;'checkNumber(event, this, true);')</span>
+523:   <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+
+
+  </div>
+
+
+<div id="validator-badges">
+  <p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>
+</div>
+
+</body>
+</html>

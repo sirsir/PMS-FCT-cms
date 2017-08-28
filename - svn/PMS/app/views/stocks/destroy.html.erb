@@ -1,0 +1,11 @@
+<%=javascript_include_tag "application" %>
+<%=javascript_include_tag "dialog" %>
+<%=javascript_include_tag "fr" %>
+<script type="text/javascript">
+<% if  @stock.errors.empty? %>
+    fncSetTrDeleted(<%=@stock.id %>);
+<% else %>
+    fncSetError('<%=error_messages_for(:object => @stock).to_s.gsub(/'/, '\\"') %>');
+<% end %>
+  fncLoadTempFrame();
+</script>

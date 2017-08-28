@@ -1,0 +1,9 @@
+<%=hidden_field_tag "field_filter[#{field_report_filter.reference_screen_index}][#{field_report_filter.field_id}][value][selected_ids][]", -1 %>
+<table  class='table_data_content' cellspacing='0'>
+  <tr class='tr_header'>
+    <th class='th_col_header'>&nbsp;</th>
+    <th class='th_col_header'>&nbsp;</th>
+   </tr>
+   <% filter_rows = field_report_filter.filter_rows(field_report_filter.filter) %>
+   <%= render :partial => "field_filters/row_selector", :collection => filter_rows ,  :locals => {:field_report_filter => field_report_filter, :cols => filter_rows, :read_only => read_only} %>
+</table>

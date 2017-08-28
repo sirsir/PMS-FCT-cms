@@ -1,0 +1,10 @@
+<%=render(:partial => 'report_requests/report_request_step', :locals => { :step => :filters }) %>
+<%
+form_id = "frm_report_request_#{@report_request.id}"
+%>
+<% form_tag url_for(:action => 'update'), :onSubmit => "fncPrepareFormForSubmit(this);", :method=>:put, :id=>form_id, :target=>"tmp_frame" do %>
+  <%= hidden_field_tag "report_request[id]", @report_request.id %>
+  <%= group_tag("Report Request Filter", render(:partial => "form", :locals => {:report_request => @report_request, :read_only => false}), { :id => "#{form_id}_content", :type => "form", :blindable => false}) %>
+<% end %>
+
+<hr />

@@ -1,0 +1,115 @@
+<%
+name_prefix ||= ''
+
+combo_box_options = cell.select_value_combined_codes(field)
+
+manual_text = CustomFields::CodeCombindedReference.cell_text(cell.value)
+
+input_name = "#{name_prefix}cells[#{field.custom_field_id}]"
+ccr_result_id_prefix = "code_option_#{field.id}"
+
+field_display_as = CustomFields::CodeCombindedReference.field_display_as(field.value)
+is_manual = field_display_as == :model_for_sale && !manual_text.empty?
+%>
+<!-- AUTO FILL IN DROP DOWNS -->
+<div id="ccr_auto_lookup"
+     <% if is_manual %> style="display:none" <% end %>
+     >
+       <%
+       operation_url = url_for(:controller => "rows",
+         :action => "code_combined_reference",
+         :id => 0,
+         :is_group => false,
+         :scr_row_id => "JAVASCRIPT_VAR_VALUE_01",
+         :field_id => field.id,
+         :option_flag => false,
+         :main_index => 0,
+         :input_name => input_name,
+         :screen_id => row.screen_id,
+         :ccr_result_id_prefix => ccr_result_id_prefix,
+         :next_ccr_result_id => "#{ccr_result_id_prefix}_ccr_options"
+       )
+
+       option_div_id = "ccr_option_#{field.id}"
+       onchange = <<JAVASCRIPT
+fncAjaxUpdaterWithReplacement("#{option_div_id}", "#{operation_url}", ["JAVASCRIPT_VAR_VALUE_01", this.value]);
+$('flag_field_#{field.id}').value = "";
+JAVASCRIPT
+
+       onchange << js_reset_ccr_ref_attrib_fields(field, input_name)
+
+       scr_row_id = CustomFields::CodeCombindedReference.cell_scr_row_id(cell.value)
+       scr_row = Row.find(scr_row_id) if scr_row_id > 0
+     %>
+       <%=code_combined_collection_for_select_tag(
+         "#{input_name}[scr_row_id]",
+         combo_box_options[:available_scr_rows], :id, :screen_combined_code, scr_row_id,
+         { :include_blank => true, :onchange => onchange}) %>
+       <!--pre><%=onchange%></pre-->
+  <br />
+  <br />
+
+  <div id="<%= option_div_id %>">
+    <%
+    unless scr_row.nil?
+      ocr_field = field.ocr_field
+      scr_field = ocr_field.scr_field
+
+      scr_row_cell_value = scr_row.cell(scr_field.custom_field_id).value
+
+      sub_scr_row_id = CustomFields::ScreenCombindedReference.group_row_id(scr_row_cell_value)
+      sub_scr_row = Row.find(sub_scr_row_id) if sub_scr_row_id > 0
+      
+      multiplier_row_id = CustomFields::CodeCombindedReference.cell_multiplier_row_id(cell.value, scr_row)
+      @multiplier_row = Row.find(multiplier_row_id) if multiplier_row_id > 0
+      
+      local_vars = {
+        :input_name => input_name,
+        :new_record => @row.new_record? || false,
+        :parent_scr_row => nil,
+        :scr_row => scr_row,
+        :sub_scr_row => sub_scr_row,
+        :field => field,
+        :available_options => combo_box_options[:available_options] || {},
+        :selected_values => combo_box_options[:selected_values],
+        :screen_id => row.screen_id,
+        :ccr_result_id_prefix => ccr_result_id_prefix,
+        :parent_ccr_result_id => nil,
+        :next_ccr_result_id => "#{ccr_result_id_prefix}_ccr_options",
+        :selected_option_row_ids => combo_box_options[:selected_opt_row_ids] || [],
+        :readonly => readonly
+      }
+    %>
+      <%= render :partial => "/rows/code_combined_reference", :locals => local_vars %>
+    <%end%>
+  </div>
+</div>
+
+<!-- MANUAL TEXT BOX -->
+<% if field_display_as == :model_for_sale %>
+<% if readonly %>
+ <%= manual_text %>
+<% else %>
+  <div style="white-space: nowrap">
+    <%
+    manual_text_name = "#{input_name}[text]"
+    name_txt = sanitize_to_id(manual_text_name)
+    onclick = <<JAVASCRIPT
+  $("ccr_auto_lookup").style.display = this.checked ? "none" : '';
+  $("#{name_txt}").style.display = this.checked ? "" : "none";
+  $("#{name_txt}").disabled = !this.checked;
+JAVASCRIPT
+    on_change = <<JAVASCRIPT
+#{js_update_field_flag_value("flag_field_#{field.id}")};
+JAVASCRIPT
+  %>
+    <%= check_box_tag("manual", false, is_manual, {:onclick => onclick,:disabled => readonly} ) %>
+    <%= label_tag("manual", "manual")%>
+    &nbsp;
+    <%= text_field_tag(manual_text_name, manual_text, :disabled => !is_manual, :size => 75, :onkeyup => "this.value = this.value.toUpperCase();", :onchange => on_change, :style => is_manual ? '' : 'display: none;')%>
+  </div>
+<% end %>
+<% end %>
+
+<%= field_descr_tag :descr => field.custom_field.descr, :break => false %>
+

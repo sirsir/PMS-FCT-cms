@@ -1,0 +1,14 @@
+<%
+    descr = "GRAPH : #{@report_request.report.name}  (#{text_field_tag 'current_zoom', @zoom , :class => 'display_textbox'} %)"
+    grp_tag = group_header_tag(descr, "graph_area", {:blindable => true})
+%>
+<table class='group' cellSpacing='0' cellPadding='0' border='0' width='auto'>
+  <tr>
+    <td><%=grp_tag%></td>
+  </tr>
+  <tr>
+    <td>
+      <%= render(:partial => 'graph_row') %>
+    </td>
+  </tr>
+</table>

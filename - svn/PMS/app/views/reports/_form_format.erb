@@ -1,0 +1,88 @@
+
+<table>
+  <tr>
+    <th class="th_row_header">Label:</th>
+    <td>
+      <%= select_label_tag("field_report[label_id]", @field_report.label_id.to_i) %>
+      <%= field_descr_tag %>
+    </td>
+  </tr>
+
+  <%=table_hr_tag  %>
+
+  <tr>
+    <th class="th_row_header">Format:</th>
+    <td>
+      <%
+      name_tag = "field_report[field_format][format]"
+
+      if @field_report.field_type == :field
+        case @field_report.field
+        when Fields::Data
+      %>
+          <%=render :partial => "field_format_#{@field_report.field.custom_field.class.name.gsub("::","").underscore}", :locals => {:name_tag => name_tag} %>
+        <% else %>
+
+        <% end %>
+      <% else %>
+        <%=render :partial => "field_format_fields_formula", :locals => {:name_tag => name_tag} %>
+      <% end %>
+      <%=field_descr_tag %>
+    </td>
+  </tr>
+
+  <%=table_hr_tag  %>
+
+  <tr>
+    <th class="th_row_header">Sorting:</th>
+    <td>
+      <%
+      sortings = FieldsReport.sortings.collect{|a| [a.to_s.titleize, FieldsReport.sortings.index(a)]}
+      sorting_options = options_for_select(sortings, @field_report.sorting_index)
+      %>
+       <%=select_tag "field_report[sorting_index]", sorting_options %>
+      <%= field_descr_tag %>
+    </td>
+  </tr>
+  
+  <%
+  if @field_report.location == :cell
+  %>
+
+  <%=table_hr_tag  %>
+
+  <tr>
+    <th class="th_row_header">Chart Axis:</th>
+    <td>
+      <%
+      chart_axises = FieldsReport.chart_axises.collect{|a| [a.to_s.titleize, FieldsReport.chart_axises.index(a)]}
+      chart_axis_options = options_for_select(chart_axises, @field_report.chart_axis_index)
+      %>
+       <%=select_tag "field_report[chart_axis_index]", chart_axis_options %>
+      <%= field_descr_tag %>
+    </td>
+  </tr>
+
+  <%=table_hr_tag  %>
+
+  <tr>
+    <th class="th_row_header">Percentage:</th>
+    <td>
+      <%=check_box_tag "field_report[percentage_weight][0]", true, @field_report.is_percentage_weight? %>
+      <%=hidden_field_tag("field_report[percentage_weight][-1]", false) %>
+      <%=field_descr_tag %>
+    </td>
+  </tr>
+
+  <%
+  end
+  %>
+
+  <%=table_hr_tag  %>
+
+  <tr>
+    <td colspan="2">
+      <%= group_button(:area_id => @screen.id) %>
+    </td>
+  </tr>
+</table>

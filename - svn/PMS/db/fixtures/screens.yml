@@ -1,0 +1,527 @@
+ 
+menu_group_screen_1: 
+  name: Setting
+  updated_at: 2008-12-22 09:55:12 Z
+  display_seq: 4
+  icon: 
+  type: MenuGroupScreen
+  system: 1
+  action: setting
+  id: 1
+  value: 
+  label_id: 9
+  controller: front_desk
+  screen_id: 8
+  relate_screen: 
+  alias_screen: 
+  created_at: 2008-12-22 07:17:52 Z
+ 
+menu_group_screen_4: 
+  name: Reports
+  updated_at: 2008-12-30 07:20:34 Z
+  display_seq: 2
+  icon: 
+  type: MenuGroupScreen
+  system: 1
+  action: report
+  id: 4
+  value: 
+  label_id: 12
+  controller: front_desk
+  screen_id: 8
+  relate_screen: 
+  alias_screen: 
+  created_at: 2008-12-22 07:21:47 Z
+ 
+menu_group_screen_6: 
+  name: Preference
+  updated_at: 2008-12-22 07:24:55 Z
+  display_seq: 3
+  icon: 
+  type: MenuGroupScreen
+  system: 1
+  action: preference
+  id: 6
+  value: 
+  label_id: 14
+  controller: front_desk
+  screen_id: 8
+  relate_screen: 
+  alias_screen: 
+  created_at: 2008-12-22 07:24:55 Z
+ 
+menu_group_screen_7: 
+  name: Security
+  updated_at: 2008-12-22 07:25:45 Z
+  display_seq: 5
+  icon: 
+  type: MenuGroupScreen
+  system: 1
+  action: security
+  id: 7
+  value: 
+  label_id: 15
+  controller: front_desk
+  screen_id: 8
+  relate_screen: 
+  alias_screen: 
+  created_at: 2008-12-22 07:25:45 Z
+ 
+menu_group_screen_8: 
+  name: root
+  updated_at: 2008-12-22 08:41:35 Z
+  display_seq: 0
+  icon: 
+  type: MenuGroupScreen
+  system: 1
+  action: index
+  id: 8
+  value: 
+  label_id: 
+  controller: front_desk
+  screen_id: 
+  relate_screen: 
+  alias_screen: 
+  created_at: 2008-12-22 08:41:35 Z
+ 
+list_screen_11: 
+  name: languages
+  updated_at: 
+  display_seq: 1
+  icon: system
+  type: ListScreen
+  system: 1
+  action: index
+  id: 11
+  value: 
+  label_id: 18
+  controller: languages
+  screen_id: 1
+  relate_screen: 
+  alias_screen: 
+  created_at: 
+ 
+list_screen_12: 
+  name: labels
+  updated_at: 
+  display_seq: 2
+  icon: system
+  type: ListScreen
+  system: 1
+  action: index
+  id: 12
+  value: 
+  label_id: 19
+  controller: labels
+  screen_id: 1
+  relate_screen: 
+  alias_screen: 
+  created_at: 
+ 
+list_screen_15: 
+  name: screens
+  updated_at: 
+  display_seq: 5
+  icon: system
+  type: ListScreen
+  system: 1
+  action: index
+  id: 15
+  value: 
+  label_id: 22
+  controller: screens
+  screen_id: 1
+  relate_screen: 
+  alias_screen: 
+  created_at: 
+ 
+list_screen_18: 
+  name: users
+  updated_at: 
+  display_seq: 4
+  icon: user
+  type: ListScreen
+  system: 1
+  action: index
+  id: 18
+  value: 
+  label_id: 25
+  controller: users
+  screen_id: 7
+  relate_screen: 
+  alias_screen: 
+  created_at: 
+ 
+screen_21: 
+  name: User Information
+  updated_at: 
+  display_seq: 3
+  icon: options
+  type: Screen
+  system: 1
+  action: edit
+  id: 21
+  value: 
+  label_id: 28
+  controller: users
+  screen_id: 6
+  relate_screen: 
+  alias_screen: 
+  created_at: 
+ 
+list_screen_35: 
+  name: custom_fields
+  updated_at: 
+  display_seq: 4
+  icon: system
+  type: ListScreen
+  system: 1
+  action: index
+  id: 35
+  value: 
+  label_id: 34
+  controller: custom_fields
+  screen_id: 1
+  relate_screen: 
+  alias_screen: 
+  created_at: 
+ 
+menu_group_screen_36: 
+  name: Permissions
+  updated_at: 
+  display_seq: 1
+  icon: permission
+  type: MenuGroupScreen
+  system: 1
+  action: permission
+  id: 36
+  value: 
+  label_id: 300
+  controller: front_desk
+  screen_id: 7
+  relate_screen: 
+  alias_screen: 
+  created_at: 
+ 
+menu_group_screen_37: 
+  name: screens
+  updated_at: 
+  display_seq: 1
+  icon: 
+  type: MenuGroupScreen
+  system: 1
+  action: screen
+  id: 37
+  value: 
+  label_id: 22
+  controller: front_desk
+  screen_id: 8
+  relate_screen: 
+  alias_screen: 
+  created_at: 
+ 
+list_screen_142: 
+  name: Role
+  updated_at: 
+  display_seq: 5
+  icon: role
+  type: ListScreen
+  system: 1
+  action: index
+  id: 142
+  value: 
+  label_id: 294
+  controller: roles
+  screen_id: 7
+  relate_screen: 
+  alias_screen: 
+  created_at: 
+ 
+header_screen_147: 
+  name: Report
+  updated_at: 2009-09-24 08:08:21 Z
+  display_seq: 7
+  icon: system
+  type: HeaderScreen
+  system: 1
+  action: index
+  id: 147
+  value: 
+  label_id: 12
+  controller: reports
+  screen_id: 1
+  relate_screen: 
+  alias_screen: 
+  created_at: 2009-09-17 14:52:39 Z
+ 
+list_screen_148: 
+  name: Role Screen
+  updated_at: 
+  display_seq: 1
+  icon: permission
+  type: ListScreen
+  system: 1
+  action: index_role_screen
+  id: 148
+  value: 
+  label_id: 301
+  controller: permissions
+  screen_id: 36
+  relate_screen: 
+  alias_screen: 
+  created_at: 
+ 
+list_screen_149: 
+  name: Role Field
+  updated_at: 
+  display_seq: 2
+  icon: permission
+  type: ListScreen
+  system: 1
+  action: index_role_field
+  id: 149
+  value: 
+  label_id: 302
+  controller: permissions
+  screen_id: 36
+  relate_screen: 
+  alias_screen: 
+  created_at: 
+ 
+list_screen_150: 
+  name: User Screen
+  updated_at: 
+  display_seq: 3
+  icon: permission
+  type: ListScreen
+  system: 1
+  action: index_user_screen
+  id: 150
+  value: 
+  label_id: 303
+  controller: permissions
+  screen_id: 36
+  relate_screen: 
+  alias_screen: 
+  created_at: 
+ 
+list_screen_151: 
+  name: User Field
+  updated_at: 
+  display_seq: 4
+  icon: permission
+  type: ListScreen
+  system: 1
+  action: index_user_field
+  id: 151
+  value: 
+  label_id: 304
+  controller: permissions
+  screen_id: 36
+  relate_screen: 
+  alias_screen: 
+  created_at: 
+ 
+screen_184: 
+  name: Report Requests
+  updated_at: 2011-01-24 20:11:23 Z
+  display_seq: 
+  icon: graph
+  type: 
+  system: 1
+  action: index
+  id: 184
+  value: 
+  label_id: 13
+  controller: report_requests
+  screen_id: 4
+  relate_screen: 
+  alias_screen: 
+  created_at: 2011-01-07 04:00:19 Z
+ 
+menu_group_screen_939: 
+  name: MAINTENANCE
+  updated_at: 2011-08-29 05:38:34 Z
+  display_seq: 7
+  icon: 
+  type: MenuGroupScreen
+  system: 1
+  action: maintenance
+  id: 939
+  value: 
+  label_id: 1349
+  controller: maintenance
+  screen_id: 8
+  relate_screen: 
+  alias_screen: 
+  created_at: 2011-08-29 05:38:34 Z
+ 
+screen_940: 
+  name: VERSION
+  updated_at: 2011-08-29 05:38:34 Z
+  display_seq: 1
+  icon: info
+  type: 
+  system: 1
+  action: version
+  id: 940
+  value: 
+  label_id: 1350
+  controller: maintenance
+  screen_id: 939
+  relate_screen: 
+  alias_screen: 
+  created_at: 2011-08-29 05:38:34 Z
+ 
+screen_941: 
+  name: SERVICE
+  updated_at: 2011-08-29 05:38:34 Z
+  display_seq: 2
+  icon: multi_app
+  type: 
+  system: 1
+  action: service
+  id: 941
+  value: 
+  label_id: 1351
+  controller: maintenance
+  screen_id: 939
+  relate_screen: 
+  alias_screen: 
+  created_at: 2011-08-29 05:38:34 Z
+ 
+screen_942: 
+  name: DATA_LOG
+  updated_at: 2011-08-29 05:38:34 Z
+  display_seq: 4
+  icon: search_file
+  type: 
+  system: 1
+  action: data_log
+  id: 942
+  value: 
+  label_id: 1352
+  controller: maintenance
+  screen_id: 939
+  relate_screen: 
+  alias_screen: 
+  created_at: 2011-08-29 05:38:34 Z
+ 
+screen_943: 
+  name: SYSTEM_LOG
+  updated_at: 2011-08-29 05:38:34 Z
+  display_seq: 5
+  icon: search_file
+  type: 
+  system: 1
+  action: system_log
+  id: 943
+  value: 
+  label_id: 1353
+  controller: maintenance
+  screen_id: 939
+  relate_screen: 
+  alias_screen: 
+  created_at: 2011-08-29 05:38:34 Z
+ 
+screen_944: 
+  name: BACKUP
+  updated_at: 2011-08-29 05:38:34 Z
+  display_seq: 6
+  icon: backup
+  type: 
+  system: 1
+  action: backup
+  id: 944
+  value: 
+  label_id: 1354
+  controller: maintenance
+  screen_id: 939
+  relate_screen: 
+  alias_screen: 
+  created_at: 2011-08-29 05:38:34 Z
+ 
+screen_945: 
+  name: RESTORE
+  updated_at: 2011-08-29 05:38:34 Z
+  display_seq: 7
+  icon: restore
+  type: 
+  system: 1
+  action: restore
+  id: 945
+  value: 
+  label_id: 1355
+  controller: maintenance
+  screen_id: 939
+  relate_screen: 
+  alias_screen: 
+  created_at: 2011-08-29 05:38:34 Z
+ 
+screen_946: 
+  name: RESTART
+  updated_at: 2011-08-29 05:38:34 Z
+  display_seq: 8
+  icon: restart
+  type: 
+  system: 1
+  action: restart
+  id: 946
+  value: 
+  label_id: 1356
+  controller: maintenance
+  screen_id: 939
+  relate_screen: 
+  alias_screen: 
+  created_at: 2011-08-29 05:38:34 Z
+ 
+screen_947: 
+  name: FIRMWARE
+  updated_at: 2011-08-29 05:38:34 Z
+  display_seq: 9
+  icon: info
+  type: 
+  system: 1
+  action: firmware
+  id: 947
+  value: 
+  label_id: 1357
+  controller: maintenance
+  screen_id: 939
+  relate_screen: 
+  alias_screen: 
+  created_at: 2011-08-29 05:38:34 Z
+ 
+screen_1024: 
+  name: MEMORY
+  updated_at: 2012-10-10 00:00:00 Z
+  display_seq: 3
+  icon: memory
+  type: 
+  system: 1
+  action: memory
+  id: 1024
+  value: 
+  label_id: 1663
+  controller: maintenance
+  screen_id: 939
+  relate_screen: 
+  alias_screen: 
+  created_at: 2012-10-10 00:00:00 Z
+ 
+list_screen_1044: 
+  name: fields
+  updated_at: 
+  display_seq: 6
+  icon: system
+  type: ListScreen
+  system: 1
+  action: index
+  id: 1044
+  value: 
+  label_id: 293
+  controller: fields
+  screen_id: 1
+  relate_screen: 
+  alias_screen: 
+  created_at: 

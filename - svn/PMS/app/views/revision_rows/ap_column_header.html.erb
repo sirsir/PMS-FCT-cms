@@ -1,0 +1,24 @@
+<% currency = @template_name =~ /domestic/ ? "THB" : "USD" %>
+<tr>
+  <th rowspan="2" class="td_item_lc_detail">Item</th>
+  <th class="td_model_lc_detail">Model</th>
+  <th colspan="4"class="td_description_lc_detail">Description</th>
+  <th rowspan="2" class="td_qty_lc_detail">Qty</th>
+  <th class="td_amount_lc_detail">Unit Price</th>
+  <th class="td_amount_lc_detail">Amount(<%= currency %>)</th>
+  <th class="td_amount_lc_detail">Volume Discount</th>
+  <th class="td_amount_lc_detail">Unit Amount</th>
+  <th class="td_amount_lc_detail">Net Amount</th>
+</tr>
+<tr>
+  <th class="td_item_no">Item No</th>
+  <th class="td_item_name">Item Name</th>
+  <th class="td_process">Process</th>
+  <th class="td_L">L=</th>
+  <th class="td_amount_lc_detail">Length</th>
+  <th class="td_unit_discount_lc_detail"><%= currency %></th>
+  <th class="td_unit_discount_lc_detail"><%= currency %></th>
+  <th class="td_unit_total_lc_detail"><%= currency %></th>
+  <th class="td_amount_discount_lc_detail"><%= currency %></th>
+  <th class="td_amount_total_lc_detail"><%= currency %></th>
+</tr>

@@ -1,0 +1,113 @@
+<%
+single_or_empty_value =  @custom_field.single_value? | !@custom_field.multi_value?
+unchecked_value = @custom_field.unchecked_value?
+%>
+<tr>
+  <th class="th_row_header">Type:</th>
+  <td>
+    <div onclick='
+      $("custom_field_value_new_line").disabled =
+        $("custom_field_value_default_value").disabled =
+        $("custom_field_value_type_single").checked ? "true" : '';
+
+      $("tr_multi_options").style.display =
+        $("tr_multi_new_line").style.display =
+        $("tr_multi_default_value").style.display =
+        $("custom_field_value_type_single").checked ? "none" : '';
+
+      $("custom_field_value_default_value__checked").disabled =
+        $("custom_field_value_default_value__unchecked").disabled =
+        $("custom_field_value_true_label_id").disabled =
+        $("custom_field_value_false_label_id").disabled =
+        $("custom_field_value_type_multi").checked ? "true" : '';
+
+      $("tr_single_default_value").style.display =
+        $("tr_single_true_display_value").style.display =
+        $("tr_single_false_display_value").style.display =
+        $("custom_field_value_type_multi").checked ? "none" : '';
+         '>
+      <%= radio_button_tag 'custom_field[value][type]', 'single', single_or_empty_value %> <%= label_tag "custom_field_value_type_single", "Single" %>
+      <%= radio_button_tag 'custom_field[value][type]', 'multi', !single_or_empty_value %> <%= label_tag "custom_field_value_type_multi", "Multi" %>
+    </div>
+  </td>
+</tr>
+
+<tr id="tr_single_true_display_value" style="<%="display: none" if !single_or_empty_value %>">
+  <th class="th_row_header">True Value:</th>
+  <td>
+    <%= select_label_tag("custom_field[value][true_label_id]", @custom_field.true_label_id.to_i) %>
+  </td>
+</tr>
+
+<tr id="tr_single_false_display_value" style="<%="display: none" if !single_or_empty_value %>">
+  <th class="th_row_header">False Value:</th>
+  <td>
+    <%= select_label_tag("custom_field[value][false_label_id]", @custom_field.false_label_id.to_i) %>
+  </td>
+</tr>
+
+<tr id="tr_single_default_value" style="<%="display: none" if !single_or_empty_value %>">
+  <th class="th_row_header">Default Value:</th>
+  <td>
+    <%= radio_button_tag 'custom_field[value][default_value][]', 'checked', !unchecked_value %> <%= label_tag "custom_field_value_default_value__checked", "Check" %>
+    <%= radio_button_tag 'custom_field[value][default_value][]', 'unchecked', unchecked_value %> <%= label_tag "custom_field_value_default_value__unchecked", "Uncheck" %>
+  </td>
+</tr>
+
+<tr id="tr_multi_options" style="<%="display: none" if single_or_empty_value %>">
+  <%
+  unless @custom_field.label_ids.empty?
+    labels = Label.find(:all, :conditions => [" id IN (?)",@custom_field.default_value])
+  else
+    labels = []
+  end
+
+  field_type_optional_tag = left_to_right_tag(
+    :descr => "Option",
+    :name =>  "custom_field[value][label_ids]",
+    :assigned_options => @assigned_options,
+    :all_options => @labels,
+    :value_method => "id",
+    :text_method => "descr"
+  )
+%>
+  <th class="th_row_header">CheckBox Options:</th>
+  <td>
+    <%=field_type_optional_tag %>
+    <%= field_descr_tag %>
+  </td>
+</tr>
+
+<tr id="tr_multi_new_line" style="<%="display: none" if single_or_empty_value %>">
+  <th class="th_row_header">New Line:</th>
+  <td>
+    <div id="tr_multi_new_line_div">
+      <%= check_box_tag('custom_field[value][new_line]', 'true', @custom_field.new_line?,:disabled => single_or_empty_value) %>
+      <%= label_tag('custom_field[value][new_line]', 'Display one item per line') %>
+      <%= hidden_field_tag 'custom_field[value][new_line]', false %>
+      <%= field_descr_tag %>
+    </div>
+  </td>
+</tr>
+
+<tr id="tr_multi_default_value" style="<%="display: none" if single_or_empty_value %>">
+  <%
+if !@custom_field.default_value.empty? && !single_or_empty_value
+  labels = Label.find(:all, :conditions => [" id IN (?)",@custom_field.default_value])
+else
+  labels = []
+end
+field_default_optional_tag = left_to_right_tag(
+  :descr => "Option",
+  :name =>  "custom_field[value][default_value]",
+  :assigned_options => labels,
+  :all_options => @labels,
+  :value_method => "id",
+  :text_method => "descr")
+%>
+  <th class="th_row_header">Default Value:</th>
+  <td>
+    <%= field_default_optional_tag %>
+    <%= field_descr_tag :break => false %>
+  </td>
+</tr>

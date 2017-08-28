@@ -1,0 +1,27 @@
+<%= hidden_field_tag(:reference_screen_index, @field_report_filter.reference_screen_index) %>
+<%= hidden_field_tag(:field_id, @field_report_filter.field_id) %>
+<%= hidden_field_tag(:report_id, @field_report_filter.report_id) %>
+<table>
+   <% if @field_report_filter.field.is_a?(Fields::Data) %>
+         <% name_tag = "value[filter]" %>
+         <%=render :partial => "field_filter_#{@field_report_filter.field.custom_field.class.name.gsub("::","").underscore}", :locals => {:name_tag => name_tag}  %>
+  <% elsif @field_report_filter.field_id < 0 %>
+         <% name_tag = "value[filter]" %>
+         <%=render :partial => "field_filter_id", :locals => {:name_tag => name_tag}  %>
+  <% else %>
+<tr>
+  <td colspan="2">
+    <span style="font-style: italic">Currently no configuration for dynamic fields (Accumulation, CodeCombindedReferenceAttribute, Comparison, etc.). Please press submit</span>
+  </td>
+</tr>
+   <% end %>
+<%= table_hr_tag %>
+<tr>
+  <td colspan="2">
+    <%= group_button(:area_id => @screen.id) %>
+    <% unless @field_report_filter.new_record? %>
+      <%=check_box_tag "destroy" %><%=label_tag "destroy", "Delete this filter" %>
+    <% end %>
+  </td>
+</tr>
+</table>

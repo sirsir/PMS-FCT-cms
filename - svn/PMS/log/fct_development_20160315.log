@@ -1,0 +1,122 @@
+# Logfile created on Tue Mar 15 11:20:59 +0700 2016  [4;36;1mSQL (1.0ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (1.0ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+  [4;36;1mScreen Columns (2.0ms)[0m   [0;1mSHOW FIELDS FROM `screens`[0m
+  [4;35;1mScreen Load (2.0ms)[0m   [0mSELECT * FROM `screens` [0m
+  [4;36;1mMenuGroupScreen Columns (2.0ms)[0m   [0;1mSHOW FIELDS FROM `screens`[0m
+  [4;35;1mListScreen Columns (4.0ms)[0m   [0mSHOW FIELDS FROM `screens`[0m
+  [4;36;1mHeaderScreen Columns (2.0ms)[0m   [0;1mSHOW FIELDS FROM `screens`[0m
+  [4;35;1mRevisionScreen Columns (2.0ms)[0m   [0mSHOW FIELDS FROM `screens`[0m
+  [4;36;1mDetailScreen Columns (2.0ms)[0m   [0;1mSHOW FIELDS FROM `screens`[0m
+  [4;35;1mCustomField Columns (4.0ms)[0m   [0mSHOW FIELDS FROM `custom_fields`[0m
+  [4;36;1mCustomField Load (9.0ms)[0m   [0;1mSELECT * FROM `custom_fields` [0m
+  [4;35;1mCustomFields::TextField Columns (4.0ms)[0m   [0mSHOW FIELDS FROM `custom_fields`[0m
+  [4;36;1mCustomFields::DateTimeField Columns (3.0ms)[0m   [0;1mSHOW FIELDS FROM `custom_fields`[0m
+  [4;35;1mCustomFields::Reference Columns (2.0ms)[0m   [0mSHOW FIELDS FROM `custom_fields`[0m
+  [4;36;1mCustomFields::TextArea Columns (1.0ms)[0m   [0;1mSHOW FIELDS FROM `custom_fields`[0m
+  [4;35;1mCustomFields::ComboBox Columns (2.0ms)[0m   [0mSHOW FIELDS FROM `custom_fields`[0m
+  [4;36;1mCustomFields::NumericField Columns (2.0ms)[0m   [0;1mSHOW FIELDS FROM `custom_fields`[0m
+  [4;35;1mCustomFields::AutoNumbering Columns (1.0ms)[0m   [0mSHOW FIELDS FROM `custom_fields`[0m
+  [4;36;1mCustomFields::RadioButton Columns (1.0ms)[0m   [0;1mSHOW FIELDS FROM `custom_fields`[0m
+  [4;35;1mCustomFields::CheckBox Columns (5.0ms)[0m   [0mSHOW FIELDS FROM `custom_fields`[0m
+  [4;36;1mCustomFields::UploadImage Columns (5.0ms)[0m   [0;1mSHOW FIELDS FROM `custom_fields`[0m
+  [4;35;1mUser Columns (4.0ms)[0m   [0mSHOW FIELDS FROM `users`[0m
+  [4;36;1mUser Load (1.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`login` = N'tsestaff' AND `users`.`disabled_flag` = 0) LIMIT 1[0m
+  [4;35;1mScreen Load (3.0ms)[0m   [0mSELECT * FROM `screens` WHERE (`screens`.`id` = 1057) [0m
+  [4;36;1mRow Columns (2.0ms)[0m   [0;1mSHOW FIELDS FROM `rows`[0m
+  [4;35;1mSQL (1.0ms)[0m   [0mSELECT count(*) AS count_all FROM `rows` WHERE (`rows`.screen_id = 1057) [0m
+  [4;36;1mRow Load (2.0ms)[0m   [0;1mSELECT * FROM `rows` WHERE (`rows`.screen_id = 1057) [0m
+  [4;35;1mHeaderRow Columns (3.0ms)[0m   [0mSHOW FIELDS FROM `rows`[0m
+  [4;36;1mScreen Load (1.0ms)[0m   [0;1mSELECT * FROM `screens` WHERE (`screens`.`id` = 1057) [0m
+  [4;35;1mField Columns (3.0ms)[0m   [0mSHOW FIELDS FROM `fields`[0m
+  [4;36;1mField Load (1.0ms)[0m   [0;1mSELECT * FROM `fields` WHERE (`fields`.screen_id = 1057) ORDER BY display_seq[0m
+  [4;35;1mFields::Data Columns (2.0ms)[0m   [0mSHOW FIELDS FROM `fields`[0m
+  [4;36;1mCustomField Load (1.0ms)[0m   [0;1mSELECT * FROM `custom_fields` WHERE (`custom_fields`.`id` = 141) [0m
+  [4;35;1mLabel Columns (1.0ms)[0m   [0mSHOW FIELDS FROM `labels`[0m
+  [4;36;1mLabel Load (2.0ms)[0m   [0;1mSELECT * FROM `labels` WHERE ( name = N'G_Description') LIMIT 1[0m
+  [4;35;1mCell Columns (1.0ms)[0m   [0mSHOW FIELDS FROM `cells`[0m
+  [4;36;1mCell Load (1.0ms)[0m   [0;1mSELECT * FROM `cells` WHERE (`cells`.row_id = 936 AND (field_id in (SELECT id FROM custom_fields))) [0m
+  [4;35;1mCustomField Load (1.0ms)[0m   [0mSELECT * FROM `custom_fields` WHERE (`custom_fields`.`id` = 141) [0m
+  [4;36;1mScreen Load (1.0ms)[0m   [0;1mSELECT * FROM `screens` WHERE (`screens`.`id` = 1057) [0m
+  [4;35;1mField Load (1.0ms)[0m   [0mSELECT * FROM `fields` WHERE (`fields`.screen_id = 1057) ORDER BY display_seq[0m
+  [4;36;1mCustomField Load (1.0ms)[0m   [0;1mSELECT * FROM `custom_fields` WHERE (`custom_fields`.`id` = 141) [0m
+  [4;35;1mLabel Load (1.0ms)[0m   [0mSELECT * FROM `labels` WHERE ( name = N'G_Description') LIMIT 1[0m
+  [4;36;1mCell Load (1.0ms)[0m   [0;1mSELECT * FROM `cells` WHERE (`cells`.row_id = 937 AND (field_id in (SELECT id FROM custom_fields))) [0m
+  [4;35;1mCustomField Load (1.0ms)[0m   [0mSELECT * FROM `custom_fields` WHERE (`custom_fields`.`id` = 141) [0m
+  [4;36;1mScreen Load (1.0ms)[0m   [0;1mSELECT * FROM `screens` WHERE (`screens`.`id` = 1057) [0m
+  [4;35;1mField Load (1.0ms)[0m   [0mSELECT * FROM `fields` WHERE (`fields`.screen_id = 1057) ORDER BY display_seq[0m
+  [4;36;1mCustomField Load (1.0ms)[0m   [0;1mSELECT * FROM `custom_fields` WHERE (`custom_fields`.`id` = 141) [0m
+  [4;35;1mLabel Load (1.0ms)[0m   [0mSELECT * FROM `labels` WHERE ( name = N'G_Description') LIMIT 1[0m
+  [4;36;1mCell Load (1.0ms)[0m   [0;1mSELECT * FROM `cells` WHERE (`cells`.row_id = 1387 AND (field_id in (SELECT id FROM custom_fields))) [0m
+  [4;35;1mCustomField Load (1.0ms)[0m   [0mSELECT * FROM `custom_fields` WHERE (`custom_fields`.`id` = 141) [0m
+  [4;36;1mScreen Load (1.0ms)[0m   [0;1mSELECT * FROM `screens` WHERE (`screens`.`id` = 1057) [0m
+  [4;35;1mField Load (1.0ms)[0m   [0mSELECT * FROM `fields` WHERE (`fields`.screen_id = 1057) ORDER BY display_seq[0m
+  [4;36;1mCustomField Load (1.0ms)[0m   [0;1mSELECT * FROM `custom_fields` WHERE (`custom_fields`.`id` = 141) [0m
+  [4;35;1mLabel Load (1.0ms)[0m   [0mSELECT * FROM `labels` WHERE ( name = N'G_Description') LIMIT 1[0m
+  [4;36;1mCell Load (1.0ms)[0m   [0;1mSELECT * FROM `cells` WHERE (`cells`.row_id = 1468 AND (field_id in (SELECT id FROM custom_fields))) [0m
+  [4;35;1mCustomField Load (1.0ms)[0m   [0mSELECT * FROM `custom_fields` WHERE (`custom_fields`.`id` = 141) [0m
+  [4;36;1mScreen Load (1.0ms)[0m   [0;1mSELECT * FROM `screens` WHERE (`screens`.`id` = 1057) [0m
+  [4;35;1mField Load (1.0ms)[0m   [0mSELECT * FROM `fields` WHERE (`fields`.screen_id = 1057) ORDER BY display_seq[0m
+  [4;36;1mCustomField Load (2.0ms)[0m   [0;1mSELECT * FROM `custom_fields` WHERE (`custom_fields`.`id` = 141) [0m
+  [4;35;1mLabel Load (1.0ms)[0m   [0mSELECT * FROM `labels` WHERE ( name = N'G_Description') LIMIT 1[0m
+  [4;36;1mCell Load (1.0ms)[0m   [0;1mSELECT * FROM `cells` WHERE (`cells`.row_id = 1469 AND (field_id in (SELECT id FROM custom_fields))) [0m
+  [4;35;1mCustomField Load (1.0ms)[0m   [0mSELECT * FROM `custom_fields` WHERE (`custom_fields`.`id` = 141) [0m
+  [4;36;1mScreen Load (1.0ms)[0m   [0;1mSELECT * FROM `screens` WHERE (`screens`.`id` = 1057) [0m
+  [4;35;1mField Load (1.0ms)[0m   [0mSELECT * FROM `fields` WHERE (`fields`.screen_id = 1057) ORDER BY display_seq[0m
+  [4;36;1mCustomField Load (1.0ms)[0m   [0;1mSELECT * FROM `custom_fields` WHERE (`custom_fields`.`id` = 141) [0m
+  [4;35;1mLabel Load (2.0ms)[0m   [0mSELECT * FROM `labels` WHERE ( name = N'G_Description') LIMIT 1[0m
+  [4;36;1mCell Load (5.0ms)[0m   [0;1mSELECT * FROM `cells` WHERE (`cells`.row_id = 1474 AND (field_id in (SELECT id FROM custom_fields))) [0m
+  [4;35;1mCustomField Load (2.0ms)[0m   [0mSELECT * FROM `custom_fields` WHERE (`custom_fields`.`id` = 141) [0m
+  [4;36;1mRow Load (3.0ms)[0m   [0;1mSELECT * FROM `rows` WHERE (`rows`.row_id = 936) ORDER BY id DESC LIMIT 1[0m
+  [4;35;1mRow Load (2.0ms)[0m   [0mSELECT * FROM `rows` WHERE (`rows`.row_id = 937) ORDER BY id DESC LIMIT 1[0m
+  [4;36;1mRow Load (2.0ms)[0m   [0;1mSELECT * FROM `rows` WHERE (`rows`.row_id = 959) ORDER BY id DESC LIMIT 1[0m
+  [4;35;1mRow Load (3.0ms)[0m   [0mSELECT * FROM `rows` WHERE (`rows`.row_id = 963) ORDER BY id DESC LIMIT 1[0m
+  [4;36;1mRow Load (2.0ms)[0m   [0;1mSELECT * FROM `rows` WHERE (`rows`.row_id = 996) ORDER BY id DESC LIMIT 1[0m
+  [4;35;1mRow Load (3.0ms)[0m   [0mSELECT * FROM `rows` WHERE (`rows`.row_id = 1106) ORDER BY id DESC LIMIT 1[0m
+  [4;36;1mRow Load (4.0ms)[0m   [0;1mSELECT * FROM `rows` WHERE (`rows`.row_id = 1111) ORDER BY id DESC LIMIT 1[0m
+  [4;35;1mRow Load (2.0ms)[0m   [0mSELECT * FROM `rows` WHERE (`rows`.row_id = 1254) ORDER BY id DESC LIMIT 1[0m
+  [4;36;1mRow Load (2.0ms)[0m   [0;1mSELECT * FROM `rows` WHERE (`rows`.row_id = 1275) ORDER BY id DESC LIMIT 1[0m
+  [4;35;1mRow Load (1.0ms)[0m   [0mSELECT * FROM `rows` WHERE (`rows`.row_id = 1381) ORDER BY id DESC LIMIT 1[0m
+  [4;36;1mRow Load (1.0ms)[0m   [0;1mSELECT * FROM `rows` WHERE (`rows`.row_id = 1385) ORDER BY id DESC LIMIT 1[0m
+  [4;35;1mRow Load (2.0ms)[0m   [0mSELECT * FROM `rows` WHERE (`rows`.row_id = 1387) ORDER BY id DESC LIMIT 1[0m
+  [4;36;1mRow Load (1.0ms)[0m   [0;1mSELECT * FROM `rows` WHERE (`rows`.row_id = 1388) ORDER BY id DESC LIMIT 1[0m
+  [4;35;1mRow Load (1.0ms)[0m   [0mSELECT * FROM `rows` WHERE (`rows`.row_id = 1466) ORDER BY id DESC LIMIT 1[0m
+  [4;36;1mRow Load (2.0ms)[0m   [0;1mSELECT * FROM `rows` WHERE (`rows`.row_id = 1468) ORDER BY id DESC LIMIT 1[0m
+  [4;35;1mRow Load (2.0ms)[0m   [0mSELECT * FROM `rows` WHERE (`rows`.row_id = 1469) ORDER BY id DESC LIMIT 1[0m
+  [4;36;1mRow Load (1.0ms)[0m   [0;1mSELECT * FROM `rows` WHERE (`rows`.row_id = 1470) ORDER BY id DESC LIMIT 1[0m
+  [4;35;1mRow Load (2.0ms)[0m   [0mSELECT * FROM `rows` WHERE (`rows`.row_id = 1474) ORDER BY id DESC LIMIT 1[0m
+  [4;36;1mRow Load (1.0ms)[0m   [0;1mSELECT * FROM `rows` WHERE (`rows`.row_id = 1475) ORDER BY id DESC LIMIT 1[0m
+  [4;35;1mRow Load (1.0ms)[0m   [0mSELECT * FROM `rows` WHERE (`rows`.row_id = 1554) ORDER BY id DESC LIMIT 1[0m
+  [4;36;1mSQL (1.0ms)[0m   [0;1mSELECT count(*) AS count_all FROM `rows` WHERE (`rows`.row_id = 936) [0m
+  [4;35;1mSQL (1.0ms)[0m   [0mSELECT count(*) AS count_all FROM `rows` WHERE (`rows`.row_id = 937) [0m
+  [4;36;1mSQL (2.0ms)[0m   [0;1mSELECT count(*) AS count_all FROM `rows` WHERE (`rows`.row_id = 959) [0m
+  [4;35;1mSQL (1.0ms)[0m   [0mSELECT count(*) AS count_all FROM `rows` WHERE (`rows`.row_id = 963) [0m
+  [4;36;1mSQL (3.0ms)[0m   [0;1mSELECT count(*) AS count_all FROM `rows` WHERE (`rows`.row_id = 996) [0m
+  [4;35;1mSQL (2.0ms)[0m   [0mSELECT count(*) AS count_all FROM `rows` WHERE (`rows`.row_id = 1106) [0m
+  [4;36;1mSQL (1.0ms)[0m   [0;1mSELECT count(*) AS count_all FROM `rows` WHERE (`rows`.row_id = 1111) [0m
+  [4;35;1mSQL (3.0ms)[0m   [0mSELECT count(*) AS count_all FROM `rows` WHERE (`rows`.row_id = 1254) [0m
+  [4;36;1mSQL (3.0ms)[0m   [0;1mSELECT count(*) AS count_all FROM `rows` WHERE (`rows`.row_id = 1275) [0m
+  [4;35;1mSQL (1.0ms)[0m   [0mSELECT count(*) AS count_all FROM `rows` WHERE (`rows`.row_id = 1381) [0m
+  [4;36;1mSQL (1.0ms)[0m   [0;1mSELECT count(*) AS count_all FROM `rows` WHERE (`rows`.row_id = 1385) [0m
+  [4;35;1mSQL (2.0ms)[0m   [0mSELECT count(*) AS count_all FROM `rows` WHERE (`rows`.row_id = 1387) [0m
+  [4;36;1mSQL (2.0ms)[0m   [0;1mSELECT count(*) AS count_all FROM `rows` WHERE (`rows`.row_id = 1388) [0m
+  [4;35;1mSQL (2.0ms)[0m   [0mSELECT count(*) AS count_all FROM `rows` WHERE (`rows`.row_id = 1466) [0m
+  [4;36;1mSQL (3.0ms)[0m   [0;1mSELECT count(*) AS count_all FROM `rows` WHERE (`rows`.row_id = 1468) [0m
+  [4;35;1mSQL (2.0ms)[0m   [0mSELECT count(*) AS count_all FROM `rows` WHERE (`rows`.row_id = 1469) [0m
+  [4;36;1mSQL (1.0ms)[0m   [0;1mSELECT count(*) AS count_all FROM `rows` WHERE (`rows`.row_id = 1470) [0m
+  [4;35;1mSQL (3.0ms)[0m   [0mSELECT count(*) AS count_all FROM `rows` WHERE (`rows`.row_id = 1474) [0m
+  [4;36;1mSQL (2.0ms)[0m   [0;1mSELECT count(*) AS count_all FROM `rows` WHERE (`rows`.row_id = 1475) [0m
+  [4;35;1mSQL (2.0ms)[0m   [0mSELECT count(*) AS count_all FROM `rows` WHERE (`rows`.row_id = 1554) [0m
+  [4;36;1mSQL (2.0ms)[0m   [0;1mSELECT count(*) AS count_all FROM `rows` WHERE (`rows`.row_id = 959) [0m
+  [4;35;1mSQL (1.0ms)[0m   [0mSELECT count(*) AS count_all FROM `rows` WHERE (`rows`.row_id = 963) [0m
+  [4;36;1mSQL (1.0ms)[0m   [0;1mSELECT count(*) AS count_all FROM `rows` WHERE (`rows`.row_id = 996) [0m
+  [4;35;1mSQL (1.0ms)[0m   [0mSELECT count(*) AS count_all FROM `rows` WHERE (`rows`.row_id = 1106) [0m
+  [4;36;1mSQL (1.0ms)[0m   [0;1mSELECT count(*) AS count_all FROM `rows` WHERE (`rows`.row_id = 1111) [0m
+  [4;35;1mSQL (0.0ms)[0m   [0mSELECT count(*) AS count_all FROM `rows` WHERE (`rows`.row_id = 1254) [0m
+  [4;36;1mSQL (1.0ms)[0m   [0;1mSELECT count(*) AS count_all FROM `rows` WHERE (`rows`.row_id = 1275) [0m
+  [4;35;1mSQL (1.0ms)[0m   [0mSELECT count(*) AS count_all FROM `rows` WHERE (`rows`.row_id = 1381) [0m
+  [4;36;1mSQL (3.0ms)[0m   [0;1mSELECT count(*) AS count_all FROM `rows` WHERE (`rows`.row_id = 1385) [0m
+  [4;35;1mSQL (2.0ms)[0m   [0mSELECT count(*) AS count_all FROM `rows` WHERE (`rows`.row_id = 1388) [0m
+  [4;36;1mSQL (1.0ms)[0m   [0;1mSELECT count(*) AS count_all FROM `rows` WHERE (`rows`.row_id = 1466) [0m
+  [4;35;1mSQL (1.0ms)[0m   [0mSELECT count(*) AS count_all FROM `rows` WHERE (`rows`.row_id = 1470) [0m
+  [4;36;1mSQL (1.0ms)[0m   [0;1mSELECT count(*) AS count_all FROM `rows` WHERE (`rows`.row_id = 1475) [0m
+  [4;35;1mSQL (1.0ms)[0m   [0mSELECT count(*) AS count_all FROM `rows` WHERE (`rows`.row_id = 1554) [0m

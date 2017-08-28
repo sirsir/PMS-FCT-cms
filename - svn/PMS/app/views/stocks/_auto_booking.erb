@@ -1,0 +1,38 @@
+<%=error_messages_for 'stock' %>
+<table>
+
+  <tr>
+    <th class="th_row_header">Method:</th>
+    <td>
+      <% Stock.method_options.each_with_index do |o, i|
+        checked = i == 0
+        checked = o == @stock.booking_method.to_sym if !@stock.booking_method.nil?
+      %>
+        <%=radio_button_tag 'stock[auto_booking][method]', "#{o}", checked %><%=label_tag 'stock_auto_booking_method', "#{o.to_s.upcase}" %>
+  
+        <br />
+      <% end %>
+      <%=field_descr_tag %>
+    </td>
+  </tr>
+  
+  <tr>
+    <th class="th_row_header">Auto Booking Keys:</th>
+    <td>
+      <%=left_to_right_tag(
+        :descr => 'Stock Keys',
+        :name => 'stock[auto_booking][key_ids]',
+        :assigned_options => @assigned_options,
+        :all_options => @all_options,
+        :value_method => 'id',
+        :text_method => 'name')
+      %>
+      <%=field_descr_tag %>
+    </td>
+  </tr>
+
+  <tr >
+    <th></th>
+    <td><%=group_button %></td>
+  </tr>
+</table>

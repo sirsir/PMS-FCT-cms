@@ -1,0 +1,20 @@
+<table class='table_content' cellspacing='0'>
+  <tr class='tr_header'>
+    <% ['Type', 'Description'].each do |h| %>
+      <th class='th_col_header'><%= (h =~ /&nbsp;/) ? h : h.to_s.titleize %></th>
+    <% end %>
+  </tr>
+  <% @custom_field_types.each do |custom_field_type| %>
+    <%
+    operation_area = "operation_area_#{@screen.id}"
+    operation_url = url_for(:action => :new, :id => 0, :custom_field_type => custom_field_type['type'])
+  %>
+    <tr class='tr_<%= @custom_field_types.index(custom_field_type) % 2 == 0 ? 'even' : 'odd' %>'
+        operation_area='<%= operation_area %>' operation_url='<%= operation_url %>'
+        relation_area='' relation_url=''
+        handleonclick='true'>
+      <td class='td_cell'><%= custom_field_type.class.to_s.gsub('CustomFields::','').titleize %></td>
+      <td class='td_cell'><%= custom_field_type.description %></td>
+    </tr>
+  <% end %>
+</table>

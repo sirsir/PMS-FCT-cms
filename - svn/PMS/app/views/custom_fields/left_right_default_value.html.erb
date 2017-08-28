@@ -1,0 +1,10 @@
+<%=
+  left_to_right_tag(
+    :descr => "Rows",
+    :name =>  "custom_field[value][default_value]",
+    :assigned_options => [],
+    :all_options => @left_right_rows,
+    :value_method => :id,
+    :text_method => :description)
+%>
+<%= field_descr_tag :break => false %>

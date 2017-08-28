@@ -1,0 +1,15 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  transaction_at: 2011-06-06 18:29:17
+  type: MyString
+  value: 
+  reason_row_id: 1
+  remark: MyString
+
+two:
+  transaction_at: 2011-06-06 18:29:17
+  type: MyString
+  value: 
+  reason_row_id: 1
+  remark: MyString

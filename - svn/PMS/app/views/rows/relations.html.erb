@@ -1,0 +1,5 @@
+<% if !(@screens.empty?) %>
+  <% @screens.each do |screen| %>
+    <%= relation_div(screen, @custom_fields) %>
+  <% end %>
+<% end %>

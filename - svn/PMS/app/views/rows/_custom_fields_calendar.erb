@@ -1,0 +1,52 @@
+<%
+detail_screen = field.custom_field.detail_screen
+cell_date = CustomFields::Calendar.cell_date(cell.value)
+date = cell_date == Date.null_date ? CustomFields::DateTimeField.begin_of_period(Date.today, :year) : cell_date
+current_year = Time.now.year
+format = field.custom_field.format.to_sym
+discard_day = discard_month = format.eql?(:monthly) ? true : false
+
+if format.eql?(:monthly)
+%>
+
+  <table border="0" cellspacing="0">
+    <tr>
+      <th >Selected Date:</th>
+      <td><%= select_date(date, :prefix => "cells[#{field.custom_field_id}]", :discard_month => discard_month, :discard_day => discard_day, :start_year => current_year - 5, :end_year => current_year + 1, :disabled => @readonly) %></td>
+      <% if @readonly %>
+        <%= hidden_field_tag "cells[#{field.custom_field_id}][year]", date.year %>
+      <% end %>
+    </tr>
+  </table>
+
+  <% if cell_date != Date.null_date %>
+
+    <table class="table_data_content" cellspacing="0" id="calendar_monthly">
+      <%=render :partial => '/rows/field_level', :collection => (1..detail_screen.field_level).to_a, :locals => { :screen => detail_screen } %>
+      <%
+      all_row_ids = cell.calendar_values.collect{|cv| "'tr_row_id_#{cv.row_id}_form'" }
+      cell.calendar_values.each do |cv|
+        tr_class = "tr_data_#{cell.calendar_values.index(cv) % 2 == 0 ? 'odd' : 'even' }"
+
+      %>
+        <tr class='<%=tr_class %>' id="<%= "tr_row_id_#{cv.row_id}" %>" onclick="fncToggleTrs('tr_row_id_<%=cv.row_id %>_form', [<%=all_row_ids.join(', ')%>]);">
+          <th class="tr_header th_col_header" id="<%= "tr_row_id_#{cv.row_id}_th" %>" rowspan="1"><%= date.strftime('%b') %></th>
+          <%= render :partial => 'column', :collection => detail_screen.fields, :locals => {:row=>cv.row} %>
+        </tr>
+
+        <tr class='<%=tr_class %>' id="tr_row_id_<%=cv.row_id %>_form" style="display: none;">
+          <td class="td_data_cell" colspan="99">
+            <%=screen_modification_tag date.strftime('%b'),
+              render(:partial => 'form', :locals => {:row => cv.row, :readonly => @readonly, :name_prefix => "calendar_value_row_#{cv.row_id}_",
+                :area_id => (@action_source == 'relations') ? cv.row.screen_id.to_s : nil}),
+              "frm_edit_#{cv.row.screen_id.to_s}_content" %>
+          </td>
+        </tr>
+
+        <% date = date.next_month %>
+      <% end %>
+    </table>
+  <% end %>
+<% else %>
+  <p>Pending</p>
+<% end %>

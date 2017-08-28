@@ -1,0 +1,17 @@
+<%
+combo_box_options = {
+      :assigned_options => [],
+      :all_options => custom_field.labels
+      }
+content = screen_collection_select_tag(
+    :assigned_options => combo_box_options[:assigned_options],
+    :all_options => combo_box_options[:all_options],
+    :name => "#{name}",
+    :value_method => :id,
+    :text_method => :descr,
+    :include_blank => true,
+    :on_change => events )
+%>
+
+<%=content %>
+<%=field_descr_tag %>

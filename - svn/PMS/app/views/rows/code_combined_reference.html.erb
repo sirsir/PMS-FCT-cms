@@ -1,0 +1,31 @@
+<%
+local_vars = {
+  :field => @field,
+  :new_record => true,
+  :parent_scr_row => nil,
+  :scr_row => @scr_row,
+  :sub_scr_row => @sub_scr_row,
+  #:option_flag => @option_flag,
+  #:selected_row => @ocr_row,
+  :selected_options => [],
+  :selected_values => [],
+  #:main_index => @main_index,
+  #:screens => @screens,
+  #:size => @size,
+  #:is_group => @is_group,
+  :available_options => @available_options,
+  #:relate_model_rows =>@relate_model_rows,
+  #:model_options => @model_options || {},
+  #:selected_option_row => nil,,
+  :selected_option_row_ids => [],
+  #:ocr_row => @ocr_row,
+  :count=>@count,
+  :input_name => @input_name,
+  :screen_id => @screen_id,
+  :ccr_result_id_prefix => @ccr_result_id_prefix,
+  :parent_ccr_result_id => nil,
+  :next_ccr_result_id => @next_ccr_result_id
+}
+%>
+<%= render :partial => "/rows/code_combined_reference", :locals => local_vars %>
+

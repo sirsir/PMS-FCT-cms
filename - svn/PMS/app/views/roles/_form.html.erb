@@ -1,0 +1,39 @@
+<table>
+  <tr>
+    <th class="th_row_header"><%= field_label_tag Label.descr_by_name('G_NAME'), :mandatory => true, :unique => true %></th>
+    <td>
+      <%= text_field_tag "role[name]" , @role.name  %>
+      <%= field_descr_tag %>
+    </td>
+  </tr>
+
+  <tr>
+    <th class="th_row_header"><%= Label.descr_by_name('G_DESCR') %></th>
+    <td>
+      <%= text_field_tag "role[descr]" , @role.descr  %>
+      <%= field_descr_tag %>
+    </td>
+  </tr>
+
+  <tr>
+    <th class="th_row_header"><%= Label.descr_by_name('S_Users') %></th>
+    <td>
+      <%= left_to_right_tag(
+        :descr => Label.descr_by_name("S_Users"),
+        :name =>  "role[user_ids][]",
+        :assigned_options => @role.users,
+        :all_options => @all_users,
+        :value_method => "id",
+        :text_method => "login",
+        :left_to_right_options => {})
+    %>
+      <%= field_descr_tag :break => false %>
+    </td>
+  </tr>
+  <tr>
+    <th />
+    <td>
+      <%= group_button(:reused_form => true, :area_id => @screen.id) %>
+    </td>
+  </tr>
+</table>

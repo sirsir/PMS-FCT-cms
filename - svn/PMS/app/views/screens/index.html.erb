@@ -1,0 +1,34 @@
+<%= screen_name_list_tag @screen_self %>
+
+<%
+operation_area = "operation_area_#{@screen_self.id}"
+relation_area = "relation_area_#{@screen_self.id}"
+field_area = "field_area_#{@screen_self.id}"
+operation_url_new = url_for(:action=>:new)
+on_click_new = <<JAVASCRIPT
+fncAjaxUpdater("#{operation_area}", "#{operation_url_new}");
+fncClearDiv($("relation_area_#{@screen_self.id}"));
+fncClearDiv($("field_area_#{@screen_self.id}"));
+fncClearDiv($("error_area"));
+return false;
+JAVASCRIPT
+%>
+
+<%= operation_tag( [:new, :export], {:actions => {:new => :new}}, {:new => {:onClick => on_click_new}} )%>
+
+<%= group_tag @screen_self, render(:partial => 'screens',
+                              :locals => {
+                                :operation_area => operation_area,
+                                :relation_area => relation_area , 
+                                :field_area => field_area
+                              }) %>
+
+<%= operation_tag( [:new, :export], {:actions => {:new => :new}}, {:new => {:onClick => on_click_new}} )%>
+
+<hr />
+
+<div id ='error_area'></div>
+<%= anchor(operation_area) %>
+<div id ='<%= operation_area %>' ></div>
+<div id ='<%= relation_area %>' ></div>
+<div id ='<%= field_area %>' ></div>

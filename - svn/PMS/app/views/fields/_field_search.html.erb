@@ -1,0 +1,87 @@
+<%
+cf_name = "custom_fields_#{field.custom_field_id}"
+cf_id = sanitize_to_id(cf_name)
+
+if field.is_a?(Fields::Data) && field.display_in_search?
+  if field.custom_field.is_a?(CustomFields::IssueTracking)
+    field,@count = field_for_search(field,{:count => @count, :fields_per_line => @fields_per_line})
+%>
+    <%= field %>
+<% 
+  else
+%>
+  </tr>
+  <tr>
+    <td class='td_search' style='white-space:nowrap;' id ="<%=cf_id%>_label">
+      <b><%= label_tag("label[#{cf_name}]","#{field.descr}"":") %></b>
+    </td>
+<%
+    case field.custom_field
+    when CustomFields::AutoNumbering then
+      field,@count = field_for_search(field,{:count => @count})
+    else
+      field = field_for_search(field)
+    end
+%>
+  </tr>
+  <tr>
+<td class='td_search' style='white-space:nowrap;' id="<%=cf_id%>_filter" align="right"><%=field %></td>
+<%
+    @count +=1
+  end if false
+%>
+
+<%
+custom_field = field.custom_field
+options = {}
+
+defaults = {
+  :name => :custom_field,
+  :screen_id => nil,
+  :count => 1,
+  :fields_per_line => 1,
+  :value => nil,
+  :read_only => false,
+  :range => true,
+  :screen_index => nil
+}
+options = defaults.merge(options)
+
+case options[:name]
+when :field
+  input_name = "fields"
+  input_name << "[#{options[:screen_id]}]" if options[:screen_id]
+  input_name << "[#{field.id}]"
+when :custom_field
+  input_name = "custom_fields"
+  input_name << "[#{options[:screen_id]}]" if options[:screen_id]
+  input_name << "[#{custom_field.id}]"
+when :field_filter
+  input_name = "field_filter"
+  input_name << "[#{options[:screen_index]}][#{field.id}][value]"
+end
+
+input_id = sanitize_to_id(input_name)
+%>
+<div id="search_tab" >
+  <div id ="<%=input_id%>_filter" style="margin: 2px; width: 240px;" class="search">
+    <% unless field.custom_field.is_a?(CustomFields::IssueTracking) || field.custom_field.is_a?(CustomFields::DateTimeField) || field.custom_field.is_a?(CustomFields::DateTimeRange) %>
+    <b><%= label_tag("", "#{field.descr}:") %></b>
+    <% if field.required_search? %>
+    <span class='required_field'>&nbsp;*&nbsp;</span>
+  <% end %>
+    <br />
+    <% end %>
+  <%= render :partial => "fields/search/#{field.custom_field.class.name.gsub("::","").underscore}",
+    :locals => {
+      :custom_field => field.custom_field,
+      :field => field,
+      :input_id => input_id,
+      :input_name => input_name,
+      :options => options
+    } %>
+  </div>
+</div>
+<%
+end
+%>

@@ -1,0 +1,14 @@
+<tr class="tr_header" ><th class="group_caption_center" colspan="99">Object Allocation</th></tr>
+<tr class="tr_data_odd">
+  <td class="td_cell" colspan="99">
+    <%
+    img_url = url_for(
+      :action => 'memory_chart',
+      :id => session.active_screen.id,
+      :type => :object_allocation,
+      :time => Time.now
+    )
+    %>
+    <%=image_tag img_url, :alt => '[Object Allocation Chart]' %>
+  </td>
+</tr>

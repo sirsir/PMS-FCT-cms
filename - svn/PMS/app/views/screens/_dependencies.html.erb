@@ -1,0 +1,14 @@
+<% if @screen.dependencies.length > 0 %>
+<tr>
+  <%= screen_relation_img_tag("vertical_line") %>
+</tr>
+<tr>
+  <td align="center">
+    <table cellpadding="0" cellspacing="0" border="0">
+      <tr>
+        <%= render :partial=>"dependency", :collection => @screen.dependencies %>
+      </tr>
+    </table>
+  </td>
+</tr>
+<% end %>

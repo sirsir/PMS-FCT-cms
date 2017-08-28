@@ -1,0 +1,71 @@
+<% form_tag url_for(:action => 'compare_action_report'), :target => "_blank" do %>
+<%= hidden_field_tag("date_from", @date_from) %>
+<%= hidden_field_tag("rpt_type", @rpt_type) %>
+<%= hidden_field_tag("export", "yes") %>
+<%= submit_tag("Export") %>
+<% end if @screen.allow_action?("export") %>
+<% nloop = 1 %><% #@loop = 6 %>
+
+<font size="large"><center><B><%=@rpt_name%></B></center></font><br>
+<table border=1  align="Center">
+<tr class='table_content'>
+  <th rowspan=2 align="Center">Sales Office</th>
+  <th rowspan=2 align="Center">Salesman</th>
+  <th rowspan=2 align="Center">Rank</th>
+  <% for nloop in 1..@loop %>
+    <th colspan=4 align="Center" nowrap>
+    <% if @rpt_type.to_i <= 2 %>&nbsp;&nbsp;<%=@dto[nloop] == @dfrom[nloop] ? @dto[nloop] : @dfrom[nloop] + " to " + @dto[nloop] %>&nbsp;&nbsp;
+    <% elsif @rpt_type.to_i == 3 %><%= @dfrom[nloop].to_date.month.to_s + "/" + @dfrom[nloop].to_date.year.to_s %>
+    <% elsif @rpt_type.to_i == 4 %>Year <%=@dfrom[nloop].to_date.year.to_s%>
+    <% elsif @rpt_type.to_i == 5 %>Q<%=nloop.to_s + "/" + @dfrom[nloop].to_date.year.to_s%>
+    <% end %>
+    </th>
+  <% end %>
+</tr>
+<tr class='table_content'>
+  <% nloop = 1 %>
+  <% for nloop in 1..@loop %>
+  <th align="Center">New Visit</th>
+  <th align="Center">Routine</th>
+  <th align="Center">Special</th>
+  <th align="Center">P/O</th>
+  <% nloop+=1 %>
+  <% end %>
+</tr>
+<% color = []
+   color << "#CEE7FF"
+   color << "#F5F8FD"%>
+<% @result.each_with_index do |b, n| %>
+<tr bgcolor=<%=color[0]%>>
+  <td><%=b[0]%></td>
+  <% b[1].each_with_index do |s,i| %>
+    <%="<tr bgcolor=" + color[0] + "><td>&nbsp;</td>" if i > 0 %>
+    <td><%=s[0]%></td>
+    <% s[1].each_with_index do |r,j| %>
+      <%="<tr bgcolor=" + color[j%2] + "><td>&nbsp;</td><td>&nbsp;</td>" if j > 0 %>
+      <td align="center"><%=r[0]%></td>
+      <% nloop = 1 %>
+      <% for nloop in 1..@loop %>
+      <td align="center"><%=r[1][nloop.to_s]["New Visit"] ||="&nbsp"%></td>
+      <td align="center"><%=r[1][nloop.to_s]["Routine"] ||="&nbsp"%></td>
+      <td align="center"><%=r[1][nloop.to_s]["Special"] ||="&nbsp"%></td>
+      <td align="center"><%=r[1][nloop.to_s]["P/O"] ||="&nbsp"%></td>
+      <% nloop += 1 %>
+      <% end %>
+      <%="</tr>" if j > 0 %>
+    <% end %>
+      <tr bgcolor="#FAF8CC">
+        <td align="center" colspan="3"><b>Total</b></td>
+      <% nloop = 1 %>
+      <% for nloop in 1..@loop %>
+      <td align="center"><b><%=@total[s[0]][nloop.to_s]["New Visit"] ||=0%></b></td>
+      <td align="center"><b><%=@total[s[0]][nloop.to_s]["Routine"] ||=0%></b></td>
+      <td align="center"><b><%=@total[s[0]][nloop.to_s]["Special"] ||=0%></b></td>
+      <td align="center"><b><%=@total[s[0]][nloop.to_s]["P/O"] ||=0%></b></td>
+      <% nloop += 1 %>
+      <% end %>
+      <%="</tr>" if i > 0 %>
+  <% end %>
+  </tr>
+<%end%>
+</table>

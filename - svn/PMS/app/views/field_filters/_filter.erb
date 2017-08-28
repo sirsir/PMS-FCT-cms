@@ -1,0 +1,10 @@
+<tr>
+  <th class='th_row_header' style="white-space: nowrap"><%= label_tag("#{filter.field_id < 0 ? 'Rows' : filter.field.descr}:") %></th>
+    <td style="white-space: nowrap">
+      <% if filter.field_id < 0 %>
+      <%= render :partial => "field_filters/id", :locals => {:field_report_filter => filter, :read_only => read_only } %>
+      <% else %>
+      <%= render :partial => "field_filters/#{filter.field.custom_field.class.name.gsub("::","").underscore}", :locals => {:field_report_filter => filter, :read_only => read_only } %>
+      <% end %>
+    </td>
+</tr>

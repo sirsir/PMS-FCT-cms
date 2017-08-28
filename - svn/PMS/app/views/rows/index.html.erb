@@ -1,0 +1,80 @@
+<% if @action_source == "search" %>
+  <div id='search_result'><br />
+<% end %>
+
+  <%= screen_name_list_tag @screen if @action_source != "relations" %>
+  <%
+  unless @action_source == "relations"
+    operation_flag = @screen.include_required_search?(@filtered_reference)
+    operations = []
+    ajax_params = {
+      :controller => @screen.class.to_s.pluralize.underscore == "list_screens" ? "rows" : @screen.class.to_s.pluralize.underscore.gsub("screen","row") ,
+      :action_source => @action_source,
+      :filtered_reference => @filtered_reference,
+      :screen_id => @screen.id
+    }
+    operations << :new if @screen.allow_action?("new") && operation_flag
+    operations << :delete if @screen.allow_action?("destroy") && operation_flag
+    if (@action_source.gsub("page_","") != "relations") && (@screen.allow_action?("export"))
+      operations += [:export] if operation_flag
+      operations += [:import] if @screen.allow_import?
+    end
+    operations << :print if operation_flag
+
+    action = "page_" + @action_source.gsub("page_","")
+    html_page_tags = page_tag(@screen.id,@pageno.to_i,@maxpage.to_i,action,@row_pattern.nil? ? nil : @row_pattern.id)
+    html_operation_tags = operation_tag( operations, {:id =>params[:id], :ajax_params => ajax_params, :pagination => html_page_tags } )
+  end
+%>
+<% if @view_mode == :calendar %>
+  <%= render(:partial => 'calendar') %>
+<% else  %>
+  <%= render(:partial => 'list', :locals => {:screen => @screen, :rows => @rows, :html_operation_tags => html_operation_tags }) %>
+<% end %>
+    
+<% if @action_source != "relations" %>
+  <%
+  operation_area = "operation_area_#{@screen.id}"
+  %>
+  <div id ='error_area'></div>
+  <%= anchor(operation_area) %>
+  <div id ='<%= operation_area %>'>
+    <% if @quick_operation == 'new' %>
+      <%
+        operation_url_options = {
+          :action => :new,
+          :id => @screen.id,
+          :action_source => @action_source,
+          :screen_id => @screen.id
+        }
+        operation_url = url_for(operation_url_options)
+      %>
+      <div name="on_load_operation_content" status="unloaded" ajax_result_id="<%= operation_area %>" ajax_url="<%=operation_url %>"></div>
+        
+    <% end %>
+  </div>
+  <table>
+    <tr>
+      <td>
+        <input type="checkbox" id="auto_load_relation_content" onclick="fncToggleRelationArea('relation_area',this);"/><%= label_tag 'auto_load_relation_content', 'Show Relations' %>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <div id ='relation_area' name='relation_area'></div>
+      </td>
+    </tr>
+  </table>
+<% end %>
+
+<% if @action_source == "search" %>
+  </div>
+  <%=javascript_include_tag "application" %>
+  <%=javascript_include_tag "dialog" %>
+  <%=javascript_include_tag "fr" %>
+  <script type="text/javascript">
+    fncCopyResultToMainFrame("search_result", "main");
+
+    fncLoadTempFrame();
+  </script>
+<%end%>

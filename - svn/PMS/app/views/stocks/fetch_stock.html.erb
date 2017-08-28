@@ -1,0 +1,42 @@
+<table>
+  <!-- WARNING!!! The first list must be the table start tag -->
+  <%
+  stock_keys_html = (@stock.stock_keys.empty?) ? "&nbsp;" :
+    @stock.stock_keys.collect{|cf| "<li>#{cf.label_descr}</li>" }.join
+
+  booking_method_html = (@stock.booking_method.nil?) ? "&nbsp;" : @stock.booking_method.to_s.upcase
+
+  booking_keys_html = (@stock.booking_keys.empty?) ? "&nbsp;" :
+    @stock.booking_keys.collect{|cf| "<li>#{cf.label_descr}</li>" }.join
+
+  hidden_keys_html = (@stock.hidden.nil?) ? "&nbsp;" :
+    @stock.hidden.collect do |k, v|
+      unless v.empty?
+        "<li>#{CustomField.find(k).label_descr} : #{Label.find(v).descr}</li>"
+      end
+    end.join
+  %>
+
+  <tr id="<%=@stock.id %>_replacement" readonly='<%=@readonly %>'>
+    <td class='td_cell'>&nbsp;</td>
+    <td class='td_cell'><%=h @stock.id %></td>
+    <td class='td_cell'><%= (@stock.name.to_s.empty?) ? "&nbsp;" : @stock.name %></td>
+    <td class='td_cell'><%= (@stock.label.to_s.empty?) ? "&nbsp;" : @stock.label.descr %></td>
+    <td class='td_cell'><%= (@stock.descr.to_s.empty?) ? "&nbsp;" : @stock.descr %></td>
+    <td class='td_cell'><%=stock_keys_html %></td>
+    <td class='td_cell'><%=@stock.amount_custom_field.label_descr %></td>
+    <td class='td_cell'><%=booking_method_html %></td>
+    <td class='td_cell'><%=booking_keys_html %></td>
+    <td class='td_cell'><%=hidden_keys_html %></td>
+    <td class='td_cell'><pre class="td_cell_remark"><%= @stock.remark.to_s.empty? ? "&nbsp;" : @stock.remark %></pre></td>
+<%
+
+options = {:confirm => true}
+options[:onclick] = "fncTrDelete(this.href, #{@stock.id});"
+options[:object] = @stock
+
+content = link_to_destroy(options)
+%>
+    <td class='td_cell' id='<%="#{@stock.id}_destroy"%>'><%=content %></td>
+  </tr>
+</table>

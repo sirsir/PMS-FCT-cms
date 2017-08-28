@@ -1,0 +1,34 @@
+<%
+custom_fields ||= field.custom_field.custom_fields
+%>
+
+<%=hidden_field_tag "cells[value][stock_item_id]", CustomFields::StockQuantity.cell_stock_item_id(cell.value) %>
+
+  </td>
+</tr>
+<%
+custom_fields.each do |cf|
+  ref_field = Fields::Data.new(
+    :mandatory_check => 1,
+    :unique => 0,
+    :display_flags => field.display_flags
+  )
+  ref_field.screen = field.screen
+  ref_field.custom_field = cf
+%>
+          
+<%=render :partial => "/rows/fields_data", :locals => {:field => ref_field, :row => row, :readonly => !row.new_record?, :name_prefix => name_prefix} %>
+
+<% end %>
+
+<tr id="fields_data_<%=row.id %>_<%=field.id %>_booking_method">
+  <th class="th_row_header"></th>
+    <td>
+<% if field.custom_field.quantity_type.to_sym == :booked %>
+      <div onclick='
+        $("fields_data___10").style.display =
+          $("booking_method").checked ? "none" : '';
+       '>
+        <%= check_box_tag "booking_method", field.custom_field.stock.booking_method %><%= label_tag "booking_method", field.custom_field.stock.booking_method.upcase %>
+      </div>
+<% end %>

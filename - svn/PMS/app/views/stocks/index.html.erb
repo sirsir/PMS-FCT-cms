@@ -1,0 +1,16 @@
+<%= screen_name_list_tag @screen %>
+
+<%
+operation_tags = operation_tag( [:new] )
+%>
+
+<%=operation_tags %>
+
+<%= group_tag @screen, render(:partial => 'stocks') %>
+
+<%=operation_tags %>
+
+<hr />
+
+<div id ='error_area'></div>
+<div id ='operation_area'></div>

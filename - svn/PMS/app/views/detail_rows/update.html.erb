@@ -1,0 +1,24 @@
+<%=javascript_include_tag "prototype" %>
+<%=javascript_include_tag "application" %>
+<%=javascript_include_tag "ajax" %>
+<%=javascript_include_tag "dialog" %>
+<%=javascript_include_tag "fr" %>
+<script type="text/javascript">
+ <%  # ToDo: Determine if the source was from creating, modifying or displaying form  %>
+<% if @detail_row.errors.empty? %>
+    fncUpdateTrToTableContent(<%=@detail_row.screen_id %>, <%=@detail_row.id %>);
+    fncUpdateTrToTableContent(<%=@detail_row.revision_row.screen_id %>, <%=@detail_row.revision_row.id %>);
+    fncUpdateTrToTableContent(<%=@detail_row.revision_row.header_row.screen_id %>, <%=@detail_row.revision_row.header_row.id %>);
+  <% unless @form_content_reuse %>
+      var main_doc = fncGetMainDocument();
+      var div = main_doc.getElementById("operation_area_<%=@detail_row.screen_id %>");
+      fncClearDiv(div);
+  <% end %>
+<% else %>
+    fncSetError('<%=error_messages_for(:object => @detail_row).to_s.gsub(/'/, "&rsquo\;") %>');
+<% end %>
+  fncLoadTempFrame();
+</script>
+
+
+

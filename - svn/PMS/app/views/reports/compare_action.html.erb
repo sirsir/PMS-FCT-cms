@@ -1,0 +1,17 @@
+<br><h1>Compare Action Report</h1><br>
+<table border="0">
+<tr nowrap><td>Report Type
+<select id ="rpt_type">
+  <option value="">Please select one</option>
+  <option value="1">Daily</option>
+  <option value="2">Weekly</option>
+  <option value="3">Monthly</option>
+  <option value="5">Quarterly</option>
+  <option value="4">Yearly</option>
+</select> &nbsp; &nbsp;</td>
+<td><%= field_date("date_from") %></td>
+<td> &nbsp; &nbsp;<input type="button" onClick="fncLoadCompareActionReport();" value ="Search"></td>
+</tr>
+</table>
+<hr>
+<div id ='report_area'></div>

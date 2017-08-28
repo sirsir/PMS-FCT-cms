@@ -1,0 +1,86 @@
+<table class="form_content">
+  <tr>
+    <th class="th_row_header"><%= label_tag "report_request[name]", "#{Label.descr_by_name('G_NAME')}:" %></th>
+    <td>
+      <% if read_only %>
+        <%=h @report_request.name %>
+      <% else %>
+        <%= text_field :report_request, :name %>
+        <%= field_descr_tag %>
+      <% end %>
+    </td>
+  </tr>
+  
+  <%=table_hr_tag unless read_only %>
+
+  <tr>
+    <%
+    report_input_name = "report_request[report_id]"
+    report_options = options_from_collection_for_select(@reports, :id, :name, @report_request.report_id)
+  %>
+    <th class="th_row_header"><%= label_tag report_input_name, "Report:" %></th>
+    <td>
+      <% if read_only %>
+        <%=h @report_request.report.name %>
+      <% else %>
+        <%= select_tag report_input_name, report_options %>
+        <%= field_descr_tag %>
+      <% end %>
+    </td>
+  </tr>
+
+  <%= hidden_field_tag "report_request[user_id]", @report_request.user_id %>
+
+  <%=table_hr_tag unless read_only %>
+
+  <tr>
+    <th class="th_row_header"><%= label_tag "report_request[refresh_interval_index]", "Interval:" %></th>
+    <td>
+      <% if RAILS_ENV =~ /development/ %>
+        <% if read_only %>
+          <%=h @report_request.refresh_interval.to_s.titleize %>
+        <% else %>
+        <%
+        refresh_intervals = ReportRequest.refresh_intervals.collect{|i| [i.to_s.titleize, ReportRequest.refresh_intervals.index(i)] }
+        refresh_interval_options = options_for_select(refresh_intervals, @report_request.refresh_interval_index)
+        %>
+          <%= select_tag "report_request[refresh_interval_index]", refresh_interval_options %>
+          <%= field_descr_tag %>
+        <% end  %>
+      <% else %>
+        &nbsp;
+      <% end  %>
+    </td>
+  </tr>
+
+  <tr>
+    <th class="th_row_header"><%= label_tag "", "Last Run:" %></th>
+    <td>
+      <%=h @report_request.last_run_when =~ /never/i ? " " : @report_request.last_run_when %>
+    </td>
+  </tr>
+
+  <%=table_hr_tag unless read_only %>
+
+  <tr>
+    <th class="th_row_header"><%= label_tag "remark", "Remark:" %></th>
+    <td>
+      <% if read_only %>
+        <%=h @report_request.remark %>
+      <% else %>
+        <%= text_area_tag("report_request[remark]", @report_request.remark, :size=>"40x5") %>
+        <%= field_descr_tag %>
+      <% end %>
+    </td>
+  </tr>
+
+  <%=table_hr_tag unless read_only %>
+
+  <% unless read_only %>
+  <tr>
+    <td colspan="2">
+      <%= group_button() %>
+    </td>
+  </tr>
+  <% end %>
+</table>

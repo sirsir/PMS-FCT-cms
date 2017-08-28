@@ -1,0 +1,89 @@
+<%
+permission_type = @permission_type.name.to_s
+
+if permission_type =~ /Role/
+  model_1, key_1, label_1, method_1 = [Role, :role_id , 'S_Roles', :name]
+else
+  model_1, key_1, label_1, method_1 = [User, :user_id, 'S_Users', :login]
+end
+
+if permission_type =~ /Screen/
+  model_2, key_2, label_2, method_2 = [Screen, :screen_id, 'S_Screen', :label_descr]
+else
+  model_2, key_2, label_2, method_2 = [Field, :field_id, 'G_Field', :full_descr]
+end
+
+label_1 = Label.descr_by_name(label_1)
+label_2 = Label.descr_by_name(label_2)
+name_1 = "permission[#{key_1}]"
+name_2 = "permission[#{key_2}]"
+id_1 = @permission[key_1]
+id_2 = @permission[key_2]
+value_1 = (id_1.to_i > 0) ? model_1.find(id_1.to_i).send(method_1) : "-All-"
+value_2 = (id_2.to_i > 0) ? model_2.find(id_2.to_i).send(method_2) : "-All-"
+%>
+
+<%= hidden_field_tag(name_1, id_1)%>
+<%= hidden_field_tag(name_2, id_2)%>
+<%= hidden_field_tag("permission_type", "#{@permission_type}") %>
+<%= hidden_field_tag("screen_id", "#{@screen_id}") %>
+<%= hidden_field_tag("source_screen_id", "#{@source_screen_id}") %>
+<table>
+  <tr>
+    <th class="th_row_header"><%= label_1 %>:</th>
+    <td>
+      <%= h value_1 %>
+      <%= field_descr_tag %>
+    </td>
+  </tr>
+  <tr>
+    <th class="th_row_header"><%= label_2 %>:</th>
+    <td>
+      <%= h value_2 %>
+      <%= field_descr_tag %>
+    </td>
+  </tr>
+
+  <% if @permission_type != Permissions::RoleField %>
+    <tr>
+      <th class="th_row_header"><%= Label.descr_by_name('S_Grant') %>:</th>
+      <td>
+        <%= left_to_right_tag(
+          :descr => Label.descr_by_name("S_Operation"),
+          :name =>  "permission[actions][grant]",
+          :assigned_options => @grant_actions,
+          :all_options => @all_actions,
+          :value_method => "to_s",
+          :text_method => "titleize",
+          :left_to_right_options => {})
+      %>
+        <%= field_descr_tag %>
+      </td>
+    </tr>
+  <% end %>
+
+  <% if @permission_type != Permissions::RoleScreen %>
+    <tr>
+      <th class="th_row_header"><%= Label.descr_by_name('S_Revoke') %>:</th>
+      <td>
+        <%= left_to_right_tag(
+          :descr => Label.descr_by_name("S_Operation"),
+          :name =>  "permission[actions][revoke]",
+          :assigned_options => @revoke_actions,
+          :all_options => @all_actions,
+          :value_method => "to_s",
+          :text_method => "titleize",
+          :left_to_right_options => {})
+      %>
+        <%= field_descr_tag %>
+      </td>
+    </tr>
+  <% end %>
+
+  <tr>
+    <th />
+    <td>
+      <%= group_button(:area_id => @screen.id) %>
+    </td>
+  </tr>
+</table>

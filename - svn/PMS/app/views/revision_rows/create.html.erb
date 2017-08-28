@@ -1,0 +1,27 @@
+<%=javascript_include_tag "prototype" %>
+<%=javascript_include_tag "application" %>
+<%=javascript_include_tag "ajax" %>
+<%=javascript_include_tag "dialog" %>
+<%=javascript_include_tag "fr" %>
+<script type="text/javascript">
+ <%  # ToDo: Determine if the source was from creating, modifying or displaying form  %>
+<% if @revision_row.errors.empty? %>
+    fncAppendTrToTableContent(<%=@revision_row.screen_id %>, <%=@revision_row.id %>);
+    fncUpdateTrToTableContent(<%=@revision_row.header_row.screen_id %>, <%=@revision_row.header_row.id %>);
+
+  <%
+  operation_url_options = {
+      :action => :edit,
+      :id=>@revision_row.id,
+      :screen_id=>@revision_row.screen_id
+    }
+  operation_url = url_for(operation_url_options)
+  %>
+
+    fncSetOperationContent('operation_area_<%=@revision_row.screen_id %>', '<%=operation_url %>');
+<% else %>
+    fncSetError('<%=error_messages_for(:object => @revision_row).to_s.gsub(/'/, "&rsquo\;") %>');
+<% end %>
+  
+  fncLoadTempFrame();
+</script>

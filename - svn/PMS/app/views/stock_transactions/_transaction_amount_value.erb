@@ -1,0 +1,11 @@
+<%
+stock_detail = @stock.stock_details.select{|sd| sd.transaction_type == @transaction_type}.first
+readonly = stock_detail.input_value.to_sym != transaction_amount_value
+name = "stock_#{transaction_amount_value}_value"
+name = "stock_transaction[value][amount]" unless readonly
+%>
+
+<td class="td_cell" style="white-space: nowrap">
+  <%=hidden_field_tag name, "" %>
+  <span id="span_stock_<%=transaction_amount_value%>_value"></span>
+</td>

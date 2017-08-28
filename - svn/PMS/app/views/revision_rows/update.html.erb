@@ -1,0 +1,47 @@
+<%=javascript_include_tag "prototype" %>
+<%=javascript_include_tag "application" %>
+<%=javascript_include_tag "ajax" %>
+<%=javascript_include_tag "dialog" %>
+<%=javascript_include_tag "fr" %>
+<script type="text/javascript">
+ <%  # ToDo: Determine if the source was from creating, modifying or displaying form  %>
+ <%
+ screen = @revision_row.screen
+ screen_tabs = screen.detail_screens || []
+
+ tab_ids = screen_tabs.collect do |s|
+   div_id = sanitize_to_id("tab_#{@revision_row.id}_create_#{s.id}_content")
+
+   "'#{div_id}'"
+ end
+%>
+<% if @revision_row.errors.empty? %>
+  <% if @save_as_new_copy %>
+        <%
+        header_row = @revision_row.header_row
+        %>
+        fncAppendTrToTableContent(<%=header_row.screen_id %>, <%=header_row.id %>);
+
+        <% operation_url = url_for(
+              :controller => :revision_rows,
+              :action => :index,
+              :id => header_row.id,
+              :screen_id => header_row.screen_id) %>
+
+        fncSetOperationContent('operation_area_<%= header_row.screen_id %>', '<%=operation_url %>');
+  <% else %> 
+        fncUpdateTrToTableContent(<%=@revision_row.screen_id %>, <%=@revision_row.id %>);
+        fncUpdateTrToTableContent(<%=@revision_row.header_row.screen_id %>, <%=@revision_row.header_row.id %>);
+        fncResetUnloaded([<%=tab_ids.join(",")%>]);
+    <% if @action_source == "relations"%>
+          var main_doc = fncGetMainDocument();
+          var div = main_doc.getElementById("operation_area_<%=@revision_row.screen_id %>");
+          fncClearDiv(div);
+    <% end %>
+  <% end %>
+<% else %>
+    fncSetError('<%=error_messages_for(:object => @revision_row).to_s.gsub(/'/, "&rsquo\;") %>');
+<% end %>
+ 
+  fncLoadTempFrame();
+</script>

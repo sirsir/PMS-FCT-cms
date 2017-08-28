@@ -1,0 +1,52 @@
+  <%
+  name_prefix ||= ''
+  criteria ||= {}
+  name = "#{name_prefix}cells[#{field.custom_field_id}][parts][]"
+  %>
+
+ <tr class='tr_data_' criteria_status="<%= screen_combined_reference.empty? ? 'new' : 'used' %>" onclick="fncAddReportCriteria(this)">
+    <% if option_type == :screen %>
+    <td class='td_cell' id="type">
+      <%
+        type_options = options_from_collection_for_select_tag(CustomFields::ScreenCombindedReference.part_type - [:option], :to_s, :to_s, screen_combined_reference[:type].to_s , :include_blank => true )
+      %>
+      <%= select_tag "#{name}[type]", type_options, {:onchange => "set_state_option_tag(this, this.value);return false;"} %>
+    </td>
+    <% end %>
+
+
+    <td class='td_cell' id="delimiter">
+      <%
+        delimiter_options = options_from_collection_for_select_tag(CustomFields::ScreenCombindedReference.delimiter, :to_s, :to_s, screen_combined_reference[:delimiter].to_s , :include_blank => true, :prompt => 'None')
+      %>
+      <%= select_tag "#{name}[delimiter]", delimiter_options %>
+    </td>
+
+    <td class='td_cell' id="screen_id">
+      <%
+        screen_options = "<option value=''>Please select</option>"
+        screen_options << options_from_collection_for_select(screens, :id, :label_descr, screen_combined_reference[:screen_id])
+      %>
+      <%= select_tag "#{name}[screen_id]", screen_options %>
+    </td>
+    
+    <% if option_type == :screen %>
+    <td class='td_cell' id="screen_combinded_reference_row_id">
+      <%
+        group_options = "<option value=''>Please select</option>"
+        group_options << options_from_collection_for_select(group_rows, :id, :screen_combined_code, screen_combined_reference[:screen_combinded_reference_row_id])
+
+        style_display = "display: none;" if screen_combined_reference.nil? || screen_combined_reference[:type] != :group
+      %>
+      <%= select_tag "#{name}[screen_combinded_reference_row_id]", group_options, :style => "#{style_display}" %>
+      <span></span>
+    </td>
+    <% end %>
+
+    <td class='td_cell'>
+      <a href="#" onclick="fncRemoveReportField(this);return false;"><%=image_tag "cal_close.gif", :size => "16x16", :border => 0 %></a>
+      <% if option_type == :option %>
+        <%=hidden_field_tag "#{name}[type]", :option %>
+      <% end %>
+    </td>
+</tr>

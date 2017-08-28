@@ -1,0 +1,10 @@
+<%
+row_groups = []
+row_groups << [-1]  #~ Template
+row_groups << [nil] if @report_request.report.display_grand_totals.include?(:row) #~ Grand Total
+
+row_groups.each do |rg|
+%>
+<%=render :partial => 'loading_row', :collection => rg %>
+
+<% end %>

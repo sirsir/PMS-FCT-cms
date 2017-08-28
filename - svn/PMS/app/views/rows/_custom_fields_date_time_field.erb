@@ -1,0 +1,122 @@
+<% if readonly %>
+  <%=cell.to_html %>
+<% else %>
+  <%
+  name_prefix ||= ''
+  name_postfix ||= ''
+  fncSetDateTimeRange ||= ''
+  cf_id = field.custom_field_id
+  cell_value = if field.custom_field.is_a?(CustomFields::DateTimeRange)
+    unless cell.date_time_range_value.nil?
+      name_postfix == "from" ? cell.date_time_range_value.date_time_from : cell.date_time_range_value.date_time_to
+    end
+  else
+    cell.value
+  end
+  cell_input_name = name_postfix.empty? ? "#{name_prefix}cells[#{cf_id}]" : "#{name_prefix}cells[#{cf_id}][#{name_postfix}]"
+  cell_input_id = sanitize_to_id("#{field.screen_id}_#{cell_input_name}")
+  fncSetDateTimeRange = "setDateTimeRange('#{cell_input_id}');" if field.custom_field.is_a?(CustomFields::DateTimeRange)
+
+  cf =  CustomField.find(cf_id)
+  cf_date_format = cf.format_date
+  date_format = "'#{CustomFields::DateTimeFormat.find_by_name(cf_date_format).format}'"
+  cf_default_value = cf.default_value
+
+  parameter_fields = field.parameter_fields
+  list_param_updater = []
+
+  parameter_fields.collect do |f|
+    i = parameter_fields.index(f)
+
+    cf_parameter = CustomFields::Parameter.find(parameter_fields[i].custom_field_id)
+    cell_value = Time.now if cf_parameter.default_value == "current_date"
+
+    javascript_var = "JAVASCRIPT_VAR_VALUE_#{i.to_s.rjust(2, '0')}"
+    parameter_url = url_for(:controller => 'rows',
+      :action => "parameter",
+      :id => 0,
+      :field_id => f.id,
+      :date_value => javascript_var)
+
+    list_param_updater << {:area => "parameter_#{f.id}", :url => parameter_url, :replacment_var => javascript_var}
+  end
+
+  cell_value = Time.now if (cell_value.to_s.empty? && cf_default_value == 'current_date')
+
+  list_param_updater = '[' + list_param_updater.collect{|p| "{'area' : '#{p[:area]}', 'url' : '#{p[:url]}', 'replacment_var' : '#{p[:replacment_var]}'}" }.join(',') + ']'
+  onchange = <<JAVASCRIPT
+fncSetDateTimeFormat('#{cell_input_id}_text', #{date_format}, this.value);
+fncUpdateParameterField(#{list_param_updater}, this.value);
+#{fncSetDateTimeRange};
+JAVASCRIPT
+%>
+  <%= hidden_field_tag(cell_input_name,
+    cell_value.to_date == Date.null_date ? '' : cell_value.to_date.to_s,
+    :onchange => onchange,
+    :id => cell_input_id)
+  %>
+  <%
+  case cf_date_format
+  when :short_date, :long_date then
+    cell_value = cf.text(cell_value) unless cell_value.to_s.empty?
+    field_type_optional_tag = text_field_tag('', cell_value, :readonly => true, :id => "#{cell_input_id}_text", :onclick => "javascript:NewCssCal('#{cell_input_id}','yyyymmdd');", :size => 7)
+    field_type_optional_tag << calendar_tag(cell_input_id, name_postfix)
+  else
+    case cf_date_format
+    when :short_month, :long_month, :half_year, :quarter_year, :year then
+      cell_value = cell_value.to_s.empty? ?  nil : cell_value.to_date
+      field_month_name = "field_#{field.id}_month_#{name_postfix}"
+      field_year_name = "field_#{field.id}_year_#{name_postfix}"
+      start_year = (Time.now.year)-10
+      end_year = (Time.now.year)+5
+      onchange = "fncSetDate('#{cf_date_format}', '#{sanitize_to_id("date[#{field_month_name}]")}', '#{sanitize_to_id("date[#{field_year_name}]")}', '#{cell_input_id}', true, '#{Date.null_date}');"
+
+      case cf_date_format
+      when :year then
+        field_type_optional_tag = ''
+      else
+        case cf_date_format
+        when :short_month, :long_month then
+          use_short_month = (cf_date_format == :short_month)
+          control = select_month(cell_value, {:field_name => field_month_name, :use_short_month => use_short_month, :include_blank => true}, {:onchange => onchange})
+        else
+
+          value_month = cell_value.nil? ? 0 : cell_value.month
+          acc_month = Date.null_date.month
+          cell_value = cell_value >> -12 unless (value_month == 0 || value_month >= acc_month)
+            
+          options = ['']
+
+          case cf_date_format
+          when :half_year
+            period = CustomFields::DateTimeField.half_year(cell_value)
+
+            options += %w(1st 2nd).collect{|n| "{n} Half" }
+          when :quarter_year
+            period = CustomFields::DateTimeField.quarter_year(cell_value)
+
+            options += %w(1st 2nd 3rd 4th).collect{|n| "{n} Quarter" }
+            end
+
+          options.collect!{|o| [o, o.to_i] }
+
+          options = options_for_select(options, period.to_i)
+          control = select_tag(sanitize_to_id("date[#{field_month_name}]"), options, :onchange => onchange)
+        end
+        field_type_optional_tag = control
+      end
+
+      field_type_optional_tag << select_year(cell_value, {:field_name => field_year_name, :start_year => start_year, :end_year => end_year, :include_blank => true}, {:onchange => onchange})
+
+      if name_postfix == "to"
+        options_image_tag = {:width => '16', :heigth => '16', :alt => 'Reset date', :onclick => "javascript:ResetDateTimeRange('#{cf_date_format}', '#{sanitize_to_id(cell_input_name)}', 'date_#{field_year_name}', '#{Date.null_date}');"}
+        field_type_optional_tag << image_tag('cal_close.gif', options_image_tag)
+      end
+    else
+      field_type_optional_tag = ''
+    end
+  end
+%>
+  <%= field_type_optional_tag %>
+  <%= field_descr_tag :descr => field.custom_field.descr unless name_postfix == 'from' %>
+<% end %>

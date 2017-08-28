@@ -1,0 +1,12 @@
+<%
+user = user_record
+operation_area ||= ""
+operation_url = url_for(:action => :edit, :id => @screen.id, :user_id => user.id)
+%>
+
+<tr class='tr_<%= @users.index(user) % 2 == 0 ? "even" : "odd" %>' id='<%=user.id%>'
+    operation_area='<%=operation_area%>' operation_url='<%=operation_url%>'
+    relation_area='' relation_url=''
+    handleonclick='true'>
+  <%= render :partial => "user", :locals => { :user => user } %>
+</tr>

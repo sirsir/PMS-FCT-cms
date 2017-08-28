@@ -1,0 +1,41 @@
+<%
+fields_name = "report[fields][]"
+field_reports ||= []
+tr_class = (field_reports.index(field_report).to_i % 2 == 0 ? "odd" : "even")
+%>
+<tr class="tr_data_<%=tr_class %>" id="<%=id %>">
+  <td id="td_<%=id %>" class="td_cell" style="white-space: nowrap"<%="colspan=#{"2"}" if field_report.field_type == :formula %> >
+    <%
+    screen = field_report.report.reference_screens[field_report.reference_screen_index] if field_report.reference_screen_index
+    screen_alias = field_report.report.reference_screen_alias[field_report.reference_screen_index] if field_report.reference_screen_index
+    screen_name = case field_report.field_type
+    when :formula
+      ( field_report.formula.nil? ) ? "..." : Fields::Formula.evaluate_syntax(field_report.formula)
+    else
+      "#{( screen.nil? ) ? "Screen?" : screen.label_descr} (#{( screen_alias.nil? ) ? "?" : screen_alias})"
+    end
+    %>
+    <%=screen_name %>
+  </td>
+  <td class="td_cell" style="white-space: nowrap; <%="display: none;" if field_report.field_type == :formula %>" >
+    <input type='hidden' name='<%=fields_name %>[field_id]' value='<%=field_report.field_id %>' />
+    <input type='hidden' name='<%=fields_name %>[field_report_id]' value='<%=field_report.id %>' />
+    <input type='hidden' name='<%=fields_name %>[location]' value='<%=field_report.location %>' id="<%=id %>_location"/>
+    <input type='hidden' name='<%=fields_name %>[reference_screen_index]' value='<%=field_report.reference_screen_index %>' id="<%=id %>_reference_screen_index"/>
+    <input type='hidden' name='<%=fields_name %>[field_type]' value='<%=field_report.field_type %>' id="<%=id %>_field_type"/>
+    <input type='hidden' name='<%=fields_name %>[formula]' value='<%= field_report.field_type == :formula ? field_report.formula.to_yaml.gsub("\n","^n") : '' %>' id="<%=id %>_field_formula"/>
+    <%=field_report.field_id < 0 ? 'Id' : field_report.field.descr unless field_report.field_type == :formula %>
+  </td>
+  <td class="td_cell">
+    <%
+
+    sum_opts = field_report.location.eql?(:col) ? [:non,:auto] : FieldsReport.summarize_options.delete_if {|sym| [:auto, :per].include?(sym)}
+
+    summarize_option_tags = render :partial => "summarize_option", :collection => sum_opts, :locals => {:field_report => field_report}
+    %>
+    <%=select_tag  "#{fields_name}[summarize]", summarize_option_tags %>
+  </td>
+  <td class="td_cell"><a href="#" onclick="fncMmoveReportField(this, false);return false;"><%=image_tag "arrow_down.gif", :size => "16x16", :border => 0 %></a></td>
+  <td class="td_cell"><a href="#" onclick="fncMmoveReportField(this, true);return false;"><%=image_tag "arrow_up.gif", :size => "16x16", :border => 0 %></a></td>
+  <td class="td_cell"><a href="#" onclick="fncRemoveReportField(this);return false;"><%=image_tag "cal_close.gif", :size => "16x16", :border => 0 %></a></td>
+</tr>

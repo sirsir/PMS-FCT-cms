@@ -1,0 +1,33 @@
+<%
+@multiplier_row ||= selected_multiplier_row
+if @multiplier_row.nil?
+%>
+  <%=render :partial => 'screen_combined_reference_group', :locals => { :scr_row => scr_row } %>
+<%
+else
+  count = @multiplier_row.select_multiple_counter_from_descr
+  screen_options = CustomFields::ScreenCombindedReference.screen_combined_reference_rows(sub_scr_row)
+%>
+  <%=hidden_field_tag("#{input_name}[options][#{index}][group]", count) %>
+
+  <% (0...count).each do |loop_count| %>
+    <% unless loop_count == 0 %>
+  <hr />
+    <% end %>
+    <% screen_options.each_with_index do |o,i| %>
+      <%='<br/>' unless i == 0 %>
+      <%
+      assigned_group_options[loop_count] ||= {}
+      assigned_options = assigned_group_options[loop_count][i] || { :row_ids => [] }
+      %>
+      <%=left_to_right_tag(
+        :descr => "<span style='font-size: xx-small;'>(#{loop_count+1})</span> #{o[:screen].label_descr}",
+        :name =>  "#{input_name}[groups][#{loop_count}][options][#{i}][row_ids]",
+        :assigned_options => Row.find(assigned_options[:row_ids]),
+        :all_options => o[:rows],
+        :value_method => :id,
+        :text_method => :description,
+        :sort => false )%>
+    <% end %>
+  <% end %>
+<% end %>

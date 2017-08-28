@@ -1,0 +1,8 @@
+<%
+form_id = "frm_report_request_filter_#{@report_request.id}"
+%>
+<% form_tag url_for(:action => 'fetch'), :onSubmit => "fncPrepareFormForSubmit(this);", :method=>:put, :id=>form_id, :target=>"tmp_frame" do %>
+  <%= group_tag("Report Request Filter", render(:partial => "field_filters", :locals => {:fields_reports => @report_request.report.fields_reports}), { :id => "#{form_id}_content", :type => "form", :blindable => false}) %>
+<% end %>
+
+<hr />

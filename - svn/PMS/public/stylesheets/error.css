@@ -1,0 +1,23 @@
+/*
+    Document   : error
+    Created on : Nov 17, 2010, 3:28:06 AM
+    Author     : Danzler.S
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+.missing_implementation {
+    font:  normal medium monospace;
+    color: white;
+    background-color: red;
+}
+
+.missing_implementation pre{
+    color: black;
+}
+
+.error_message {
+    font:  normal medium monospace;
+    color: red;
+}
+

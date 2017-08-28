@@ -1,0 +1,12 @@
+<%
+language = language_record
+operation_area ||= ""
+operation_url = url_for(:action => :edit, :id => language.id)
+%>
+
+<tr class='tr_<%= @languages.index(language) % 2 == 0 ? "even" : "odd" %>' id='<%= language.id %>'
+    operation_area='<%=operation_area%>' operation_url='<%=operation_url%>'
+    relation_area='' relation_url=''
+    handleonclick='true'>
+  <%= render :partial => "language", :locals => { :language => language_record } %>
+</tr>

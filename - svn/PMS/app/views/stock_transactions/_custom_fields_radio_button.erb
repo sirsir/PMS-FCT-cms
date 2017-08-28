@@ -1,0 +1,15 @@
+<%
+labels = custom_field.labels
+new_line = custom_field.value[:new_line]
+
+value = custom_field.default_value
+%>
+
+<%=radio_button_collection_tag(
+      :customs_fields_id => custom_field.id,
+      :radio_options => labels,
+      :assigned_label_id => value,
+      :name => "#{name}",
+      :token => new_line ? "<br>" : '')%>
+<%=field_descr_tag %>
+

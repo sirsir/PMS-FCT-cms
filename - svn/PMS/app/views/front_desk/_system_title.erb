@@ -1,0 +1,22 @@
+<%
+format ||= :full
+#~ Version format
+# major.minor.app_revision.fixture_revision
+# Major : Increase when the overall system has changed, will start 1 when all main feature are implemented
+# Minor : Increase when main features are added
+# App Revision : Follow PMS subversion repository, to identify application source code version
+# Fixture Revision : Follow Client subversion repository, to identify system's setting
+version_config = Rails.configuration.version
+version_no = [:major, :minor, :rev, :client_rev].collect{|k| version_config[k] }.join('.')
+%>
+<%
+if [:full, :long, :short].include?(format)
+  title = []
+  title << Rails.configuration.system_name.upcase unless format == :long
+  title << Rails.configuration.system_descr.titleize unless format == :short
+  version_no << "/#{Rails.env}" unless Rails.env =~ /production/
+%>
+<b><%=title.join(' - ') %></b> [<span><%= version_no %></span>]
+<% else format == :title %>
+<%=Rails.configuration.system_descr.titleize %> [<%= version_no %>]
+<% end %>

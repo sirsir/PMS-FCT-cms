@@ -1,0 +1,60 @@
+<% name_prefix ||= '' %>
+<table class='form_content' >
+
+  <% if row.screen.is_a?(RevisionScreen) %>
+    <%
+    header_screen = row.screen.header_screen
+    header_row = row.header_row
+    %>
+      <%= render :partial => "/rows/field", :collection => header_screen.fields.select{|f| f.display_in_form? } , :locals => {:row => header_row, :readonly => readonly, :name_prefix => name_prefix } %>
+
+    <%=table_hr_tag unless row.screen.fields.empty? %>
+  <% end %>
+
+  <%= render :partial => "/rows/field", :collection => row.screen.fields, :locals => {:row => row, :readonly => readonly, :name_prefix => name_prefix } %>
+
+  <%=table_hr_tag %>
+
+  <% if row.screen.is_a?(HeaderScreen) %>
+    <%
+    revision_screen = row.screen.revision_screen
+    revision_row = row.latest_revision || RevisionRow.new
+    %>
+      <%= render :partial => "/rows/field", :collection => revision_screen.fields.select{|f| f.is_mandatory? } , :locals => {:row => revision_row, :readonly => readonly, :name_prefix => name_prefix } %>
+
+    <%=table_hr_tag %>
+  <% end %>
+
+  <%  if (name_prefix =~ /calendar_value_row/).nil? %>
+    <tr>
+      <th class="th_row_header">Remark:</th>
+      <td>
+        <% if readonly %>
+          <pre class="td_cell_remark"><%= row.remark %></pre>
+        <% else %>
+          <%= screen_text_area_tag(:name => "#{name_prefix}remark", :cell_value => row.remark) %>
+          <%= field_descr_tag %>
+        <% end %>
+      </td>
+    </tr>
+  
+    <%=table_hr_tag %>
+
+  <% end %>
+    
+  <%
+  unless readonly || name_prefix.include?("calendar_value")
+    on_submit = ""
+
+    buttons = group_button({
+        :reused_form => row.new_record? && !row.is_a?(HeaderRow),
+        :save_as => !row.new_record? && !row.is_a?(HeaderRow),
+        :area_id => area_id,
+        :onclick => on_submit
+      } )
+  %>
+    <tr>
+      <td colspan='2' align='center'><%=buttons %></td>
+    </tr>
+  <% end %>
+</table>

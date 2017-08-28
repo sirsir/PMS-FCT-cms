@@ -1,0 +1,24 @@
+/* 4 chars */
+.char_3 {
+    width:4mm!important;
+}
+
+/* n chars */
+.char_n{
+    width:40mm!important;
+}
+
+/* m chars */
+.char_m{
+    width:40mm!important;
+}
+
+/* 6 chars */
+.char_6{
+    width:7mm!important;
+}
+
+/* 8.2 chars */
+.char_8_2{
+    width:12mm!important;
+}

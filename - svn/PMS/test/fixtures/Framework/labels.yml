@@ -1,0 +1,250 @@
+labels_002: 
+  created_at: "2008-12-26 03:28:37.000"
+  id: 2
+  name: S_CST_NAME
+  updated_at: "2008-12-26 03:28:37.000"
+labels_003: 
+  created_at: "2008-12-26 03:57:47.000"
+  id: 3
+  name: G_Name
+  updated_at: "2008-12-26 03:57:47.000"
+labels_007: 
+  created_at: "2008-12-26 03:58:42.000"
+  id: 7
+  name: G_Remark
+  updated_at: "2008-12-26 03:58:42.000"
+labels_008: 
+  created_at: ~
+  id: 9
+  name: S_Setting
+  updated_at: ~
+labels_009: 
+  created_at: ~
+  id: 12
+  name: S_Report
+  updated_at: ~
+labels_010: 
+  created_at: ~
+  id: 13
+  name: S_Report_Requests
+  updated_at: ~
+labels_011: 
+  created_at: ~
+  id: 14
+  name: S_Preference
+  updated_at: ~
+labels_012: 
+  created_at: ~
+  id: 15
+  name: S_Security
+  updated_at: ~
+labels_014: 
+  created_at: ~
+  id: 18
+  name: S_Languages
+  updated_at: ~
+labels_015: 
+  created_at: ~
+  id: 19
+  name: S_Labels
+  updated_at: ~
+labels_017: 
+  created_at: ~
+  id: 21
+  name: S_Notifications
+  updated_at: ~
+labels_018: 
+  created_at: ~
+  id: 22
+  name: S_Screen
+  updated_at: ~
+labels_019: 
+  created_at: ~
+  id: 23
+  name: S_Function
+  updated_at: ~
+labels_020: 
+  created_at: ~
+  id: 24
+  name: S_Groups
+  updated_at: ~
+labels_021: 
+  created_at: ~
+  id: 25
+  name: S_Users
+  updated_at: ~
+labels_022: 
+  created_at: ~
+  id: 26
+  name: S_General
+  updated_at: ~
+labels_023: 
+  created_at: ~
+  id: 27
+  name: S_Company_Information
+  updated_at: ~
+labels_024: 
+  created_at: ~
+  id: 28
+  name: S_User_Information
+  updated_at: ~
+labels_025: 
+  created_at: ~
+  id: 29
+  name: S_Notification
+  updated_at: ~
+labels_026: 
+  created_at: "2009-01-05 18:25:44.000"
+  id: 30
+  name: G_List
+  updated_at: "2009-01-05 18:25:44.000"
+labels_027: 
+  created_at: ~
+  id: 32
+  name: S_Captions
+  updated_at: ~
+labels_028: 
+  created_at: ~
+  id: 33
+  name: S_Field_Type
+  updated_at: ~
+labels_029: 
+  created_at: ~
+  id: 34
+  name: S_Custom_Field
+  updated_at: ~
+labels_030: 
+  created_at: "2009-01-13 18:43:38.000"
+  id: 35
+  name: G_Creation
+  updated_at: "2009-01-13 18:43:38.000"
+labels_031: 
+  created_at: "2009-01-13 18:44:11.000"
+  id: 36
+  name: G_Modification
+  updated_at: "2009-01-13 18:44:11.000"
+labels_032: 
+  created_at: "2009-01-13 19:09:35.000"
+  id: 37
+  name: G_Available
+  updated_at: "2009-01-13 19:09:35.000"
+labels_033: 
+  created_at: "2009-01-13 19:09:56.000"
+  id: 38
+  name: G_Assigned
+  updated_at: "2009-01-13 19:09:56.000"
+labels_034: 
+  created_at: "2009-01-21 23:18:57.000"
+  id: 69
+  name: G_Option
+  updated_at: "2009-01-21 23:18:57.000"
+labels_035: 
+  created_at: "2009-01-21 11:40:03.000"
+  id: 70
+  name: G_PARENT
+  updated_at: "2009-01-21 11:40:03.000"
+labels_036: 
+  created_at: "2009-01-21 11:42:15.000"
+  id: 71
+  name: G_LABEL
+  updated_at: "2009-01-22 08:49:32.000"
+labels_037: 
+  created_at: "2009-01-21 11:44:52.000"
+  id: 72
+  name: G_DISPLAY_SEQ
+  updated_at: "2009-01-21 11:44:52.000"
+labels_051: 
+  created_at: "2009-02-06 03:39:35.000"
+  id: 144
+  name: G_Descr
+  updated_at: "2009-02-06 03:40:41.000"
+labels_054: 
+  created_at: "2009-02-12 07:55:14.000"
+  id: 149
+  name: G_CONFIRM
+  updated_at: "2009-02-12 07:55:14.000"
+labels_134: 
+  created_at: "2009-08-26 04:32:01.000"
+  id: 248
+  name: G_Login
+  updated_at: "2009-08-26 04:32:01.000"
+labels_135: 
+  created_at: "2009-08-26 04:32:20.000"
+  id: 249
+  name: G_Password
+  updated_at: "2009-08-26 04:32:20.000"
+labels_136: 
+  created_at: "2009-08-28 00:00:00.000"
+  id: 250
+  name: G_Search
+  updated_at: "2009-08-28 00:00:00.000"
+labels_137: 
+  created_at: "2009-08-28 00:00:00.000"
+  id: 251
+  name: G_Display
+  updated_at: "2009-08-28 00:00:00.000"
+labels_179: 
+  created_at: "2009-09-12 15:17:54.157"
+  id: 293
+  name: G_Field
+  updated_at: "2009-09-12 15:17:54.157"
+labels_180: 
+  created_at: "2009-09-16 15:17:54.000"
+  id: 294
+  name: S_Roles
+  updated_at: ~
+labels_186: 
+  created_at: ~
+  id: 300
+  name: S_Permissin
+  updated_at: ~
+labels_187: 
+  created_at: ~
+  id: 301
+  name: S_Role_Screen
+  updated_at: ~
+labels_188: 
+  created_at: ~
+  id: 302
+  name: S_Role_Field
+  updated_at: ~
+labels_189: 
+  created_at: ~
+  id: 303
+  name: S_User_Screen
+  updated_at: ~
+labels_190: 
+  created_at: ~
+  id: 304
+  name: S_User_Field
+  updated_at: ~
+labels_191: 
+  created_at: ~
+  id: 305
+  name: S_Grant
+  updated_at: ~
+labels_192: 
+  created_at: ~
+  id: 306
+  name: S_Revoke
+  updated_at: ~
+labels_193: 
+  created_at: ~
+  id: 307
+  name: S_Operation
+  updated_at: ~
+labels_194: 
+  created_at: "2009-09-23 07:08:48.033"
+  id: 308
+  name: G_Old_Password
+  updated_at: "2009-09-23 07:08:48.033"
+labels_195: 
+  created_at: "2009-09-23 07:09:20.173"
+  id: 309
+  name: G_New_Password
+  updated_at: "2009-09-23 07:09:20.173"
+labels_196: 
+  created_at: "2009-09-23 07:09:56.597"
+  id: 310
+  name: G_Confirm_Password
+  updated_at: "2009-09-23 07:09:56.597"

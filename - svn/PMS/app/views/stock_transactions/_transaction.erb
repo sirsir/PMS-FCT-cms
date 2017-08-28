@@ -1,0 +1,23 @@
+<%
+custom_field = @stock.amount_custom_field
+stock_detail = @stock.stock_details.select{|sd| sd.transaction_type == @transaction_type}.first
+readonly = stock_detail.input_value.to_sym != transaction
+name = "stock_#{transaction}_value"
+%>
+
+<tr>
+  <th class="th_row_header"><%="#{transaction.to_s.titleize} Amount:" %></th>
+  <td>
+    <%=render(:partial => "/stock_transactions/" + custom_field.class.name.gsub("::","").underscore,
+      :locals => {
+        :transaction => transaction,
+        :name => name,
+        :readonly => readonly,
+        :custom_field => custom_field
+      }
+    ) %>
+  </td>
+</tr>
+
+
+

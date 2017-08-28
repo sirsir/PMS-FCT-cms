@@ -1,0 +1,7 @@
+<tr>
+  <th class="th_row_header">Field:</th>
+  <td id='field_description_selector'>
+    <%= select_tag("field[value][source_field_id]", options_from_collection_for_select_tag( @screen.header_fields, :id, :descr, @field.source_field_id)) %>
+    <%= field_descr_tag %>
+  </td>
+</tr>

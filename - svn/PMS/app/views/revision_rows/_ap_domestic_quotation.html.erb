@@ -1,0 +1,174 @@
+<%
+#~ Add special items to list
+sfv1 = Field.value_by_field_name("SFV1 In-House assy - Service Cost In-House Budget", @revision_row)
+sfv2 = Field.value_by_field_name("SFV2 Out-site assy - Service Cost In-House Budget", @revision_row)
+suk = Field.value_by_field_name("Include SUK Transportation", @revision_row) == "True"
+sfo = Field.value_by_field_name("SFO Discount", @revision_row)
+
+all_rows = [@detail_rows].flatten
+all_rows << :SFV1 if sfv1.to_f > 0
+all_rows << :SFV2 if sfv2.to_f > 0
+all_rows << :SUK if suk
+
+unless sfo =~ /None/i || sfo.to_s.empty?
+  sfo = sfo.split("-").first.strip
+  all_rows << sfo.upcase.to_sym
+end
+
+#~ Split the rows into pages
+rows_per_page = get_print_rows_per_page(all_rows.size)
+total_pages = rows_per_page.size
+
+empty_row = DetailRow.new
+
+seq_no = 0
+rows_per_page.each_with_index do |cnt, p_idx|
+  rows = []
+
+  #~ Pre Empty Row
+  rows << empty_row
+
+  #~ Page's Rows
+  page_rows = all_rows[0...cnt]
+  all_rows -= page_rows
+  rows += page_rows
+
+  #~ Fill in Rows
+  rows += [empty_row] * (cnt - page_rows.size)
+
+  #~ Post Empty Row
+  rows << empty_row
+
+  current_page = p_idx + 1
+  is_first_page = current_page == 1
+  is_last_page = current_page == total_pages
+
+  #~ Render the report
+%>
+
+  <div class="page_inline">
+
+    <!-- Report Header -->
+    <% if is_first_page %>
+      <%
+      addresses = address_text(
+        :no => Field.value_by_field_name("Sales Office No.", @revision_row),
+        :moo => Field.value_by_field_name("Sales Office Moo", @revision_row),
+        :road => Field.value_by_field_name("Sales Office Road", @revision_row),
+        :soi => Field.value_by_field_name("Sales Office Soi", @revision_row),
+        :sub_dist => Field.value_by_field_name("Sales Office Sub District", @revision_row),
+        :dist => Field.value_by_field_name("Sales Office District", @revision_row),
+        :province => Field.value_by_field_name("Sales Office Province", @revision_row),
+        :postal => Field.value_by_field_name("Sales Office Postal Code", @revision_row),
+        :tel => Field.value_by_field_name("Sales Office Tel No.", @revision_row),
+        :fax => Field.value_by_field_name("Sales Office Fax No.", @revision_row)
+      )
+    %>
+      <%= render :partial => 'page_header',
+            :locals => {
+              :name => 'System Upgrade Solution Bkk Co.,Ltd.', :title => 'QUOTATION',
+              :addresses => addresses
+            }
+      %>
+      <%= render :partial => 'ap_quotation_header' %>
+    <% end %>
+
+    <table class="table_lc_detail">
+      <!-- Page Header -->
+      <%= render :file => "/revision_rows/ap_column_header" %>
+
+      <!-- Details -->
+      <% rows.each_with_index do |dr, r_idx| %>
+        <%
+        if dr.is_a?(DetailRow) && dr.new_record? && (r_idx > 0 && r_idx < rows.size-1)
+          tr_title = "Double-Click to remove"
+          tr_ondblclick = "this.parentNode.removeChild(this)"
+        end
+      %>
+        <tr title="<%= tr_title %>" onDblClick="<%= tr_ondblclick %>">
+          <%
+          case dr
+          when DetailRow
+          %>
+            <%= render :partial => 'ap_quotation_detail',
+                  :locals => {
+                    :seq_no => dr.new_record? ? nil : seq_no += 1,
+                    :detail_row => dr
+                  }
+            %>
+          <% else %>
+            <%
+            revision_field_name = case dr
+            when :SFV1 then 'SFV1 In-House assy - Sales Price PRICE'
+            when :SFV2 then 'SFV2 Out-site assy - Sales Price PRICE'
+            when :SUK then 'SUK Transportation ASSEMBLY - Sales Price UNIT PRICE'
+            when :SFO, :SFO1, :SFO2 then 'SFO Discount Price Amount (THB)'
+            end
+          %>
+            <%= render :partial => 'ap_quotation_detail',
+                  :locals => {
+                    :seq_no => seq_no += 1,
+                    :revision_item => { dr => revision_field_name }
+                  }
+            %>
+          <% end %>
+        </tr>
+      <% end %>
+
+      <!-- Detail Accumulation -->
+      <% if is_last_page %>
+        <tr>
+          <%= render :partial => 'ap_quotation_detail',
+                :locals => {
+                  :revision_item => {
+                    :qty => "Grand Total Qty",
+                    :price_amt => "Grand Price - Amount (THB)",
+                    :vol_discount_amt => "Grand Volumn Discount - Amount (THB)",
+                    :net_amt => "Grand Net Amount (THB)"
+                  },
+                  :grand_total => true,
+                  :grand_header_descr => "Total"
+                }
+          %>
+        </tr>
+        <tr>
+          <% grand_discount_percent = Field.value_by_field_name("Customer Grand Discount", @revision_row)  %>
+          <%= render :partial => 'ap_quotation_detail',
+                :locals => {
+                  :revision_item => {
+                    :net_amt => "Grand Discount Amount (THB)"
+                  },
+                  :grand_total => true,
+                  :grand_discount => true,
+                  :grand_header_descr => "Discount " + grand_discount_percent + "%"
+                }
+          %>
+        </tr>
+        <tr>
+          <%= render :partial => 'ap_quotation_detail',
+                :locals => {
+                  :revision_item => {
+                    :net_amt => "Grand Total Amount (THB)"
+                  },
+                  :grand_total => true,
+                  :grand_discount => true,
+                  :grand_header_descr => "Grand Total"
+                }
+          %>
+        </tr>
+      <% end %>
+    </table>
+
+    <!-- Report Footer -->
+    <% if is_last_page %>
+      <%= render :partial => 'ap_quotation_footer' %>
+    <% end %>
+
+    <!-- Page Footer -->
+    <%= render :partial => 'page_footer', :locals => { :current_page => current_page, :total_pages => total_pages } %>
+  </div>
+
+  <% unless is_last_page %>
+    <%= page_break_after_tag %>
+  <% end %>
+<% end %>

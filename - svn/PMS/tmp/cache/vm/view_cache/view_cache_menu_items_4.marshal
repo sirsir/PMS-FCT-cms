@@ -1,0 +1,1283 @@
+{	:cache_expirationi€Q:envC:"ActiveSupport::StringInquirer"fct_development:result"¬Î
+<a href="/" target="_top"><img alt="fct" src="/images/logo_small.png?1467192134" style="border-style: none;" title="F.C. Techno Co., Ltd." /></a>
+<p />
+<table class="tab_table" id="left_panel_tab" selected_tab="left_panel_tab_menu" style="width:100%; padding:0px; border-spacing:0px;">
+<tr valign='bottom'>
+<td class='tab_button_header'>
+<table class='tab_table' style='width:100%;padding:0px;border-spacing:0px;'>
+<tr>
+<td class='tab_button_top_left_selected' id='left_panel_tab_menu_top_left'></td>
+<td class='tab_button_top_selected' id='left_panel_tab_menu_top'></td>
+<td class='tab_button_top_right_selected' id='left_panel_tab_menu_top_right'></td>
+</tr>
+</table>
+</td>
+<td class='tab_button_header'>
+<table class='tab_table' style='width:100%;padding:0px;border-spacing:0px;'>
+<tr>
+<td class='tab_button_top_left' id='left_panel_tab_filter_top_left'></td>
+<td class='tab_button_top' id='left_panel_tab_filter_top'></td>
+<td class='tab_button_top_right' id='left_panel_tab_filter_top_right'></td>
+</tr>
+</table>
+</td>
+</tr>
+<!-- Tab Button Text -->
+<tr>
+<td class = 'tab_button_selected' id = 'left_panel_tab_menu' onClick='fncOnCilckTab(this.id);'>
+Menu
+</td>
+<td class = 'tab_button' id = 'left_panel_tab_filter' onClick='fncOnCilckTab(this.id);'>
+Filter
+</td>
+</tr>
+<!-- Tab Pages -->
+<tr class ='tab_page_background'>
+<td class = 'tab_page_body' colspan = '7' style="padding: 0px; color: white; background-color: #002299;">
+<div class='tab_content_selected' id='left_panel_tab_menu_content' style="">
+<div class='menu_item' id='menu_item_37'
+state='opened' always_show='true'>
+<div class="menu_empty_cell">
+</div>
+<div class="menu_state menu_link menu_empty_cell"
+onClick='fncSetSubMenu(["menu_item_37", "menu_item_1066", "menu_item_1090", "menu_item_1056", "menu_item_1057", "menu_item_1081", "menu_item_1096"], ["menu_item_37"]); return false;'>&ensp;&ensp;</div>
+<div class="menu_link menu_empty_cell menu_descr"
+style="width: 184px;"
+onClick='fncSetSubMenu(["menu_item_37", "menu_item_1066", "menu_item_1090", "menu_item_1056", "menu_item_1057", "menu_item_1081", "menu_item_1096"], ["menu_item_37"]); return false;'>
+Screens
+</div>
+&nbsp;
+&nbsp;
+</div>
+<div class='menu_item' id='menu_item_1066'
+state='opened' always_show='false'>
+<div class="menu_empty_cell">
+&ensp;&ensp;
+</div>
+<div class="menu_state menu_link menu_empty_cell"
+onClick='fncSetSubMenu(["menu_item_1066", "menu_item_1067", "menu_item_1068", "menu_item_1053", "menu_item_1054", "menu_item_1072", "menu_item_1084", "menu_item_1069", "menu_item_1070", "menu_item_1087", "menu_item_1095", "menu_item_37", "menu_item_1066", "menu_item_1090", "menu_item_1056", "menu_item_1057", "menu_item_1081", "menu_item_1096"], ["menu_item_1066", "menu_item_37"]); return false;'>&ensp;&ensp;</div>
+<div class="menu_link menu_empty_cell menu_descr"
+style="width: 168px;"
+onClick='fncSetSubMenu(["menu_item_1066", "menu_item_1067", "menu_item_1068", "menu_item_1053", "menu_item_1054", "menu_item_1072", "menu_item_1084", "menu_item_1069", "menu_item_1070", "menu_item_1087", "menu_item_1095", "menu_item_37", "menu_item_1066", "menu_item_1090", "menu_item_1056", "menu_item_1057", "menu_item_1081", "menu_item_1096"], ["menu_item_1066", "menu_item_37"]); return false;'>
+Master Data
+</div>
+&nbsp;
+&nbsp;
+</div>
+<div class='menu_item' id='menu_item_1067'
+state='opened' always_show='false'>
+<div class="menu_empty_cell">
+&ensp;&ensp;
+&ensp;&ensp;
+</div>
+<div class="menu_icon menu_link menu_empty_cell" id="icon_menu_item_1067"
+title="Open Country"
+onClick='fncLoadAjaxByScreenId("/screens/1067?quick_operation=index&amp;type=ListScreen", "/screens/search/1067?type=ListScreen");
+fncSetSelectedMenuItem(["menu_item_1067", "menu_item_1066", "menu_item_37"]);
+'>
+<img alt="Screen" src="/images/menu/screen.png?1452591029" />
+</div>
+<div class="menu_link menu_empty_cell menu_descr" id="descr_menu_item_1067"
+style="width: 152px;"
+title="Open Country"
+onClick='fncLoadAjaxByScreenId("/screens/1067?quick_operation=index&amp;type=ListScreen", "/screens/search/1067?type=ListScreen");
+fncSetSelectedMenuItem(["menu_item_1067", "menu_item_1066", "menu_item_37"]);
+'>
+Country
+</div>
+<div class="menu_icon menu_link menu_empty_cell" id="new_menu_item_1067"
+title="New Country"
+onClick='fncLoadAjaxByScreenId("/screens/1067?quick_operation=new&amp;type=ListScreen", "/screens/search/1067?type=ListScreen");
+fncSetSelectedMenuItem(["menu_item_1067", "menu_item_1066", "menu_item_37"]);
+'
+width="16">
+<img alt="New" class="menu_operation" src="/images/menu/new.png?1452591029" />
+</div>
+<div class="menu_icon menu_link menu_empty_cell" id="find_menu_item_1067"
+title="Find Country"
+onClick='fncLoadAjaxByScreenIdFind("/screens/1067?quick_operation=find&amp;type=ListScreen", "/screens/search/1067?type=ListScreen");
+fncSetSelectedMenuItem(["menu_item_1067", "menu_item_1066", "menu_item_37"]);
+'
+width="16">
+<img alt="Find" class="menu_operation" src="/images/menu/find.png?1452591029" />
+</div>
+</div>
+<div class='menu_item' id='menu_item_1068'
+state='opened' always_show='false'>
+<div class="menu_empty_cell">
+&ensp;&ensp;
+&ensp;&ensp;
+</div>
+<div class="menu_icon menu_link menu_empty_cell" id="icon_menu_item_1068"
+title="Open Province"
+onClick='fncLoadAjaxByScreenId("/screens/1068?quick_operation=index&amp;type=ListScreen", "/screens/search/1068?type=ListScreen");
+fncSetSelectedMenuItem(["menu_item_1068", "menu_item_1066", "menu_item_37"]);
+'>
+<img alt="Screen" src="/images/menu/screen.png?1452591029" />
+</div>
+<div class="menu_link menu_empty_cell menu_descr" id="descr_menu_item_1068"
+style="width: 152px;"
+title="Open Province"
+onClick='fncLoadAjaxByScreenId("/screens/1068?quick_operation=index&amp;type=ListScreen", "/screens/search/1068?type=ListScreen");
+fncSetSelectedMenuItem(["menu_item_1068", "menu_item_1066", "menu_item_37"]);
+'>
+Province
+</div>
+<div class="menu_icon menu_link menu_empty_cell" id="new_menu_item_1068"
+title="New Province"
+onClick='fncLoadAjaxByScreenId("/screens/1068?quick_operation=new&amp;type=ListScreen", "/screens/search/1068?type=ListScreen");
+fncSetSelectedMenuItem(["menu_item_1068", "menu_item_1066", "menu_item_37"]);
+'
+width="16">
+<img alt="New" class="menu_operation" src="/images/menu/new.png?1452591029" />
+</div>
+<div class="menu_icon menu_link menu_empty_cell" id="find_menu_item_1068"
+title="Find Province"
+onClick='fncLoadAjaxByScreenIdFind("/screens/1068?quick_operation=find&amp;type=ListScreen", "/screens/search/1068?type=ListScreen");
+fncSetSelectedMenuItem(["menu_item_1068", "menu_item_1066", "menu_item_37"]);
+'
+width="16">
+<img alt="Find" class="menu_operation" src="/images/menu/find.png?1452591029" />
+</div>
+</div>
+<div class='menu_item' id='menu_item_1053'
+state='opened' always_show='false'>
+<div class="menu_empty_cell">
+&ensp;&ensp;
+&ensp;&ensp;
+</div>
+<div class="menu_icon menu_link menu_empty_cell" id="icon_menu_item_1053"
+title="Open Corporation"
+onClick='fncLoadAjaxByScreenId("/screens/1053?quick_operation=index&amp;type=ListScreen", "/screens/search/1053?type=ListScreen");
+fncSetSelectedMenuItem(["menu_item_1053", "menu_item_1066", "menu_item_37"]);
+'>
+<img alt="Screen" src="/images/menu/screen.png?1452591029" />
+</div>
+<div class="menu_link menu_empty_cell menu_descr" id="descr_menu_item_1053"
+style="width: 152px;"
+title="Open Corporation"
+onClick='fncLoadAjaxByScreenId("/screens/1053?quick_operation=index&amp;type=ListScreen", "/screens/search/1053?type=ListScreen");
+fncSetSelectedMenuItem(["menu_item_1053", "menu_item_1066", "menu_item_37"]);
+'>
+Corporation
+</div>
+<div class="menu_icon menu_link menu_empty_cell" id="new_menu_item_1053"
+title="New Corporation"
+onClick='fncLoadAjaxByScreenId("/screens/1053?quick_operation=new&amp;type=ListScreen", "/screens/search/1053?type=ListScreen");
+fncSetSelectedMenuItem(["menu_item_1053", "menu_item_1066", "menu_item_37"]);
+'
+width="16">
+<img alt="New" class="menu_operation" src="/images/menu/new.png?1452591029" />
+</div>
+<div class="menu_icon menu_link menu_empty_cell" id="find_menu_item_1053"
+title="Find Corporation"
+onClick='fncLoadAjaxByScreenIdFind("/screens/1053?quick_operation=find&amp;type=ListScreen", "/screens/search/1053?type=ListScreen");
+fncSetSelectedMenuItem(["menu_item_1053", "menu_item_1066", "menu_item_37"]);
+'
+width="16">
+<img alt="Find" class="menu_operation" src="/images/menu/find.png?1452591029" />
+</div>
+</div>
+<div class='menu_item' id='menu_item_1054'
+state='opened' always_show='false'>
+<div class="menu_empty_cell">
+&ensp;&ensp;
+&ensp;&ensp;
+</div>
+<div class="menu_icon menu_link menu_empty_cell" id="icon_menu_item_1054"
+title="Open Contact"
+onClick='fncLoadAjaxByScreenId("/screens/1054?quick_operation=index&amp;type=ListScreen", "/screens/search/1054?type=ListScreen");
+fncSetSelectedMenuItem(["menu_item_1054", "menu_item_1066", "menu_item_37"]);
+'>
+<img alt="Screen" src="/images/menu/screen.png?1452591029" />
+</div>
+<div class="menu_link menu_empty_cell menu_descr" id="descr_menu_item_1054"
+style="width: 152px;"
+title="Open Contact"
+onClick='fncLoadAjaxByScreenId("/screens/1054?quick_operation=index&amp;type=ListScreen", "/screens/search/1054?type=ListScreen");
+fncSetSelectedMenuItem(["menu_item_1054", "menu_item_1066", "menu_item_37"]);
+'>
+Contact
+</div>
+<div class="menu_icon menu_link menu_empty_cell" id="new_menu_item_1054"
+title="New Contact"
+onClick='fncLoadAjaxByScreenId("/screens/1054?quick_operation=new&amp;type=ListScreen", "/screens/search/1054?type=ListScreen");
+fncSetSelectedMenuItem(["menu_item_1054", "menu_item_1066", "menu_item_37"]);
+'
+width="16">
+<img alt="New" class="menu_operation" src="/images/menu/new.png?1452591029" />
+</div>
+<div class="menu_icon menu_link menu_empty_cell" id="find_menu_item_1054"
+title="Find Contact"
+onClick='fncLoadAjaxByScreenIdFind("/screens/1054?quick_operation=find&amp;type=ListScreen", "/screens/search/1054?type=ListScreen");
+fncSetSelectedMenuItem(["menu_item_1054", "menu_item_1066", "menu_item_37"]);
+'
+width="16">
+<img alt="Find" class="menu_operation" src="/images/menu/find.png?1452591029" />
+</div>
+</div>
+<div class='menu_item' id='menu_item_1072'
+state='opened' always_show='false'>
+<div class="menu_empty_cell">
+&ensp;&ensp;
+&ensp;&ensp;
+</div>
+<div class="menu_icon menu_link menu_empty_cell" id="icon_menu_item_1072"
+title="Open Staff"
+onClick='fncLoadAjaxByScreenId("/screens/1072?quick_operation=index&amp;type=ListScreen", "/screens/search/1072?type=ListScreen");
+fncSetSelectedMenuItem(["menu_item_1072", "menu_item_1066", "menu_item_37"]);
+'>
+<img alt="Screen" src="/images/menu/screen.png?1452591029" />
+</div>
+<div class="menu_link menu_empty_cell menu_descr" id="descr_menu_item_1072"
+style="width: 152px;"
+title="Open Staff"
+onClick='fncLoadAjaxByScreenId("/screens/1072?quick_operation=index&amp;type=ListScreen", "/screens/search/1072?type=ListScreen");
+fncSetSelectedMenuItem(["menu_item_1072", "menu_item_1066", "menu_item_37"]);
+'>
+Staff
+</div>
+<div class="menu_icon menu_link menu_empty_cell" id="new_menu_item_1072"
+title="New Staff"
+onClick='fncLoadAjaxByScreenId("/screens/1072?quick_operation=new&amp;type=ListScreen", "/screens/search/1072?type=ListScreen");
+fncSetSelectedMenuItem(["menu_item_1072", "menu_item_1066", "menu_item_37"]);
+'
+width="16">
+<img alt="New" class="menu_operation" src="/images/menu/new.png?1452591029" />
+</div>
+<div class="menu_icon menu_link menu_empty_cell" id="find_menu_item_1072"
+title="Find Staff"
+onClick='fncLoadAjaxByScreenIdFind("/screens/1072?quick_operation=find&amp;type=ListScreen", "/screens/search/1072?type=ListScreen");
+fncSetSelectedMenuItem(["menu_item_1072", "menu_item_1066", "menu_item_37"]);
+'
+width="16">
+<img alt="Find" class="menu_operation" src="/images/menu/find.png?1452591029" />
+</div>
+</div>
+<div class='menu_item' id='menu_item_1084'
+state='opened' always_show='false'>
+<div class="menu_empty_cell">
+&ensp;&ensp;
+&ensp;&ensp;
+</div>
+<div class="menu_icon menu_link menu_empty_cell" id="icon_menu_item_1084"
+title="Open Unit"
+onClick='fncLoadAjaxByScreenId("/screens/1084?quick_operation=index&amp;type=ListScreen", "/screens/search/1084?type=ListScreen");
+fncSetSelectedMenuItem(["menu_item_1084", "menu_item_1066", "menu_item_37"]);
+'>
+<img alt="Screen" src="/images/menu/screen.png?1452591029" />
+</div>
+<div class="menu_link menu_empty_cell menu_descr" id="descr_menu_item_1084"
+style="width: 152px;"
+title="Open Unit"
+onClick='fncLoadAjaxByScreenId("/screens/1084?quick_operation=index&amp;type=ListScreen", "/screens/search/1084?type=ListScreen");
+fncSetSelectedMenuItem(["menu_item_1084", "menu_item_1066", "menu_item_37"]);
+'>
+Unit
+</div>
+<div class="menu_icon menu_link menu_empty_cell" id="new_menu_item_1084"
+title="New Unit"
+onClick='fncLoadAjaxByScreenId("/screens/1084?quick_operation=new&amp;type=ListScreen", "/screens/search/1084?type=ListScreen");
+fncSetSelectedMenuItem(["menu_item_1084", "menu_item_1066", "menu_item_37"]);
+'
+width="16">
+<img alt="New" class="menu_operation" src="/images/menu/new.png?1452591029" />
+</div>
+<div class="menu_icon menu_link menu_empty_cell" id="find_menu_item_1084"
+title="Find Unit"
+onClick='fncLoadAjaxByScreenIdFind("/screens/1084?quick_operation=find&amp;type=ListScreen", "/screens/search/1084?type=ListScreen");
+fncSetSelectedMenuItem(["menu_item_1084", "menu_item_1066", "menu_item_37"]);
+'
+width="16">
+<img alt="Find" class="menu_operation" src="/images/menu/find.png?1452591029" />
+</div>
+</div>
+<div class='menu_item' id='menu_item_1069'
+state='opened' always_show='false'>
+<div class="menu_empty_cell">
+&ensp;&ensp;
+&ensp;&ensp;
+</div>
+<div class="menu_icon menu_link menu_empty_cell" id="icon_menu_item_1069"
+title="Open Payment"
+onClick='fncLoadAjaxByScreenId("/screens/1069?quick_operation=index&amp;type=ListScreen", "/screens/search/1069?type=ListScreen");
+fncSetSelectedMenuItem(["menu_item_1069", "menu_item_1066", "menu_item_37"]);
+'>
+<img alt="Screen" src="/images/menu/screen.png?1452591029" />
+</div>
+<div class="menu_link menu_empty_cell menu_descr" id="descr_menu_item_1069"
+style="width: 152px;"
+title="Open Payment"
+onClick='fncLoadAjaxByScreenId("/screens/1069?quick_operation=index&amp;type=ListScreen", "/screens/search/1069?type=ListScreen");
+fncSetSelectedMenuItem(["menu_item_1069", "menu_item_1066", "menu_item_37"]);
+'>
+Payment
+</div>
+<div class="menu_icon menu_link menu_empty_cell" id="new_menu_item_1069"
+title="New Payment"
+onClick='fncLoadAjaxByScreenId("/screens/1069?quick_operation=new&amp;type=ListScreen", "/screens/search/1069?type=ListScreen");
+fncSetSelectedMenuItem(["menu_item_1069", "menu_item_1066", "menu_item_37"]);
+'
+width="16">
+<img alt="New" class="menu_operation" src="/images/menu/new.png?1452591029" />
+</div>
+<div class="menu_icon menu_link menu_empty_cell" id="find_menu_item_1069"
+title="Find Payment"
+onClick='fncLoadAjaxByScreenIdFind("/screens/1069?quick_operation=find&amp;type=ListScreen", "/screens/search/1069?type=ListScreen");
+fncSetSelectedMenuItem(["menu_item_1069", "menu_item_1066", "menu_item_37"]);
+'
+width="16">
+<img alt="Find" class="menu_operation" src="/images/menu/find.png?1452591029" />
+</div>
+</div>
+<div class='menu_item' id='menu_item_1070'
+state='opened' always_show='false'>
+<div class="menu_empty_cell">
+&ensp;&ensp;
+&ensp;&ensp;
+</div>
+<div class="menu_icon menu_link menu_empty_cell" id="icon_menu_item_1070"
+title="Open Delivery Term"
+onClick='fncLoadAjaxByScreenId("/screens/1070?quick_operation=index&amp;type=ListScreen", "/screens/search/1070?type=ListScreen");
+fncSetSelectedMenuItem(["menu_item_1070", "menu_item_1066", "menu_item_37"]);
+'>
+<img alt="Screen" src="/images/menu/screen.png?1452591029" />
+</div>
+<div class="menu_link menu_empty_cell menu_descr" id="descr_menu_item_1070"
+style="width: 152px;"
+title="Open Delivery Term"
+onClick='fncLoadAjaxByScreenId("/screens/1070?quick_operation=index&amp;type=ListScreen", "/screens/search/1070?type=ListScreen");
+fncSetSelectedMenuItem(["menu_item_1070", "menu_item_1066", "menu_item_37"]);
+'>
+Delivery Term
+</div>
+<div class="menu_icon menu_link menu_empty_cell" id="new_menu_item_1070"
+title="New Delivery Term"
+onClick='fncLoadAjaxByScreenId("/screens/1070?quick_operation=new&amp;type=ListScreen", "/screens/search/1070?type=ListScreen");
+fncSetSelectedMenuItem(["menu_item_1070", "menu_item_1066", "menu_item_37"]);
+'
+width="16">
+<img alt="New" class="menu_operation" src="/images/menu/new.png?1452591029" />
+</div>
+<div class="menu_icon menu_link menu_empty_cell" id="find_menu_item_1070"
+title="Find Delivery Term"
+onClick='fncLoadAjaxByScreenIdFind("/screens/1070?quick_operation=find&amp;type=ListScreen", "/screens/search/1070?type=ListScreen");
+fncSetSelectedMenuItem(["menu_item_1070", "menu_item_1066", "menu_item_37"]);
+'
+width="16">
+<img alt="Find" class="menu_operation" src="/images/menu/find.png?1452591029" />
+</div>
+</div>
+<div class='menu_item' id='menu_item_1087'
+state='opened' always_show='false'>
+<div class="menu_empty_cell">
+&ensp;&ensp;
+&ensp;&ensp;
+</div>
+<div class="menu_icon menu_link menu_empty_cell" id="icon_menu_item_1087"
+title="Open Project Type"
+onClick='fncLoadAjaxByScreenId("/screens/1087?quick_operation=index&amp;type=ListScreen", "/screens/search/1087?type=ListScreen");
+fncSetSelectedMenuItem(["menu_item_1087", "menu_item_1066", "menu_item_37"]);
+'>
+<img alt="Screen" src="/images/menu/screen.png?1452591029" />
+</div>
+<div class="menu_link menu_empty_cell menu_descr" id="descr_menu_item_1087"
+style="width: 152px;"
+title="Open Project Type"
+onClick='fncLoadAjaxByScreenId("/screens/1087?quick_operation=index&amp;type=ListScreen", "/screens/search/1087?type=ListScreen");
+fncSetSelectedMenuItem(["menu_item_1087", "menu_item_1066", "menu_item_37"]);
+'>
+Project Type
+</div>
+<div class="menu_icon menu_link menu_empty_cell" id="new_menu_item_1087"
+title="New Project Type"
+onClick='fncLoadAjaxByScreenId("/screens/1087?quick_operation=new&amp;type=ListScreen", "/screens/search/1087?type=ListScreen");
+fncSetSelectedMenuItem(["menu_item_1087", "menu_item_1066", "menu_item_37"]);
+'
+width="16">
+<img alt="New" class="menu_operation" src="/images/menu/new.png?1452591029" />
+</div>
+<div class="menu_icon menu_link menu_empty_cell" id="find_menu_item_1087"
+title="Find Project Type"
+onClick='fncLoadAjaxByScreenIdFind("/screens/1087?quick_operation=find&amp;type=ListScreen", "/screens/search/1087?type=ListScreen");
+fncSetSelectedMenuItem(["menu_item_1087", "menu_item_1066", "menu_item_37"]);
+'
+width="16">
+<img alt="Find" class="menu_operation" src="/images/menu/find.png?1452591029" />
+</div>
+</div>
+<div class='menu_item' id='menu_item_1095'
+state='opened' always_show='false'>
+<div class="menu_empty_cell">
+&ensp;&ensp;
+&ensp;&ensp;
+</div>
+<div class="menu_icon menu_link menu_empty_cell" id="icon_menu_item_1095"
+title="Open Shipping Condition"
+onClick='fncLoadAjaxByScreenId("/screens/1095?quick_operation=index&amp;type=ListScreen", "/screens/search/1095?type=ListScreen");
+fncSetSelectedMenuItem(["menu_item_1095", "menu_item_1066", "menu_item_37"]);
+'>
+<img alt="Screen" src="/images/menu/screen.png?1452591029" />
+</div>
+<div class="menu_link menu_empty_cell menu_descr" id="descr_menu_item_1095"
+style="width: 152px;"
+title="Open Shipping Condition"
+onClick='fncLoadAjaxByScreenId("/screens/1095?quick_operation=index&amp;type=ListScreen", "/screens/search/1095?type=ListScreen");
+fncSetSelectedMenuItem(["menu_item_1095", "menu_item_1066", "menu_item_37"]);
+'>
+Shipping Condition
+</div>
+<div class="menu_icon menu_link menu_empty_cell" id="new_menu_item_1095"
+title="New Shipping Condition"
+onClick='fncLoadAjaxByScreenId("/screens/1095?quick_operation=new&amp;type=ListScreen", "/screens/search/1095?type=ListScreen");
+fncSetSelectedMenuItem(["menu_item_1095", "menu_item_1066", "menu_item_37"]);
+'
+width="16">
+<img alt="New" class="menu_operation" src="/images/menu/new.png?1452591029" />
+</div>
+<div class="menu_icon menu_link menu_empty_cell" id="find_menu_item_1095"
+title="Find Shipping Condition"
+onClick='fncLoadAjaxByScreenIdFind("/screens/1095?quick_operation=find&amp;type=ListScreen", "/screens/search/1095?type=ListScreen");
+fncSetSelectedMenuItem(["menu_item_1095", "menu_item_1066", "menu_item_37"]);
+'
+width="16">
+<img alt="Find" class="menu_operation" src="/images/menu/find.png?1452591029" />
+</div>
+</div>
+<div class='menu_item' id='menu_item_1090'
+state='opened' always_show='false'>
+<div class="menu_empty_cell">
+&ensp;&ensp;
+</div>
+<div class="menu_icon menu_link menu_empty_cell" id="icon_menu_item_1090"
+title="Open Project"
+onClick='fncLoadAjaxByScreenId("/screens/1090?quick_operation=index&amp;type=HeaderScreen", "/screens/search/1090?type=HeaderScreen");
+fncSetSelectedMenuItem(["menu_item_1090", "menu_item_37"]);
+'>
+<img alt="Screen" src="/images/menu/screen.png?1452591029" />
+</div>
+<div class="menu_link menu_empty_cell menu_descr" id="descr_menu_item_1090"
+style="width: 168px;"
+title="Open Project"
+onClick='fncLoadAjaxByScreenId("/screens/1090?quick_operation=index&amp;type=HeaderScreen", "/screens/search/1090?type=HeaderScreen");
+fncSetSelectedMenuItem(["menu_item_1090", "menu_item_37"]);
+'>
+Project
+</div>
+<div class="menu_icon menu_link menu_empty_cell" id="new_menu_item_1090"
+title="New Project"
+onClick='fncLoadAjaxByScreenId("/screens/1090?quick_operation=new&amp;type=HeaderScreen", "/screens/search/1090?type=HeaderScreen");
+fncSetSelectedMenuItem(["menu_item_1090", "menu_item_37"]);
+'
+width="16">
+<img alt="New" class="menu_operation" src="/images/menu/new.png?1452591029" />
+</div>
+<div class="menu_icon menu_link menu_empty_cell" id="find_menu_item_1090"
+title="Find Project"
+onClick='fncLoadAjaxByScreenIdFind("/screens/1090?quick_operation=find&amp;type=HeaderScreen", "/screens/search/1090?type=HeaderScreen");
+fncSetSelectedMenuItem(["menu_item_1090", "menu_item_37"]);
+'
+width="16">
+<img alt="Find" class="menu_operation" src="/images/menu/find.png?1452591029" />
+</div>
+</div>
+<div class='menu_item' id='menu_item_1056'
+state='opened' always_show='false'>
+<div class="menu_empty_cell">
+&ensp;&ensp;
+</div>
+<div class="menu_icon menu_link menu_empty_cell" id="icon_menu_item_1056"
+title="Open Quotation"
+onClick='fncLoadAjaxByScreenId("/screens/1056?quick_operation=index&amp;type=HeaderScreen", "/screens/search/1056?type=HeaderScreen");
+fncSetSelectedMenuItem(["menu_item_1056", "menu_item_37"]);
+'>
+<img alt="Screen" src="/images/menu/screen.png?1452591029" />
+</div>
+<div class="menu_link menu_empty_cell menu_descr" id="descr_menu_item_1056"
+style="width: 168px;"
+title="Open Quotation"
+onClick='fncLoadAjaxByScreenId("/screens/1056?quick_operation=index&amp;type=HeaderScreen", "/screens/search/1056?type=HeaderScreen");
+fncSetSelectedMenuItem(["menu_item_1056", "menu_item_37"]);
+'>
+Quotation
+</div>
+<div class="menu_icon menu_link menu_empty_cell" id="new_menu_item_1056"
+title="New Quotation"
+onClick='fncLoadAjaxByScreenId("/screens/1056?quick_operation=new&amp;type=HeaderScreen", "/screens/search/1056?type=HeaderScreen");
+fncSetSelectedMenuItem(["menu_item_1056", "menu_item_37"]);
+'
+width="16">
+<img alt="New" class="menu_operation" src="/images/menu/new.png?1452591029" />
+</div>
+<div class="menu_icon menu_link menu_empty_cell" id="find_menu_item_1056"
+title="Find Quotation"
+onClick='fncLoadAjaxByScreenIdFind("/screens/1056?quick_operation=find&amp;type=HeaderScreen", "/screens/search/1056?type=HeaderScreen");
+fncSetSelectedMenuItem(["menu_item_1056", "menu_item_37"]);
+'
+width="16">
+<img alt="Find" class="menu_operation" src="/images/menu/find.png?1452591029" />
+</div>
+</div>
+<div class='menu_item' id='menu_item_1057'
+state='opened' always_show='false'>
+<div class="menu_empty_cell">
+&ensp;&ensp;
+</div>
+<div class="menu_icon menu_link menu_empty_cell" id="icon_menu_item_1057"
+title="Open Purchase Order"
+onClick='fncLoadAjaxByScreenId("/screens/1057?quick_operation=index&amp;type=HeaderScreen", "/screens/search/1057?type=HeaderScreen");
+fncSetSelectedMenuItem(["menu_item_1057", "menu_item_37"]);
+'>
+<img alt="Screen" src="/images/menu/screen.png?1452591029" />
+</div>
+<div class="menu_link menu_empty_cell menu_descr" id="descr_menu_item_1057"
+style="width: 168px;"
+title="Open Purchase Order"
+onClick='fncLoadAjaxByScreenId("/screens/1057?quick_operation=index&amp;type=HeaderScreen", "/screens/search/1057?type=HeaderScreen");
+fncSetSelectedMenuItem(["menu_item_1057", "menu_item_37"]);
+'>
+Purchase Order
+</div>
+<div class="menu_icon menu_link menu_empty_cell" id="new_menu_item_1057"
+title="New Purchase Order"
+onClick='fncLoadAjaxByScreenId("/screens/1057?quick_operation=new&amp;type=HeaderScreen", "/screens/search/1057?type=HeaderScreen");
+fncSetSelectedMenuItem(["menu_item_1057", "menu_item_37"]);
+'
+width="16">
+<img alt="New" class="menu_operation" src="/images/menu/new.png?1452591029" />
+</div>
+<div class="menu_icon menu_link menu_empty_cell" id="find_menu_item_1057"
+title="Find Purchase Order"
+onClick='fncLoadAjaxByScreenIdFind("/screens/1057?quick_operation=find&amp;type=HeaderScreen", "/screens/search/1057?type=HeaderScreen");
+fncSetSelectedMenuItem(["menu_item_1057", "menu_item_37"]);
+'
+width="16">
+<img alt="Find" class="menu_operation" src="/images/menu/find.png?1452591029" />
+</div>
+</div>
+<div class='menu_item' id='menu_item_1081'
+state='opened' always_show='false'>
+<div class="menu_empty_cell">
+&ensp;&ensp;
+</div>
+<div class="menu_icon menu_link menu_empty_cell" id="icon_menu_item_1081"
+title="Open Delivery"
+onClick='fncLoadAjaxByScreenId("/screens/1081?quick_operation=index&amp;type=HeaderScreen", "/screens/search/1081?type=HeaderScreen");
+fncSetSelectedMenuItem(["menu_item_1081", "menu_item_37"]);
+'>
+<img alt="Screen" src="/images/menu/screen.png?1452591029" />
+</div>
+<div class="menu_link menu_empty_cell menu_descr" id="descr_menu_item_1081"
+style="width: 168px;"
+title="Open Delivery"
+onClick='fncLoadAjaxByScreenId("/screens/1081?quick_operation=index&amp;type=HeaderScreen", "/screens/search/1081?type=HeaderScreen");
+fncSetSelectedMenuItem(["menu_item_1081", "menu_item_37"]);
+'>
+Delivery
+</div>
+<div class="menu_icon menu_link menu_empty_cell" id="new_menu_item_1081"
+title="New Delivery"
+onClick='fncLoadAjaxByScreenId("/screens/1081?quick_operation=new&amp;type=HeaderScreen", "/screens/search/1081?type=HeaderScreen");
+fncSetSelectedMenuItem(["menu_item_1081", "menu_item_37"]);
+'
+width="16">
+<img alt="New" class="menu_operation" src="/images/menu/new.png?1452591029" />
+</div>
+<div class="menu_icon menu_link menu_empty_cell" id="find_menu_item_1081"
+title="Find Delivery"
+onClick='fncLoadAjaxByScreenIdFind("/screens/1081?quick_operation=find&amp;type=HeaderScreen", "/screens/search/1081?type=HeaderScreen");
+fncSetSelectedMenuItem(["menu_item_1081", "menu_item_37"]);
+'
+width="16">
+<img alt="Find" class="menu_operation" src="/images/menu/find.png?1452591029" />
+</div>
+</div>
+<div class='menu_item' id='menu_item_1096'
+state='opened' always_show='false'>
+<div class="menu_empty_cell">
+&ensp;&ensp;
+</div>
+<div class="menu_icon menu_link menu_empty_cell" id="icon_menu_item_1096"
+title="Open Invoice"
+onClick='fncLoadAjaxByScreenId("/screens/1096?quick_operation=index&amp;type=HeaderScreen", "/screens/search/1096?type=HeaderScreen");
+fncSetSelectedMenuItem(["menu_item_1096", "menu_item_37"]);
+'>
+<img alt="Screen" src="/images/menu/screen.png?1452591029" />
+</div>
+<div class="menu_link menu_empty_cell menu_descr" id="descr_menu_item_1096"
+style="width: 168px;"
+title="Open Invoice"
+onClick='fncLoadAjaxByScreenId("/screens/1096?quick_operation=index&amp;type=HeaderScreen", "/screens/search/1096?type=HeaderScreen");
+fncSetSelectedMenuItem(["menu_item_1096", "menu_item_37"]);
+'>
+Invoice
+</div>
+<div class="menu_icon menu_link menu_empty_cell" id="new_menu_item_1096"
+title="New Invoice"
+onClick='fncLoadAjaxByScreenId("/screens/1096?quick_operation=new&amp;type=HeaderScreen", "/screens/search/1096?type=HeaderScreen");
+fncSetSelectedMenuItem(["menu_item_1096", "menu_item_37"]);
+'
+width="16">
+<img alt="New" class="menu_operation" src="/images/menu/new.png?1452591029" />
+</div>
+<div class="menu_icon menu_link menu_empty_cell" id="find_menu_item_1096"
+title="Find Invoice"
+onClick='fncLoadAjaxByScreenIdFind("/screens/1096?quick_operation=find&amp;type=HeaderScreen", "/screens/search/1096?type=HeaderScreen");
+fncSetSelectedMenuItem(["menu_item_1096", "menu_item_37"]);
+'
+width="16">
+<img alt="Find" class="menu_operation" src="/images/menu/find.png?1452591029" />
+</div>
+</div>
+<div class='menu_item' id='menu_item_4'
+state='opened' always_show='true'>
+<div class="menu_empty_cell">
+</div>
+<div class="menu_state menu_link menu_empty_cell"
+onClick='fncSetSubMenu(["menu_item_4", "menu_item_184"], ["menu_item_4"]); return false;'>&ensp;&ensp;</div>
+<div class="menu_link menu_empty_cell menu_descr"
+style="width: 184px;"
+onClick='fncSetSubMenu(["menu_item_4", "menu_item_184"], ["menu_item_4"]); return false;'>
+Report
+</div>
+&nbsp;
+&nbsp;
+</div>
+<div class='menu_item' id='menu_item_184'
+state='opened' always_show='false'>
+<div class="menu_empty_cell">
+&ensp;&ensp;
+</div>
+<div class="menu_icon menu_link menu_empty_cell" id="icon_menu_item_184"
+title="Open Report Requests"
+onClick='fncLoadAjaxByScreenId("/report_requests/index/184?quick_operation=index&amp;type=Screen", "/report_requests/search/184?type=Screen");
+fncSetSelectedMenuItem(["menu_item_184", "menu_item_4"]);
+'>
+<img alt="Graph" src="/images/menu/graph.png?1452591028" />
+</div>
+<div class="menu_link menu_empty_cell menu_descr" id="descr_menu_item_184"
+style="width: 168px;"
+title="Open Report Requests"
+onClick='fncLoadAjaxByScreenId("/report_requests/index/184?quick_operation=index&amp;type=Screen", "/report_requests/search/184?type=Screen");
+fncSetSelectedMenuItem(["menu_item_184", "menu_item_4"]);
+'>
+Report Requests
+</div>
+</div>
+<div class='menu_item' id='menu_item_6'
+state='opened' always_show='true'>
+<div class="menu_empty_cell">
+</div>
+<div class="menu_state menu_link menu_empty_cell"
+onClick='fncSetSubMenu(["menu_item_6", "menu_item_21"], ["menu_item_6"]); return false;'>&ensp;&ensp;</div>
+<div class="menu_link menu_empty_cell menu_descr"
+style="width: 184px;"
+onClick='fncSetSubMenu(["menu_item_6", "menu_item_21"], ["menu_item_6"]); return false;'>
+Preference
+</div>
+&nbsp;
+&nbsp;
+</div>
+<div class='menu_item' id='menu_item_21'
+state='opened' always_show='false'>
+<div class="menu_empty_cell">
+&ensp;&ensp;
+</div>
+<div class="menu_icon menu_link menu_empty_cell" id="icon_menu_item_21"
+title="Open User Information"
+onClick='fncLoadAjaxByScreenId("/users/21/edit?quick_operation=index&amp;type=Screen", "/users/search/21?type=Screen");
+fncSetSelectedMenuItem(["menu_item_21", "menu_item_6"]);
+'>
+<img alt="Options" src="/images/menu/options.png?1452591029" />
+</div>
+<div class="menu_link menu_empty_cell menu_descr" id="descr_menu_item_21"
+style="width: 168px;"
+title="Open User Information"
+onClick='fncLoadAjaxByScreenId("/users/21/edit?quick_operation=index&amp;type=Screen", "/users/search/21?type=Screen");
+fncSetSelectedMenuItem(["menu_item_21", "menu_item_6"]);
+'>
+User Information
+</div>
+&nbsp;
+&nbsp;
+</div>
+<div class='menu_item' id='menu_item_1'
+state='opened' always_show='true'>
+<div class="menu_empty_cell">
+</div>
+<div class="menu_state menu_link menu_empty_cell"
+onClick='fncSetSubMenu(["menu_item_1", "menu_item_11", "menu_item_12", "menu_item_35", "menu_item_15", "menu_item_1044", "menu_item_147", "menu_item_1086"], ["menu_item_1"]); return false;'>&ensp;&ensp;</div>
+<div class="menu_link menu_empty_cell menu_descr"
+style="width: 184px;"
+onClick='fncSetSubMenu(["menu_item_1", "menu_item_11", "menu_item_12", "menu_item_35", "menu_item_15", "menu_item_1044", "menu_item_147", "menu_item_1086"], ["menu_item_1"]); return false;'>
+Setting
+</div>
+&nbsp;
+&nbsp;
+</div>
+<div class='menu_item' id='menu_item_11'
+state='opened' always_show='false'>
+<div class="menu_empty_cell">
+&ensp;&ensp;
+</div>
+<div class="menu_icon menu_link menu_empty_cell" id="icon_menu_item_11"
+title="Open Languages"
+onClick='fncLoadAjaxByScreenId("/languages/index/11?quick_operation=index&amp;type=ListScreen", "/languages/search/11?type=ListScreen");
+fncSetSelectedMenuItem(["menu_item_11", "menu_item_1"]);
+'>
+<img alt="System" src="/images/menu/system.png?1452591029" />
+</div>
+<div class="menu_link menu_empty_cell menu_descr" id="descr_menu_item_11"
+style="width: 168px;"
+title="Open Languages"
+onClick='fncLoadAjaxByScreenId("/languages/index/11?quick_operation=index&amp;type=ListScreen", "/languages/search/11?type=ListScreen");
+fncSetSelectedMenuItem(["menu_item_11", "menu_item_1"]);
+'>
+Languages
+</div>
+&nbsp;
+&nbsp;
+</div>
+<div class='menu_item' id='menu_item_12'
+state='opened' always_show='false'>
+<div class="menu_empty_cell">
+&ensp;&ensp;
+</div>
+<div class="menu_icon menu_link menu_empty_cell" id="icon_menu_item_12"
+title="Open Labels"
+onClick='fncLoadAjaxByScreenId("/labels/index/12?quick_operation=index&amp;type=ListScreen", "/labels/search/12?type=ListScreen");
+fncSetSelectedMenuItem(["menu_item_12", "menu_item_1"]);
+'>
+<img alt="System" src="/images/menu/system.png?1452591029" />
+</div>
+<div class="menu_link menu_empty_cell menu_descr" id="descr_menu_item_12"
+style="width: 168px;"
+title="Open Labels"
+onClick='fncLoadAjaxByScreenId("/labels/index/12?quick_operation=index&amp;type=ListScreen", "/labels/search/12?type=ListScreen");
+fncSetSelectedMenuItem(["menu_item_12", "menu_item_1"]);
+'>
+Labels
+</div>
+&nbsp;
+&nbsp;
+</div>
+<div class='menu_item' id='menu_item_35'
+state='opened' always_show='false'>
+<div class="menu_empty_cell">
+&ensp;&ensp;
+</div>
+<div class="menu_icon menu_link menu_empty_cell" id="icon_menu_item_35"
+title="Open Custom Field"
+onClick='fncLoadAjaxByScreenId("/custom_fields/index/35?quick_operation=index&amp;type=ListScreen", "/custom_fields/search/35?type=ListScreen");
+fncSetSelectedMenuItem(["menu_item_35", "menu_item_1"]);
+'>
+<img alt="System" src="/images/menu/system.png?1452591029" />
+</div>
+<div class="menu_link menu_empty_cell menu_descr" id="descr_menu_item_35"
+style="width: 168px;"
+title="Open Custom Field"
+onClick='fncLoadAjaxByScreenId("/custom_fields/index/35?quick_operation=index&amp;type=ListScreen", "/custom_fields/search/35?type=ListScreen");
+fncSetSelectedMenuItem(["menu_item_35", "menu_item_1"]);
+'>
+Custom Field
+</div>
+&nbsp;
+&nbsp;
+</div>
+<div class='menu_item' id='menu_item_15'
+state='opened' always_show='false'>
+<div class="menu_empty_cell">
+&ensp;&ensp;
+</div>
+<div class="menu_icon menu_link menu_empty_cell" id="icon_menu_item_15"
+title="Open Screens"
+onClick='fncLoadAjaxByScreenId("/screens/index/15?quick_operation=index&amp;type=ListScreen", "/screens/search/15?type=ListScreen");
+fncSetSelectedMenuItem(["menu_item_15", "menu_item_1"]);
+'>
+<img alt="System" src="/images/menu/system.png?1452591029" />
+</div>
+<div class="menu_link menu_empty_cell menu_descr" id="descr_menu_item_15"
+style="width: 168px;"
+title="Open Screens"
+onClick='fncLoadAjaxByScreenId("/screens/index/15?quick_operation=index&amp;type=ListScreen", "/screens/search/15?type=ListScreen");
+fncSetSelectedMenuItem(["menu_item_15", "menu_item_1"]);
+'>
+Screens
+</div>
+&nbsp;
+&nbsp;
+</div>
+<div class='menu_item' id='menu_item_1044'
+state='opened' always_show='false'>
+<div class="menu_empty_cell">
+&ensp;&ensp;
+</div>
+<div class="menu_icon menu_link menu_empty_cell" id="icon_menu_item_1044"
+title="Open Field"
+onClick='fncLoadAjaxByScreenId("/fields/index/1044?quick_operation=index&amp;type=ListScreen", "/fields/search/1044?type=ListScreen");
+fncSetSelectedMenuItem(["menu_item_1044", "menu_item_1"]);
+'>
+<img alt="System" src="/images/menu/system.png?1452591029" />
+</div>
+<div class="menu_link menu_empty_cell menu_descr" id="descr_menu_item_1044"
+style="width: 168px;"
+title="Open Field"
+onClick='fncLoadAjaxByScreenId("/fields/index/1044?quick_operation=index&amp;type=ListScreen", "/fields/search/1044?type=ListScreen");
+fncSetSelectedMenuItem(["menu_item_1044", "menu_item_1"]);
+'>
+Field
+</div>
+&nbsp;
+&nbsp;
+</div>
+<div class='menu_item' id='menu_item_1086'
+state='opened' always_show='false'>
+<div class="menu_empty_cell">
+&ensp;&ensp;
+</div>
+<div class="menu_icon menu_link menu_empty_cell" id="icon_menu_item_1086"
+title="Open Report Template"
+onClick='fncLoadAjaxByScreenId("/report_templates/index/1086?quick_operation=index&amp;type=ListScreen", "/report_templates/search/1086?type=ListScreen");
+fncSetSelectedMenuItem(["menu_item_1086", "menu_item_1"]);
+'>
+<img alt="System" src="/images/menu/system.png?1452591029" />
+</div>
+<div class="menu_link menu_empty_cell menu_descr" id="descr_menu_item_1086"
+style="width: 168px;"
+title="Open Report Template"
+onClick='fncLoadAjaxByScreenId("/report_templates/index/1086?quick_operation=index&amp;type=ListScreen", "/report_templates/search/1086?type=ListScreen");
+fncSetSelectedMenuItem(["menu_item_1086", "menu_item_1"]);
+'>
+Report Template
+</div>
+&nbsp;
+&nbsp;
+</div>
+<div class='menu_item' id='menu_item_147'
+state='opened' always_show='false'>
+<div class="menu_empty_cell">
+&ensp;&ensp;
+</div>
+<div class="menu_icon menu_link menu_empty_cell" id="icon_menu_item_147"
+title="Open Report"
+onClick='fncLoadAjaxByScreenId("/reports/index/147?quick_operation=index&amp;type=HeaderScreen", "/reports/search/147?type=HeaderScreen");
+fncSetSelectedMenuItem(["menu_item_147", "menu_item_1"]);
+'>
+<img alt="System" src="/images/menu/system.png?1452591029" />
+</div>
+<div class="menu_link menu_empty_cell menu_descr" id="descr_menu_item_147"
+style="width: 168px;"
+title="Open Report"
+onClick='fncLoadAjaxByScreenId("/reports/index/147?quick_operation=index&amp;type=HeaderScreen", "/reports/search/147?type=HeaderScreen");
+fncSetSelectedMenuItem(["menu_item_147", "menu_item_1"]);
+'>
+Report
+</div>
+&nbsp;
+&nbsp;
+</div>
+<div class='menu_item' id='menu_item_7'
+state='opened' always_show='true'>
+<div class="menu_empty_cell">
+</div>
+<div class="menu_state menu_link menu_empty_cell"
+onClick='fncSetSubMenu(["menu_item_7", "menu_item_36", "menu_item_18", "menu_item_142"], ["menu_item_7"]); return false;'>&ensp;&ensp;</div>
+<div class="menu_link menu_empty_cell menu_descr"
+style="width: 184px;"
+onClick='fncSetSubMenu(["menu_item_7", "menu_item_36", "menu_item_18", "menu_item_142"], ["menu_item_7"]); return false;'>
+Security
+</div>
+&nbsp;
+&nbsp;
+</div>
+<div class='menu_item' id='menu_item_36'
+state='opened' always_show='false'>
+<div class="menu_empty_cell">
+&ensp;&ensp;
+</div>
+<div class="menu_state menu_link menu_empty_cell"
+onClick='fncSetSubMenu(["menu_item_36", "menu_item_148", "menu_item_149", "menu_item_150", "menu_item_151", "menu_item_7", "menu_item_36", "menu_item_18", "menu_item_142"], ["menu_item_36", "menu_item_7"]); return false;'>&ensp;&ensp;</div>
+<div class="menu_link menu_empty_cell menu_descr"
+style="width: 168px;"
+onClick='fncSetSubMenu(["menu_item_36", "menu_item_148", "menu_item_149", "menu_item_150", "menu_item_151", "menu_item_7", "menu_item_36", "menu_item_18", "menu_item_142"], ["menu_item_36", "menu_item_7"]); return false;'>
+Permission
+</div>
+&nbsp;
+&nbsp;
+</div>
+<div class='menu_item' id='menu_item_148'
+state='opened' always_show='false'>
+<div class="menu_empty_cell">
+&ensp;&ensp;
+&ensp;&ensp;
+</div>
+<div class="menu_icon menu_link menu_empty_cell" id="icon_menu_item_148"
+title="Open Role Screen"
+onClick='fncLoadAjaxByScreenId("/permissions/index_role_screen/148?quick_operation=index&amp;type=ListScreen", "/permissions/search/148?type=ListScreen");
+fncSetSelectedMenuItem(["menu_item_148", "menu_item_36", "menu_item_7"]);
+'>
+<img alt="Permission" src="/images/menu/permission.png?1452591029" />
+</div>
+<div class="menu_link menu_empty_cell menu_descr" id="descr_menu_item_148"
+style="width: 152px;"
+title="Open Role Screen"
+onClick='fncLoadAjaxByScreenId("/permissions/index_role_screen/148?quick_operation=index&amp;type=ListScreen", "/permissions/search/148?type=ListScreen");
+fncSetSelectedMenuItem(["menu_item_148", "menu_item_36", "menu_item_7"]);
+'>
+Role Screen
+</div>
+&nbsp;
+&nbsp;
+</div>
+<div class='menu_item' id='menu_item_149'
+state='opened' always_show='false'>
+<div class="menu_empty_cell">
+&ensp;&ensp;
+&ensp;&ensp;
+</div>
+<div class="menu_icon menu_link menu_empty_cell" id="icon_menu_item_149"
+title="Open Role Field"
+onClick='fncLoadAjaxByScreenId("/permissions/index_role_field/149?quick_operation=index&amp;type=ListScreen", "/permissions/search/149?type=ListScreen");
+fncSetSelectedMenuItem(["menu_item_149", "menu_item_36", "menu_item_7"]);
+'>
+<img alt="Permission" src="/images/menu/permission.png?1452591029" />
+</div>
+<div class="menu_link menu_empty_cell menu_descr" id="descr_menu_item_149"
+style="width: 152px;"
+title="Open Role Field"
+onClick='fncLoadAjaxByScreenId("/permissions/index_role_field/149?quick_operation=index&amp;type=ListScreen", "/permissions/search/149?type=ListScreen");
+fncSetSelectedMenuItem(["menu_item_149", "menu_item_36", "menu_item_7"]);
+'>
+Role Field
+</div>
+&nbsp;
+&nbsp;
+</div>
+<div class='menu_item' id='menu_item_150'
+state='opened' always_show='false'>
+<div class="menu_empty_cell">
+&ensp;&ensp;
+&ensp;&ensp;
+</div>
+<div class="menu_icon menu_link menu_empty_cell" id="icon_menu_item_150"
+title="Open User Screen"
+onClick='fncLoadAjaxByScreenId("/permissions/index_user_screen/150?quick_operation=index&amp;type=ListScreen", "/permissions/search/150?type=ListScreen");
+fncSetSelectedMenuItem(["menu_item_150", "menu_item_36", "menu_item_7"]);
+'>
+<img alt="Permission" src="/images/menu/permission.png?1452591029" />
+</div>
+<div class="menu_link menu_empty_cell menu_descr" id="descr_menu_item_150"
+style="width: 152px;"
+title="Open User Screen"
+onClick='fncLoadAjaxByScreenId("/permissions/index_user_screen/150?quick_operation=index&amp;type=ListScreen", "/permissions/search/150?type=ListScreen");
+fncSetSelectedMenuItem(["menu_item_150", "menu_item_36", "menu_item_7"]);
+'>
+User Screen
+</div>
+&nbsp;
+&nbsp;
+</div>
+<div class='menu_item' id='menu_item_151'
+state='opened' always_show='false'>
+<div class="menu_empty_cell">
+&ensp;&ensp;
+&ensp;&ensp;
+</div>
+<div class="menu_icon menu_link menu_empty_cell" id="icon_menu_item_151"
+title="Open User Field"
+onClick='fncLoadAjaxByScreenId("/permissions/index_user_field/151?quick_operation=index&amp;type=ListScreen", "/permissions/search/151?type=ListScreen");
+fncSetSelectedMenuItem(["menu_item_151", "menu_item_36", "menu_item_7"]);
+'>
+<img alt="Permission" src="/images/menu/permission.png?1452591029" />
+</div>
+<div class="menu_link menu_empty_cell menu_descr" id="descr_menu_item_151"
+style="width: 152px;"
+title="Open User Field"
+onClick='fncLoadAjaxByScreenId("/permissions/index_user_field/151?quick_operation=index&amp;type=ListScreen", "/permissions/search/151?type=ListScreen");
+fncSetSelectedMenuItem(["menu_item_151", "menu_item_36", "menu_item_7"]);
+'>
+User Field
+</div>
+&nbsp;
+&nbsp;
+</div>
+<div class='menu_item' id='menu_item_18'
+state='opened' always_show='false'>
+<div class="menu_empty_cell">
+&ensp;&ensp;
+</div>
+<div class="menu_icon menu_link menu_empty_cell" id="icon_menu_item_18"
+title="Open Users"
+onClick='fncLoadAjaxByScreenId("/users/index/18?quick_operation=index&amp;type=ListScreen", "/users/search/18?type=ListScreen");
+fncSetSelectedMenuItem(["menu_item_18", "menu_item_7"]);
+'>
+<img alt="User" src="/images/menu/user.png?1452591029" />
+</div>
+<div class="menu_link menu_empty_cell menu_descr" id="descr_menu_item_18"
+style="width: 168px;"
+title="Open Users"
+onClick='fncLoadAjaxByScreenId("/users/index/18?quick_operation=index&amp;type=ListScreen", "/users/search/18?type=ListScreen");
+fncSetSelectedMenuItem(["menu_item_18", "menu_item_7"]);
+'>
+Users
+</div>
+&nbsp;
+&nbsp;
+</div>
+<div class='menu_item' id='menu_item_142'
+state='opened' always_show='false'>
+<div class="menu_empty_cell">
+&ensp;&ensp;
+</div>
+<div class="menu_icon menu_link menu_empty_cell" id="icon_menu_item_142"
+title="Open Roles"
+onClick='fncLoadAjaxByScreenId("/roles/index/142?quick_operation=index&amp;type=ListScreen", "/roles/search/142?type=ListScreen");
+fncSetSelectedMenuItem(["menu_item_142", "menu_item_7"]);
+'>
+<img alt="Role" src="/images/menu/role.png?1452591028" />
+</div>
+<div class="menu_link menu_empty_cell menu_descr" id="descr_menu_item_142"
+style="width: 168px;"
+title="Open Roles"
+onClick='fncLoadAjaxByScreenId("/roles/index/142?quick_operation=index&amp;type=ListScreen", "/roles/search/142?type=ListScreen");
+fncSetSelectedMenuItem(["menu_item_142", "menu_item_7"]);
+'>
+Roles
+</div>
+&nbsp;
+&nbsp;
+</div>
+<div class='menu_item' id='menu_item_939'
+state='opened' always_show='true'>
+<div class="menu_empty_cell">
+</div>
+<div class="menu_state menu_link menu_empty_cell"
+onClick='fncSetSubMenu(["menu_item_939", "menu_item_940", "menu_item_941", "menu_item_1024", "menu_item_942", "menu_item_943", "menu_item_944", "menu_item_945", "menu_item_946", "menu_item_947"], ["menu_item_939"]); return false;'>&ensp;&ensp;</div>
+<div class="menu_link menu_empty_cell menu_descr"
+style="width: 184px;"
+onClick='fncSetSubMenu(["menu_item_939", "menu_item_940", "menu_item_941", "menu_item_1024", "menu_item_942", "menu_item_943", "menu_item_944", "menu_item_945", "menu_item_946", "menu_item_947"], ["menu_item_939"]); return false;'>
+Maintenance
+</div>
+&nbsp;
+&nbsp;
+</div>
+<div class='menu_item' id='menu_item_940'
+state='opened' always_show='false'>
+<div class="menu_empty_cell">
+&ensp;&ensp;
+</div>
+<div class="menu_icon menu_link menu_empty_cell" id="icon_menu_item_940"
+title="Open Version"
+onClick='fncLoadAjaxByScreenId("/maintenance/version/940?quick_operation=index&amp;type=Screen", "/maintenance/search/940?type=Screen");
+fncSetSelectedMenuItem(["menu_item_940", "menu_item_939"]);
+'>
+<img alt="Info" src="/images/menu/info.png?1452591029" />
+</div>
+<div class="menu_link menu_empty_cell menu_descr" id="descr_menu_item_940"
+style="width: 168px;"
+title="Open Version"
+onClick='fncLoadAjaxByScreenId("/maintenance/version/940?quick_operation=index&amp;type=Screen", "/maintenance/search/940?type=Screen");
+fncSetSelectedMenuItem(["menu_item_940", "menu_item_939"]);
+'>
+Version
+</div>
+&nbsp;
+&nbsp;
+</div>
+<div class='menu_item' id='menu_item_941'
+state='opened' always_show='false'>
+<div class="menu_empty_cell">
+&ensp;&ensp;
+</div>
+<div class="menu_icon menu_link menu_empty_cell" id="icon_menu_item_941"
+title="Open Service"
+onClick='fncLoadAjaxByScreenId("/maintenance/service/941?quick_operation=index&amp;type=Screen", "/maintenance/search/941?type=Screen");
+fncSetSelectedMenuItem(["menu_item_941", "menu_item_939"]);
+'>
+<img alt="Multi_app" src="/images/menu/multi_app.png?1452591029" />
+</div>
+<div class="menu_link menu_empty_cell menu_descr" id="descr_menu_item_941"
+style="width: 168px;"
+title="Open Service"
+onClick='fncLoadAjaxByScreenId("/maintenance/service/941?quick_operation=index&amp;type=Screen", "/maintenance/search/941?type=Screen");
+fncSetSelectedMenuItem(["menu_item_941", "menu_item_939"]);
+'>
+Service
+</div>
+&nbsp;
+&nbsp;
+</div>
+<div class='menu_item' id='menu_item_1024'
+state='opened' always_show='false'>
+<div class="menu_empty_cell">
+&ensp;&ensp;
+</div>
+<div class="menu_icon menu_link menu_empty_cell" id="icon_menu_item_1024"
+title="Open Memory"
+onClick='fncLoadAjaxByScreenId("/maintenance/memory/1024?quick_operation=index&amp;type=Screen", "/maintenance/search/1024?type=Screen");
+fncSetSelectedMenuItem(["menu_item_1024", "menu_item_939"]);
+'>
+<img alt="Memory" src="/images/menu/memory.png?1452591028" />
+</div>
+<div class="menu_link menu_empty_cell menu_descr" id="descr_menu_item_1024"
+style="width: 168px;"
+title="Open Memory"
+onClick='fncLoadAjaxByScreenId("/maintenance/memory/1024?quick_operation=index&amp;type=Screen", "/maintenance/search/1024?type=Screen");
+fncSetSelectedMenuItem(["menu_item_1024", "menu_item_939"]);
+'>
+Memory
+</div>
+&nbsp;
+&nbsp;
+</div>
+<div class='menu_item' id='menu_item_942'
+state='opened' always_show='false'>
+<div class="menu_empty_cell">
+&ensp;&ensp;
+</div>
+<div class="menu_icon menu_link menu_empty_cell" id="icon_menu_item_942"
+title="Open Data Log"
+onClick='fncLoadAjaxByScreenId("/maintenance/data_log/942?quick_operation=index&amp;type=Screen", "/maintenance/search/942?type=Screen");
+fncSetSelectedMenuItem(["menu_item_942", "menu_item_939"]);
+'>
+<img alt="Search_file" src="/images/menu/search_file.png?1452591028" />
+</div>
+<div class="menu_link menu_empty_cell menu_descr" id="descr_menu_item_942"
+style="width: 168px;"
+title="Open Data Log"
+onClick='fncLoadAjaxByScreenId("/maintenance/data_log/942?quick_operation=index&amp;type=Screen", "/maintenance/search/942?type=Screen");
+fncSetSelectedMenuItem(["menu_item_942", "menu_item_939"]);
+'>
+Data Log
+</div>
+&nbsp;
+&nbsp;
+</div>
+<div class='menu_item' id='menu_item_943'
+state='opened' always_show='false'>
+<div class="menu_empty_cell">
+&ensp;&ensp;
+</div>
+<div class="menu_icon menu_link menu_empty_cell" id="icon_menu_item_943"
+title="Open System Log"
+onClick='fncLoadAjaxByScreenId("/maintenance/system_log/943?quick_operation=index&amp;type=Screen", "/maintenance/search/943?type=Screen");
+fncSetSelectedMenuItem(["menu_item_943", "menu_item_939"]);
+'>
+<img alt="Search_file" src="/images/menu/search_file.png?1452591028" />
+</div>
+<div class="menu_link menu_empty_cell menu_descr" id="descr_menu_item_943"
+style="width: 168px;"
+title="Open System Log"
+onClick='fncLoadAjaxByScreenId("/maintenance/system_log/943?quick_operation=index&amp;type=Screen", "/maintenance/search/943?type=Screen");
+fncSetSelectedMenuItem(["menu_item_943", "menu_item_939"]);
+'>
+System Log
+</div>
+&nbsp;
+&nbsp;
+</div>
+<div class='menu_item' id='menu_item_944'
+state='opened' always_show='false'>
+<div class="menu_empty_cell">
+&ensp;&ensp;
+</div>
+<div class="menu_icon menu_link menu_empty_cell" id="icon_menu_item_944"
+title="Open Backup"
+onClick='fncLoadAjaxByScreenId("/maintenance/backup/944?quick_operation=index&amp;type=Screen", "/maintenance/search/944?type=Screen");
+fncSetSelectedMenuItem(["menu_item_944", "menu_item_939"]);
+'>
+<img alt="Backup" src="/images/menu/backup.png?1452591028" />
+</div>
+<div class="menu_link menu_empty_cell menu_descr" id="descr_menu_item_944"
+style="width: 168px;"
+title="Open Backup"
+onClick='fncLoadAjaxByScreenId("/maintenance/backup/944?quick_operation=index&amp;type=Screen", "/maintenance/search/944?type=Screen");
+fncSetSelectedMenuItem(["menu_item_944", "menu_item_939"]);
+'>
+Backup
+</div>
+&nbsp;
+&nbsp;
+</div>
+<div class='menu_item' id='menu_item_945'
+state='opened' always_show='false'>
+<div class="menu_empty_cell">
+&ensp;&ensp;
+</div>
+<div class="menu_icon menu_link menu_empty_cell" id="icon_menu_item_945"
+title="Open Restore"
+onClick='fncLoadAjaxByScreenId("/maintenance/restore/945?quick_operation=index&amp;type=Screen", "/maintenance/search/945?type=Screen");
+fncSetSelectedMenuItem(["menu_item_945", "menu_item_939"]);
+'>
+<img alt="Restore" src="/images/menu/restore.png?1452591029" />
+</div>
+<div class="menu_link menu_empty_cell menu_descr" id="descr_menu_item_945"
+style="width: 168px;"
+title="Open Restore"
+onClick='fncLoadAjaxByScreenId("/maintenance/restore/945?quick_operation=index&amp;type=Screen", "/maintenance/search/945?type=Screen");
+fncSetSelectedMenuItem(["menu_item_945", "menu_item_939"]);
+'>
+Restore
+</div>
+&nbsp;
+&nbsp;
+</div>
+<div class='menu_item' id='menu_item_946'
+state='opened' always_show='false'>
+<div class="menu_empty_cell">
+&ensp;&ensp;
+</div>
+<div class="menu_icon menu_link menu_empty_cell" id="icon_menu_item_946"
+title="Open Restart"
+onClick='fncLoadAjaxByScreenId("/maintenance/restart/946?quick_operation=index&amp;type=Screen", "/maintenance/search/946?type=Screen");
+fncSetSelectedMenuItem(["menu_item_946", "menu_item_939"]);
+'>
+<img alt="Restart" src="/images/menu/restart.png?1452591029" />
+</div>
+<div class="menu_link menu_empty_cell menu_descr" id="descr_menu_item_946"
+style="width: 168px;"
+title="Open Restart"
+onClick='fncLoadAjaxByScreenId("/maintenance/restart/946?quick_operation=index&amp;type=Screen", "/maintenance/search/946?type=Screen");
+fncSetSelectedMenuItem(["menu_item_946", "menu_item_939"]);
+'>
+Restart
+</div>
+&nbsp;
+&nbsp;
+</div>
+<div class='menu_item' id='menu_item_947'
+state='opened' always_show='false'>
+<div class="menu_empty_cell">
+&ensp;&ensp;
+</div>
+<div class="menu_icon menu_link menu_empty_cell" id="icon_menu_item_947"
+title="Open Firmware"
+onClick='fncLoadAjaxByScreenId("/maintenance/firmware/947?quick_operation=index&amp;type=Screen", "/maintenance/search/947?type=Screen");
+fncSetSelectedMenuItem(["menu_item_947", "menu_item_939"]);
+'>
+<img alt="Info" src="/images/menu/info.png?1452591029" />
+</div>
+<div class="menu_link menu_empty_cell menu_descr" id="descr_menu_item_947"
+style="width: 168px;"
+title="Open Firmware"
+onClick='fncLoadAjaxByScreenId("/maintenance/firmware/947?quick_operation=index&amp;type=Screen", "/maintenance/search/947?type=Screen");
+fncSetSelectedMenuItem(["menu_item_947", "menu_item_939"]);
+'>
+Firmware
+</div>
+&nbsp;
+&nbsp;
+</div>
+</div>
+<div class='tab_content' id="left_panel_tab_filter_content" style="">filters...</div>
+</td>
+</tr>
+</table>
+<br />
+<ul style="background-color: white">
+<li onclick='fncAjaxUpdater("main","/fields/index/0");
+return false;
+' style="cursor: pointer">Fields By-Pass :D</li>
+</ul>
+</div
+:updated_atIu:	Time©€5eY:@marshal_with_utc_coercionF

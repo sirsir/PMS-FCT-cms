@@ -1,0 +1,98 @@
+<tr>
+  <th class="th_row_header">Screen:</th>
+  <td>
+    <%
+    operation_url = url_for(:controller => "fields",
+      :action=>"accumulation",
+      :id=>0,
+      :screen_id=>"JAVASCRIPT_VAR_VALUE")
+      selected_screen = (@field.value).nil? ? nil : Field.find(:first,:conditions => [" id = ?", @field.value['field_id']]).screen
+
+    if (@field.id.nil?)
+      html_tag = collection_select(:selected_screen, :screen_id,
+        @screen.dependencies, :id, :name,
+        {
+          :include_blank => true
+        },
+        {
+          :onchange=>"fncAjaxUpdaterWithReplacement(\"combined_result\",\"#{operation_url}\", [\"JAVASCRIPT_VAR_VALUE\", this.value] );"
+        })
+    else
+      html_tag = select_tag("field[screen_id]",
+        options_from_collection_for_select_tag(@screen.dependencies, :id, :name, selected_screen.id ),
+        {
+          :onchange=>"fncAjaxUpdaterWithReplacement(\"combined_result\",\"#{operation_url}\", [\"JAVASCRIPT_VAR_VALUE\", this.value] );",
+          :include_blank =>true
+        })
+    end
+  %>
+    <%= html_tag %>
+    <%= field_descr_tag %>
+  </td>
+</tr>
+<tr>
+  <th class="th_row_header"><%= field_label_tag :field, :mandatory => true %>:</th>
+  <td>
+    <div id='combined_result'>
+      <%if !(selected_screen.nil?) %>
+        <%=select_tag("field[value][field_id]", options_from_collection_for_select( selected_screen.accumulate_fields, :id, :full_descr, @field.value['field_id'].to_i )) %>
+        <%= field_descr_tag %>
+      <% end %>
+    </div>
+  </td>
+</tr>
+
+<tr>
+  <th class="th_row_header">Accumulate Function:</th>
+  <td>
+    <%
+    labels = Field.display_accumulate_control_options
+    if @field.id.nil?
+      selected_function = "SUM"
+    elsif @field.value.nil?
+      selected_function = ""
+    else
+      selected_function = @field.value['fnc']
+    end
+    labels.each  do |label|
+    %>
+      <%= radio_button_tag 'field[value][fnc]', label[:key], (label[:key] == selected_function ? true : false) %>
+      <%= label_tag "field[value][fnc][#{label[:key].to_s.downcase}]", label[:name] %>
+      <br />
+    <% end %>
+    <%= field_descr_tag %>
+  </td>
+</tr>
+
+<% all_format_collection = Field.display_numeric_format %>
+<% all_option_collection = Field.display_numeric_option %>
+<% field_options =  @field.option %>
+<% h_format_options = all_format_collection.collect{|f| " \"#{f.name.to_s}\": [\"" + f.option.join("\" , \"") + "\"]"}.join(",") %>
+<tr>
+  <th class="th_row_header">Format:</th>
+  <td>
+      <%= select_tag "field[value][format]",
+                     options_from_collection_for_select(all_format_collection , :name, :descr, @field.format),
+                     :onchange => "fncSetDisplayOptions({#{h_format_options}}, this.value, 'field_value_option');" %>
+    <%= field_descr_tag %>
+  </td>
+</tr>
+
+<% all_option_collection.each do |opt| %>
+  <% option_name = "field[value][option][#{opt.to_s}]" %>
+  <% isDisplay = field_options.include?(opt) %>
+  <tr id="<%=opt.to_s%>" class="tr_display<%= (isDisplay) ? "" : "_none" %>" >
+    <th class="th_row_header"><%= opt.to_s.sub("_", " ").capitalize %>:</th>
+    <td>
+      <% if(opt ==:unit) then %>
+          <% unit_collection = Field.display_currency_unit %>
+          <% option_tags = unit_collection.collect!{|u| selected = (u[:name] == field_options[opt]) ? "selected=\"selected\"" : ''
+                                                    "<option value='#{u[:name]}' #{selected} >#{u[:descr]}</option>"} %>
+          <%= select_tag option_name, option_tags, :disabled => !isDisplay %>
+       <% else %>
+          <%= text_field_tag option_name, field_options[opt], :disabled => !isDisplay %>
+       <% end %>
+      <%= field_descr_tag %>
+    </td>
+ </tr>
+<% end %>

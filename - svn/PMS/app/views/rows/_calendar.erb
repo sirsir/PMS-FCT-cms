@@ -1,0 +1,77 @@
+<%
+data_fields = @screen.data_fields
+data_fields += @screen.revision_screen.data_fields if (@screen.is_a?(HeaderScreen))
+
+color_data_fields = data_fields.select{|f|
+  f.display_in_search? &&
+    (f.custom_field.is_a?(CustomFields::RadioButton) ||
+      f.custom_field.is_a?(CustomFields::CheckBox) ||
+      f.custom_field.is_a?(CustomFields::Reference))
+}
+
+color_custom_field_ids = color_data_fields.collect{|f| f.custom_field_id }
+%>
+<div id="calendar_view">
+  <%= render :partial => 'calendar_color_selector', :locals => {:color_data_fields => color_data_fields} %>
+
+  <%
+  bom = @calendar_date.beginning_of_month
+  calendar_field = Field.find(@calendar_field_id)
+  custom_field_id = calendar_field.custom_field_id
+
+  title = @calendar_field_detail.to_s.empty? ? calendar_field.label_descr.dup : @calendar_field_detail.titleize
+  title << " within #{bom.strftime("%B '%y")}"
+
+  pre_bom = bom << 1
+  nxt_bom = bom >> 1
+  %>
+
+  <table cellspacing="0">
+      <tr class="header">
+        <th class="navigator" onclick="fncCalendarNavigate('<%= pre_bom.strftime("%d-%b-%Y") %>', '<%= pre_bom.end_of_month.strftime("%d-%b-%Y") %>', true, <%= custom_field_id %>, <%= @screen.id %>)">&laquo;</th>
+        <th class="title" colspan="7"><%= title %></th>
+        <th class="navigator" onclick="fncCalendarNavigate('<%= nxt_bom.strftime("%d-%b-%Y") %>', '<%= nxt_bom.end_of_month.strftime("%d-%b-%Y") %>', true, <%= custom_field_id %>, <%= @screen.id %>)">&raquo;</th>
+      </tr>
+  </table>
+  <table cellspacing="0">
+      <tr>
+        <%
+        bow = bom.beginning_of_week
+        eow = bow.end_of_week
+        %>
+        <% (bow..eow).each do |dt| %>
+          <th><%= dt.strftime("%a") %></th>
+        <% end %>
+      </tr>
+      <% while bow <= bom.end_of_month %>
+        <%
+        eow = bow.end_of_week
+        %>
+      <tr class="rows">
+        <% (bow..eow).each do |dt| %>
+          <%
+          td_class = "td_#{dt.month == bom.month ? dt.strftime("%j").to_i % 5 + 1 : 0}"
+          td_class << ' selectable' unless [@rows[dt.to_s]].flatten.compact.empty?
+          div_id = [custom_field_id]
+          div_id << @calendar_field_detail unless @calendar_field_detail.to_s.empty?
+
+          onclick = <<JAVASCRIPT
+fncCalendarNavigate('#{dt.strftime("%d-%b-%Y")}', '#{dt.strftime("%d-%b-%Y")}', false, '#{div_id.join('_')}', #{@screen.id})
+JAVASCRIPT
+          %>
+          <td class="<%= td_class %>" onclick="<%= onclick if td_class =~ /selectable/ %>">
+            <div class="date"><%= dt.strftime("%d") %></div>
+            <%= render :partial => 'calendar_search', :locals => {:date => dt, :color_custom_field_ids => color_custom_field_ids} %>
+          </td>
+        <% end %>
+      </tr>
+        <%
+        bow = eow.next_week
+        %>
+      <% end %>
+  </table>
+  
+  <%= render :partial => 'calendar_color_selector', :locals => {:color_data_fields => color_data_fields} %>
+
+  <%= render :partial => 'calendar_stylesheet', :locals => {:color_custom_field_ids => color_custom_field_ids} %>
+</div>

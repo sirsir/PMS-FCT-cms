@@ -1,0 +1,35 @@
+<tr>
+  <th class="th_row_header">Stock:</th>
+  <td>
+    <% if @stocks.nil? %>
+      <%= select_tag 'custom_field[value][stock_id]' %>
+    <% elsif @custom_field.value.nil? %>
+      <%= select_tag 'custom_field[value][stock_id]', options_from_collection_for_select(@stocks, 'id', 'name') %>
+    <% else %>
+      <%= select_tag 'custom_field[value][stock_id]', options_from_collection_for_select(@stocks, 'id', 'name', @custom_field.value[:stock_id].to_i) %>
+    <% end %>   
+  </td>
+</tr>
+
+<tr>
+  <th class="th_row_header">Quantity:</th>
+  <td>
+    <%
+    numeric_custom_fields = @custom_fields.select{|cf| cf.is_a?(CustomFields::NumericField)}
+    custom_field_id = @custom_field.value.nil? ? nil : @custom_field.value[:custom_field_id]
+    %>
+    <%= select_tag 'custom_field[value][custom_field_id]', options_from_collection_for_select(numeric_custom_fields, 'id', 'name', custom_field_id.to_i) %>
+  </td>
+</tr>
+
+<tr>
+  <th class="th_row_header">Quantity Type:</th>
+  <td>
+    <%= radio_button_tag 'custom_field[value][quantity_type]', 'Quantity', @custom_field.new_record? || @custom_field.value[:quantity_type].to_sym.eql?(:Quantity) %>
+    <%= label_tag 'custom_field_value_quantity_type_quantity', 'Quantity' %>
+    <%= radio_button_tag 'custom_field[value][quantity_type]', 'TakeIn', @custom_field.value.nil? ? false : @custom_field.value[:quantity_type].to_sym.eql?(:TakeIn) %>
+    <%= label_tag 'custom_field_value_quantity_type_takein', 'TakeIn' %>
+    <%= radio_button_tag 'custom_field[value][quantity_type]', 'Booked', @custom_field.value.nil? ? false : @custom_field.value[:quantity_type].to_sym.eql?(:Booked) %>
+    <%= label_tag 'custom_field_value_quantity_type_booked', 'Booked' %>
+  </td>
+</tr>

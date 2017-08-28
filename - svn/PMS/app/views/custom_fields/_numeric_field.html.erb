@@ -1,0 +1,48 @@
+<%
+all_format_collection = CustomFields::NumericFormat.format_collection
+all_options_collection = CustomFields::NumericFormat.option_collection
+cf_options =  @custom_field.option
+h_format_options = all_format_collection.collect{|f| " \"#{f.name.to_s}\": [\"" + f.option.join("\" , \"") + "\"]"}.join(",")
+
+name_tag = "custom_field[value]"
+%>
+<tr>
+  <th class="th_row_header">Format:</th>
+  <td>
+    <%= select_tag "#{name_tag}[format]",
+                    options_from_collection_for_select(all_format_collection , :name, :descr, @custom_field.format),
+                    :onchange => "fncSetDisplayOptions({#{h_format_options}}, this.value, '#{sanitize_to_id("#{name_tag}[option]")}');" %>
+    <%= field_descr_tag %>
+  </td>
+</tr>
+<% isCurrency = @custom_field.format == :currency %>
+<% all_options_collection.each do |opt| %>
+  <% if(opt !=:rounding && opt !=:significance && opt != :prefix_multiplier)then %>
+    <% option_name = "#{name_tag}[option][#{opt.to_s}]" %>
+    <% isDisplay = cf_options.include?(opt) && (isCurrency ? true : opt != :unit)  %>
+    <tr id="<%=opt.to_s%>" class="tr_display<%= (isDisplay) ? "" : "_none" %>" >
+      <th class="th_row_header"><%= opt.to_s.sub("_", " ").capitalize %>:</th>
+      <td>
+        <% if(opt ==:unit) then %>
+            <% cf_options[opt] ||= "THB" %>
+            <% unit_collection = CustomFields::NumericFormat.currency_unit_collection %>
+            <% option_tags = unit_collection.collect!{|u| selected = (u[:name] == cf_options[opt].to_s) ? "selected=\"selected\"" : ''
+                                                      "<option value='#{u[:name]}' #{selected} >#{u[:descr]}</option>"} %>
+            <%= select_tag option_name, option_tags, :disabled => !isDisplay %>
+        <% else %>
+            <%= text_field_tag option_name, cf_options[opt], :disabled => !isDisplay %>
+         <% end %>
+
+        <%= field_descr_tag %>
+      </td>
+   </tr>
+ <% end  %>
+<% end %>
+
+<tr>
+  <th class="th_row_header">Default Value:</th>
+  <td>
+    <%= text_field_tag "#{name_tag}[default_value]", @custom_field.default_value %>
+    <%= field_descr_tag %>
+  </td>
+</tr>

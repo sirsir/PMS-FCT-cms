@@ -1,0 +1,96 @@
+  <% last_page_nember=((@rows.length).to_f/20).ceil %>
+  <% i=1 %>
+
+  <% @rows.each do |r| %>
+    <% if @rows.index(r) == 0 %>
+      
+      <table width="100%">      
+        <tr>
+          <td><p align="LEFT">Page <%= i %> of <%= last_page_nember %> </p></td>
+          <td><p align="RIGHT">Printed by : <%="#{@current_user.login}" %></p></td>
+         </tr>
+      </table>
+
+    <table align="center">
+      <tr><th><%=Rails.configuration.client_name %></th></tr>
+      <tr><th><%=screen_name_list_tag @screen %></th></tr>
+    </table>
+
+    <table width="100%">
+      <tr>
+        <% if !session[:search_filter_info].empty? %>
+        <b>Results of:</b>
+        <%  session[:search_filter_info].each do |a,b| %>
+          <br/><%=  a.titleize %> : <%=  b %>
+        <% end %>
+        <br/>
+        <br/>
+      <% end %>
+    </tr>
+    </table>
+
+  <% end %>
+
+  <% if @rows.index(r)%20 == 0 %>
+    <% if @rows.index(r) > 0 %>
+      <table>
+        <tr>
+          <td>
+            <p align="LEFT">Printed on : <%="#{Time.now.to_date} #{Time.now.strftime("%H:%M:%S")}" %></p>
+          </td>
+        </tr>
+      </table>
+
+      <div class="page_break"></div>
+
+      <table width="100%">
+        <tr>
+          <% i=i+1 %>
+          <td><p align="LEFT">Page <%= i  %> of <%= last_page_nember %>  </p></td>
+          <td><p align="RIGHT">Printed by : <%= "#{@current_user.login}" %></p></td>
+        </tr>
+      </table>
+
+    <% end %>
+
+    <table  style=" border-collapse: collapse; border: thin solid black; ">
+
+      <%=render :partial => "/rows/field_level", :collection => (1..@screen.field_level).to_a, :locals => { :screen => @screen } %>
+    <% end %>
+
+    <tr>
+      <td style=" white-space:nowrap ; border: thin solid black;"><%="&nbsp;" %></td>
+
+      <%if r.screen.is_a?(RevisionScreen) && r.screen.control_revision? %>
+        <td class='td_cell' id='<%="#{r.id}_rev_no"%>'><%=r.rev_no %></td>
+      <%end%>
+
+      <%= render :partial => "/rows/column", :collection =>r.screen.fields, :locals => {:row=> r} %>
+
+      <%if r.screen.is_a?(HeaderScreen)%>
+
+        <% if r.screen.revision_screen.control_revision? %>
+          <td class='td_cell' id='<%="#{r.id}_latest_rev_no"%>'><%=r.latest_revision_no %></td>
+        <% end %>
+
+        <%= render :partial => "/rows/column", :collection =>r.screen.revision_screen.fields.select{|f| f.display_in_header_list? }, :locals => {:row=>r.latest_revision} %>
+      <%end%>
+
+      <td style=" white-space: nowrap ; border: thin solid black;"><%=r.remark.to_s.empty? ? "&nbsp;" : r.remark %></td>
+    </tr>
+
+    <% if @rows.index(r) == (@rows.length)-1 %>
+    </table>
+
+    <table>
+      <tr>
+        <td>
+          <p align="LEFT">Printed on : <%="#{Time.now.to_date} #{Time.now.strftime("%H:%M:%S")}" %></p>
+        </td>
+      </tr>
+    </table>
+  <% end %>
+<% end %>
+
+
+

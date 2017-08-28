@@ -1,0 +1,23 @@
+<h1>Running Services</h1>
+
+<pre>
+List of Running Service (ip:ports)
+</pre>
+
+<%
+deduct = [
+  /^ *(end|#)\n$/,
+  /^[\n\/]?$/
+]
+objects = {}
+ObjectSpace.each_object(String) do|obj|
+  if deduct.any?{|d| !(obj =~ d).nil? }
+    Object
+  else
+    objects[obj] = objects[obj].to_i + 1
+  end
+end
+%>
+<pre>
+<%= objects.collect{|k,v| [v, k] if v > 900}.compact.sort.reverse.inspect %>
+</pre>

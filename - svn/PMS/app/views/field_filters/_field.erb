@@ -1,0 +1,39 @@
+<% if screen_id.nil? || field.field_id < 0 || field.field.screen_id == screen_id %>
+  <tr>
+    <th class='th_row_header' style="white-space: nowrap"><%= label_tag("#{field.field_id < 0 ? 'Rows' : field.field.descr}:") %></th>
+  <% if field.location == :col %>
+      <td style="white-space: nowrap">
+        <%= render(:partial => "field_filters/cols", :locals => {:cols => field.field.filter_rows, :field_report => field, :read_only => read_only}) %>
+      </td>
+  <% elsif field.location == :row %>
+    <% if field.field.custom_field.is_a?(CustomFields::IssueTracking) %>
+      <%= field_for_search(field.field,{:count => @count, :fields_per_line => @fields_per_line, :name => :field_filter, :read_only => read_only}) %>
+    <% else %>
+      <%
+      ff = @report_request.field_filter(field.field_id)
+      value = ff.value if ff
+      %>
+      <td style="white-space: nowrap">
+        <%
+        case field.field.custom_field
+        when CustomFields::DateTimeField then
+          field_filter = @report_request.field_filter(field.field_id)
+          dt_from = field_filter.datetime_from
+          dt_to = field_filter.datetime_to
+          dt_status = field_filter.datetime_status
+          dt_format = field.format
+          data_options = {:from => dt_from,
+                          :to => dt_to,
+                          :status => dt_status,
+                          :format => dt_format
+                          }
+        else
+          data_options = value
+        end
+        %>
+        <%= field_for_search(field.field, {:name => :field_filter, :value => data_options, :read_only => read_only}) %>
+      </td>
+    <% end %>
+  <% end %>
+  </tr>
+<% end %>

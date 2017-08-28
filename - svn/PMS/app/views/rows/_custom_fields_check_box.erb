@@ -1,0 +1,33 @@
+<% if readonly %>
+  <%=cell.to_html%>
+<% else %>
+<%
+name_prefix ||= ''
+labels = if cell.custom_field.single_value?
+  [CustomFields::CheckBox.empty_label(cell.custom_field.true_label, cell.custom_field.false_label)]
+else
+    cell.custom_field.labels
+end
+
+chk_box_type = cell.custom_field.check_box_type?
+
+if cell.value.empty?
+  cell_value = field.custom_field.checked_value? ? {"0" => "true"} : {}
+
+  field.custom_field.default_value.each do |t|
+    cell_value = cell_value.merge({"#{t}" => "true"})
+  end
+else
+  cell_value = cell.value
+end
+
+%>
+
+<%= check_box_collection_tag(
+  :check_box_options => labels,
+  :chk_box_type => chk_box_type,
+  :assigned_label_id => cell_value,
+  :name => "#{name_prefix}cells[#{field.custom_field_id}]",
+  :customs_fields_id => field.custom_field_id) %>
+<%= field_descr_tag :descr => field.custom_field.descr %>
+<% end %>

@@ -1,0 +1,15 @@
+<%= screen_modification_tag @screen, render(:partial => 'edit_display_seqs') %>
+
+<hr />
+
+<%
+main_url = url_for(:controller=>:screens, :action=>:index)
+on_click_back = "fncAjaxUpdater(\"main\",\"#{main_url}\");" +
+  "return false;"
+%>
+
+<%= operation_tag( [:back],{:actions=>{:back=>:index}}, {:back=>{:onClick=>"#{on_click_back}"}} )%>
+
+
+
+

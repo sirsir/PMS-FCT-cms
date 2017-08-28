@@ -1,0 +1,23 @@
+<table class="form_content">
+  <%
+  screens = @report_request.report.reference_screens
+  screens.each_with_index do |s, s_idx|
+    field_report_filters = @field_report_filters[s_idx]
+
+    next if field_report_filters.nil?
+%>
+  <tr class="tr_header">
+    <th class="th_col_header" colspan="2" style="white-space: nowrap"><%=s.label_descr %></th>
+  </tr>
+    <%= render :partial => "field_filters/filter", :collection => field_report_filters, :locals => { :read_only => read_only } %>
+<% end %>
+
+  <% unless read_only %>
+  <tr>
+    <td colspan="2">
+      <%= group_button() %>
+    </td>
+  </tr>
+  <% end %>
+</table>
+

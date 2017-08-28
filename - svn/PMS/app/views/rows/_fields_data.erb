@@ -1,0 +1,44 @@
+<% name_prefix ||= '' %>
+<tr id="fields_data_<%=row.id %>_<%=field.id %>">
+  <th class="th_row_header">
+    <%
+      cell = row.cell(field.custom_field_id)
+      cell ||= Cell.new(:row_id => row.id, :field_id => field.custom_field_id)
+      seperate_ctrls_id ||= nil
+      if seperate_ctrls_id
+        onclick = <<JAVASCRIPT
+           $('Div_Flag_Field_#{seperate_ctrls_id}').click();
+JAVASCRIPT
+      end
+    %>
+    <%= js_trigger_tag sanitize_to_id("flag_field_#{field.id}" ), cell.to_key_value, :onclick => onclick %>
+    <%
+    if field.is_mandatory? && !field.custom_field.is_a?(CustomFields::AutoNumbering)
+      mandatory_content = "*".to_html
+      mandatory_title = "Must specify #{field.descr}"
+    end
+    if field.is_unique? && !field.screen.has_a_auto_numbering_with_unique?
+      unique_class = "unique"
+      unique_fields = field.screen.fields.collect{|f| f.descr if f.is_unique?}.compact.join(", ")
+      unique_title = "#{unique_fields} must be unique"
+    end
+    %>
+    <span class="mandatory" title="<%=mandatory_title %>"><%=mandatory_content %></span>
+    <span class="<%=unique_class %>" title="<%=unique_title %>"><%= label_tag "", "#{field.full_descr}" %></span>
+    :
+  </th>
+ 
+  <td>
+
+    <%= render :partial => "/rows/" + field.custom_field.class.name.gsub("::","").underscore,
+      :locals => {:field =>field,
+      :row => row,
+      :cell => cell,
+      :readonly => readonly,
+      :mandatory_content => mandatory_content,
+      :mandatory_title => mandatory_title,
+      :unique_class => unique_class,
+      :name_prefix => name_prefix,
+      :unique_title => unique_title} %>
+  </td>
+</tr>

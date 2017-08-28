@@ -1,0 +1,6 @@
+<table>
+  <!-- WARNING!!! The first list must be the table start tag -->
+  <tr id="<%= @report_template.id %>_replacement" readonly='<%= @readonly %>'>
+    <%= render :partial => "report_template", :locals => { :report_template => @report_template } %>
+  </tr>
+</table>

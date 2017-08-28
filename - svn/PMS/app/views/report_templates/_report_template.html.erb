@@ -1,0 +1,24 @@
+<td class='td_cell'>&nbsp;</td>
+<td class='td_cell'><%=h report_template.id %></td>
+<td class='td_cell'><%=h report_template.name %></td>
+<td class='td_cell'><%=h report_template.screen.name if Screen.exists?(report_template.screen_id) %>&nbsp;</td>
+<%
+report_template_name = report_template.template_name
+if report_template_name =~ /\?$/
+  report_template_name = "<span class='missing_implementation'>#{report_template_name}</span>"
+else
+  report_template_name = h(report_template_name)
+end
+%>
+<td class='td_cell'><%= report_template_name.gsub(/ReportTemplates::/, '') %></td>
+
+<%
+options = {:confirm => true}
+options[:onclick] = "fncTrDelete(this.href, #{report_template.id});"
+options[:object] = report_template
+options[:controller] = :report_templates
+
+%>
+<td class='td_cell'><%=h report_template.display.titleize %></td>
+<td class='td_cell'><%=h report_template.output_type.upcase %></td>
+<td class='td_cell' id='<%= report_template.id %>_destroy'><%= link_to_destroy(options) %></td>

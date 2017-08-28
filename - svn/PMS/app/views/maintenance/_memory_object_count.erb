@@ -1,0 +1,19 @@
+<tr class="tr_header"><th class="group_caption_center" colspan="2">Object Count</th></tr>
+<tr class="tr_header"><th class="th_col_header">Name</th><th class="th_col_header">Value</th></tr>
+<%
+  b = true
+
+  object_spaces = @mem_stat.object_history[:object_space]
+  latest_timestamp = object_spaces.keys.max
+  current_object_space = object_spaces[latest_timestamp].to_a.sort_by{|o| o.last }.reverse
+  current_object_space.each do |o|
+%>
+<tr class="tr_data_<%= (b ^= true) ? 'odd' : 'even' %>">
+  <%
+  model_name = o.first
+  value = o.last
+  %>
+  <td class="td_cell"><%= model_name.to_s %></td>
+  <td class="td_cell" style="text-align: right;"><%= number_with_delimiter(value) %></td>
+</tr>
+<% end %>

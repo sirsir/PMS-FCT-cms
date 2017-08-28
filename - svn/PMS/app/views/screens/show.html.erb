@@ -1,0 +1,18 @@
+<p>
+  <b>Name:</b>
+  <%=h @screen.name %>
+</p>
+
+<p>
+  <b>Screen:</b>
+  <%=h @screen.screen_id %>
+</p>
+
+<p>
+  <b>Label:</b>
+  <%=h @screen.label_id %>
+</p>
+
+
+<%= link_to 'Edit', edit_screen_path(@screen) %> |
+<%= link_to 'Back', screens_path %>

@@ -1,0 +1,59 @@
+<table class='form_content'>
+
+  <%
+  url_options = {
+    :controller => :stock_transactions,
+    :action => :stock_value,
+    :id => @stock.id,
+    :transaction_type => @transaction_type,
+    :authenticity_token => form_authenticity_token
+  }
+
+  stock_key_ids = []
+
+  @stock.stock_keys.each_with_index do |k, i|
+    url_options["stock_key_id_#{i}"] = "JAVASCRIPT_VAR_VALUE_#{(i).to_s.rjust(2,'0')}"
+    stock_key_ids << case k
+    when CustomFields::RadioButton
+      k.label_ids.collect{|l| "'#{sanitize_to_id("stock_key_id_#{i}][label][#{l}]")}'"}
+    else
+      ["'#{sanitize_to_id("stock_key_id_#{i}")}'"]
+    end
+  end
+  
+  url = url_for(url_options)
+  stock_key_ids = stock_key_ids.collect{|k| "[" + k.join(",") + "]"}
+
+  
+events = <<JAVASCRIPT
+fncChangeStockKey("#{url}",[#{stock_key_ids.join(",")}]);
+JAVASCRIPT
+  %>
+  <%=render(:partial => 'stock_key', :collection => @stock.stock_keys, :locals => {:url => url, :stock_key_ids => stock_key_ids, :events => events}) %>
+
+  <%=table_hr_tag %>
+
+  <%=render(:partial => 'transaction', :collection => StockTransaction.transaction_value_lists) %>
+
+<%
+onclick = <<JAVASCRIPT
+fncAddStockTransactionRow("stock_transaction_tmp_row", "stock_#{@transaction_type}_transaction_rows");
+return false;
+JAVASCRIPT
+%>
+  <tr >
+    <td >
+      <%=link_to "Append", {}, { :href => "#", :onclick => onclick } %>
+    </td>
+    <td>
+      <table style="background-color: red">
+      <tr class="tr_data_odd" id="stock_transaction_tmp_row">
+        <td class="td_cell" style="white-space: nowrap">&nbsp;</td>
+          <%=render(:partial => 'transaction_key_value', :collection => @stock.stock_keys) %>
+          <%=render(:partial => 'transaction_amount_value', :collection => StockTransaction.transaction_value_lists) %>
+        <td class="td_cell" style="white-space: nowrap">&nbsp;</td>
+      </tr>
+    </table>
+    </td>
+  </tr>
+</table>

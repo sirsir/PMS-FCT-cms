@@ -1,0 +1,13 @@
+<% if @field_type.nil? %>
+  <%= group_tag "Select Field Type", render(:partial => 'field_types') %>
+<% else %>
+  <%
+  form_id = "frm_new_#{@screen_self.id}"
+  %>
+
+  <% form_tag url_for(:action => 'create'), :onSubmit => "fncPrepareFormForSubmit(this);", :id => form_id, :target => "tmp_frame" do %>
+    <%= screen_creation_tag "#{@field.class.name.gsub("Fields::", "")} Field", render(:partial => 'form') %>
+  <% end %>
+<% end %>
+
+<hr />

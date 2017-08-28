@@ -1,0 +1,37 @@
+<%=javascript_include_tag "prototype" %>
+<%=javascript_include_tag "application" %>
+<%=javascript_include_tag "ajax" %>
+<%=javascript_include_tag "dialog" %>
+<%=javascript_include_tag "fr" %>
+
+<%
+  operation_area_id = "operation_area_#{@screen.id}"
+  operations = []
+  ajax_params = {
+      :controller => @screen.class.to_s.pluralize.underscore.gsub("screen","row"),
+      :action_source => @action_source,
+      :filtered_reference => @filtered_reference,
+      :revision_row_id => @revision_row.id,
+      :screen_id => @screen.id,
+      :parent_row_id => @revision_row.id,
+      :operation_area_id => operation_area_id
+      }
+  operations << :new if @screen.allow_action?("new") && !@readonly
+  operations << :delete if @screen.allow_action?("destroy") && !@readonly
+  if @screen.allow_action?("export")
+    operations << :export
+    operations << :import if @screen.allow_import?
+  end
+  operations << :print
+  html_operation_tags = operation_tag( operations,{:id =>params[:id], :ajax_params => ajax_params } )
+
+%> 
+<%= render(:partial => 'rows/list', :locals => {:screen => @screen, :rows => @rows,
+          :html_operation_tags => html_operation_tags }) %>
+
+ <% if @action_source != "relations" %>
+    <div id ='error_area_<%=@screen.id%>'></div>
+    <div id ='<%= operation_area_id %>'></div>
+    <!-- ToDo: Allow user to select if they want to auto/manual load relation -->
+    <div id ='relation_area_<%=@screen.id%>'></div>
+  <% end %>

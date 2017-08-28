@@ -1,0 +1,52 @@
+<% 
+name_prefix ||= ''
+tag_name = "#{name_prefix}cells[#{field.custom_field_id}]"
+%>
+
+<%= screen_text_field_tag(:name => "#{tag_name}[code]", :cell_value => CustomFields::ScreenCombindedReference.cell_code(cell.value)) %>
+<%= field_descr_tag :descr => field.descr%>
+
+<!-- Append rows after id="fields_data_<%=row.id %>_<%=field.id %>" -->
+<% [:screen, :option].each do |block_type| %>
+<table><tr><td>
+  <%
+  content_id = "table_content_#{row.id}_#{block_type}"
+  %>
+  <%=group_header_tag("#{block_type.to_s.pluralize.titleize}", content_id)%>
+
+  <table id ="<%= content_id %>" class="table_data_content" cellspacing="0">
+      <tr class='tr_header'>
+        <%
+        headers = [:type, :delimitor, :screen, :group, "&nbsp;"]
+        headers -= [:type, :group] if block_type == :option
+
+        headers.each do |h| %>
+          <th class='th_col_header'><%= (h =~ /&nbsp;/) ? h : h.to_s.titleize %></th>
+        <% end %>
+      </tr>
+
+      <%
+        part_types = block_type == :screen ? [:screen,:group] : [:option]
+        parts = CustomFields::ScreenCombindedReference.cell_parts_by_type(cell.value, part_types)
+
+        scr_custom_field = field.custom_field
+        if block_type == :screen
+          screen_ids = scr_custom_field.screen_ids
+
+          group_rows = CustomFields::ScreenCombindedReference.group_rows(field)
+          group_rows = group_rows.select{|r| r.id != row.id } unless row.new_record?
+          group_rows.sort!{|a, b| a.screen_combined_code <=> b.screen_combined_code}
+        else
+          screen_ids = scr_custom_field.option_screen_ids
+        end
+
+        screens = screen_ids.collect{|s_id| Screen.find(s_id) }
+        screens.sort!{|a, b| a.label_descr <=> b.label_descr }
+
+        locals = {:field => field, :option_type => block_type, :screens => screens, :group_rows => group_rows}
+      %>
+      <%=render :partial => "screen_combined_reference", :collection => parts, :locals => locals %>
+      <%=render :partial => "screen_combined_reference", :collection => [{}], :locals => locals %>
+  </table>
+</td></tr></table>
+<% end %>

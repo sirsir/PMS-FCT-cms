@@ -1,0 +1,18 @@
+<p>
+  <b>Screen:</b>
+  <%=h @field.screen.label_descr %>
+</p>
+
+<p>
+  <b>Custom field:</b>
+  <%=h @field.custom_field_label_descr %>
+</p>
+
+<p>
+  <b>Display seq:</b>
+  <%=h @field.display_seq %>
+</p>
+
+
+<%= link_to 'Edit', edit_field_path(@field) %> |
+<%= link_to 'Back', fields_path %>

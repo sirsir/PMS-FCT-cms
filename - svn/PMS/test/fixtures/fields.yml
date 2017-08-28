@@ -1,0 +1,19 @@
+fields_127: 
+  updated_at: 2009-02-05 12:17:43 Z
+  display_seq: 1
+  custom_field_id: 186
+  id: 127
+  mandatory_check: 
+  screen_id: 71
+  unique: 
+  created_at: 2009-02-05 12:17:43 Z
+
+fields_145: 
+  updated_at: 2009-02-06 03:32:28 Z
+  display_seq: 0
+  custom_field_id: 200
+  id: 145
+  mandatory_check: 
+  screen_id: 80
+  unique: 
+  created_at: 2009-02-06 03:32:28 Z

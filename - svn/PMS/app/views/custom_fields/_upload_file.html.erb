@@ -1,0 +1,32 @@
+<% cf = @custom_field %>
+<% cf_options = cf.option %>
+<% file_type_collection = CustomFields::FileType.text_type_collection %>
+
+<tr>
+  <th class="th_row_header">Max size:</th>
+  <td>
+    <div name="custom_field_numeric">
+    <%= screen_numeric_field_tag(:name => "custom_field[value][option][max_size]", 
+                                 :cell_value => cf_options[:max_size],
+                                 :isFloat => false, 
+                                 :isMinus => false) %> KB. <br/>
+    <%= hidden_field_tag "precision", 0 %>
+    <%= hidden_field_tag "separator", "." %>
+    <%= hidden_field_tag "delimiter", "," %>
+    </div>
+    <span class="missing_implementation"> Missing implement in rows method. </span>
+    <%#= field_descr_tag %>
+  </td>
+</tr>
+
+<tr>
+  <th class="th_row_header">File Type:</th>
+  <td>
+    <%= check_box_collection_tag(:check_box_options => file_type_collection,
+                                 :assigned_label_id => cf_options[:file_type],
+                                 :name => "custom_field[value][option][file_type]",
+                                 :customs_fields_id => cf.id) %>
+    <span class="missing_implementation"> Missing implement in rows method.</span>
+    <%#= field_descr_tag %>
+  </td>
+</tr>

@@ -1,0 +1,8 @@
+<select id="filter2" name="filter2"><option value=''></option>
+<% i=0 %>
+<% for i in 0..@results.size - 1 %>
+  <% @results[i].each_pair do |k,v| %>
+    <option value="<%=k%>"><%=v%></option>
+  <% end %>
+  <% i+=1 %>
+<% end %>

@@ -1,0 +1,280 @@
+<table class="table_header">
+  <tr>
+    <td colspan="7" class="td_report_name"><b>IAI CALCULATION SHEET (Industrial Robot)</b></td>
+  </tr>
+  <tr>
+    <td><table>
+        <tr>
+          <td class="td_title_header">To :</td>
+          <td class="td_text_customer"><%= Field.value_by_field_name("OVS To",@revision_row) %>&nbsp;</td>
+        </tr>
+        <tr>
+          <td class="td_title_header">Attn :</td>
+          <td class="td_text_customer"><%= Field.value_by_field_name("OVS Attn",@revision_row) %>&nbsp;</td>
+        </tr>
+      </table></td>
+    <td class="td_top_nbsp">&nbsp;</td>
+    <td><table>
+        <tr>
+          <td class="td_title_header">RC</td>
+          <td class="td_top_nbsp">&nbsp;</td>
+          <td class="td_text_robo_equation">Sale Price = JPN STD Price(YEN) X 1.15/Exchange Rate</td>
+        </tr>
+        <tr>
+          <td class="td_title_header">IA</td>
+          <td class="td_top_nbsp">&nbsp;</td>
+          <td class="td_text_robo_equation">Sale Price = (CIF Cost + Duty + Factory Cost)/0.65/Exchange Rate</td>
+        </tr>
+      </table></td>
+    <td class="td_top_nbsp">&nbsp;</td>
+    <td>
+      <table>
+        <tr>
+          <td class="td_title_header2">Sale Exchange Rate (<%="\xC2\xA5:$" %>)</td>
+          <td class="td_numeric_with_frame"><%= Field.value_by_field_name("Oversea Sale Exchange Rate J2U",@revision_row) %>&nbsp;</td>
+        </tr>
+        <tr>
+          <td class="td_title_header2">Cost Exchange Rate (<%="\xC2\xA5:\xE0\xB8\xBF" %>)</td>
+          <td class="td_numeric_with_frame"><%= Field.value_by_field_name("Oversea Cost Exchange Rate J2T",@revision_row) %>&nbsp;</td>
+        </tr>
+        <tr>
+          <td class="td_title_header2">Cost Exchange Rate (<%="\xE0\xB8\xBF:$" %>)</td>
+          <td class="td_numeric_with_frame"><%= Field.value_by_field_name("Oversea Cost Exchange Rate T2U",@revision_row) %>&nbsp;</td>
+        </tr>
+      </table>
+    </td>
+    <td class="td_top_nbsp">&nbsp;</td>
+    <td>
+      <table>
+        <tr>
+          <td class="td_title_header2">FOB to CIF Rate</td>
+          <td class="td_numeric_with_frame"><%= Field.value_by_field_name("OVS FOB to CIF Rate",@revision_row) %>&nbsp;</td>
+        </tr>
+        <tr>
+          <td class="td_title_header2">Company Cost Rate</td>
+          <td class="td_numeric_with_frame"><%= Field.value_by_field_name("OVS Company Cost Rate",@revision_row) %>&nbsp;</td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+</table>
+<%
+current_page = 0
+total_page = (@detail_rows.size/20.0).ceil
+%>
+<table class="table_lc_detail">
+  <% item = 0 %>
+  <% @detail_rows.each_with_index do |dr, i| %>
+    <% if i/20>0 and i%20==0 %>
+    </table>
+    <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+    <p><%= current_page += 1 %> of <%= total_page %></p>
+    <div class="page_break"></div>
+    <table class="table_lc_detail">
+    <% end %>
+    <%= render :file => "/revision_rows/iai_calculate_column_header" if (i/20>0 and i%20==0) or i == 0%>
+    <tr>
+      <td class="td_middle_nbsp"><%=i+1 %></td>
+      <td class="td_text_detail"><%= Field.value_by_field_name("OVS Product Series",dr) %>&nbsp;</td>
+      <td class="td_text_detail"><%= Field.value_by_field_name("OVS Item",dr) %>&nbsp;</td>
+      <td class="td_text_detail"><%= Field.value_by_field_name("OVS Description",dr) %>&nbsp;</td>
+      <td class="td_number_detail"><%= Field.value_by_field_name("OVS Qty",dr) %>&nbsp;</td>
+      <td class="td_number_detail"><%= Field.value_by_field_name("OVS Cost(FOB) Unit(JPY)",dr) %>&nbsp;</td>
+      <td class="td_number_detail"><%= Field.value_by_field_name("OVS Robot Cost(CIF) Unit(JPY)",dr) %>&nbsp;</td>
+      <td class="td_number_detail"><%= Field.value_by_field_name("OVS Robot Cost(CIF) Total(JPY)",dr) %>&nbsp;</td>
+      <td class="td_number_detail"><%= Field.value_by_field_name("OVS Robot Cost(CIF) Unit(THB)",dr) %>&nbsp;</td>
+      <td class="td_number_detail"><%= Field.value_by_field_name("OVS Robot Cost(CIF) Total(THB)",dr) %>&nbsp;</td>
+      <td class="td_number_detail"><%= Field.value_by_field_name("OVS Duty %",dr) %>&nbsp;</td>
+      <td class="td_number_detail"><%= Field.value_by_field_name("OVS Duty Unit(JPY)",dr) %>&nbsp;</td>
+      <td class="td_number_detail"><%= Field.value_by_field_name("OVS Duty Total(JPY)",dr) %>&nbsp;</td>
+      <td class="td_number_detail"><%= Field.value_by_field_name("OVS Factory Cost Unit(JPY)",dr) %>&nbsp;</td>
+      <td class="td_number_detail"><%= Field.value_by_field_name("OVS Factory Cost Total(JPY)",dr) %>&nbsp;</td>
+      <td class="td_number_detail"><%= Field.value_by_field_name("OVS Selling Price Unit(JPY)",dr) %>&nbsp;</td>
+      <td class="td_number_detail"><%= Field.value_by_field_name("OVS Selling Price Unit(USD)",dr) %>&nbsp;</td>
+      <td class="td_number_detail"><%= Field.value_by_field_name("OVS Selling Price Amount(JPY)",dr) %>&nbsp;</td>
+      <td class="td_number_detail"><%= Field.value_by_field_name("OVS Selling Price Amount(USD)",dr) %>&nbsp;</td>
+    </tr>
+  <% end %>
+  <% if @detail_rows.length < 20 %>
+    <% for n in @detail_rows.length+1..20 %>
+      <tr title="Double-Click to remove" onDblClick="this.parentNode.removeChild(this)">
+        <% (0...19).each do |c| %>
+          <td class="td_middle_nbsp">&nbsp;</td>
+        <% end %>
+      </tr>
+    <% end %>
+  <% end %>
+  <tr>
+    <td class="td_bottom_nbsp">&nbsp;</td>
+    <td class="td_bottom_nbsp">&nbsp;</td>
+    <td class="td_bottom_nbsp">&nbsp;</td>
+    <td class="td_bottom_nbsp">&nbsp;</td>
+    <td class="td_bottom_nbsp">&nbsp;</td>
+    <td class="td_bottom_nbsp">&nbsp;</td>
+    <td class="td_bottom_nbsp">&nbsp;</td>
+    <td class="td_bottom_nbsp">&nbsp;</td>
+    <td class="td_bottom_nbsp">&nbsp;</td>
+    <td class="td_bottom_nbsp">&nbsp;</td>
+    <td class="td_bottom_nbsp">&nbsp;</td>
+    <td class="td_bottom_nbsp">&nbsp;</td>
+    <td class="td_bottom_nbsp">&nbsp;</td>
+    <td class="td_bottom_nbsp">&nbsp;</td>
+    <td class="td_bottom_nbsp">&nbsp;</td>
+    <td class="td_bottom_nbsp">&nbsp;</td>
+    <td class="td_bottom_nbsp">&nbsp;</td>
+    <td class="td_bottom_nbsp">&nbsp;</td>
+    <td class="td_bottom_nbsp">&nbsp;</td>
+  </tr>
+  <tr>
+    <td class="td_amount_detail">&nbsp;</td>
+    <td colspan="3" class="td_amount_detail">TOTAL</td>
+    <td class="td_amount_detail">&nbsp;</td>
+    <td class="td_amount_detail">&nbsp;</td>
+    <td class="td_amount_detail">&nbsp;</td>
+    <td class="td_amount_detail"><%= Field.value_by_field_name("OVS Sum of Robot Cost(CIF) Total(JPY)",@revision_row) %>&nbsp;</td>
+    <td class="td_amount_detail">&nbsp;</td>
+    <td class="td_amount_detail"><%= Field.value_by_field_name("OVS Sum of Robot Cost(CIF) Total(THB)",@revision_row) %>&nbsp;</td>
+    <td class="td_amount_detail">&nbsp;</td>
+    <td class="td_amount_detail">&nbsp;</td>
+    <td class="td_amount_detail"><%= Field.value_by_field_name("OVS Sum of Duty Total(JPY)",@revision_row) %>&nbsp;</td>
+    <td class="td_amount_detail">&nbsp;</td>
+    <td class="td_amount_detail"><%= Field.value_by_field_name("OVS Sum of Factory Cost Total(JPY)",@revision_row) %>&nbsp;</td>
+    <td class="td_amount_detail">&nbsp;</td>
+    <td class="td_free_detail">&nbsp;</td>
+    <th class="td_amount_detail"><%= Field.value_by_field_name("OVS Grand Selling Price Amount(JPY)",@revision_row) %>&nbsp;</th>
+    <th class="td_amount_detail"><%= Field.value_by_field_name("OVS Grand Selling Price Amount(USD)",@revision_row) %>&nbsp;</th>
+  </tr>
+  <tr>
+    <td colspan="16" class="td_text_factor" style="text-align: right;">Total Sale</td>
+    <td class="td_text_factor">&nbsp;</td>
+    <td class="td_amount_detail"><%= Field.value_by_field_name("OVS Grand Selling Price Amount(JPY)",@revision_row) %>&nbsp;</td>
+    <td class="td_amount_detail"><%= Field.value_by_field_name("OVS Grand Selling Price Amount(USD)",@revision_row) %>&nbsp;</td>
+  </tr>
+  <tr>
+    <td colspan="16" class="td_text_factor" style="text-align: right;">Discount</td>
+    <td class="td_amount_detail"><%= Field.value_by_field_name("OVS Grand Discount Percent",@revision_row)%>&nbsp;</td>
+    <td class="td_amount_detail"><%= Field.value_by_field_name("OVS Grand Discount Amount(JPY)",@revision_row)%>&nbsp;</td>
+    <td class="td_amount_detail"><%= Field.value_by_field_name("OVS Grand Discount Amount(USD)",@revision_row)%>&nbsp;</td>
+  </tr>
+  <tr>
+    <td colspan="16" class="td_text_factor" style="text-align: right;">Grand Total Sale</td>
+    <td class="td_text_factor">&nbsp;</td>
+    <td class="td_amount_detail"><%= Field.value_by_field_name("OVS Grand Total Amount(JPY)",@revision_row) %>&nbsp;</td>
+    <td class="td_amount_detail"><%= Field.value_by_field_name("OVS Grand Total Amount(USD)",@revision_row) %>&nbsp;</td>
+  </tr>
+</table>
+
+<table class="table_footer">
+  <tr>
+    <td>
+      <table class="table_cost_summary">
+        <tr>
+          <td colspan="2" class="td_cost_summary_header">Cost</td>
+          <td class="td_cost_summary_header">USD</td>
+          <td class="td_cost_summary_header">THB</td>
+          <td class="td_cost_summary_header">JPY</td>
+        </tr>
+        <tr>
+          <td class="td_cost_summary_header">1</td>
+          <td class="td_cost_summary_item">Robot Cost(CIF)</td>
+          <td class="td_cost_summary_amount"><%= Field.value_by_field_name("OVS Robot Cost(CIF) Total(USD)",@revision_row) %>&nbsp;</td>
+          <td class="td_cost_summary_amount"><%= Field.value_by_field_name("OVS Robot Cost(CIF) Total(THB)",@revision_row) %>&nbsp;</td>
+          <td class="td_cost_summary_amount"><%= Field.value_by_field_name("OVS Robot Cost(CIF) Total(JPY)",@revision_row) %>&nbsp;</td>
+        </tr>
+        <tr>
+          <td class="td_cost_summary_header">2</td>
+          <td class="td_cost_summary_item">Duty</td>
+          <td class="td_cost_summary_amount"><%= Field.value_by_field_name("OVS Duty Total(USD)",@revision_row) %>&nbsp;</td>
+          <td class="td_cost_summary_amount"><%= Field.value_by_field_name("OVS Duty Total(THB)",@revision_row) %>&nbsp;</td>
+          <td class="td_cost_summary_amount"><%= Field.value_by_field_name("OVS Duty Total(JPY)",@revision_row) %>&nbsp;</td>
+        </tr>
+        <tr>
+          <td class="td_cost_summary_header">3</td>
+          <td class="td_cost_summary_item">Factory Cost</td>
+          <td class="td_cost_summary_amount"><%= Field.value_by_field_name("OVS Factory Cost Total(USD)",@revision_row) %>&nbsp;</td>
+          <td class="td_cost_summary_amount"><%= Field.value_by_field_name("OVS Factory Cost Total(THB)",@revision_row) %>&nbsp;</td>
+          <td class="td_cost_summary_amount"><%= Field.value_by_field_name("OVS Factory Cost Total(JPY)",@revision_row) %>&nbsp;</td>
+        </tr>
+        <tr>
+          <td class="td_cost_summary_header">4</td>
+          <td class="td_cost_summary_item">Discount from SUS Crop</td>
+          <td class="td_cost_summary_amount"><%= Field.value_by_field_name("Total Discount from SUS (USD)",@revision_row) %>&nbsp;</td>
+          <td class="td_cost_summary_amount"><%= Field.value_by_field_name("Total Discount from SUS (THB)",@revision_row) %>&nbsp;</td>
+          <td class="td_cost_summary_amount"><%= Field.value_by_field_name("Total Discount from SUS (JPY)",@revision_row) %>&nbsp;</td>
+        </tr>
+        <tr>
+          <td class="td_cost_summary_header">&nbsp;</td>
+          <td class="td_cost_summary_item">&nbsp;</td>
+          <td class="td_cost_summary_amount">&nbsp;</td>
+          <td class="td_cost_summary_amount">&nbsp;</td>
+          <td class="td_cost_summary_amount">&nbsp;</td>
+        </tr>
+        <tr>
+          <td colspan="2" class="td_number_detail">Total Cost</td>
+          <td class="td_total_summary_amount"><%= Field.value_by_field_name("OVS Total Cost(USD)",@revision_row) %>&nbsp</td>
+          <td class="td_total_summary_amount"><%= Field.value_by_field_name("OVS Total Cost(THB)",@revision_row) %>&nbsp</td>
+          <td class="td_total_summary_amount"><%= Field.value_by_field_name("OVS Total Cost(JPY)",@revision_row) %>&nbsp</td>
+        </tr>
+        <tr>
+          <td>&nbsp;</td>
+          <td>&nbsp;</td>
+          <td>&nbsp;</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td colspan="2" class="td_number_detail_with_frame">Gross Profit (USD)</td>
+          <td class="td_number_detail"><%= Field.value_by_field_name("OVS Gross Profit(USD)",@revision_row) %>&nbsp</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td colspan="2" class="td_number_detail_with_frame">Profit rate</td>
+          <td class="td_number_detail"><%= Field.value_by_field_name("OVS Profit Rate Percent",@revision_row) %>&nbsp;</td>
+          <td>&nbsp;</td>
+        </tr>
+      </table>
+    </td>
+    <td class="td_valign_top">
+      <table>
+        <tr>
+          <td>Project Information</td>
+        </tr>
+        <tr>
+          <td>
+            <table class="table_border">
+              <tr>
+                <td class="td_header_title2">Sale Name:</td>
+                <td class="td_header_text_underscore">&nbsp;</td>
+                <td class="td_header_title2">Project Name/Application:</td>
+                <td class="td_header_text_underscore"><%= Field.value_by_field_name("OVS Project Name",@revision_row) %>&nbsp;</td>
+                <td class="td_header_text">&nbsp;</td>
+              </tr>
+              <tr>
+                <td class="td_header_title2">Business Type:</td>
+                <td class="td_header_text"><%= Field.value_by_field_name("Customer Business Type",@revision_row) %>&nbsp;</td>
+                <td class="td_header_title2">Nationality:</td>
+                <td class="td_header_text"><%= Field.value_by_field_name("Customer Nationality",@revision_row) %>&nbsp;</td>
+                <td class="td_header_text">&nbsp;</td>
+              </tr>
+              <tr>
+                <td class="td_header_title2">Source:</td>
+                <td class="td_header_text"><%= Field.value_by_field_name("OVS Source",@revision_row) %>&nbsp;</td>
+                <td class="td_header_title2">Type of project:</td>
+                <td class="td_header_text"><%= Field.value_by_field_name("OVS Type of project",@revision_row) %>&nbsp;</td>
+                <td class="td_header_text">&nbsp;</td>
+              </tr>
+              <tr>
+                <td class="td_header_title2">End User:</td>
+                <td class="td_header_text_underscore">&nbsp;</td>
+                <td class="td_header_title2">Assembly Date:</td>
+                <td class="td_header_text_underscore">&nbsp;</td>
+                <td class="td_header_text">&nbsp;</td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+</table>
+<br/><br/>
+<p><%= current_page+1 %> of <%= total_page %></p>

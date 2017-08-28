@@ -1,0 +1,16 @@
+<tr class="tr_header" ><th class="group_caption_center" colspan="3">Running Process</th></tr>
+<tr class="tr_header"><th class="th_col_header">Image Name</th><th class="th_col_header">PID</th><th class="th_col_header">Mem Usage</th></tr>
+<%
+  b = true
+
+  task_lists = @mem_stat.object_history[:task_list]
+  latest_timestamp = task_lists.keys.max
+  current_task_lists = task_lists[latest_timestamp]
+  current_task_lists.each do |t|
+%>
+<tr class="tr_data_<%= (b ^= true) ? 'odd' : 'even' %>">
+  <td class="td_cell"><%= t[:image_name] %></td>
+  <td class="td_cell" style="text-align: right;"><%= t[:pid] %></td>
+  <td class="td_cell" style="text-align: right;"><%= number_to_human_size t[:mem_usage], :precision => 2 %></td>
+</tr>
+<% end %>

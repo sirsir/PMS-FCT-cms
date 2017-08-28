@@ -1,0 +1,7 @@
+<%=render(:partial => 'report_step', :locals => { :step => :formats }) %>
+
+<%=group_tag("Report Field Format", render(:partial => 'field_formats')) %>
+
+<hr />
+
+<div id ="frm_set_format_<%=@report.id%>"></div>

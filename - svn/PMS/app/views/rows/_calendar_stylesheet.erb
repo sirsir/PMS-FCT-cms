@@ -1,0 +1,66 @@
+<style type="text/css">
+#calendar_view .legend {
+  font-family: verdana,arial,helvetica,sans-serif;
+  font-size: 13px;
+  line-height: 18px;
+  white-space: nowrap;
+  display: inline-block;
+  width: 300px;
+  overflow: hidden;
+}
+</style>
+<%
+#~ This variable has to match the 'data_per_day' variable in '_calendar_search'
+data_per_day = 5
+
+all_rows = @rows.values.collect{|v| v.sort{|a, b| b.id <=> a.id }.first(data_per_day) }.flatten
+
+classes = [:record] + color_custom_field_ids
+
+classes.each do |c|
+  legend_descr = {}
+  case c
+  when :record
+    values = (0..(clr_base_color1 * clr_base_color2 * clr_base_color3)).to_a
+  else
+    values = all_rows.collect do |r|
+      cell = r.cell(c)
+      cell = r.latest_revision.cell(c) if r.is_a?(HeaderRow) && cell.nil?
+      v = cell.to_text.to_s unless cell.nil?
+      k = v.to_s.gsub(/\W/,'').underscore
+
+      legend_descr[k] ||= v.to_s
+
+      k
+    end.uniq.sort
+    values.delete_if{|v| v.empty? }
+  end
+%>
+<div name="calendar_legend" id="calendar_legend_<%= c %>" style="display: none;">
+  <%
+  values.each_with_index do |v, index|
+    red, green, blue = background_color(index)
+    color = foreground_color(red, green, blue)
+  %>
+<style type="text/css">
+#calendar_view .clr_<%= "field_" unless c == :record %><%= c %>_<%= v %> {
+  background-color: RGB(<%= red %>, <%= green %>, <%= blue %>);
+  color: <%= color %> ;
+}
+</style>
+    <% unless c == :record %>
+      <div class="legend"><span class="data clr_field_<%= c %>_<%= v %>">&hellip;</span><%= legend_descr[v] %></div>
+    <% end %>
+  <% end %>
+
+<style type="text/css">
+#calendar_view .clr_<%= "field_" unless c == :record %><%= c %>_ {
+  background-color: white;
+  color: red ;
+}
+</style>
+  <% unless c == :record %>
+      <div class="legend"><span class="data clr_field_<%= c %>_">&hellip;</span>NOT SET</div>
+  <% end %>
+  </div>
+<% end %>

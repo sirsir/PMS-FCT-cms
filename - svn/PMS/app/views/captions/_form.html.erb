@@ -1,0 +1,15 @@
+<table>
+  <tr>
+    <th class="th_row_header"><%= field_label_tag :name, :mandatory => true, :unique => true %>:</th>
+    <td>
+      <%= text_field_tag "label[name]", @label.name %>
+      <%= field_descr_tag %>
+    </td>
+  </tr>
+  <%= render(:partial => 'field', :collection => @languages) %>
+  <tr>
+    <th />
+    <td><%= group_button(:reused_form => @label.new_record?, :area_id => @screen.id) %></td>
+  </tr>
+</table>
+

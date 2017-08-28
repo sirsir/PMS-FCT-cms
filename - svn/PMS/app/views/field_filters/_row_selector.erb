@@ -1,0 +1,14 @@
+<%
+field_filter = @report_request.field_filter(field_report_filter.reference_screen_index, field_report_filter.field_id)
+
+html_tag = ""
+row_class = cols.index(row_selector) % 2 == 0 ? "even" : "odd"
+name_tag = "field_filter[#{field_report_filter.reference_screen_index}][#{field_report_filter.field_id}][value][selected_ids][]"
+selected_ids = field_filter.nil? ? [] : field_filter.selected_ids
+
+if (read_only && selected_ids.include?(row_selector.id)) || !read_only then
+  html_tag = "<tr class='tr_data_#{row_class}'><td class='td_cell' > #{read_only ? "&nbsp;" : check_box_tag(name_tag, row_selector.id, selected_ids.include?(row_selector.id))} </td>" +
+             "<td class='td_cell' > #{row_selector.description}</td>"
+end
+%>
+<%= html_tag %>

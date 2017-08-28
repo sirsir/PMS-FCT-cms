@@ -1,0 +1,43 @@
+<%
+field_reports ||= []
+tr_class = "tr_#{(field_reports.index(field_format).to_i % 2 == 0 ? "odd" : "even")}"
+operation_area = "frm_set_format_#{field_format.report_id}"
+operation_url = url_for(:controller => "reports", :action=>"edit_format", :id=> field_format.report_id, :field_report_id => field_format.id)
+
+%>
+<tr class="<%=tr_class %>" id="<%=field_format.id %>"
+     operation_area='<%=operation_area%>' operation_url='<%=operation_url%>'
+     relation_area='' relation_url=''
+     handleonclick='true' >
+  <td class="td_cell" style="white-space: nowrap"<%="colspan=#{"2"}" if field_format.field_type == :formula %> >
+    <%
+    screen = @report.reference_screens[field_format.reference_screen_index] if field_format.reference_screen_index
+    screen_alias = @report.reference_screen_alias[field_format.reference_screen_index] if field_format.reference_screen_index
+    screen_name = case field_format.field_type
+    when :formula
+      ( field_format.formula.nil? ) ? "..." : Fields::Formula.evaluate_syntax(field_format.formula)
+    else
+      "#{( screen.nil? ) ? "Screen?" : screen.label_descr} (#{( screen_alias.nil? ) ? "?" : screen_alias})"
+    end
+    %>
+    <%=screen_name %>
+  </td>
+  <td class="td_cell" style="white-space: nowrap; <%="display: none;" if field_format.field_type == :formula %>">
+    <%=field_format.field_id < 0 ? 'Id' : field_format.field.descr unless field_format.field_type == :formula %>
+  </td>
+  <td class="td_cell" style="white-space: nowrap">
+    <%=field_format.label_id.nil? ? "&nbsp;" : field_format.descr %>
+  </td>
+  <td class="td_cell">
+    <%= field_format.field_format.nil? ? "&nbsp;" : full_text_toogler_tag("#{field_format.id}_value", field_format.field_format[:format].to_yaml.gsub("!map:HashWithIndifferentAccess \n","").to_html, field_format.id) %>
+  </td>
+  <td class="td_cell">
+    <%= field_format.sorting == :none ? "&nbsp;" : field_format.sorting.to_s.titleize %>
+  </td>
+  <td class="td_cell">
+    <%= field_format.chart_axis == :none ? "&nbsp;" : field_format.chart_axis.to_s.titleize %>
+  </td>
+  <td class="td_cell" align="center">
+    <%= check_box_image_tag field_format.is_percentage_weight? %>
+  </td>
+</tr>

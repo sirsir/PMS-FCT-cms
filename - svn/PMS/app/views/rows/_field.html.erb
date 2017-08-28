@@ -1,0 +1,18 @@
+<%
+case field
+when Fields::ReferenceAttribute
+  reference_field_method = :reference_field
+when Fields::CodeCombindedReferenceAttribute
+  reference_field_method = :ccr_field
+end
+
+display_in_form = !field.read_only? &&
+  reference_field_method &&
+  field.send(reference_field_method).display_in_form?
+
+if field.display_in_form? || display_in_form
+
+seperate_ctrls_id ||= nil
+%>
+<%= render :partial => "/rows/" + field.class.name.gsub("::","").underscore, :locals => {:field =>field, :row => row, :readonly => readonly, :name_prefix => name_prefix, :seperate_ctrls_id => seperate_ctrls_id} %>
+<% end %>

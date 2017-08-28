@@ -1,0 +1,29 @@
+<%
+%w(
+public/version.txt
+client/susbkk/public/version.txt
+).each do |file_name|
+  file_path = File.join(RAILS_ROOT, file_name)
+  if File.exist?(file_path)
+    group = file_name =~ /^client/ ? 'Fixture' : 'Source Code'
+%>
+<tr class="tr_header" ><th class="group_caption_center" colspan="2"><%= group %></th></tr>
+<%
+  b = true
+  File.open(file_name, 'r') do |file|
+    file.each do |line|
+      values = line.split(/: /)
+%>
+<tr class="tr_data_<%= (b ^= true) ? 'odd' : 'even' %>">
+  <td class="td_cell"><%=values.first.titleize %></td>
+  <td class="td_cell"><%=values.last %></td>
+</tr>
+<%
+      end
+    end
+  end
+end
+%>
+
+
+

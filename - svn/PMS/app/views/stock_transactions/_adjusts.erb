@@ -1,0 +1,14 @@
+<%
+  columns = ["&nbsp;"] + @stock.stock_keys.collect{|sk| sk.label_descr } +
+    StockTransaction.transaction_value_lists.collect{|v| v.to_s.titleize } + ["&nbsp;"]
+%>
+
+<table class="table_data_content" cellspacing="0">
+  <tbody id="stock_<%=@transaction_type%>_transaction_rows">
+    <tr class="tr_header">
+      <% columns.each do |h| %>
+        <th class='th_col_header'><%= (h =~ /&nbsp;/) ? h : h.to_s.titleize %></th>
+      <% end %>
+    </tr>
+  </tbody>
+</table>

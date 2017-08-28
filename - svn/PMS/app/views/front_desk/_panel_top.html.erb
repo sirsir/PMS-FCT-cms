@@ -1,0 +1,11 @@
+<!------------------------------------ Top Panel Start ---------------------------------------->
+<!-- 1 --> <td id='top_panel' style='background-color:#<%= Rails.env =~ /test/ ? 'C66' : 'C3C8DB' %>; width: 100%; height:0%' colspan='3' width='100%' height='0%'>
+<!-- 1 -->   <table  width='100%' height='0%' border=0 cellspacing=0 cellpadding=0>
+<!-- 1 -->     <tr height='0%' style='height: 100%;'>
+<!-- 1 -->       <td align='left'   width='30%' style='width: 30%;'>Welcome, <%= User.find(session['user_id'])['login'] %> [<a href='/front_desk/logout'>logout</a>]</td>
+<!-- 1 -->       <td align='center' width='40%' style='width: 40%;'><%=render :partial => "system_title"%></td>
+<!-- 1 -->       <td align='right'  width='30%' style='width: 30%;'><div id='system_time'></div></td>
+<!-- 1 -->     </tr>
+<!-- 1 -->   </table>
+<!-- 1 --> </td>  
+<!------------------------------------ Top Panel End ---------------------------------------->      

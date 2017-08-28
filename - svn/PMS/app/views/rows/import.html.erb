@@ -1,0 +1,32 @@
+<p style="color: green;"><%= flash[:notice] %></p>
+<p style="color: red;"><%= flash[:error] %></p>
+
+<%
+form_id = "frm_import_#{@screen.id}"
+%>
+<% form_tag url_for(:action => :import, :step => :import_selected_file), :onSubmit => "fncPrepareFormForSubmit(this);", :multipart => true, :method=>:put, :id=>form_id, :target=>"tmp_frame"  do %>
+  <%= hidden_field_tag("screen_id", @screen.id) %>
+  <%= hidden_field_tag("parent_row_id", @parent_row_id) %>
+  <%= hidden_field_tag("operation_area_id", @operation_area_id) %>
+<table>
+  <tr>
+    <th class="th_row_header">Format:</th>
+    <td>
+      <%= select(:import, :file_type, [['Comma Separated Value (*.csv)','CSV']])%>
+      <%=field_descr_tag(:descr => 'File format for the file being imported') %>
+    </td>
+  </tr>
+  <tr>
+    <th class="th_row_header">File:</th>
+    <td>
+      <%= file_field_tag("file", :onchange => "if(checkFileExtension(this, 'import_file_type')){ import_submit.disabled = ''; return true; } else { import_submit.disabled = 'disabled'; return false;}") %>
+      <%=field_descr_tag(:descr => 'Full path to the file located on your machine - e.g. D:\\temp\\myimport.csv') %>
+    </td>
+  </tr>
+</table>
+  <%= submit_tag("Upload", :id => :import_submit, :disabled => true ) %>
+<% end %>
+
+<p>
+  <%= link_to 'Click here', url_for(:action => :import, :step => :template) %> to download a template.
+</p>

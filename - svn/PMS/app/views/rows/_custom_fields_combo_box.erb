@@ -1,0 +1,31 @@
+<% if readonly %>
+ <%=cell.to_html %>
+<% else %>
+<%
+name_prefix ||= ''
+combo_value = get_all_and_selected_value(field.custom_field, @row.id, field.custom_field_id.to_s)
+name = "#{name_prefix}cells[#{field.custom_field_id}]"
+
+if combo_value[1].nil?
+  combo_value[1] = field.custom_field.default_value.to_s
+end
+
+case field.custom_field.name
+when "Action Type" then
+  content  = screen_combo_box_collection_tag_visit(name, combo_value)
+when "Visit Purpose" then
+  action_type_cf = CustomField.find_by_name("Action Type")
+  visit_label = Label.find_by_name("G_Visit")
+  action_type_label_id = params[:action] == "new" ? 0 : CustomFields::ComboBox.cell_label_id(@row.cell(action_type_cf.id).value)
+
+  disabled = (params[:action] == "new") || (action_type_label_id != visit_label.id)
+  content = screen_combo_box_collection_tag_visit_purpose(name, combo_value, disabled)
+else
+  content  = screen_combo_box_collection_tag(name, combo_value)
+end
+
+%>
+
+<%=content %>
+<%= field_descr_tag :descr => field.custom_field.descr %>
+<% end %>

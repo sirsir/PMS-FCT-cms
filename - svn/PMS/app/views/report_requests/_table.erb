@@ -1,0 +1,40 @@
+<% if @report_request.report.row_fields_reports.empty? %>
+  <span class="missing_implementation">RowFieldsReports not defined for report_id = <%=@report_request.report.id%></span>
+<% else %>
+  <%
+  reference_screen_indexes = @report_request.report.visible_reference_screen_indexes
+  ajax_url = url_for(:action => :fetch_report_request_block, :id => @report_request.id, :show_request_row_level => expand_all_level ? reference_screen_indexes.length : 0, :authenticity_token => form_authenticity_token )
+  %>
+  <div name="on_load_report_content" ajax_url="<%=ajax_url %>"
+       status="unloaded" ajax_call_mode="request" <%='style="display:none"' if print %>>
+    <div id="report_request_result_level_selector" style="display: none">
+  <%
+  if reference_screen_indexes.length > 1
+    reference_screen_indexes.each_with_index do |s_idx, i|
+      screen = @report_request.report.reference_screens[s_idx]
+  %>
+      <% unless expand_all_level %>
+         <%=radio_button_tag "report_request_row[state_level]", i, i==0, {:onclick => "fncSetReportRequestRowStateLevel('report_request_result_table_content', this.value);" } %>
+         <%=label_tag "report_request_row[state_level][#{i}]", screen.label_descr %>
+      <% end %>
+  <%
+    end
+  end
+  %>
+    </div>
+    <div id="report_request_result_loading" style="display: block"> <img src='/images/loading.gif' /> Loading...</div>
+  </div>
+  
+  <table class="table_data_content" cellspacing="0" border="1" name="report_request_result_table_content" id="report_request_result_table_content">
+    <%=render :partial => 'col_fields'%>
+    <tr class="tr_header" >
+      <th class="th_col_header" style="<%="display: none" unless @report_request.report.hide_row_columns? %>">&nbsp;</th>
+    <%=render :partial => 'row_fields'%>
+    <% if @report_request.report.cell_location == :row %>
+      <th class="th_col_header">&nbsp;</th>
+    <% end %>
+    <%=render :partial => 'cell_fields'%>
+    </tr>
+    <%=render :partial => 'report_request_rows' %>
+  </table>
+<% end %>

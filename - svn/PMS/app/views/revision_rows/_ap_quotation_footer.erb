@@ -1,0 +1,168 @@
+<%
+fields ||= {}
+show_exchange ||= false
+
+defaults = {
+  :note => "Note",
+  :term => "Quotation Term",
+  :cif_country_port => "CIF Country Port",
+  :delivery_1 => "Delivery",
+  :delivery_2 => "Delivery 2",
+  :delivery_3 => "Delivery 3",
+  :payment => "Payment RefAttr",
+  :remark => "Remarks 2",
+  :validity => "Validity",
+  :issued_sign => "Issued Signature",
+  :issued_first_name => "Issued First Name",
+  :issued_last_name => "Issued Last Name",
+  :issued_position => "Issued Position",
+  :checked_sign => "Check  Signature",
+  :checked_first_name => "Check First Name",
+  :checked_last_name => "Check Last Name",
+  :checked_position => "Check By Position",
+  :approved_sign => "Approved Signature",
+  :approved_first_name => "Approved First Name",
+  :approved_last_name => "Approved Last Name",
+  :approved_position => "Approved Position",
+  :exchange_currency_amount => "Currency Amount",
+  :exchange_thai_bath => "Thai Baht",
+  :exchange_effective_date => "Effective Date"
+}
+fields = defaults.merge(fields)
+
+fields.each{|k, v| fields[k] = Field.value_by_field_name(v, @revision_row).to_s.gsub("<br>", "\n") }
+
+%>
+<table class="table_footer">
+  <tr>
+    <th class="td_head_footer">&nbsp;</th>
+    <th class="td_head_footer">&nbsp;</th>
+    <td >&nbsp;</td>
+  </tr>
+  <tr>
+    <th class="td_head_footer">NOTE</th>
+    <th class="td_head_footer">:</th>
+    <td class="td_cell_footer"><%= fields[:note].to_html %></td>
+  </tr>
+  <tr>
+    <th class="td_head_footer">TERMS</th>
+    <th class="td_head_footer">:</th>
+    <%
+    quotation_term = fields[:term]
+
+    str = if quotation_term =~ /CIF/i
+      " #{fields[:cif_country_port].to_html}"
+    elsif quotation_term =~ /DDU/i
+      ", Delivery duty unpaid, delivery on Seagate plant / UPS SCS."
+    elsif quotation_term =~ /DDP/i
+      ""
+    end
+  %>
+    <td class="td_cell_footer"><%= quotation_term.to_html %><%= str.to_html %></td>
+  </tr>
+  <tr>
+    <th class="td_head_footer">DELIVERY</th>
+    <th class="td_head_footer">:</th>
+    <td colspan="10" class="td_cell_footer">
+      <style type="text/css">
+        .delivery_amt {
+          text-align: center;
+          border-bottom: 0.18mm solid black;
+        }
+
+        .delivery_note {
+          white-space: nowrap;
+        }
+      </style>
+      <table class="table_footer">
+        <tr>
+          <td class="td_head_footer">
+            <div class="delivery_amt"><%= fields[:delivery_1].to_html %></div>
+          </td>
+          <td class="td_cell_footer delivery_note">working days after confirming your P.O. for SUS Standard Part.
+          </td>
+        </tr>
+        <tr>
+          <td class="td_head_footer">
+            <div class="delivery_amt"><%= fields[:delivery_2].to_html %></div>
+          </td>
+          <td class="td_cell_footer delivery_note">working days after confirming your P.O. for Local Part "SFZ-xx".
+          </td>
+        </tr>
+        <tr>
+          <td class="td_head_footer">
+            <div class="delivery_amt"><%= fields[:delivery_3].to_html %></div>
+          </td>
+          <td class="td_cell_footer delivery_note">weeks after confirming your P.O. for SUS Assembly project. Please check again when order.</td>
+        </tr>
+      </table>
+
+    </td>
+  </tr>
+  <tr>
+    <th class="td_head_footer">PAYMENT</th>
+    <th class="td_head_footer">:</th>
+    <td class="td_cell_footer"><%= fields[:payment].to_html %></td>
+  </tr>
+  <tr>
+    <th class="td_head_footer">REMARKS</th>
+    <th class="td_head_footer">:</th>
+    <td class="td_cell_footer"><%= fields[:remark].to_html %></td>
+  </tr>
+  
+  <% if show_exchange %>
+  <tr>
+    <th class="td_head_footer">EXCHANGE RATE</th>
+    <th class="td_head_footer">:</th>
+    <td colspan="4" class="td_cell_footer">
+      <%= fields[:exchange_currency_amount].to_html %> USD=THB <%= fields[:exchange_thai_bath].to_html %>
+      (Foreign Exchange Rates as of <%= fields[:exchange_effective_date].to_html %>: refer data from "Bank of Thailand").
+    </td>
+  </tr>
+  <% end %>
+
+  <tr>
+    <th class="td_head_footer">VALIDITY</th>
+    <th class="td_head_footer">:</th>
+    <td class="td_cell_footer"><%= fields[:validity].to_html %></td>
+  </tr>
+
+</table>
+
+<!--Declaration -->
+<p style="text-align: left;">If you need further information, please feel free to contact us.</p>
+<p style="text-align: left;">Yours Faithfully,</p>
+
+<!-- Signatures -->
+<table class="table_footer">
+  <tr>
+    <th class="td_name_footer_2" >Issued By</th>
+    <td class="td_free_footer">&nbsp;</td>
+    <th class="td_name_footer_2" >Checked By</th>
+    <td class="td_free_footer">&nbsp;</td>
+    <th class="td_name_footer_2" >Approved By</th>
+  </tr>
+  <tr>
+    <td class="td_signature_footer"><%= fields[:issued_sign] %>&nbsp;</td>
+    <td class="td_free_footer">&nbsp;</td>
+    <td class="td_signature_footer"><%= fields[:checked_sign] %>&nbsp;</td>
+    <td class="td_free_footer">&nbsp;</td>
+    <td class="td_signature_footer"><%= fields[:approved_sign] %>&nbsp;</td>
+  </tr>
+  <tr>
+    <td class="td_name_footer">
+      <%= fields[:issued_first_name].to_html %> <%= fields[:issued_last_name].to_html %><br />
+      <i><%= fields[:issued_position].to_html %></i>
+    </td>
+    <td class="td_free_footer">&nbsp;</td>
+    <td class="td_name_footer">
+      <%= fields[:checked_first_name].to_html %> <%= fields[:checked_last_name].to_html %><br />
+      <i><%= fields[:checked_position].to_html %></i>
+    </td>
+    <td class="td_free_footer">&nbsp;</td>
+    <td class="td_name_footer">
+      <%= fields[:approved_first_name].to_html %> <%= fields[:approved_last_name].to_html %><br />
+      <i><%= fields[:approved_position].to_html %></i>
+    </td>
+  </tr>
+</table>

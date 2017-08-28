@@ -1,0 +1,18 @@
+<%
+form_id = "frm_alias_selector_#{@report.id}"
+%>
+
+<% form_tag url_for(:action => 'set_reference_screen_alias', :id =>@report.id ), :onSubmit => "fncPrepareFormForSubmit(this);", :method=>:put, :id => form_id, :target=>"tmp_frame" do %>
+  <table id ="table_content_<%=@report.id%>" class="table_data_content" cellspacing="0">
+    <tr class='tr_header'>
+      <% ["&nbsp;", "Screen", "Alias", "Outer Join", "&nbsp;"].each do |h| %>
+        <th class='th_col_header'><%= (h =~ /&nbsp;/) ? h : h.to_s.titleize %></th>
+      <% end %>
+    </tr>
+    <%=render :partial => "reference_screen_alia", :collection => (0..@report.reference_screen_ids.length-1).to_a %>
+  </table>
+
+  <hr />
+
+  <%= group_button(:area_id => @screen.id) %>
+<% end %>

@@ -1,0 +1,16 @@
+<%= stylesheet_link_tag "pms" %>
+<%= stylesheet_link_tag "menu" %>
+<%= stylesheet_link_tag "tab" %>
+<%= javascript_include_tag "prototype" %>  
+<%= javascript_include_tag "effects" %>
+<%= javascript_include_tag "application" %>
+<%= javascript_include_tag "datetimepicker" %>
+<%= javascript_include_tag "dialog" %>
+<%= javascript_include_tag "fr" %>
+
+<script type='text/javascript'>
+  fncSetInvalidSearch([<%=@filter_errors[:required].join(",")%>], [<%=@filter_errors[:invalid].join(",")%>]);
+  var main_doc = fncGetMainDocument();
+  main_doc.getElementById('main').innerHTML = "<span class='error_message'>Please specify required filters and input the values in the correct format...</span>";
+  fncLoadTempFrame();
+</script>

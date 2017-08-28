@@ -1,0 +1,252 @@
+<%
+reference_screens ||= []
+
+if reference_screens.empty?
+  field_id ||= @field.id
+  field_values ||= @field.value
+  field_options ||= @field.option
+  field_format ||= @field.format
+  date_fields ||= @screen.date_fields
+  fields ||= @screen.fields
+  case @screen
+  when HeaderScreen
+    fields += @screen.revision_screen.fields
+  when RevisionScreen
+    fields += @screen.header_screen.fields
+  when DetailScreen
+    fields += @screen.revision_screen.fields
+    fields += @screen.revision_screen.header_screen.fields
+  else
+  end
+else
+  fields = []
+  date_fields ||= []
+  reference_screens.each_with_index do |s, idx|
+    s_fields = []
+    s_fields += s.fields
+    s_fields += s.revision_screen.fields if s.is_a?(HeaderScreen)
+    
+    s_fields.each do |f|
+      cf = f.custom_field
+      case cf
+      when CustomFields::Calendar
+        fields << ["#{screen_alias[idx]}.#{f.label_descr}", "#{f.id}|#{idx}"]
+        cf.detail_screen.fields.each{|df| fields << ["#{screen_alias[idx]}.#{df.label_descr}", "#{df.id}|#{idx}"]}
+      else
+        fields << ["#{screen_alias[idx]}.#{f.label_descr}", "#{f.id}|#{idx}"]
+      end
+    end
+    
+    date_fields += s.fields.collect{|f| ["#{screen_alias[idx]}.#{f.label_descr}", "#{f.id}|#{idx}"] if f.custom_field.is_a?(CustomFields::DateTimeField) || f.custom_field.is_a?(CustomFields::Calendar)}.compact
+  end
+end
+%>
+<tr>
+  <td colspan="2" align="center">
+    <table id="formula_builder" border="1" style="background-color: lightgrey">
+      <tr style="background-color: grey">
+        <th>Expressions</th>
+        <th>Function</th>
+      </tr>
+      <tr style="vertical-align: top ;">
+        <td>
+          <%
+          exp_options = []
+          exp_options << '[fnc]' if field_id.nil?
+          %>
+          <%= select_tag('cmbExpression', options_for_select(exp_options, '[fnc]'), :style => 'width: 100%', :size => 16) %>
+        </td>
+        <td>
+    <% functions = Field.display_formula_control_options %>
+    <% functions.each  do |fnc|%>
+      <%= radio_button_tag('rdoOperation', fnc[:key],(fnc[:key] == 'ADD') ? true : false,{:onchange => 'fncControlOperation()'}) %> <%=label_tag("rdoOperation_#{fnc[:key].to_s.downcase}", fnc[:name]) %>
+      <%
+      case fnc[:key]
+      when 'CNS'
+      %>
+        <%= text_field_tag('txtCNS','',{:disabled=>true}) %>
+      <%
+      when 'DAT'
+        date_options = [
+          [:Month, :MNT],
+          [:Quarter, :QRT],
+          [:Half, :HYR],
+          [:Year, :YER]
+        ]
+        if reference_screens.empty?
+          var_options = options_from_collection_for_select(date_fields, :id, :full_descr, nil )
+        else
+          var_options = options_for_select(date_fields)
+        end
+      %>
+        <%= select_tag 'cmbDAT_FNC', options_for_select(date_options), {:disabled => true} %>
+        <%= select_tag('cmbDAT_VAR', var_options,{:disabled => true}) %>
+      <%
+      when 'VAR'
+        if reference_screens.empty?
+          screens = fields.collect{|f| f.screen }.uniq.sort_by{|s| s.id }
+          var_options = option_groups_from_collection_for_select(screens, :fields, :label_descr, :id, :full_descr, nil)
+        else
+          var_options = options_for_select(fields)
+        end
+      %>
+        <%=select_tag('cmbVAR', var_options, {:disabled => true}) %>
+      <% end %>
+      <br />
+    <% end %>
+        </td>
+      </tr>
+      <tr>
+        <td colspan="99" align="center">
+          <input TYPE="button" VALUE="Set"   onClick="fncGenTextbox(); fncShowDialog(null, 'pop_box', '<img src=/images/progress.gif />');"   style="width: 100px;" />
+          <input TYPE="button" VALUE="Reset" onClick="fncResetTextbox(); $('org_text').style.display='block';" style="width: 100px;" />
+          <div id="org_text" style="display: none; font: x-small monospace;">
+            <b>Original Formula : </b>
+            <% if not (field_values.nil?)%>
+              <%= Fields::Formula.evaluate_syntax(field_values[:formula])%>
+            <% else %>
+              ...
+            <% end %>
+          </div>
+        </td>
+      </tr>
+    </table>
+  </td>
+</tr>
+<tr>
+  <th class="th_row_header"><%= field_label_tag :formula, :mandatory => true %>:</th>
+  <td>
+    <div id='combined_formula' action="<%=url_for :controller => 'fields', :action => 'formula_text', :id => 0%>">
+      <% if not (field_values.nil?)%>
+        <%
+        ar_name = Fields::Formula.hidden_field_name(field_values[:formula])
+        ar_value = Fields::Formula.hidden_field_value(field_values[:formula])
+
+        ar_name.each_with_index do |element,index|
+        %>
+        <%= hidden_field_tag(element,ar_value[index]) %>
+        <% end %> 
+      <% else %>
+        <%= hidden_field_tag('field[value][formula][fnc]','[fnc]',{}) %>
+      <% end %>
+    </div>
+    <div id='combined_formula_result' style="font-family:monospace">
+      <div id="combined_formula_result_text">
+        <% if not (field_values.nil?)%>
+          <%= Fields::Formula.evaluate_syntax(field_values[:formula])%>
+        <% else %>
+          ...
+        <% end %>
+      </div>
+      <%=hidden_field_tag('combined_formula_result_yaml', field_values.nil? ? '' : field_values.to_yaml)%>
+    </div>
+    <%= field_descr_tag :descr => 'Use the formula builder to construct a Formula' %>
+  </td>
+</tr>
+
+<%=table_hr_tag  %>
+
+<% if reference_screens.empty? %>
+  <%
+  tr_data_type_number_names = []
+  tr_data_type_number_names << 'tr_data_type_number_format'
+  tr_data_type_number_options = Field.display_numeric_option
+  tr_data_type_number_options.each do |opt|
+    tr_data_type_number_names << "tr_data_type_number_format_#{opt.to_s}"
+  end
+
+  ht_type_options = Field.display_data_types.collect do |t|
+    options = []
+    options = tr_data_type_number_names.collect do |n|
+      opt = n.to_s.gsub('tr_data_type_number_format_','').to_sym
+      case opt
+      when :prefix_multiplier
+        CustomFields::NumericFormat.prefix_multiplier_collection.collect{|p| "#{n}_#{p[:name]}"}
+      else
+        n
+      end
+    end.flatten if t == :number
+
+    " \"#{t.to_s}\": [\"" + options.join("\", \"") + "\"]"
+  end.join(',')
+
+  data_type = field_values.nil? ? 'number' : field_values[:data_type]
+  data_types = Field.display_data_types.collect{|d| [d.to_s.titleize, d.to_s]}
+
+  all_format_collection = Field.display_numeric_format
+  all_option_collection = Field.display_numeric_option
+  h_format_options = all_format_collection.collect do |f|
+    options = f.option.collect do |opt|
+      case opt
+      when :prefix_multiplier
+        CustomFields::NumericFormat.prefix_multiplier_collection.collect{|p| "prefix_multiplier_#{p[:name]}"}
+      else
+        opt
+      end
+    end.flatten
+
+    " \"#{f.name.to_s}\": [\"" + "tr_data_type_number_format_" + options.join("\", \"tr_data_type_number_format_") + "\"]"
+  end.join(',')
+  %>
+
+  <tr>
+    <th class="th_row_header">Data Type:</th>
+    <td>
+      <%=select_tag 'field[value][data_type]', options_for_select(data_types, data_type), :onchange => "fncSetDisplayOptions({#{ht_type_options}}, this.value, 'input');" %>
+      <%=field_descr_tag %>
+    </td>
+  </tr>
+
+  <tr id="tr_data_type_number_format" class="tr_display<%= (data_type == 'number') ? '' : '_none' %>">
+    <th class="th_row_header">Format:</th>
+    <td>
+      <%=select_tag 'field[value][format]',
+        options_from_collection_for_select(all_format_collection , :name, :descr, field_format),
+        :onchange => "fncSetDisplayOptions({#{h_format_options}}, this.value, 'input');
+  document.getElementById(\"tr_data_type_number_format\").className = \"tr_display\";
+  document.getElementById(\"input_data_type_number_format\").disabled = false",
+        :id => 'input_data_type_number_format', :disabled => data_type != 'number' %>
+      <%=field_descr_tag %>
+    </td>
+  </tr>
+
+  <% all_option_collection.each do |opt| %>
+    <%
+    option_name = "field[value][option][#{opt.to_s}]"
+    isDisplay = ( field_options.nil? ) ? true : field_options.include?(opt)
+    option = ( field_options.nil? ) ? nil : field_options[opt]
+  %>
+    <% unless opt == :prefix_multiplier %>
+      <tr id="tr_data_type_number_format_<%=opt.to_s%>" class="tr_display<%= (isDisplay) ? '' : '_none' %>" >
+        <th class="th_row_header"><%= label_tag option_name, "#{opt.to_s.sub('_', ' ').capitalize}"":" %></th>
+      <% end %>
+      <td>
+        <% if(opt == :unit) %>
+          <% unit_collection = Field.display_currency_unit %>
+          <% option_tags = unit_collection.collect!{|u| selected = (u[:name] == option) ? "selected=\"selected\"" : ''
+            "<option value='#{u[:name]}' #{selected} >#{u[:descr]}</option>"} %>
+          <%=select_tag option_name, option_tags, :disabled => !isDisplay || data_type != 'number', :id => "input_data_type_number_format_#{opt.to_s}" %>
+        <% elsif(opt == :rounding) %>
+          <% rounding_option_collection = CustomFields::NumericFormat.rounding_collection %>
+          <% option_tags = rounding_option_collection.collect!{|u| selected = (u[:name].to_sym == ((field_options[opt].nil?) ? :None : field_options[opt].to_sym)) ? "selected=\"selected\"" : ''
+            "<option value='#{u[:name]}' #{selected} >#{u[:descr]}</option>"} %>
+          <%=select_tag option_name, option_tags, :disabled => !isDisplay || data_type != 'number', :id => "input_data_type_number_format_#{opt.to_s}" %>
+        <% elsif(opt == :prefix_multiplier) %>
+          <% prefix_multiplier_options = CustomFields::NumericFormat.prefix_multiplier_collection %>
+          <% prefix_multiplier_options.each_with_index do |dt, i| %>
+          </td>
+        </tr>
+        <tr id="tr_data_type_number_format_<%="#{opt.to_s}_#{dt[:name]}"%>" class="tr_display<%= (isDisplay) ? '' : '_none' %>" >
+          <th><%=label_tag option_name, "#{opt.to_s.sub('_', ' ').capitalize}"":" if i == 0 %></th>
+          <td><%=radio_button_tag(option_name, dt[:name],
+              dt[:name].to_sym == ((field_options[opt].nil?) ? :None : field_options[opt].to_sym),
+              :disabled => !isDisplay || data_type != 'number', :id => "input_data_type_number_format_#{opt.to_s}_#{dt[:name]}") + "#{dt[:descr]}" %>
+          <% end %>
+        <% else %>
+          <%=text_field_tag option_name, option, :disabled => !isDisplay || data_type != 'number', :id => "input_data_type_number_format_#{opt.to_s}" %>
+        <% end %>
+        <%=field_descr_tag %>
+      </td>
+    </tr>
+  <% end %>
+<% end %>

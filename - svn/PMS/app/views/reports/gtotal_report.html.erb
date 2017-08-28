@@ -1,0 +1,177 @@
+<% form_tag url_for(:action => 'gtotal_report'), :target => "_blank" do %>
+  <%= hidden_field_tag("invoice_to", params[:invoice_to]) %>
+  <%= hidden_field_tag("invoice_from", params[:invoice_from]) %>
+  <%= hidden_field_tag("filter_item", params[:filter_item]) %>
+  <%= hidden_field_tag("export", "yes") %>
+  <%= hidden_field_tag("rpt_type", @rpt_type) %>
+  <%= submit_tag("Export") %>
+<% end if @screen.allow_action?("export")%>
+
+<table  border=0 align="Left" >
+<tr align="Left" class='table_content'>
+<% if @rpt_name == "Product Type" || @rpt_name == "Sales Office" %>
+  <% if @rpt_name == "Product Type" %>
+    <th>Product Type</th>
+    <th>Sales Office</th>
+  <% else %>
+    <th>Sales Office</th>
+    <th>Product Type</th>
+  <% end %>
+  <th>Saleman</th>
+  <th>Potential Rank</th>
+  <th>Customer</th>
+  <th>Total amount</th>
+<% elsif @rpt_name == "Bill Count" %>
+  <th>Sales Office</th>
+  <th>Saleman</th>
+  <th>Quotation (count)</th>
+  <th>P/O (count)</th>
+  <th>Invoice (count)</th>
+<% else %>
+  <%="<th>#{@rpt_name}</th>" unless @rpt_name == "Potential Rank" %>
+  <th>Potential Rank</th>
+  <th>Customer</th>
+  <th>Product Type</th>
+  <th>Total amount</th>
+<% end %>
+</tr>
+<%i=0%>
+<% if @rpt_name == "Potential Rank" %>
+
+  <% @report_data.each_pair do |potential_rank,customers| %>
+    <tr bgcolor='<%=((i%2)==0)?"#CEE7FF" : "#F5F8FD"%>'>
+      <td align="center"><%= retrieve_result(potential_rank) %></td>
+      <% index_of_customers = 1 %>
+      <% customers.each_pair do |customer,product_types| %>
+        <%= "<tr bgcolor='#{((i%2)==0)?"#CEE7FF" : "#F5F8FD"}'><td>&nbsp;</td>" if index_of_customers > 1 %>
+        <td><%= retrieve_result(customer) %></td>
+        <% index_of_product_types = 1 %>
+        <% product_types.each_pair do |product_type,amount| %>
+          <%= "<tr bgcolor='#{((i%2)==0)?"#CEE7FF" : "#F5F8FD"}'><td>&nbsp;</td><td>&nbsp;</td>" if index_of_product_types > 1 %>
+          <td align="center"><%= retrieve_result(product_type) %></td>
+          <td align="right"><%=number_to_currency(amount,:unit => "", :precision => 2)%></td>
+          <%i=i+1%>
+          <%= "</tr>" if index_of_product_types > 1 %>
+          <% index_of_product_types += 1 %>
+        <% end %>
+        <%= "</tr>" if index_of_customers > 1 %>
+        <% index_of_customers += 1 %>
+      <% end %>
+      <tr align="right" bgcolor='#FAF8CC'><td colspan="3"><b>TOTAL</b></td>
+        <td><b><%=number_to_currency(@report_total[potential_rank],:unit => "", :precision => 2)%></b></td>
+      </tr>
+    </tr>
+  <% end %>
+  <tr align="right" bgcolor='#EBDDE2'><td colspan="3"><b>GRAND TOTAL</b></td>
+    <td><b><%=number_to_currency(@report_gtotal,:unit => "", :precision => 2)%></b></td>
+  </tr>
+<% elsif @rpt_name == "Product Type" || @rpt_name == "Sales Office" %>
+  <% @report_data.each_pair do |product_type,sale_offices| %>
+    <tr bgcolor='<%=((i%2)==0)?"#CEE7FF" : "#F5F8FD"%>'>
+      <td><%= retrieve_result(product_type) %></td>
+      <% index_of_sale_offices = 1 %>
+      <% sale_offices.each_pair do |sale_office,salemans| %>
+        <%= "<tr bgcolor='#{((i%2)==0)?"#CEE7FF" : "#F5F8FD"}'><td>&nbsp;</td>" if index_of_sale_offices > 1 %>
+        <td><%= retrieve_result(sale_office) %></td>
+        <% index_of_salemans = 1 %>
+        <% salemans.each_pair do |saleman,potential_ranks| %>
+          <%= "<tr bgcolor='#{((i%2)==0)?"#CEE7FF" : "#F5F8FD"}'><td>&nbsp;</td><td>&nbsp;</td>" if index_of_salemans > 1 %>
+          <td><%= retrieve_result(saleman) %></td>
+          <% index_of_potential_ranks = 1 %>
+          <% potential_ranks.each_pair do |potential_rank,customers| %>
+            <%= "<tr bgcolor='#{((i%2)==0)?"#CEE7FF" : "#F5F8FD"}'><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td>" if index_of_potential_ranks > 1 %>
+            <td align="center"><%= retrieve_result(potential_rank) %></td>
+            <% index_of_customers = 1 %>
+            <% customers.each_pair do |customer,amount| %>
+              <%= "<tr bgcolor='#{((i%2)==0)?"#CEE7FF" : "#F5F8FD"}'><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td>" if index_of_customers > 1 %>
+              <td><%= retrieve_result(customer) %></td>
+              <td align="right"><%=number_to_currency(amount,:unit => "", :precision => 2)%></td>
+              <%i=i+1%>
+              <%= "</tr>" if index_of_customers > 1 %>
+              <% index_of_customers += 1 %>
+            <% end %>
+            <%= "</tr>" if index_of_potential_ranks > 1 %>
+            <% index_of_potential_ranks += 1 %>
+          <% end %>
+          <%= "</tr>" if index_of_salemans > 1 %>
+          <% index_of_salemans += 1 %>
+        <% end %>
+        <%= "</tr>" if index_of_sale_offices > 1 %>
+        <% index_of_sale_offices += 1 %>
+      <% end %>
+      <tr align="right" bgcolor='#FAF8CC'><td colspan="5"><b>TOTAL</b></td>
+        <td><b><%=number_to_currency(@report_total[product_type],:unit => "", :precision => 2)%></b></td>
+      </tr>
+    </tr>
+  <% end %>
+  <tr align="right" bgcolor='#EBDDE2'><td colspan="5"><b>GRAND TOTAL</b></td>
+    <td><b><%=number_to_currency(@report_gtotal,:unit => "", :precision => 2)%></b></td>
+  </tr>
+<% elsif @rpt_name == "Bill Count" %>
+  
+  <% @report_data.each_pair do |sale_offices,salemans| %>
+    <%i=1%>
+    <tr bgcolor='<%=((i%2)==0)?"#CEE7FF" : "#F5F8FD"%>'>
+      <td><%= retrieve_result(sale_offices) %></td>
+      <% is = 1 %>
+      <% salemans.each_pair do |sales,bill| %>
+        <%= "<tr bgcolor='#{((is%2)==0)?"#CEE7FF" : "#F5F8FD"}'><td>&nbsp;</td>" if is  > 1 %>
+        <td><%= retrieve_result(sales) %></td>
+        <td align="center"><%=bill['Quotation']%></td>
+        <td align="center"><%=bill['P/O']%></td>
+        <td align="center"><%=bill['Invoice']%></td>
+        <%is+=1%>
+        </tr>
+    <% end %>
+    <%= "</tr>" if is > 1 %>
+    <% i += 1 %>
+      <tr align="right" bgcolor='#FAF8CC'><td colspan="2"><b>TOTAL</b></td>
+        <td align="center"><b><%=@report_total[sale_offices]['Quotation']%></b></td>
+        <td align="center"><b><%=@report_total[sale_offices]['P/O']%></b></td>
+        <td align="center"><b><%=@report_total[sale_offices]['Invoice']%></b></td>
+      </tr>
+    </tr>
+  <% end %>
+  <tr align="right" bgcolor='#EBDDE2'><td colspan="2"><b>GRAND TOTAL</b></td>
+    <td align="center"><b><%=number_to_currency(@report_gtotal['Quotation'],:unit => "", :precision => 0)%></b></td>
+    <td align="center"><b><%=number_to_currency(@report_gtotal['P/O'],:unit => "", :precision => 0)%></b></td>
+    <td align="center"><b><%=number_to_currency(@report_gtotal['Invoice'],:unit => "", :precision => 0)%></b></td>
+  </tr>
+<%else%>
+  <% @report_data.each_pair do |rpt,potential_ranks| %>
+    <tr bgcolor='<%=((i%2)==0)?"#CEE7FF" : "#F5F8FD"%>'>
+      <td><%= (rpt == "N/A") ? rpt : retrieve_result(rpt) %></td>
+      <% index_of_potential_ranks = 1 %>
+      <% potential_ranks.each_pair do |potential_rank,customers| %>
+        <%= "<tr bgcolor='#{((i%2)==0)?"#CEE7FF" : "#F5F8FD"}'><td>&nbsp;</td>" if index_of_potential_ranks > 1 %>
+        <td align="center"><%= retrieve_result(potential_rank) %></td>
+        <% index_of_customers = 1 %>
+        <% customers.each_pair do |customer,product_types| %>
+          <%= "<tr bgcolor='#{((i%2)==0)?"#CEE7FF" : "#F5F8FD"}'><td>&nbsp;</td><td>&nbsp;</td>" if index_of_customers > 1 %>
+          <td><%= retrieve_result(customer) %></td>
+          <% index_of_product_types = 1 %>
+          <% product_types.each_pair do |product_type,amount| %>
+            <%= "<tr bgcolor='#{((i%2)==0)?"#CEE7FF" : "#F5F8FD"}'><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td>" if index_of_product_types > 1 %>
+            <td align="center"><%= retrieve_result(product_type) %></td>
+            <td align="right"><%=number_to_currency(amount,:unit => "", :precision => 2)%></td>
+            <%i=i+1%>
+            <%= "</tr>" if index_of_product_types > 1 %>
+            <% index_of_product_types += 1 %>
+          <% end %>
+          <%= "</tr>" if index_of_customers > 1 %>
+          <% index_of_customers += 1 %>
+        <% end %>
+        <%= "</tr>" if index_of_potential_ranks > 1 %>
+        <% index_of_potential_ranks += 1 %>
+      <% end %>
+    <tr align="right" bgcolor='#FAF8CC'><td colspan="4"><b>TOTAL</b></td>
+        <td><b><%=number_to_currency(@report_total[rpt],:unit => "", :precision => 2)%></b></td>
+     </tr>
+    </tr>
+  <% end %>
+  <tr align="right" bgcolor='#EBDDE2'><td colspan="4"><b>GRAND TOTAL</b></td>
+    <td><b><%=number_to_currency(@report_gtotal,:unit => "", :precision => 2)%></b></td>
+  </tr>
+<%end%>
+
+</table>

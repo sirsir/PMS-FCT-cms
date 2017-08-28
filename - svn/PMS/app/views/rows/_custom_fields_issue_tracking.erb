@@ -1,0 +1,36 @@
+<% if readonly %>
+ <%=cell.to_html%>
+<% else %>
+<%
+name_prefix ||= ''
+if (@action_source == "relations")  && (params[:action] == "new")
+  ref_custom_field_id = ""
+  ref_id = ""
+  unless @filtered_reference.nil?
+    @filtered_reference.each do |f,k|
+      ref_custom_field_id = k
+      ref_id = f[:row_id]
+    end
+  end
+  name = "#{name_prefix}cells[#{field.custom_field_id}]"
+  value = retrieve_cell_cf(ref_id, field.custom_field_id) || ""
+  value.delete('Completed_date')
+  customs_fields_id = field.custom_field_id
+else
+  name = "#{name_prefix}cells[#{field.custom_field_id}]"
+  if cell.value.to_s.empty? && field.custom_field.default_value == "current_date"
+      value = {"Due_date" => Time.now.strftime("%d-%b-%Y"),
+               "Original_date" => Time.now.strftime("%d-%b-%Y")
+              }
+  else
+    value = cell.value
+  end
+  customs_fields_id = field.custom_field_id
+end
+%>
+
+<span style="white-space: nowrap">
+  <%= issue_tracking_tag(name,value,customs_fields_id) %>
+  <%= field_descr_tag :descr => field.custom_field.descr %>
+</span>
+<% end %>

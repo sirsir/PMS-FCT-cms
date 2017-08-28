@@ -1,0 +1,9 @@
+<%=render(:partial => 'stock_step', :locals => { :step => :auto_bookings }) %>
+
+<%
+form_id = "frm_stock_setting_#{@stock.id}"
+%>
+
+<% form_tag url_for(:action => 'update', :id => @stock.id, :step => :auto_bookings ), :onSubmit => "fncPrepareFormForSubmit(this);", :method=>:put, :id => form_id, :target=>"tmp_frame" do %>
+  <%=group_tag("Auto Booking", render(:partial => 'auto_booking'), {:type => "form", :blindable => false} ) %>
+<% end %>

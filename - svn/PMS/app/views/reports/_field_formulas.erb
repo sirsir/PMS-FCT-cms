@@ -1,0 +1,36 @@
+<table style="padding: 0px; background-color: #F5F8FD">
+  <%=render(:partial => '/fields/formula', :locals => {:reference_screens => reference_screens, :screen_alias => @report.reference_screen_alias}) %>
+  <tr>
+    <td>
+      <%
+      [:row, :cell].each do |p|
+        on_click =<<JAVASCRIPT
+var select = document.getElementById('cmbExpression');
+if (select.options.length == 0) {
+fncSetFormulaValue("combined_formula_result","field_report_template_formula_id");
+fncAddReportField("field_report_template_formula_id", "#{p.to_s}");
+}
+return false;
+JAVASCRIPT
+      %>
+         <%=link_to( (p == :row ) ? "R" : "x", "#", :onclick => on_click ) %>
+      <% end %>
+    </td>
+    <%
+    field_report = FieldsReport.new(
+      :report_id => @report.id,
+      :field_id => 0,
+      :location => FieldsReport.locations[0],
+      :field_type => :formula
+    )
+    %>
+    <td>
+      <table style="display: none;">
+        <tbody>
+          <%=render(:partial => 'field_report', :collection => [field_report], :locals => {:id => "field_report_template_formula_id" }) %>
+        </tbody>
+      </table>
+    </td>
+  </tr>
+</table>
+  

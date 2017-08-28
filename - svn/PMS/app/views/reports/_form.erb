@@ -1,0 +1,95 @@
+<%=hidden_field_tag "report[criterias][]" if @report.new_record? %>
+<table>
+  <tr>
+    <th class="th_row_header"><%= field_label_tag :name, :mandatory => true, :unique => true %>:</th>
+    <td>
+      <%= text_field :report, :name %>
+      <%= field_descr_tag %>
+    </td>
+  </tr>
+  <tr>
+    <th class="th_row_header">Description:</th>
+    <td>
+      <%= text_area :report, :descr, :rows=>4 %>
+      <%= field_descr_tag %>
+    </td>
+  </tr>
+
+  <%=table_hr_tag %>
+
+  <tr>
+    <%
+    name = "report[reference_screen_ids]"
+    left_to_right_options = {
+      :enable_move_all => false,
+      :multiple => true,
+      :sort => false,
+      :multi_selected => true
+    }
+    group_method = <<RUBY
+childs.sort{|a,b| a.name <=> b.name }.collect{|s|
+  if s.controller == 'screens' && s.action == 'show' && !s.is_a?(MenuGroupScreen)
+    sub_screens = [s]
+    if s.is_a?(HeaderScreen)
+      sub_screens << s.revision_screen 
+      sub_screens += s.revision_screen.detail_screens
+    end
+  end
+
+  sub_screens
+}.flatten.compact
+
+RUBY
+  %>
+    <th class="th_row_header">Screens:</th>
+    <td id='<%=name %>_selector'>
+      <%=  left_to_right_tag(
+        :descr => "Screen",
+        :name => name,
+        :assigned_options => @assigned_options,
+        :all_options => @all_options,
+        :value_method => "id",
+        :text_method => "name",
+        :group_method => group_method,
+        :group_label_method => "name",
+        :left_to_right_options => left_to_right_options )
+    %>
+      <%= field_descr_tag %>
+    </td>
+  </tr>
+
+  <%=table_hr_tag %>
+
+  <tr>
+    <th class="th_row_header">Grand Total:</th>
+    <td>
+      <%
+      input_name = "report[grand_total][]"
+      Report.grand_total_locations.each do |gt|
+        checked = @report.new_record? ? false : @report.grand_total.include?(gt.to_s)
+        input_id = "#{sanitize_to_id(input_name)}#{gt.to_s}"
+      %>
+        <%= check_box_tag input_name, gt, checked, :id => input_id %><%= label_tag input_id, "#{gt.to_s.titleize}" %>
+      <% end %>
+      <%= field_descr_tag %>
+      <%= hidden_field_tag input_name, "-1" %>
+    </td>
+  </tr>
+
+  <%=table_hr_tag %>
+
+  <tr>
+    <th class="th_row_header">Remark:</th>
+    <td>
+      <%= screen_text_area_tag(:name => "report[remark]", :cell_value => @report.remark) %>
+      <%= field_descr_tag %>
+    </td>
+  </tr>
+
+  <%=table_hr_tag %>
+
+  <tr>
+    <th />
+    <td><%= group_button(:area_id => @screen.id) %></td>
+  </tr>
+</table>

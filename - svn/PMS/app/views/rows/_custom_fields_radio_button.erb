@@ -1,0 +1,31 @@
+<% if readonly %>
+  <%=cell.to_html%>
+<% else %>
+<%
+name_prefix ||= ''
+events ||= ''
+name = "#{name_prefix}cells[#{field.custom_field_id}]"
+labels = cell.custom_field.labels
+custom_field = field.custom_field
+new_line = custom_field.value[:new_line]
+
+
+if cell.row_id.nil?
+  cell_value = {'label' => custom_field.default_value}
+else
+    cell_value = cell.value.is_a?(Hash) ? cell.value : {'label' => cell.value}
+end
+%>
+
+<%= radio_button_collection_tag(
+      :customs_fields_id => field.custom_field_id,
+      :radio_options => labels,
+      :assigned_label_id => cell_value,
+      :name => name,
+      :events => events,
+      :token => new_line ? "<br>" : '')%>
+<% if custom_field.other_label_id > 0 %>
+  <%= text_field_tag name + "[other_value]", cell_value[:other_value] %>
+<% end %>
+<%= field_descr_tag :descr => field.custom_field.descr %>
+<% end %>

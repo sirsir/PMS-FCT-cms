@@ -1,0 +1,25 @@
+<%=javascript_include_tag "prototype" %>
+<%=javascript_include_tag "application" %>
+<%=javascript_include_tag "dialog" %>
+<%=javascript_include_tag "fr" %>
+<script type="text/javascript">
+<%
+tr_id = "#{@field.screen_id}_#{@field.id}"
+%>
+<% if @field.errors.empty? %>
+    fncUpdateTrToTableContent(<%= @screen_self.id %>, '<%= tr_id %>');
+    
+    var main_doc = fncGetMainDocument();
+    var div;
+<% unless @form_content_reuse %>
+    div = main_doc.getElementById("operation_area_<%= @screen_self.id.to_s %>");
+    fncClearDiv(div);
+<% end %>
+    div = main_doc.getElementById("error_area_<%= @screen_self.id.to_s %>");
+    fncClearDiv(div);
+<% else %>
+    fncSetError('<%=error_messages_for(:object => @field).to_s.gsub(/'/, "&rsquo\;") %>', '<%= @screen_self.id %>');
+<% end %>
+
+  fncLoadTempFrame();
+</script>

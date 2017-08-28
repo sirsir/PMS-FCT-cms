@@ -1,0 +1,32 @@
+
+<table class='table_content' id='table_content_<%=screen.id  %>' cellspacing='0'>
+<%
+$sort_field_id_order ||= []
+sort_field_order_change = $sort_field_id_order != @sort_field_id_order
+$sort_field_id_order = @sort_field_id_order
+%>
+<%= view_cache('rows/field_level', screen, :force => screen.has_required_search? || sort_field_order_change) do
+    render :partial => "/rows/field_level",
+      :collection => (1..screen.field_level).to_a,
+      :locals => { :screen => screen }
+  end %>
+
+  <%
+  operation_url_options ||= {}
+  relation_url_options ||= {}
+
+  row_model = "#{screen.prefix}_row".classify.constantize
+
+  row_groups = []
+  row_groups << [row_model.new(:screen_id => screen.id)] #~ Template
+  row_groups << rows                                     #~ Rows
+
+  row_groups.each do |rg|
+  %>
+
+  <%=render :partial => "/rows/loading_row", :collection =>rg,
+        :locals => {:screen => screen, :rows => rg, :row_type => :list,
+                    :operation_url_options => operation_url_options, :relation_url_options => relation_url_options} %>
+
+  <% end %>
+</table>

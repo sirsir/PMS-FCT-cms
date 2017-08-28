@@ -1,0 +1,23 @@
+<table>
+<tr>
+  <th class="th_row_header">From DT:</th>
+  <td>
+      <%=select_tag("custom_field[value][date_from_id]", options_from_collection_for_select(@screen.date_fields, :id, :descr)) %>
+      <%= field_descr_tag %>
+  </td>
+</tr>
+<tr>
+  <th class="th_row_header">To DT:</th>
+  <td>
+      <%=select_tag("custom_field[value][date_to_id]", options_from_collection_for_select(@screen.date_fields, :id, :descr)) %>
+      <%= field_descr_tag %>
+  </td>
+</tr>
+<tr>
+  <th class="th_row_header">Parameter Field:</th>
+  <td>
+      <%=select_tag("custom_field[value][field_id]", options_from_collection_for_select(@screen.fields, :id, :descr)) %>
+      <%= field_descr_tag %>
+  </td>
+</tr>
+</table>

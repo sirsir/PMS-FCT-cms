@@ -1,0 +1,14 @@
+ 
+<%
+html_tag = ""
+row_class = cols.index(col_login_field) % 2 == 0 ? "even" : "odd"
+name_tag = "field_filter[#{field_report.field_id}][value][selected_ids][]"
+selected_ids = @report_request.field_filter(field_report.field_id).selected_ids
+
+if (read_only && selected_ids.include?(col_login_field.id)) || !read_only then
+  html_tag = "<tr class='tr_data_#{row_class}'><td class='td_cell'> #{read_only ? "&nbsp;" : check_box_tag(name_tag, col_login_field.id, selected_ids.include?(col_login_field.id))} </td>" +
+             "<td class='td_cell'> #{col_login_field.login}</td>" +
+             "<td class='td_cell'> 14 </td></tr>"
+
+%>
+<%= html_tag %>

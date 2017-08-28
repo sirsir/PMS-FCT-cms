@@ -1,0 +1,145 @@
+<%
+fields ||= {}
+
+defaults = {
+  :to => "To",
+  :address_no => "Customer No.",
+  :address_estate => "Customer Estate",
+  :address_moo => "Moo",
+  :address_road => "Customer Road",
+  :address_soi => "Customer Soi",
+  :address_sub_district => "Customer Sub District",
+  :address_district => "Customer District",
+  :address_province => "Customer Province",
+  :address_postal_code => "Customer Postal Code",
+  :tel => "Customer Tel No.",
+  :fax => "Customer Fax No.",
+  :attn_title => "Attn Title",
+  :attn_name => "Attn Name",
+  :attn_position => "Attn Position",
+  :attn_department => "Attn Dept",
+  :attn_tel => "Attn Tel No.",
+  :attn_mobile => "Attn Mobile No.",
+  :attn_email => "Attn Email",
+  :cc => "CC",
+  :project => "Project Name",
+  :from_first_name => "Staff First Name",
+  :from_last_name => "Staff Last Name",
+  :from_tel => "Staff Tel No.",
+  :from_email => "Staff Email",
+  :quotation_no => "Quotation No.",
+  :drawing => "Drawing No."
+}
+
+fields = defaults.merge(fields)
+
+fields.each{|k, v| fields[k] = Field.value_by_field_name(v, @revision_row).to_s.gsub("<br>", "\n") }
+
+rev_date_format ||= '%d-%b-%Y'
+%>
+<table class="table_header">
+  <tr>
+    <!-- Left Hand Side -->
+    <td class ="td_customer">
+      <table class="table_customer">
+        <tr>
+          <td class="td_title_header">TO:</td>
+          <th class="td_text_customer"><%= fields[:to].to_html %></th>
+        </tr>
+        <tr>
+          <td class="td_title_header">&nbsp;</td>
+          <td class="td_address_customer">
+            <%= fields[:address_no].to_html unless fields[:address_no].empty? %>
+            <%= " #{fields[:address_estate]} Industrial Estate,".to_html unless fields[:address_estate].empty? || fields[:address_estate] == "\&nbsp\;" %>
+            <%= " Moo #{fields[:address_moo]}".to_html unless fields[:address_moo].empty? %>
+            <%= " #{fields[:address_road]} Rd.,".to_html unless fields[:address_road].empty? %>
+            <%=  " Soi #{fields[:address_soi]},".to_html unless fields[:address_soi].empty? %>
+            <%= "#{fields[:address_sub_district]},".to_html unless fields[:address_sub_district].empty? %>
+            <%= " #{fields[:address_district]},".to_html unless fields[:address_district].empty? %>
+            <%= " #{fields[:address_province]}".to_html unless fields[:address_province].empty? %>
+            <%= " #{fields[:address_postal_code]}".to_html unless fields[:address_postal_code].empty?  %>
+          </td>
+        </tr>
+        <tr>
+          <td class="td_title_header">TEL:</td>
+          <td class="td_text_customer"> <%= fields[:tel].to_html %></td>
+        </tr>
+        <tr>
+          <td class="td_title_header">FAX:</td>
+          <td class="td_text_customer"><%= fields[:fax].to_html %></td>
+        </tr>
+        <tr>
+          <td class="td_title_header">ATTN.: </td>
+          <th class="td_text_customer">
+            <%= fields[:attn_title].to_html %>
+            <%= fields[:attn_name].to_html %>
+            <%= " / #{fields[:attn_position]}".to_html unless fields[:attn_position].empty? %>
+          </th>
+        </tr>
+        <tr>
+          <td class="td_title_header"></td>
+          <td class="td_address_customer">
+            <%= "Dept: #{fields[:attn_department]}\n".to_html unless fields[:attn_department].empty? %>
+            <%= case
+              when !fields[:attn_mobile].empty?
+                " Mobile: #{fields[:attn_mobile]}"
+              when !fields[:attn_tel].empty?
+                " Tel: #{fields[:attn_tel]}"
+              end.to_html
+            %>
+            <%= " Email: #{fields[:attn_email]}".to_html unless fields[:attn_email].empty? %>
+          </td>
+        </tr>
+        <tr>
+          <td class="td_title_header">CC:</td>
+          <td class="td_text_customer"><%= fields[:cc].to_html %></td>
+        </tr>
+        <tr>
+          <td class="td_title_header" colspan="3">&nbsp;</td>
+        </tr>
+        <tr>
+          <td class="td_title_header">Project:</td>
+          <td class="td_text_customer"><%= fields[:project].to_html %></td>
+        </tr>
+        <tr>
+          <td class="td_title_header" colspan="3">&nbsp;</td>
+        </tr>
+        <tr>
+          <td colspan="2" class="text_italic">We are pleased to quote you as follows,</td>
+        </tr>
+      </table>
+    </td>
+
+    <!-- Right Hand Side -->
+    <td class ="td_staff">
+      <table class="table_staff">
+        <tr>
+          <td class="td_title_header">DATE:</td>
+          <td class="td_text_staff"><%= @revision_row.rev_date.strftime(rev_date_format) %></td>
+        </tr>
+        <tr>
+          <td class="td_title_header">FROM:</td>
+          <th class="td_text_staff">
+            <%= fields[:from_first_name].to_html %>
+            <%= " #{fields[:from_last_name][0..0]}.".to_html unless fields[:from_last_name].empty? %>
+          </th>
+        </tr>
+        <tr>
+          <td class="td_title_header">&nbsp;</td>
+          <td class="td_address_staff">
+            <%= "Mobile: #{fields[:from_tel]}\n".to_html unless fields[:from_tel].empty? %>
+            <%= fields[:from_email].to_html unless fields[:from_email].empty? %>
+          </td>
+        </tr>
+        <tr>
+          <td class="td_title_header">REF:</td>
+          <td class="td_text_staff"><%= fields[:quotation_no].to_html %><%= "#R#{@revision_row.rev_no}" if @revision_row.rev_no > 0 %></td>
+        </tr>
+        <tr>
+          <td class="td_title_header">DWG:</td>
+          <td class="td_text_staff"><%= fields[:drawing].to_html %></td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+</table>

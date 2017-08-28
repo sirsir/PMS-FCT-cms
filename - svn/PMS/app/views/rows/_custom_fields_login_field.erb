@@ -1,0 +1,7 @@
+<% if readonly %>
+  <%=cell.to_html %>
+<% else %>
+  <% name_prefix ||= '' %>
+  <%=screen_login_field_tag( :name => "#{name_prefix}cells[#{field.custom_field_id}]", :custom => @users, :cell_value => cell.value)%>
+  <%= field_descr_tag :descr => field.custom_field.descr %>
+<% end %>

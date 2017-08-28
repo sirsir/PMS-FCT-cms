@@ -1,0 +1,32 @@
+<h1>Editing stock_transaction</h1>
+
+<% form_for(@stock_transaction) do |f| %>
+  <%= f.error_messages %>
+
+  <p>
+    <%= f.label :transaction_at %><br />
+    <%= f.datetime_select :transaction_at %>
+  </p>
+  <p>
+    <%= f.label :type %><br />
+    <%= f.text_field :type %>
+  </p>
+  <p>
+    <%= f.label :value %><br />
+    <%= f.text_field :value %>
+  </p>
+  <p>
+    <%= f.label :reason_row_id %><br />
+    <%= f.text_field :reason_row_id %>
+  </p>
+  <p>
+    <%= f.label :remark %><br />
+    <%= f.text_field :remark %>
+  </p>
+  <p>
+    <%= f.submit "Update" %>
+  </p>
+<% end %>
+
+<%= link_to 'Show', @stock_transaction %> |
+<%= link_to 'Back', stock_transactions_path %>

@@ -1,0 +1,26 @@
+<%
+ajax_params = {
+  :controller => "report_requests"
+}
+operation_tags = operation_tag( [:print],{:id =>@report_request.id, :ajax_params => ajax_params} )
+%>
+
+<%=operation_tags %>
+
+<%=render(:partial => 'report_requests/report_request_step', :locals => { :step => :show }) %>
+
+<%=render :partial => 'form', :locals => {:read_only => true}%>
+
+<%=render :partial => 'field_filters/form', :locals => {:read_only => true}%>
+
+  <%
+  ajax_url = url_for(:action => :request_report, :id => @report_request.id, :authenticity_token => form_authenticity_token, :ajax_result_id => "report_area")
+  display_ajax_url = url_for(:action => :display_result, :id => @report_request.id, :authenticity_token => form_authenticity_token, :ajax_result_id => "report_area")
+  %>
+<div id="report_area" name="on_load_report_content"
+     ajax_url="<%=ajax_url %>" status="loaded" ajax_call_mode="request">
+  <div id="report_area" name="on_load_report_content"
+     ajax_url="<%=display_ajax_url %>" ajax_result_id="report_area" status="unloaded">
+  </div>
+</div>
+

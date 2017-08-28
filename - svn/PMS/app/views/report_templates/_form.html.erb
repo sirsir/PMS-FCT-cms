@@ -1,0 +1,89 @@
+<%= hidden_field :report_template, :type %>
+<table>
+  <tr>
+    <th class="th_row_header"><%= field_label_tag :name, :mandatory => true, :unique => true %>:</th>
+    <td>
+      <%= text_field :report_template, :name %>
+      <%= field_descr_tag :descr => "Input title for the link" %>
+    </td>
+  </tr>
+
+  <tr>
+    <th class="th_row_header"><%= field_label_tag :screen, :mandatory => true, :unique => false %>:</th>
+    <td>
+      <%= screen_collection_select_tag(
+        :assigned_options => [@report_template.screen || @screens.first],
+        :all_options => @screens,
+        :name => "report_template[screen_id]",
+        :value_method => "id",
+        :text_method => "name",
+        :group_method => Screen.select_group_method,
+        :group_label_method => "name",
+        :include_blank => true ) %>
+      <%= field_descr_tag :descr => "Select the screen that will displaying the report link" %>
+    </td>
+  </tr>
+
+
+  <tr>
+    <th class="th_row_header"><%= field_label_tag :template, :mandatory => @report_template.new_record?, :unique => false %>:</th>
+    <td>
+      <% unless @report_template.new_record? %>
+      <%= @report_template.template_name.gsub(/ReportTemplates::/, '') %>
+      <%= hidden_field :report_template, :file %>
+      <% else %>
+      <%
+      model_templates = ReportTemplate.find_template_files(:Models)
+      model_templates.collect! do |mt|
+        [mt[:name], mt[:class]]
+      end
+      model_options = options_for_select(model_templates, @report_template.template_name)
+
+      report_templates = ReportTemplate.find_template_files(:Reports)
+      report_templates.collect! do |rt|
+        [rt[:name], rt[:file]]
+      end
+      report_options = options_for_select(report_templates, @report_template.template_name)
+
+      file_options = <<HTML_TAG
+<option></option>
+<optgroup label="Models">
+#{model_options}
+</optgroup>
+<optgroup label="Reports">
+#{report_options}
+</optgroup>
+HTML_TAG
+
+      %>
+      <%= select_tag "report_template[file]", file_options %>
+      <%= field_descr_tag :descr => "Select template file." %>
+      <% end %>
+    </td>
+  </tr>
+
+  <tr>
+    <th class="th_row_header"><%= field_label_tag :display %>:</th>
+    <td>
+      <% ReportTemplate.display_views.each do |display_pos| %>
+        <%= radio_button_tag "report_template[display]", display_pos, @report_template.display == display_pos, :disabled => display_pos == 'menu_item' %><%= label_tag "report_template[display][#{display_pos}]", display_pos.titleize %>
+      <% end %>
+      <%= field_descr_tag :descr => "Select displaying position" %>
+    </td>
+  </tr>
+
+  <tr>
+    <th class="th_row_header"><%= field_label_tag :output_type %>:</th>
+    <td>
+      <% ReportTemplate.output_types.each do |output_type| %>
+        <%= radio_button_tag "report_template[output_type]", output_type, @report_template.output_type == output_type, :disabled => output_type == 'menu_item' %><%= label_tag "report_template[output_type][#{output_type}]", output_type.upcase %>
+      <% end %>
+      <%= field_descr_tag :descr => "Select output type" %>
+    </td>
+  </tr>
+  
+  <tr>
+    <th />
+    <td><%= group_button(:reused_form => @report_template.new_record?, :area_id => @screen.id) %></td>
+  </tr>
+</table>

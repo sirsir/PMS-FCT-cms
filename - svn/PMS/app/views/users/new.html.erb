@@ -1,0 +1,8 @@
+<%
+form_id = "frm_new_user"
+%>
+<% form_tag url_for(:action => 'create' ), :onSubmit => "fncPrepareFormForSubmit(this);", :id => form_id, :target=>"tmp_frame" do %>
+  <%= screen_creation_tag @screen, render(:partial => 'form', :area_id =>""), "#{form_id}_content" %>
+<% end %>
+
+<hr />

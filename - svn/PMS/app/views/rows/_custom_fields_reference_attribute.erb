@@ -1,0 +1,10 @@
+<% if readonly %>
+ <%=cell.to_html %>
+<% else %>
+<% name_prefix ||= '' %>
+<div id ="ref_att_<%=field.source_field.id%>">
+  <%=text_field_tag "#{name_prefix}cells[#{field.custom_field_id}]", cell.value, :readonly=>field.read_only? %>
+</div>
+
+<%= field_descr_tag :descr => field.custom_field.descr :break => false %>
+<% end %>

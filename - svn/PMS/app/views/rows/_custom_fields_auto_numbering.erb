@@ -1,0 +1,37 @@
+<%
+name_prefix ||= ''
+auto_numbering_field = CustomFields::AutoNumbering.cell_text(cell.value)
+%>
+
+<%=label_tag "#{name_prefix}cells[#{field.custom_field_id}][text]", auto_numbering_field %>
+<%=hidden_field_tag("#{name_prefix}cells[#{field.custom_field_id}][text]", auto_numbering_field) %>
+<%= field_descr_tag :descr => field.custom_field.descr, :break => false %>
+<% if field.custom_field.has_date? %>
+  </td>
+  </tr>
+
+  <tr id="fields_data_<%=row.id %>_<%=field.id %>">
+    <th class="th_row_header">
+      <%="#{field.descr}"%> Date :
+    </th>
+    <td>
+      <%= date = CustomFields::AutoNumbering.cell_date(cell.value, Date.today) %>
+      <%=hidden_field_tag "#{name_prefix}cells[#{field.custom_field_id}][date]", date %>
+<% end %>
+
+<%
+field.custom_field.reference_custom_fields.each do |cf|
+  ref_field = Fields::Data.new(
+    :mandatory_check => 1,
+    :unique => 0,
+    :display_flags => field.display_flags
+  )
+  ref_field.id = field.id
+  ref_field.screen = field.screen
+  ref_field.custom_field = cf
+%>
+    </td>
+  </tr>
+  <%=render :partial => "/rows/fields_data", :locals => {:field => ref_field, :row => row, :readonly => !row.new_record?} %>
+  <tr style="display: none"><td>
+<% end %>

@@ -1,0 +1,150 @@
+<table>
+  <tr>
+    <th class="th_row_header"><%= field_label_tag :name, :mandatory => true, :unique => true %>:</th>
+    <td>
+      <%= text_field_tag "screen[name]", @screen.name %>
+      <%= field_descr_tag %>
+    </td>
+  </tr>
+
+  <tr>
+    <th class="th_row_header">Type:</th>
+    <td>
+      <% if !@screen.new_record? %>
+        <%
+        screen_class = @screen.class.to_s
+        screen_class.gsub!("Screen", " ") unless @screen.system?
+        %>
+        <%= label_tag screen_class %>
+        <%= hidden_field_tag 'screen[type]', @screen.prefix %>
+      <% else %>
+        <div onclick='$("screen_value_revision_control").disabled = !$("screen_type_revision").checked; $("tr_revision_control").style.display = $("screen_type_revision").checked ? "" : "none" '>
+          <%
+          input_name = "screen[type]"
+          %w(list header revision detail report menu_group).each do |o|
+          %>
+          <%= radio_button_tag input_name, o, o == 'list' %> <%= label_tag "#{input_name}[#{o}]", o.titleize %><br />
+          <% end %>
+        </div>
+      <% end %>
+      <%= field_descr_tag %>
+    </td>
+  </tr>
+
+  <tr>
+    <th class="th_row_header">Parent:</th>
+    <td>
+      <%= screen_collection_select_tag(
+        :assigned_options => (@screen.id.nil?) ? [@screen] : [@screen.get_parent_screen],
+        :all_options => @screens,
+        :name => "screen[screen_id]",
+        :value_method => "id",
+        :text_method => "name",
+        :include_blank => false ) %>
+      <%= field_descr_tag %>
+    </td>
+  </tr>
+
+  <tr>
+    <th class="th_row_header">Label:</th>
+    <td>
+      <%= select_label_tag("screen[label_id]", @screen.label_id.to_i) %>
+      <%= field_descr_tag %>
+    </td>
+  </tr>
+
+  <tr>
+    <th class="th_row_header">Icon:</th>
+    <td>
+      <% Screen.icons.each_with_index do |icon, i| %>
+        <%= radio_button_tag("screen[icon]", icon, icon == (@screen.menu_icon || Screen.icons.first)) %>
+        <%= label_tag "screen[icon][#{icon}]", image_tag("menu/#{icon}.png", :class => :menu_icon) %>
+
+        <% if (i+1) % 5 == 0 && (i+1) != Screen.icons.size %>
+          <br />
+        <% else %>
+          &ensp;
+        <% end %>
+      <% end %>
+      <%= field_descr_tag %>
+    </td>
+  </tr>
+
+  <tr>
+    <th class="th_row_header">Display Seq:</th>
+    <td>
+      <%= text_field_tag "screen[display_seq]",@screen.display_seq %>
+      <%= field_descr_tag %>
+    </td>
+  </tr>
+
+  <%=table_hr_tag %>
+
+  <tr>
+    <th class="th_row_header">Alias:</th>
+    <td>
+      <%= screen_collection_select_tag(
+        :assigned_options => (@screen.id.nil?) ? [@screen]:[@screen.get_alias_screen],
+        :all_options => @screens_for_alias_and_relate,
+        :name => "screen[alias_screen]",
+        :value_method => "id",
+        :text_method => "name",
+        :include_blank => true ) %>
+      <%= field_descr_tag %>
+    </td>
+  </tr>
+
+  <tr>
+    <th class="th_row_header">Relate Screen:</th>
+    <td>
+      <%= screen_collection_select_tag(
+        :assigned_options => (@screen.id.nil?) ? [@screen]:[@screen.get_relate_screen],
+        :all_options => @screens_for_alias_and_relate,
+        :name => "screen[relate_screen]",
+        :value_method => "id",
+        :text_method => "name",
+        :include_blank => true ) %>
+      <%= field_descr_tag %>
+    </td>
+  </tr>
+
+  <% display = @screen.is_a?(RevisionScreen) ? "" : "none" %>
+  <tr id="tr_revision_control" style="display: <%= display %>">
+    <th class="th_row_header">Revision Control:</th>
+    <td>
+      <%
+      input_name = "screen[value][revision_control]"
+      %>
+      <%= check_box_tag input_name, true, @screen.control_revision?, { :disabled => (display == "none" ? true : false) } %>
+      <%= label_tag input_name, "Enable revision controlling for this screen"%>
+      <%= hidden_field_tag input_name, false %>
+      <%= field_descr_tag %>
+    </td>
+  </tr>
+
+  <%=table_hr_tag %>
+
+  <tr>
+    <th class="th_row_header">Print Size:</th>
+    <td>
+      <%= select 'screen', 'page_size', ReportTemplate.page_sizes %>
+      <%= field_descr_tag :descr => 'Select paper size' %>
+    </td>
+  </tr>
+
+  <tr>
+    <th class="th_row_header">Orientation:</th>
+    <td>
+      <%= radio_button_tag 'screen[page_layout]', 'portrait', @screen.page_layout != :landscape %><%= label_tag 'screen[page_layout][portrait]', 'Portrait' %>
+      <%= radio_button_tag 'screen[page_layout]', 'landscape', @screen.page_layout == :landscape %><%= label_tag 'screen[page_layout][landscape]', 'Landscape' %>
+      <%= field_descr_tag :descr => 'Select paper orientation' %>
+    </td>
+  </tr>
+
+  <%=table_hr_tag %>
+
+  <tr >
+    <th />
+    <td><%= group_button(:reused_form => @screen.new_record?, :area_id => @screen_self.id) %></td>
+  </tr>
+</table>

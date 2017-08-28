@@ -1,0 +1,25 @@
+<html>
+  <head>
+    <title><%= @revision_row.description %></title>
+<%= stylesheet_link_tag "print_susbkk", :media => "all" %>
+<%= stylesheet_link_tag "print_susbkk_table", :media => "all" %>
+  </head>
+  <body>
+<%
+partial = @revision_row.header_row.screen.name.underscore.gsub(" ", "_").gsub(/_header$/, "")
+partial = partial + (@print_id == :print2 ? "_calculate_sheet" : '')
+partial.gsub!(/(Rangsit|Lumpoon|Amata)/i, "domestic") if partial =~ /(Rangsit|Lumpoon|Amata)/i
+partial.gsub!(/l\/c/i, "lc") if partial =~ /l\/c/i
+@template_name = "_#{partial}.erb"
+
+@revision_row.clear_cache
+
+if @template_name.nil?
+  print_tag = "<span class=\"missing_implementation\">Report for #{@revision_row.header_row.screen.label_descr} doesn't exist (#{template_name}).</span>"
+else
+  print_tag = render :partial => partial
+end
+%>
+<%= print_tag %>
+  </body>
+</html>

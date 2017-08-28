@@ -1,0 +1,43 @@
+<%
+  img =
+    if @screen.dependencies.length == 1
+      'down'
+    else
+      case @screen.dependencies.index(dependency)
+        when 0 then 'left_down'
+        when (@screen.dependencies.length - 1) then 'right_down'
+        else 'intersect_down'
+      end
+    end
+
+  left_class =
+    case img
+      when 'right_down' then 'top_line'
+      when 'intersect_down' then 'top_line'
+      else 'blank'
+    end
+
+  right_class =
+    case img
+      when 'left_down' then 'top_line'
+      when 'intersect_down' then 'top_line'
+      else 'blank'
+    end
+
+%>
+<td>
+  <%
+  if dependency.system?
+    rel_type = :system
+  else
+    case dependency
+    when MenuGroupScreen
+      rel_type = :menu_group_screen
+    end
+  end
+  %>
+  <table class="screen_relation" cellpadding="0" cellspacing="0" border="0">
+    <%=screen_relation_line_tag(left_class, img, right_class)%>
+    <%=screen_relation_node_tag(dependency, :type => rel_type)%>
+  </table>
+</td>

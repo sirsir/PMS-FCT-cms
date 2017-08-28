@@ -1,0 +1,35 @@
+<tr class="tr_header" ><th class="group_caption_center" colspan="2">Configurations</th></tr>
+<tr class="tr_header"><th class="th_col_header">Name</th><th class="th_col_header">Value</th></tr>
+<%
+  b = true
+  conf = Rails.configuration
+  %w(
+    cache_classes
+    dependency_loading
+    whiny_nils
+    root_path
+    log_path
+    log_level
+    first_port
+    listening_ports
+    reserved_ports
+    offline
+    system_name
+    system_descr
+    client_code
+    client_name
+    null_date
+    time_zone
+    index_default_updated_at_filter
+  ).each do |c|
+    value = eval("conf.#{c}")
+    case value
+    when Hash, Array
+      value = value.inspect
+    end
+%>
+<tr class="tr_data_<%= (b ^= true) ? 'odd' : 'even' %>">
+  <td class="td_cell"><%=c.titleize %></td>
+  <td class="td_cell"><%=value %></td>
+</tr>
+<% end %>

@@ -1,0 +1,11 @@
+<tr class='tr_data_'>
+  <%
+  stock_key = @stock.stock_keys[select_hidden]
+  options = (@stock.hidden.nil?) ? [stock_key.labels] : [stock_key.labels, @stock.hidden[stock_key.id.to_s]]
+  %>
+  <td class='td_cell'>&nbsp;</td>
+  <td class='td_cell'><%=stock_key.label_descr %></td>
+  <td class='td_cell'><%=screen_combo_box_collection_tag("stock[hidden][#{stock_key.id}]", options) %></td>
+  <td class='td_cell'>&nbsp;</td>
+</tr>
+

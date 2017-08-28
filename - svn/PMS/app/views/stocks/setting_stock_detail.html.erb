@@ -1,0 +1,22 @@
+<%=javascript_include_tag "prototype" %>
+<%=javascript_include_tag "application" %>
+<%=javascript_include_tag "dialog" %>
+<%=javascript_include_tag "fr" %>
+
+<script type="text/javascript">
+  <%
+  next_type_index = StockTransaction.transaction_childs.index(@stock_detail.transaction_type.to_sym)
+
+  ajax_url = url_for(:action => :settings, :id => @stock.id, :transaction_type => StockTransaction.transaction_childs[next_type_index+1])
+  %>
+
+  <% if @stock_detail.transaction_type.to_sym == StockTransaction.transaction_childs.last %>
+    var main_doc = fncGetMainDocument();
+    var div = main_doc.getElementById("operation_area");
+    fncClearDiv(div);
+  <% else %>
+    fncSetOperationContent("operation_area", "<%=ajax_url %>")
+  <% end %>
+
+  fncLoadTempFrame();
+</script>

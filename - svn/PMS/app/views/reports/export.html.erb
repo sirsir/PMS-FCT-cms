@@ -1,0 +1,25 @@
+<% form_tag url_for(:action => 'generate'), :target => "_blank" do %>
+  <%= hidden_field_tag("screen_id", @screen_id) %>
+  <%= hidden_field_tag("parent_row_id", @parent_row_id) %>
+  <%= hidden_field_tag("action_source", @action_source) %>
+  <%= hidden_field_tag("row_ids", @row_ids) %>
+<table>
+  <tr>
+    <th class="th_row_header">File:</th>
+    <td>
+      <%= select(:report_type, :report_type, [['Microsoft Excel Workbook (*.xls)','XLS'],['Comma Separated Value (*.csv)','CSV']])%>
+      <%=field_descr_tag(:descr => 'File format for the file being exported') %>
+    </td>
+  </tr>
+  <tr>
+    <th class="th_row_header">Records:</th>
+    <td>
+      <%= radio_button_tag(:data_size, :filter, true) %>    <%= label_tag :data_size_filter, "Current Filtered Results" %><br/>
+      <%= radio_button_tag(:data_size, :filter_wo_limit) %> <%= label_tag :data_size_filter_wo_limit, "Filtered Results with out #{Row.max_screen_reaults} limit" %><br/>
+      <%= radio_button_tag(:data_size, :all) %>             <%= label_tag :data_size_all, 'All' %>
+      <%=field_descr_tag(:descr => 'Select the amount of records to export') %>
+    </td>
+  </tr>
+</table>
+  <%= submit_tag("Download") %>
+<% end %>

@@ -1,0 +1,12 @@
+<%= report_template_link @row %>
+<%
+form_id = "frm_edit_#{@row.screen_id.to_s}"
+%>
+<% form_tag url_for(:action => 'update'), :onSubmit => "fncPrepareFormForSubmit(this);", :multipart => true, :method=>:put, :id=>form_id, :target=>"tmp_frame"  do %>
+  <%= hidden_field_tag "row[id]", @row.id %>
+  <%= hidden_field_tag "action_source", @action_source %>
+  <%= hidden_field_tag "pageno", @pageno %>
+  <%= screen_modification_tag @row.description, render(:partial => 'form', :locals => {:row => @row, :readonly => @readonly, :area_id => @row.screen_id.to_s}), "#{form_id}_content" %>
+<% end %>
+<%=  render :partial => 'full_logs' %>
+<hr />

@@ -1,0 +1,21 @@
+
+field_types_2: 
+  name: Combo Box
+  updated_at: 2009-02-04 04:43:20 Z
+  descr: combo
+  id: 2
+  created_at: 2008-12-26 03:13:12 Z
+ 
+field_types_6: 
+  name: Text Field
+  updated_at: 2008-12-26 03:14:17 Z
+  descr: A basic single line text box custom field to allow simple text input.
+  id: 6
+  created_at: 2008-12-26 03:14:17 Z
+ 
+field_types_7: 
+  name: Text Area
+  updated_at: 2008-12-26 04:11:03 Z
+  descr: A multiline text area custom field to allow input of longer text strings.
+  id: 7
+  created_at: 2008-12-26 04:11:03 Z

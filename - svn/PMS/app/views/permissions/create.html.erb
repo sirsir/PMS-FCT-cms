@@ -1,0 +1,36 @@
+<%=javascript_include_tag "prototype" %>
+<%=javascript_include_tag "application" %>
+<%=javascript_include_tag "dialog" %>
+<%=javascript_include_tag "fr" %>
+<%=javascript_include_tag "ajax" %>
+<script type="text/javascript">
+<% if @permissions.all?{|p| p.errors.empty? } %>
+  var main_doc = fncGetMainDocument();
+  <%
+  refresh_page = @permissions.collect{|p| p.screen_id }.compact.uniq.size > 1
+  refresh_area = @permissions.collect{|p| p.field_id }.compact.uniq.size > 1
+
+  if refresh_page
+  %>
+  var jumper = main_doc.getElementById("icon_menu_item_<%= @screen.id %>");
+  jumper.click();
+  <%
+  elsif refresh_area
+  %>
+  var jumper = main_doc.getElementById("<%= params['source_screen_id'] %>_<%= @permission.field.screen_id %>");
+  jumper.click();
+  <%
+  else
+    tr_id = "#{@screen.id}_#{@permission.screen_id || @permission.field_id}"
+  %>
+    fncUpdateTrToTableContent(<%= @screen.id %>, "<%= tr_id %>");
+
+    var div = main_doc.getElementById("operation_area_<%= @screen.id %>");
+    fncClearDiv(div);
+  <% end %>
+<% else %>
+    fncSetError('<%=error_messages_for(:object => @permissions ).to_s.gsub(/'/, "&rsquo\;") %>');
+<% end %>
+
+  fncLoadTempFrame();
+</script>

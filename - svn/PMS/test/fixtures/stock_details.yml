@@ -1,0 +1,15 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  stock_id: 1
+  transaction_type: MyString
+  input_value: MyString
+  number_transaction: MyString
+  changable_key: 
+
+two:
+  stock_id: 1
+  transaction_type: MyString
+  input_value: MyString
+  number_transaction: MyString
+  changable_key: 

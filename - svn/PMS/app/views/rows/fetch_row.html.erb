@@ -1,0 +1,7 @@
+<table>
+  <!-- WARNING!!! The first list must be the table start tag -->
+  <tr id="<%= @row.id %>_replacement" readonly='<%= @readonly %>'>
+    <%= view_cache('rows/row', @row) { render(:partial => 'rows/row', :locals => { :row => @row }) } %>
+    <%= render(:partial => 'rows/row_operation', :locals => { :row => @row }) %>
+  </tr>
+</table>

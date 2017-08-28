@@ -1,0 +1,12 @@
+<tr>
+  <%
+    reference = CustomFields::Reference.find_all
+    field_type_optional_tag = select_tag("custom_field[value][custom_field_id]", options_from_collection_for_select_tag( reference, :id, :label_descr ))
+%>
+  <th class="th_row_header"><%= label_tag "custom_field[value][separator]", "Reference Custom Field:" %></th>
+  <td>
+    <%=field_type_optional_tag %>
+    <%=field_descr_tag %>
+  </td>
+</tr>
+

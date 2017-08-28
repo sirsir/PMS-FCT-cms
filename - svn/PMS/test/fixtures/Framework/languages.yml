@@ -1,0 +1,15 @@
+languages_001: 
+  created_at: "2008-12-25 10:56:19.000"
+  id: 1
+  name: EN
+  updated_at: "2008-12-25 10:56:19.000"
+languages_002: 
+  created_at: "2008-12-25 10:57:36.000"
+  id: 2
+  name: TH
+  updated_at: "2009-01-20 09:40:06.000"
+languages_003: 
+  created_at: "2008-12-26 03:34:30.000"
+  id: 4
+  name: JP
+  updated_at: "2009-01-07 02:40:35.000"

@@ -1,0 +1,62 @@
+      <% @report.reference_screens.each_with_index do |s, i| %>
+        <%
+          detail_fields = []
+          detail_field_ids = []
+          fields = s.fields.select do |f|
+            case f
+            when Fields::Data then
+              case f.custom_field
+              when CustomFields::Reference
+                true
+              when CustomFields::LeftRight, CustomFields::ListBox, CustomFields::CheckBox,
+                  CustomFields::IssueTracking,
+                  CustomFields::UploadImage, CustomFields::UploadFile
+                false
+              when CustomFields::ScreenCombindedReference,
+                  CustomFields::OptionCombindedReference,
+                  CustomFields::CodeCombindedReference
+                false
+              when CustomFields::ComboBox, CustomFields::RadioButton
+                true
+              when CustomFields::TextField, CustomFields::TextArea,
+                  CustomFields::DateTimeField,
+                  CustomFields::NumericField,
+                  CustomFields::LoginField,
+                  CustomFields::Password, CustomFields::AutoNumbering
+                true
+              when CustomFields::Calendar
+                detail_fields += f.custom_field.detail_screen.fields
+                detail_field_ids += f.custom_field.detail_screen.field_ids
+                true
+              else
+                false
+              end
+            when Fields::DetailInfo
+              false
+            else
+              true
+            end
+          end
+          fields += detail_fields
+          fields.sort!{|a,b| a.descr <=> b.descr }
+          field_options = options_from_collection_for_select_tag(fields, :id, :descr, criteria["#{table}_field_id".to_sym], :include_blank => true)
+          field_options[0] << "<option value=-1 #{'selected' if i == criteria["#{table}_screen_index".to_sym] && criteria["#{table}_field_id".to_sym].to_i < 0}>Id</option>"
+          disabled = criteria.empty? ||
+            i != criteria["#{table}_screen_index".to_sym] ||
+            !(s.field_ids + detail_field_ids + [-1]).include?(criteria["#{table}_field_id".to_sym])
+          style_display = "display:none;" if disabled
+        %>
+        <%= select_tag "#{name}[#{table}_field_id]", field_options, :id => "#{table}_field_ids_#{i}", :disabled => disabled, :style => "width:100%;#{style_display}" %>
+      <% end %>
+
+      <%
+      onblur = <<JAVASCRIPT
+      if (this.value.trim == "") this.value = this.getAttribute("orig_value");
+JAVASCRIPT
+      disabled = criteria.empty? || criteria["#{table}_screen_index".to_sym] <  @report.reference_screens.length
+      style_display = "display:none;" if disabled
+      %>
+      <%= text_field_tag "#{name}[#{table}_field_id]", criteria["#{table}_field_id".to_sym], :onblur => onblur, :orig_value => criteria["#{table}_field_id".to_sym], :id => "#{table}_field_ids_#{@report.reference_screens.length}", :disabled => disabled, :style => "width:100%;#{style_display}" %>
+
+      <select id ='<%=table %>_field_ids_' style='width:100%;<%="display:none;" unless criteria.empty? %>'></select>
+     

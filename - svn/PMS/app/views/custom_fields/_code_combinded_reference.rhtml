@@ -1,0 +1,12 @@
+<tr>
+  <%
+  if (@custom_field.is_a?(CustomFields::CodeCombindedReference))
+    field_type_optional_tag = text_field_tag("custom_field[value][separator]", @assigned_options)
+  end
+%>
+  <th class="th_row_header">Separator:</th>
+  <td>
+    <%=field_type_optional_tag %>
+    <%=field_descr_tag %>
+  </td>
+</tr>

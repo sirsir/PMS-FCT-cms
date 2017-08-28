@@ -1,0 +1,8 @@
+<%
+subling_fields = field.screen.fields.select{|f| f.display_in_form? && (f.is_a?(Fields::Separator) || f.is_a?(Fields::Data)) }
+subling_fields = subling_fields.first(subling_fields.index(field))
+%>
+
+<% unless subling_fields.last.is_a?(Fields::Separator) %>
+<%=table_hr_tag %>
+<% end %>

@@ -1,0 +1,21 @@
+<div style="margin: 3px;">
+  <%
+  steps = [:stocks,:auto_bookings,:hiddens] + StockTransaction.transaction_childs
+  actions = {
+    :stocks => :edit,
+    :auto_bookings => :auto_bookings,
+    :hiddens => :hiddens
+  }
+  StockTransaction.transaction_childs.each do |c|
+    actions[c] = :settings
+  end
+  
+  steps.each do |s|
+    descr = s.to_s.singularize.titleize
+    descr = link_to_remote(descr, :update => "operation_area", :url => { :action => actions[s], :id => @stock.id, :transaction_type => s }) unless @stock.new_record? || s == step
+%>
+    <span style="<%='font-weight: bold' if s == step %>"><%=descr %></span>
+    <%=' > ' unless s == steps.last %>
+  <% end %>
+</div>
+

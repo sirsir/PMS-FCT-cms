@@ -1,0 +1,57 @@
+<tr>
+<th class="th_row_header">Field:</th>
+  <td>
+        <%if @field.id.nil? %>
+        <%=select_tag("field[value][comparison][field_id]", options_from_collection_for_select( @screen.comparable_fields, :id, :full_descr,nil )) %>
+  <%else %>
+
+    <%=select_tag("field[value][comparison][field_id]", options_from_collection_for_select( @screen.comparable_fields, :id, :full_descr, @field.value['comparison']['field_id'].to_i )) %>
+    <%end%>
+    <%= field_descr_tag %>
+  </td>
+</tr>
+<tr>
+  <th class="th_row_header">Operator:</th>
+  <td>
+    <%
+    labels = Field.display_simple_comparison_control_options
+    selected_operator = (@field.value.nil? ? "" : @field.value['comparison']['operator'])
+    selected_operator = (@field.id.nil? ? ">" : selected_operator)
+    labels.each_with_index do |label, index|
+      input_name = "field[value][comparison][operator]"
+      input_id = sanitize_to_id("#{input_name}[#{index}]")
+    %>
+      <%= radio_button_tag(input_name, label[:key], (label[:key] == selected_operator) ? true : false, :id => input_id ) %>
+      <%= label_tag input_id, label[:name] %>
+      <br />
+    <% end %>
+    <%= field_descr_tag :break => false %>
+  </td>
+</tr>
+
+  <tr>
+    <th class="th_row_header">Comparer:</th>
+    <td>
+      <%  selected_label = (@field.value).nil? ? nil : @field.value['comparison']['comparer'] %>
+      <%= select_label_tag("field[value][comparison][comparer]", selected_label.to_i) %>
+      <%= field_descr_tag %>
+    </td>
+  </tr>
+
+    <tr>
+    <th class="th_row_header">True Label:</th>
+    <td>
+      <%  selected_label = (@field.value).nil? ? nil : @field.value['comparison']['true_label_id'] %>
+      <%= select_label_tag("field[value][comparison][true_label_id]", selected_label.to_i) %>
+      <%= field_descr_tag %>
+    </td>
+  </tr>
+
+      <tr>
+    <th class="th_row_header">False Label:</th>
+    <td>
+      <%  selected_label = (@field.value).nil? ? nil : @field.value['comparison']['false_label_id'] %>
+      <%= select_label_tag("field[value][comparison][false_label_id]", selected_label.to_i) %>
+      <%= field_descr_tag %>
+    </td>
+  </tr>

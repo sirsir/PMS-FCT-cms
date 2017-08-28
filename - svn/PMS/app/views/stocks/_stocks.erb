@@ -1,0 +1,16 @@
+<table class='table_content' id='table_content_' cellspacing='0'>
+  <tr class='tr_header'>
+    <% ["&nbsp;", "Id", "Name", "Label", "Description", "Stock Keys", "Amount Control", "Auto Booking Method", "Auto Booking Keys", "Hidden", "Remark", "&nbsp;"].each do |h| %>
+      <th class='th_col_header'><%= (h =~ /&nbsp;/) ? h : h.to_s.titleize %></th>
+    <% end %>
+  </tr>
+  <%
+  row_groups = []
+  row_groups << [Stock.new()]  #~ Template
+  row_groups << @stocks        #~ Reports
+
+  row_groups.each do |rg|
+  %>
+  <%= render :partial => "loading_stock", :collection => rg, :locals => {:stocks => rg, :row_type=>:list} %>
+  <% end %>
+</table>

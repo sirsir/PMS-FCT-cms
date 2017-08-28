@@ -1,0 +1,28 @@
+<div>
+  <table id ="table_content_<%=@report.id%>" class="table_content" cellspacing="0">
+    <%
+      @available_field_filters.keys.each do |s_idx|
+        screen = @report.reference_screens[s_idx]
+        screen_alias = @report.reference_screen_alias[s_idx]
+    %>
+      <tr class="tr_header">
+        <th class="th_col_header" colspan="99"><%= screen.nil? ? "Screen?" : screen.label_descr %> (<%=screen_alias %>)  </th>
+      </tr>
+      <tr class="tr_header">
+        <th class="th_col_header">Field</th>
+        <th class="th_col_header">Filter</th>
+      </tr>
+
+      <%
+      available_field_filters = []
+      available_field_filters << nil if @report.col_fields_reports.collect{|f| f.field_id if f.reference_screen_index == s_idx }.include?(-1)
+      available_field_filters += @available_field_filters[s_idx]
+      %>
+      <%=render :partial => "select_filter", :collection => available_field_filters,
+        :locals => {:report_id => @report.id, :select_filters => available_field_filters, :set_field_filters => @set_field_filters[s_idx], :reference_screen_index => s_idx} %>
+    <% end %>
+  </table>
+
+</div>
+<hr />
+<div id ="frm_set_filter_<%=@report.id%>"></div>

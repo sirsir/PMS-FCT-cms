@@ -1,0 +1,29 @@
+<%
+report_request_row = @report_request_row
+report_request_rows = report_request_row.leaf_report_request_rows
+report_request_col_id ||= 0
+report_request_col = ReportRequestCol.find(report_request_col_id) if report_request_col_id > 0
+fields_report = sub_total_report_request_cell
+show_percentage ||= false
+
+options = {
+  :grand_total_row => true,
+  :report_request_col_id => report_request_col_id,
+  :cell_value_cache => @vm[:cell_value_cache], 
+  :show_percentage => show_percentage
+}
+
+cell_values = fields_report.row_cell_values(report_request_row, 
+                                            report_request_col, 
+                                            report_request_rows,
+                                            options)
+                                          
+report_request_col_full_descr = ( report_request_col_id > 0 ) ? report_request_col.full_descr : "Grand Total"
+%>
+<%=render :partial => 'cell_value', :locals => {
+  :report_request_row_id => @report_request_row.id, :report_request_col_id => report_request_col_id,
+  :cell_field_report => fields_report, :cell_values => cell_values,
+  :summary => :sub_total,
+  :title => "'#{@report_request_row.full_descr}' &lowast; '#{report_request_col_full_descr}'"
+}
+%>

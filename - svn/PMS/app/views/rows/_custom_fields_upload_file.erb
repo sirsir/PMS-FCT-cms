@@ -1,0 +1,13 @@
+<% if readonly %>
+  <%=cell.to_html%>
+<% else%>
+<% name_prefix ||= '' %>
+<%= file_field_tag("#{name_prefix}cells[#{field.custom_field_id}]") %>
+<%= hidden_field_tag("custom_field_id_of_file", field.custom_field_id) %>
+<%= hidden_field_tag("original_path_file", cell.value) %>
+<!--
+Sample descr for file uploading
+"The maximum file upload size is 10.00 MB. Please zip files larger than this"
+-->
+<%= field_descr_tag :descr => field.custom_field.descr %>
+<% end %>

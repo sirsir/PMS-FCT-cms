@@ -1,0 +1,8 @@
+<table class='table_content' id='table_content' cellspacing='0'>
+  <tr class='tr_header'>
+    <% ["&nbsp;", "Type", "Description"].each do |h| %>
+      <th class='th_col_header'><%= (h =~ /&nbsp;/) ? h : h.to_s.titleize %></th>
+    <% end %>
+  </tr>
+  <%= render(:partial => 'field_type', :collection => @field_types) %>
+</table>

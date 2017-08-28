@@ -1,0 +1,24 @@
+<%
+report_request_col ||= nil
+
+length = 0
+length += 1 if sub_total_cell_field.is_percentage_weight? || (sub_total_cell_field.location == :cell && sub_total_cell_field.report.cell_location == :row && sub_total_cell_field.report.has_percentage_weight?)
+
+(0..length).each do |l|
+  full_descr = (report_request_col.nil?) ? 'Grand Total' : "#{report_request_col.full_descr} - #{sub_total_cell_field.full_descr}"
+  full_descr << " [%]" unless l == 0
+
+  if l != 0
+    descr = "%"
+  elsif sub_total_cell_field.location == :col || sub_total_cell_field.report.cell_location == :col
+    descr = (sub_total_cell_field.field_id < 0 ) ?
+      @report_request.report.reference_screens[sub_total_cell_field.reference_screen_index].label_descr :
+      sub_total_cell_field.descr
+  else
+    descr = "&nbsp;"
+  end
+  %>
+  <th class="th_col_header" title="<%=full_descr %>">
+    <%=descr %>
+  </th>
+<% end %>

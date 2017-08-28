@@ -1,0 +1,136 @@
+<%
+is_grand_total_row = @report_request_row.new_record?
+own_field = row_field_report.reference_screen_index == @report_request_row.reference_screen_index unless is_grand_total_row
+
+if own_field && !@report_request_row.row.nil?
+  row = @report_request_row.row
+  field = row_field_report.field
+  custom_field = field.custom_field
+
+  cell = row.cell(custom_field.id) unless custom_field.nil?
+
+  cell_id = "#{row.id}_#{field.id}"
+  cell_id << "_#{cell.id}" if cell
+
+  align = "left"
+
+  contents = ["
+  <span class='missing_implementation'>
+  Defind how to display '#{field.class.to_s}' - '#{field.custom_field.class.to_s}' in #{ __FILE__.gsub(RAILS_ROOT, "")}.
+  </span>"]
+
+  case field
+  when Fields::Data
+    defined_custom_field = true
+
+    case custom_field
+    when CustomFields::Reference
+      nobr = true
+    when CustomFields::LeftRight
+      nobr = true
+    when CustomFields::ListBox
+    when CustomFields::TextField
+      nobr = true
+    when CustomFields::TextArea
+      nobr = true
+    when CustomFields::DateTimeField
+      nobr = true
+    when CustomFields::NumericField
+      align = "right"
+      nobr = true
+    when CustomFields::IssueTracking
+    when CustomFields::CheckBox
+      align = "center"
+      nobr = !field.custom_field.new_line?
+    when CustomFields::ComboBox
+      nobr = true
+    when CustomFields::RadioButton
+      nobr = true
+    when CustomFields::UploadImage
+      align = "center"
+    when CustomFields::UploadFile
+    when CustomFields::LoginField
+    when CustomFields::Password
+      nobr = true
+    when CustomFields::ScreenCombindedReference
+      nobr = true
+    when CustomFields::OptionCombindedReference
+      nobr = true
+    when CustomFields::CodeCombindedReference
+      nobr = true
+    when CustomFields::AutoNumbering
+      nobr = true
+    when CustomFields::Parameter
+      align = "right"
+      nobr = true
+    else
+      defined_custom_field = false
+    end
+
+    cf = row_field_report.field.custom_field
+    contents = (cell.nil? ? ["&nbsp"] : [
+    case cf
+    when CustomFields::NumericField
+      row_field_report_format = row_field_report.format
+      CustomFields::NumericField.apply_format_option(cell.value.to_f, row_field_report_format[:format].to_sym, row_field_report_format[:option]) if !cell.value.nil?
+    else
+      cell.to_html
+    end
+    ].flatten) if defined_custom_field
+
+  when Fields::HeaderInfo
+    nobr = true
+    contents = [field.evaluate_value(row)]
+  when Fields::DetailInfo
+    field_detail_screen_value = field.get_detail_screen_value(field.detail_screen, row)
+    detail_screen_value = field_detail_screen_value.size == 0 ? nil : field_detail_screen_value.join("<br>")
+
+    nobr = true
+    contents = [detail_screen_value]
+  when Fields::Formula, Fields::Accumulation
+    align = "right"
+
+    options = {:precision => 2, :delimiter => ","}
+    contents = [number_with_precision(field.evaluate_value(row), options)]
+  when Fields::Comparison, Fields::ReferenceAttribute, Fields::CodeCombindedReferenceAttribute
+    contents = [field.evaluate_value(row)]
+  end
+elsif is_grand_total_row && row_field_report.summarize == :grp
+  contents = ["&nbsp;"]
+else
+  align = "right"
+  value = @report_request_row.summarize(row_field_report)
+  case field
+  when Fields::Data
+    value = field.custom_field.class.text(value)
+  else
+    cf = row_field_report.field.custom_field
+    value = case cf
+    when CustomFields::NumericField
+      row_field_report_format = row_field_report.format
+      CustomFields::NumericField.apply_format_option(value.to_f, row_field_report_format[:format].to_sym, row_field_report_format[:option]) if !value.nil?
+    else
+      value
+    end
+  end
+  contents = [value]
+end
+
+if own_field || row_field_report.summarize == :grp
+  summary = :cell
+elsif is_grand_total_row
+  summary = :grand_total
+else
+  summary = :sub_total
+end
+
+contents.collect!{|c| c.to_s.empty? ? (@report_request_row.row.nil? && summary == :cell ? 'N/A' : "&nbsp;") : c }
+%>
+
+<% contents.each do |c| %>
+  <td class='td_cell' id='<%=cell_id%>' align='<%=align%>'
+      style='<%="white-space: nowrap;" if nobr%><%= " font-weight: bold;" if summary != :cell %><%= " font-style: italic;" if summary == :grand_total %><%="display: none;" unless @report_request_row.report_request.report.hide_row_columns? %>'
+      title="<%=@report_request_row.full_descr%>">
+    <%=c%>
+  </td>
+<% end %>

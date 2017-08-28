@@ -1,0 +1,79 @@
+<tr>
+  <th class="th_row_header">Text Option:</th>
+  <td>
+    <%
+    options_value = @custom_field.option
+    options = CustomFields::TextOption.option_collection
+    options.each do |opt|
+      option_name = "custom_field[value][#{opt.name}]"
+      case opt.name
+      when :length , :alphabet , :symbols then
+        opt_checked = !(options_value[opt.name].empty?)
+        case opt.name
+        when :length then
+          optional_dtls_names = ["custom_field[value][min_length]", "custom_field[value][max_length]"]
+          optional_dtls = "Min:" + text_field_tag(optional_dtls_names[0], options_value[:length][:min], {:size => 5,:style => "text-align:right",:disabled => !opt_checked})
+          optional_dtls << "&nbsp; ~ &nbsp;"
+          optional_dtls << "Max:" + text_field_tag(optional_dtls_names[1], options_value[:length][:max], {:size => 5,:style => "text-align:right",:disabled => !opt_checked})
+        when :alphabet then
+          optional_dtls_names = [option_name + "[upper_case]", option_name + "[lower_case]", option_name + "[all]"]
+          optional_dtls =  radio_button_tag(option_name, "upper_case", options_value[:alphabet] == "upper_case", :disabled => !opt_checked)
+          optional_dtls << label_tag("#{option_name}[upper_case]", "Upper")
+          optional_dtls << "<br />"
+          optional_dtls << radio_button_tag(option_name, "lower_case", options_value[:alphabet] == "lower_case", :disabled => !opt_checked)
+          optional_dtls << label_tag("#{option_name}[lower_case]", "Lower")
+          optional_dtls << "<br />"
+          optional_dtls << radio_button_tag(option_name, "all", options_value[:alphabet] == "all", :disabled => !opt_checked)
+          optional_dtls << label_tag("#{option_name}[all]", "All")
+        when :symbols then
+          optional_dtls_names = [option_name]
+          optional_dtls = left_to_right_tag(:descr => "Symbols",
+            :name => option_name,
+            :assigned_options => options_value[:symbols],
+            :all_options => CustomFields::NoneAlphaNumeric.collection,
+            :value_method => :symbol,
+            :text_method => :symbol,
+            :disabled => !opt_checked)
+        end
+        optionnal_control = check_box_tag(opt.name, true, opt_checked,
+          :onclick => "fncSetDisabledField([#{optional_dtls_names.collect{|name| "\""+sanitize_to_id(name)+"\""}.join(",")}],!(this.checked))")
+        optionnal_control << hidden_field_tag(opt.name, false)
+      else
+        optional_dtls  = ""
+        optionnal_control = check_box_tag(option_name, true, CustomFields::CheckBox.true_or_false?(options_value[opt.name]))
+        optionnal_control << hidden_field_tag(option_name, false)
+      end
+     %>
+      <table>
+        <tbody valign="top">
+          <tr>
+            <td>
+              <%= optionnal_control %>
+              <%
+              case opt.name
+              when :length , :alphabet , :symbols then
+                input_name = opt.name
+              else
+                input_name = option_name
+              end
+              %>
+              <%= label_tag input_name, opt.descr %>
+            </td>
+            <td>
+              <%= optional_dtls %>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    <% end %>
+    <%= field_descr_tag %>
+  </td>
+</tr>
+
+<tr>
+  <th class="th_row_header">Default Value:</th>
+  <td>
+    <%= text_area_tag("custom_field[value][default_value]", @custom_field.default_value, :size=>"40x5") %>
+    <%= field_descr_tag %>
+  </td>
+</tr>

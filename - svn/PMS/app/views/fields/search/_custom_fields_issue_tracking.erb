@@ -1,0 +1,38 @@
+<%
+custom_field_id = input_name
+date_controls = ['Created_date', 'Dued_date', 'Completed_date']
+check_box_control = {
+        :label => 'Status',
+        :options => ['Scheduled', 'Delayed', 'Dued', 'Re-Scheduled', 'Completed', 'Cancelled', 'Un-Scheduled']
+      }
+
+#~ ToDo: Get labels and control
+date_controls.each do |dc|
+%>
+  <b><%= label_tag('', "#{dc.titleize}:") %></b><br />
+  <%
+    name_from = "#{custom_field_id}[#{dc}_from]"
+    name_to = "#{custom_field_id}[#{dc}_to]"
+    id_from = sanitize_to_id(name_from)
+    id_to = sanitize_to_id(name_to)
+   %>
+  <%= text_field_tag(name_from, '', :readonly=>true, :size=>7) %>
+  <a href='javascript:NewCssCal("<%=id_from%>","yyyymmdd")' >
+    <img src='/images/cal.gif' width='16' height='16' alt='Pick a date' border='0' /></a> ~
+  <%= text_field_tag(name_to, '', :readonly=>true, :size=>7) %>
+  <a href='javascript:NewCssCal("<%=id_to%>","yyyymmdd")' >
+    <img src='/images/cal.gif' width='16' height='16' alt='Pick a Date' border='0' /></a>
+  <img src='/images/cal_close.gif' width='16' height='16' alt='Reset date' border='0'
+       onClick='javascript:ResetTextBox("<%= id_to %>");javascript:ResetTextBox("<%= id_from %>");' />
+
+<% end %>
+
+<div style="margin-top: 5px;">
+    <b><%= label_tag('', "#{check_box_control[:label]}:") %></b><br />
+    <% check_box_control[:options].each do |o| %>
+    <span class='field_search_half'>
+      <%= check_box_tag("#{custom_field_id}[#{o}]") %>
+      <%= label_tag("#{custom_field_id}[#{o}]", o.titleize) %>
+    </span>
+  <% end %>
+</div>

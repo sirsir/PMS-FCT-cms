@@ -1,0 +1,10 @@
+<%
+color_by_options = <<HTML_TAG
+<option value="-1" selected>Records</option>
+#{options_from_collection_for_select(color_data_fields, :custom_field_id, :label_descr) }
+HTML_TAG
+  %>
+
+<p>
+Color By : <%= select_tag "color_by_field_id", color_by_options, :onchange => 'fncSetCalendarColor(this.value);' %>
+</p>

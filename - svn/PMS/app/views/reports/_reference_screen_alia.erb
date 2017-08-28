@@ -1,0 +1,25 @@
+<tr>
+  <%
+    alia_index = reference_screen_alia
+    alia = @report.reference_screen_alias[alia_index]
+    outer_join = CustomFields::CheckBox.true_or_false?(@report.reference_screen_outer_joins[alia_index]["0"])
+    screen = @report.reference_screens[alia_index]
+    onblur = <<JAVASCRIPT
+if (this.value.trim == "") this.value = this.getAttribute("orig_value");
+JAVASCRIPT
+  %>
+  <td class='td_cell'>&nbsp;</td>
+  <td class='td_cell'><%= screen.label_descr %></td>
+  <td class='td_cell'><%= text_field_tag "report[reference_screen_alias][#{alia_index}]", alia, :onblur => onblur, :orig_value => alia %></td>
+  <td class='td_cell'>
+    <%
+    input_name_prefix = "report[reference_screen_outer_joins][#{alia_index}]"
+    input_name = "#{input_name_prefix}[0]"
+    %>
+    <%= check_box_tag input_name, true, outer_join %>
+    <%= hidden_field_tag("#{input_name_prefix}[-1]", false) %>
+    <%= label_tag input_name, 'Show all' %>&nbsp;
+  </td>
+  <td class='td_cell'>&nbsp;</td>
+</tr>
+

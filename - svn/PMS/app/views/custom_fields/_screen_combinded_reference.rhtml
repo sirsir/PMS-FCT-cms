@@ -1,0 +1,37 @@
+<%
+screen_groups = @screens.collect{|s| s.parent if s.is_a?(ListScreen) }.compact.uniq
+%>
+<tr>
+  <th class="th_row_header">Code Screens:</th>
+  <td>
+    <%=left_to_right_tag(
+    :descr => "Screen",
+    :name =>  "custom_field[value][screen_ids]",
+    :assigned_options => @assigned_screens,
+    :all_options => screen_groups,
+    :value_method => "id",
+    :text_method => "name",
+    :group_method => "childs.select{|s| s.is_a?(ListScreen) }",
+    :group_label_method => "name",
+    :sort => false,
+    :multi_selected => false)%>
+  </td>
+</tr>
+
+<tr>
+  <th class="th_row_header">Option Screens:</th>
+  <td>
+    <%=left_to_right_tag(
+    :descr => "Screen",
+    :name =>  "custom_field[value][option_screen_ids]",
+    :assigned_options => @assigned_option_screens,
+    :all_options => screen_groups,
+    :value_method => "id",
+    :text_method => "name",
+    :group_method => "childs.select{|s| s.is_a?(ListScreen) }",
+    :group_label_method => "name",
+    :sort => false,
+    :multi_selected => false) %>
+  </td>
+</tr>
+

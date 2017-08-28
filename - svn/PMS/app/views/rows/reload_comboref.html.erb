@@ -1,0 +1,21 @@
+<%
+name="cells[#{@custom_field_id}][row_id]"
+
+if @field
+  on_change = update_ref_att_javascript(@field)
+  on_change << js_update_field_flag_value("flag_field_#{@field.id}")
+end
+
+ref_control = screen_collection_select_tag(
+  :assigned_options => [],
+  :all_options => @results,
+  :name => "#{name}",
+  :value_method => :id,
+  :text_method => :description,
+  :include_blank => true,
+  :on_change => on_change )
+
+%>
+
+<%=ref_control %>
+<%=field_descr_tag %>

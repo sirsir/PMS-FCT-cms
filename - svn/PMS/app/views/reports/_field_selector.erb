@@ -1,0 +1,43 @@
+<%=render(:partial => 'reference_screens')%>
+
+<hr />
+
+<%=group_tag("Formula (R, x)", render(:partial => 'field_formulas', :locals => {:reference_screens => @reference_screens, :screen_alias => @report.reference_screen_alias} ) , {:blindable => false, :id => "form_formula_content"}) %>
+
+<%
+form_id = "frm_field_selector_#{@report.id}"
+%>
+
+<hr />
+
+<% form_tag url_for(:action => 'set_fields', :id =>@report.id ), :onSubmit => "fncPrepareFormForSubmit(this);", :method=>:put, :id => form_id, :target=>"tmp_frame" do %>
+  <table>
+    <tr>
+      <td style="vertical-align: top;" colspan="2">&nbsp;</td>
+      <td style="vertical-align: top;">
+        <%=group_tag("Column (C)", render(:partial => 'selected_fields', :locals => {:location => :col} ) , {:blindable => false, :id => "#{form_id}_content"} ) %>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;" colspan="2">&nbsp;</td>
+      <td style="vertical-align: top;">
+        <%=radio_button_tag("report[cell_location]", :col, :col == @report.cell_location) %><%=label_tag "report[cell_location]", "Col" %>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">
+        <%=group_tag("Row (R)", render(:partial => 'selected_fields', :locals => {:location => :row} ) , {:blindable => false, :id => "#{form_id}_content"} ) %>
+      </td>
+      <td>
+        <%=radio_button_tag("report[cell_location]", :row, :row == @report.cell_location) %><%=label_tag "report[cell_location]", "Row" %>
+      </td>
+      <td style="vertical-align: top;">
+        <%=group_tag("Cell (x)", render(:partial => 'selected_fields', :locals => {:location => :cell} ) , {:blindable => false, :id => "#{form_id}_content"} ) %>
+      </td>
+    </tr>
+  </table>
+
+<hr />
+
+  <%= group_button(:area_id => @screen.id) %>
+<% end %>

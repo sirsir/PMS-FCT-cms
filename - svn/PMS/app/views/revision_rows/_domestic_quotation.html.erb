@@ -1,0 +1,262 @@
+<div class="page_inline">
+
+<!-- Page Header -->
+<%
+addresses = address_text(
+    :no => Field.value_by_field_name("QSB Sales Office No.", @revision_row),
+    :moo => Field.value_by_field_name("QSB Sales Office Moo", @revision_row),
+    :soi => Field.value_by_field_name("QSB Sales Office Soi", @revision_row),
+    :road => Field.value_by_field_name("QSB Sales Office Road", @revision_row),
+    :sub_dist => Field.value_by_field_name("QSB Sales Office Sub District", @revision_row),
+    :dist => Field.value_by_field_name("QSB Sales Office District", @revision_row),
+    :province => Field.value_by_field_name("QSB Sales Office Province", @revision_row),
+    :postal => Field.value_by_field_name("QSB Sales Office Postal Code", @revision_row),
+    :tel => Field.value_by_field_name("QSB Sales Office Tel No.", @revision_row),
+    :fax => Field.value_by_field_name("QSB Sales Office Fax No.", @revision_row)
+  )
+%>
+<%= render :partial => 'page_header', :locals => {
+    :name => 'System Upgrade Solution Bkk Co.,Ltd.', :title => 'QUOTATION',
+    :addresses => addresses
+  }
+%>
+
+<!-- Report Header -->
+<table class="table_header">
+  <tr>
+    <td class ="td_customer">
+      <table class="table_customer">
+        <tr>
+          <td class="td_title_header">TO:</td>
+          <th class="td_text_customer"><%= Field.value_by_field_name("QSB To", @revision_row) %>&nbsp;</th>
+        </tr>
+        <tr>
+          <td class="td_title_header">&nbsp;</td>
+          <td class="td_address_customer">
+            <%= Field.value_by_field_name("QSB Customer No.", @revision_row).empty? ? "" : "#{Field.value_by_field_name("QSB Customer No.", @revision_row)}" %>
+            <%= (Field.value_by_field_name("QSB Customer Estate", @revision_row).empty? or Field.value_by_field_name("QSB Customer Estate", @revision_row) == "\&nbsp\;") ? "" : " #{Field.value_by_field_name("QSB Customer Estate", @revision_row)} Industrial Estate," %>
+            <%= Field.value_by_field_name("QSB Customer Moo", @revision_row).empty? ? "" : " Moo #{Field.value_by_field_name("QSB Customer Moo", @revision_row)}" %>
+            <%= Field.value_by_field_name("QSB Customer Road", @revision_row).empty? ? "" : " #{Field.value_by_field_name("QSB Customer Road", @revision_row)} Rd.," %>
+            <%= Field.value_by_field_name("QSB Customer Soi", @revision_row).empty? ? "" : " Soi #{Field.value_by_field_name("QSB Customer Soi", @revision_row)}," %>
+            <%= Field.value_by_field_name("QSB Customer Sub District", @revision_row).empty? ? "" : "#{Field.value_by_field_name("QSB Customer Sub District", @revision_row)}," %>
+            <%= Field.value_by_field_name("QSB Customer District", @revision_row).empty? ? "" : " #{Field.value_by_field_name("QSB Customer District", @revision_row)}," %>
+            <%= Field.value_by_field_name("QSB Customer Province", @revision_row).empty? ? "" : " #{Field.value_by_field_name("QSB Customer Province", @revision_row)}" %>
+            <%= Field.value_by_field_name("QSB Customer Postal Code", @revision_row).empty? ? "" : " #{Field.value_by_field_name("QSB Customer Postal Code", @revision_row)}" %>
+            <br/>
+            <%= Field.value_by_field_name("QSB Customer Tel No.", @revision_row).empty? ? "" : "Tel: #{Field.value_by_field_name("QSB Customer Tel No.", @revision_row)}" %>
+            <%= Field.value_by_field_name("QSB Customer Fax No.", @revision_row).empty? ? "" : " Fax: #{Field.value_by_field_name("QSB Customer Fax No.", @revision_row)}" %>
+          </td>
+        </tr>
+        <tr>
+          <td class="td_title_header">ATTN.:</td>
+          <th class="td_text_customer">
+            <%= Field.value_by_field_name("QSB Attn Title", @revision_row) %>
+            <%= Field.value_by_field_name("QSB Attn Name", @revision_row) %>
+            <% attn_position = Field.value_by_field_name("QSB Attn Position", @revision_row) %>
+            <%= " / #{attn_position}" unless attn_position.empty? %>
+            &nbsp;
+          </th>
+        </tr>
+        <tr>
+          <td class="td_title_header"></td>
+          <td class="td_address_customer">
+            <%= Field.value_by_field_name("QSB Attn Dept", @revision_row).empty? ? "" : "Dept: #{Field.value_by_field_name("QSB Attn Dept", @revision_row)}<br/>" %>
+            <%= Field.value_by_field_name("QSB Attn Mobile No.", @revision_row).empty? ? (Field.value_by_field_name("QSB Attn Tel No.", @revision_row).empty? ? "" : " Tel: #{Field.value_by_field_name("QSB Attn Tel No.", @revision_row)}") : " Mobile: #{Field.value_by_field_name("QSB Attn Mobile No.", @revision_row)}" %>
+            <%= Field.value_by_field_name("QSB Attn Email", @revision_row).empty? ? "" :" Email: #{Field.value_by_field_name("QSB Attn Email", @revision_row)}" %>
+            &nbsp;
+          </td>
+        </tr>
+        <tr>
+          <td class="td_title_header">CC:</td>
+          <td class="td_text_customer"><%= Field.value_by_field_name("QSB CC", @revision_row) %>&nbsp;</td>
+        </tr>
+        <tr>
+          <td class="td_title_header" colspan="3">&nbsp;</td>
+        </tr>
+        <tr>
+          <td class="td_title_header">Project:</td>
+          <td class="td_text_customer"><%= Field.value_by_field_name("QSB Project Name", @revision_row) %>&nbsp;</td>
+        </tr>
+        <tr>
+          <td class="td_title_header" colspan="3">&nbsp;</td>
+        </tr>
+        <tr>
+          <td colspan="2" class="text_italic">We are pleased to quote you as follows,</td>
+        </tr>
+      </table>
+    </td>
+    <td class ="td_staff">
+      <table class="table_staff">
+        <tr>
+          <td class="td_title_header">DATE:</td>
+          <td class="td_text_staff"><%= @revision_row.rev_date.strftime('%d/%m/%Y') %></td>
+        </tr>
+        <tr>
+          <td class="td_title_header">FROM:</td>
+          <th class="td_text_staff">
+            <%= Field.value_by_field_name("QSB Staff First Name", @revision_row).empty? ? "" : "#{Field.value_by_field_name("QSB Staff First Name", @revision_row)}" %>
+            <%= Field.value_by_field_name("QSB Staff Last Name", @revision_row).empty? ? "" : " #{Field.value_by_field_name("QSB Staff Last Name", @revision_row)[0..0]}." %>
+            &nbsp;
+          </th>
+        </tr>
+        <tr>
+          <td class="td_title_header">&nbsp;</td>
+          <td class="td_address_staff">
+            <%= Field.value_by_field_name("QSB Staff Tel No.", @revision_row).empty? ? "" : "Mobile: #{Field.value_by_field_name("QSB Staff Tel No.", @revision_row)}" %><br/>
+            <%= Field.value_by_field_name("QSB Staff Email", @revision_row).empty? ? "" : "#{Field.value_by_field_name("QSB Staff Email", @revision_row)}" %>
+          </td>
+        </tr>
+        <tr>
+          <td class="td_title_header">REF:</td>
+          <td class="td_text_staff"><%= Field.value_by_field_name("QSB Quotation No.", @revision_row) %><%= "#R#{@revision_row.rev_no}" if @revision_row.rev_no > 0 %></td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+</table>
+<%
+current_page = 0
+total_rows = @detail_rows.size
+rows_per_page = get_print_rows_per_page(total_rows)
+total_pages = rows_per_page.size
+item = 0
+%>
+<table class="table_lc_detail">
+  <%= render :file => "/revision_rows/iai_column_header" %>
+  <% @detail_rows.each_with_index do |dr, i| %>
+    <% item += 1 %>
+    <% if rows_per_page[current_page] == 0 %>
+    </table>
+    <br/>
+    <p><%= current_page += 1 %> of <%= total_pages %></p>
+    </div>
+    <%= page_break_after_tag %>
+    <div class="page_inline">
+    <table class="table_lc_detail">
+      <%= render :file => "/revision_rows/iai_column_header" %>
+    <% end %>
+    <% rows_per_page[current_page] -= 1 %>
+    <tr>
+      <th class="td_middle_nbsp"><%=i+1 %></th>
+      <th class="td_text_detail"><%=Field.value_by_field_name("QSB Item",dr)%>&nbsp;</th>
+      <th class="td_text_detail"><%=Field.value_by_field_name("QSB Description",dr)%>&nbsp;</th>
+      <td class="td_number_detail"><%=Field.value_by_field_name("QSB Qty",dr)%>&nbsp;</td>
+      <td class="td_number_detail"><%=Field.value_by_field_name("QSB Selling Price Unit(THB)",dr)%>&nbsp;</td>
+      <td class="td_number_detail"><%=Field.value_by_field_name("QSB Discount Unit(THB)",dr)%>&nbsp;</td>
+      <th class="td_number_detail"><%=Field.value_by_field_name("QSB Total Unit(THB)",dr)%>&nbsp;</th>
+      <td class="td_number_detail"><%=Field.value_by_field_name("QSB Selling Price Amount(THB)",dr)%>&nbsp;</td>
+      <td class="td_number_detail"><%=Field.value_by_field_name("QSB Discount Amount(THB)",dr)%>&nbsp;</td>
+      <th class="td_number_detail"><%=Field.value_by_field_name("QSB Total Amount(THB)",dr)%>&nbsp;</th>
+    </tr>
+  <% end %>
+  <% while rows_per_page[current_page] != 0 and !rows_per_page[current_page].nil? %>
+    <tr title="Double-Click to remove" onDblClick="this.parentNode.removeChild(this)">
+      <% (0...10).each do |c| %>
+        <td class="td_middle_nbsp">&nbsp;</td>
+      <% end %>
+    </tr>
+    <% rows_per_page[current_page] -= 1 %>
+    <% if rows_per_page[current_page] == 0 and current_page != total_pages - 1 %>
+    </table>
+    <br/>
+    <p><%= current_page += 1 %> of <%= total_pages %></p>
+    </div>
+    <%= page_break_after_tag %>
+    <div class="page_inline">
+    <table class="table_lc_detail">
+      <%= render :file => "/revision_rows/iai_column_header" %>
+    <% end %>
+  <% end %>
+  <tr>
+    <td class="td_bottom_nbsp">&nbsp;</td>
+    <td class="td_bottom_nbsp">&nbsp;</td>
+    <td class="td_bottom_nbsp">&nbsp;</td>
+    <td class="td_bottom_nbsp">&nbsp;</td>
+    <td class="td_bottom_nbsp">&nbsp;</td>
+    <td class="td_bottom_nbsp">&nbsp;</td>
+    <td class="td_bottom_nbsp">&nbsp;</td>
+    <td class="td_bottom_nbsp">&nbsp;</td>
+    <td class="td_bottom_nbsp">&nbsp;</td>
+    <td class="td_bottom_nbsp">&nbsp;</td>
+  </tr>
+  <tr>
+    <td class="td_free_detail">&nbsp;</td>
+    <td class="td_free_detail">&nbsp;</td>
+    <td class="td_free_detail">&nbsp;</td>
+    <th class="td_amount_detail"><%= Field.value_by_field_name("QSB Total Qty", @revision_row) %>&nbsp;</th>
+    <td class="td_free_detail">&nbsp;</td>
+    <td class="td_free_detail">&nbsp;</td>
+    <td class="td_free_detail">&nbsp;</td>
+    <th class="td_amount_detail"><%= Field.value_by_field_name("QSB Grand Selling Price Amount(THB)", @revision_row) %>&nbsp;</th>
+    <th class="td_amount_detail"><%= Field.value_by_field_name("QSB Grand Discount Amount(THB)", @revision_row) %>&nbsp;</th>
+    <th class="td_total_detail"><%= Field.value_by_field_name("QSB Grand Total Amount(THB)", @revision_row) %>&nbsp;</th>
+  </tr>
+</table>
+<table class="table_footer">
+  <tr>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <th class="td_head_footer">NOTE</th>
+    <td colspan="4" class="td_cell_footer">:&nbsp;<%= Field.value_by_field_name("QSB Note", @revision_row) %>&nbsp;</td>
+  </tr>
+  <tr>
+    <th class="td_head_footer">TERMS</th>
+    <%
+    quotation_term = Field.value_by_field_name("QSB Quotation Term", @revision_row)
+    quotation_term = "#{quotation_term} #{Field.value_by_field_name("QSB CIF Country Port", @revision_row)}" if quotation_term =~ /CIF/i
+  %>
+    <td colspan="4" class="td_cell_footer">:&nbsp;<%= quotation_term %>&nbsp;</td>
+  </tr>
+  <tr>
+    <th class="td_head_footer">DELIVERY</th>
+    <td colspan="4" class="td_cell_footer">:&nbsp;<%= Field.value_by_field_name("QSB Delivery", @revision_row) %>&nbsp;</td>
+  </tr>
+  <tr>
+    <th class="td_head_footer">PAYMENT</th>
+    <td colspan="4" class="td_cell_footer">:&nbsp;<%= Field.value_by_field_name("QSB Payment", @revision_row) %>&nbsp;</td>
+  </tr>
+  <tr>
+    <th class="td_head_footer">REMARKS</th>
+    <td colspan="4" class="td_cell_footer">:&nbsp;<%= Field.value_by_field_name("QSB Remarks", @revision_row) %>&nbsp;</td>
+  </tr>
+  <tr>
+    <th class="td_head_footer">VALIDITY</th>
+    <td colspan="4" class="td_cell_footer">:&nbsp;<%= Field.value_by_field_name("QSB Validity", @revision_row) %>&nbsp;</td>
+  </tr>
+  <tr>
+    <td colspan="5">
+      <br />
+      If you need further information, please feel free to contact us.<br />
+      Yours Faithfully,<br />
+    </td>
+  </tr>
+</table>
+<table class="table_footer">
+  <tr>
+    <td colspan="2" class="td_signature_footer">
+      <%= "#{Field.value_by_field_name("QSB Digital Signature", @revision_row)}" %>
+      &nbsp;
+    </td>
+    <td><img src='/images/sus_stamp.png' alt="Stamp"/></td>
+    <td colspan="2">&nbsp;</td>
+  </tr>
+  <tr>
+    <td class="td_name_footer" colspan="2">
+      <%= "#{Field.value_by_field_name("QSB Staff First Name", @revision_row)} #{Field.value_by_field_name("QSB Staff Last Name", @revision_row)}" %>&nbsp;<br />
+      <i><%= Field.value_by_field_name("QSB Staff Position", @revision_row) %>&nbsp;</i>
+    </td>
+    <td class="td_free_footer">&nbsp;</td>
+    <td class="td_name_footer" colspan="2">
+      <%= Field.value_by_field_name("QSB Approved By", @revision_row)%>&nbsp;<br />
+      <i><%= Field.value_by_field_name("QSB Approved Position", @revision_row) %>&nbsp;</i>
+    </td>
+  </tr>
+</table>
+<br/>
+<p><%= current_page+1 %> of <%= total_pages %></p>
+</div>

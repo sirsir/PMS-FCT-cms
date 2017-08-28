@@ -1,0 +1,31 @@
+<html>
+  <head>
+    <title>Temp Form</title>
+    <%= javascript_include_tag "prototype" %>
+    <%= javascript_include_tag "effects" %>
+    <%= javascript_include_tag "DomElemAbsPosition" %>
+    <%= javascript_include_tag "cookie" %>
+    <%= javascript_include_tag "application" %>
+    <%= javascript_include_tag "date" %>
+    <%= javascript_include_tag "datetimepicker" %>
+    <%= javascript_include_tag "ajax" %>
+    <%= javascript_include_tag "fr" %>
+    <%= javascript_include_tag "dialog" %>
+    <%= javascript_include_tag "report" %>
+    <%= javascript_include_tag "chart" %>
+    <%= stylesheet_link_tag "screen_relation" %>
+  </head>
+  <body>
+
+    <% form_tag "", {:id=>'tmp_form_id', :multipart => true, :method=>:put, :onSubmit => "selectedOption(this);"}  do %>
+    <p>This page contains temp form for submitting data and receiving the results from the server.</p>
+    <p>ToDo: Set the action, method and append input objects then submit the form. In the result page,
+    call the a JavaScript function to move the result bask to the main page.</p>
+    <p>Upon submit, the form will call selectedOption(this) to automatically selects the option in a Left2Right CustomField.
+    This ensures the all items in the selected (right control) list are submitted with the form.</p>
+    <% end %>
+  </body>
+</html>
+<script type="text/javascript">
+  fncHideDialog("pop_box");
+</script>

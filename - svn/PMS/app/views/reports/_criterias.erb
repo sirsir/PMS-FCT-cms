@@ -1,0 +1,20 @@
+<%
+form_id = "frm_criteria_selector_#{@report.id}"
+%>
+
+<% form_tag url_for(:action => 'set_criterias', :id =>@report.id ), :onSubmit => "fncPrepareFormForSubmit(this);", :method=>:put, :id => form_id, :target=>"tmp_frame" do %>
+  <table id ="table_content_<%=@report.id%>" class="table_data_content" cellspacing="0">
+    <tr class='tr_header'>
+      <% ["&nbsp;", "A:Screen", "A:Field", "Operation", "B:Screen", "B:Field", "&nbsp;"].each do |h| %>
+        <th class='th_col_header'><%= (h =~ /&nbsp;/) ? h : h.to_s.titleize %></th>
+      <% end %>
+    </tr>
+    <%=render :partial => "criteria", :collection => @report.criterias %>
+    <%=render :partial => "criteria", :collection => [nil] %>
+  </table>
+
+  <hr />
+
+  <%= group_button(:area_id => @screen.id) %>
+<% end %>
+  

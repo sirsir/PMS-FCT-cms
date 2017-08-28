@@ -1,0 +1,36 @@
+<%
+arr_ref_screen =[]
+@reference_screens.each_with_index do |rs, index|
+  field_size = rs.fields.collect{|f| f.custom_field.is_a?(CustomFields::Calendar) ? f.custom_field.detail_screen.fields.length : 1}.sum
+  arr_ref_screen << {:ref_screen_index => index, :field_size => field_size + 2}
+end
+
+arr_ref_screen.sort!{|a,b| b[:field_size] <=> a[:field_size]}
+
+max_value = [0,0,0]
+arr_result = [[], [], []]
+
+arr_ref_screen.each do |rs|
+  index_min = max_value.index(max_value.min)
+  arr_result[index_min] << rs
+  max_value[index_min]  += rs[:field_size]
+end
+%>
+</tr>
+<tr>
+  <% arr_result.each do |i| %>
+    <%
+      i.sort! do |a, b|
+        a_descr = @reference_screens[a[:ref_screen_index]].label_descr
+        b_descr = @reference_screens[b[:ref_screen_index]].label_descr
+        a_descr <=> b_descr
+      end
+    %>
+    <td valign="top">
+      <% i.each do |j|%>
+        <%=group_tag("#{@reference_screens[j[:ref_screen_index]].label_descr} (#{@report.reference_screen_alias[j[:ref_screen_index]]})", render(:partial => 'reference_fields', :locals => {:reference_fields => @reference_screens[j[:ref_screen_index]].fields.sort{|a,b| a.descr <=> b.descr }, :reference_screen_index => j[:ref_screen_index] } ), {:type => "form", :blindable => false} ) %>
+        <br/>
+      <% end %>
+    </td>
+  <% end %>
+</tr>

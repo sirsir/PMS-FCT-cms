@@ -1,0 +1,65 @@
+<% if (field.display_seq == 0) %>
+
+<% else %>
+  <td class='td_cell'>&nbsp;</td>
+  <td class='td_cell'><%=h field.id %></td>
+  <% if field.is_a?(Fields::Separator) %>
+    <td class='td_cell' colspan="16"><hr /></td>
+  <% else %>
+    <td class='td_cell'><%=h field.name %></td>
+    <td class='td_cell'><%=field.descr %></td>
+    <td class='td_cell'><%=field.parent.nil? ? "&nbsp;" : field.parent.descr %></td>
+    <td class='td_cell'>
+      <%
+      case field
+      when Fields::Data then
+        content = field.custom_field ? field.custom_field.name : CustomField.missing_msg(field.custom_field_id)
+      when Fields::HeaderInfo then
+        content = "&nbsp;"
+      when Fields::DetailInfo then
+        content = "&nbsp;"
+      when Fields::Accumulation then
+        #content = "<span class='missing_implementation'>Display Fields::Accumulation.evaluate_text!</span>"
+        content = Fields::Accumulation.evaluate_syntax(field.value)
+      when Fields::Formula then
+        content = Fields::Formula.evaluate_syntax(field.value[:formula])
+        content << <<HTML_TAG
+    <!-- #{Fields::Formula.evaluate_syntax(field.value[:formula], :recursive => false).to_html} -->
+HTML_TAG
+      when Fields::Comparison then
+        #content = "<span class='missing_implementation'>Display Fields::Comparison.evaluate_syntax!</span>"
+        content = Fields::Comparison.evaluate_syntax(field.value[:comparison])
+      when Fields::ReferenceAttribute then
+        content = "&nbsp;"
+      when Fields::CodeCombindedReferenceAttribute then
+        content = "&nbsp;"
+      when Fields::Grouping then
+        content = "&nbsp;"
+      else
+        content = "<span class='error_message'>Unknown Field type with ID=#{field.id} #{field.class.to_s}!</span>"
+      end
+    %>
+      <%=content %>
+    </td>
+    <td class='td_cell'><%=h field.class.to_s.gsub("Fields::","") %></td>
+    <td class='td_cell' align="center"><%=check_box_image_tag field.read_only? %></td>
+    <td class='td_cell' align="center"><%=check_box_image_tag field.is_mandatory? %></td>
+    <td class='td_cell' align="center"><%=check_box_image_tag field.is_unique? %></td>
+    <td class='td_cell' align="center"><%=check_box_image_tag field.display_in_search? %></td>
+    <td class='td_cell' align="center"><%=check_box_image_tag field.required_search? %></td>
+    <td class='td_cell' align="center"><%=check_box_image_tag field.display_in_list? %></td>
+    <td class='td_cell' align="center"><%=check_box_image_tag field.display_in_description? %></td>
+    <td class='td_cell' align="center"><%=check_box_image_tag field.display_in_form? %></td>
+    <td class='td_cell' align="center"><%=field.screen.is_a?(RevisionScreen) ? check_box_image_tag(field.display_in_header_list?) : "-" %></td>
+    <td class='td_cell' align="center"><%=check_box_image_tag field.allow_import? %></td>
+    <td class='td_cell'><%=h field.sorting_order.to_s.titleize %></td>
+  <% end %>
+  <%
+  tr_id = "#{field.screen_id}_#{field.id}"
+  options = {:confirm => true}
+  options[:onclick] = "fncTrDelete(this.href, '#{tr_id}');"
+  options[:object] = field
+  options[:controller] = :fields
+  %>
+  <td class='td_cell' id='<%= tr_id %>_destroy'><%= link_to_destroy(options) %></td>
+<% end %>

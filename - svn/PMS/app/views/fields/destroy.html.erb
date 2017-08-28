@@ -1,0 +1,15 @@
+<%=javascript_include_tag "prototype" %>
+<%=javascript_include_tag "application" %>
+<%=javascript_include_tag "dialog" %>
+<%=javascript_include_tag "fr" %>
+<script type="text/javascript">
+<%
+tr_id = "#{@field.screen_id}_#{@field.id}"
+%>
+<% if  @field.errors.empty? %>
+    fncSetTrDeleted('<%= tr_id %>');
+<% else %>
+    fncSetError('<%=error_messages_for(:object => @field).to_s.gsub(/'/, '\\"') %>');
+<% end %>
+  fncLoadTempFrame();
+</script>

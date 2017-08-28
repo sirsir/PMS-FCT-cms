@@ -1,0 +1,33 @@
+<%
+rows = @rows[date.to_s] || []
+
+rows.sort!{|a, b| b.id <=> a.id }
+
+#~ This variable has to match the 'data_per_day' variable in '_calendar_stylesheet'
+data_per_day = 5
+
+count = rows.size
+rows = rows.first(data_per_day)
+%>
+
+<% rows.each_with_index do |r, index| %>
+    <%
+    index += date.strftime("%j").to_i * data_per_day
+    div_class = "data"
+    div_class << " clr_record_#{clr_index(index)}"
+    color_custom_field_ids.each do |cf_id|
+      cell = r.cell(cf_id)
+      cell = r.latest_revision.cell(cf_id) if r.is_a?(HeaderRow) && cell.nil?
+      value = cell.to_text.to_s.gsub(/\W/,'').underscore unless cell.nil?
+
+      div_class << " xxx_#{cf_id}_#{value}"
+    end
+    %>
+    <div class="<%= div_class %>" name="calendar_data">
+      <%=full_text_toogler_tag("#{r.id}_descr", r.description.to_s.empty? ? "&nbsp;" : r.description, r.id)%>
+    </div>
+<% end %>
+
+<% if count > rows.size %>
+  <div class="more"><%= count - rows.size%> more&hellip;</div>
+<% end %>

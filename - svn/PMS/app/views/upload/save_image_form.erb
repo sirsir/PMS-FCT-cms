@@ -1,0 +1,10 @@
+<%= javascript_include_tag "application" %>
+<% form_tag url_for( :action => 'save_image'),:multipart => true,:method=>:put do %>	
+  <%= file_field("file", "picture") %>
+  <br>
+  <%= button_to_function("Cancel", "fncCancelUploadImage();") %>
+  <%= reset_tag() %>
+  <%= submit_tag("Submit") %>
+  <%= hidden_field_tag("cf_id", params[:cf_id]) %>
+  <%= hidden_field_tag("screen_id", params[:screen_id]) %>
+<% end %>

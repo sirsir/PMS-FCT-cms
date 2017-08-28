@@ -1,0 +1,10 @@
+<%=render(:partial => 'stock_step', :locals => { :step => :stocks }) %>
+
+<%
+form_id = "frm_edit_#{@stock.id}"
+%>
+<% form_tag url_for(:action => 'update', :step => :stocks), :onSubmit => "fncPrepareFormForSubmit(this);", :method=>:put, :id=>form_id, :target=>"tmp_frame" do %>
+  <%= screen_modification_tag @stock.name, render(:partial => 'form'), "#{form_id}_content" %>
+<% end %>
+
+<hr />

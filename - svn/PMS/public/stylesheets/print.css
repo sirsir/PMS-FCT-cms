@@ -1,0 +1,173 @@
+/*
+    Document   : table
+    Created on : Nov 17, 2010, 3:28:06 AM
+    Author     : Danzler.S
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+.table_content, .table_data_content {
+    font-family: verdana, arial, helvetica, sans-serif;
+    font-size: 13px;
+    line-height: 18px;
+    border-width: 1px 0px 0px 1px;
+}
+
+.th_col_header, .td_cell, .td_loading {
+    padding: 0px 1px 0px 1px;
+    border-width: 0px 1px 1px 0px;
+}
+
+.table_content, .th_col_header, .td_cell, .td_loading, .table_data_content {
+    border-color: #000;
+    border-style: solid solid solid solid;
+}
+
+.tr_disabled, .tr_deleted{
+    background-color:#CCCCCC;
+}
+
+.tr_deleted {
+    text-decoration:line-through;
+    color:red;
+}
+
+.tr_odd, .tr_even,
+.tr_new, .tr_edit,
+.tr_check_odd, .tr_check_even{
+    cursor:pointer;
+}
+
+.tr_odd, .tr_check_odd, .tr_data_odd {
+    background-color:#F5F8FD;
+}
+
+.tr_even, .tr_check_even, .tr_data_even {
+    background-color:#CEE7FF;
+}
+
+.tr_new {
+    background-color:#CEE7CE;
+}
+
+.tr_edit {
+    background-color:#FFE7FF;
+}
+
+.tr_even_selected, .tr_odd_selected,
+.tr_new_selected, .tr_edit_selected{
+    background-color:#00CCFF;
+    cursor:pointer;
+}
+
+.tr_header {
+    background-color:grey;
+/*  background-color: #88A7D8;*/
+    cursor: default;
+}
+
+.td_cell {
+    vertical-align: text-top;
+}
+
+.td_cell_remark {
+    background-color: transparent;
+    margin: 0px;
+    padding: 0px;
+}
+
+.th_col_header {
+    text-align: center;
+    vertical-align: center;
+}
+
+.th_row_header {
+    text-align: right;
+    vertical-align: text-top;
+}
+
+.mandatory {
+    color: red;
+    text-decoration: none;
+}
+
+.unique {
+    text-decoration:underline;
+}
+
+.tr_even_hover, .tr_odd_hover,
+.tr_new_hover, .tr_edit_hover,
+.table_content tr:hover{
+    background-color:#7F7FFF;
+    cursor:pointer;
+    color:#FFFFFF;
+}
+
+.table_hr {
+    padding: 0px 20px 0px 20px;
+}
+
+.table_search, .td_search{
+    color: #000000;
+    font-size: 13px;
+    font-style: normal;
+    vertical-align: top;
+}
+
+.table_search .td_search_invalid{
+    color: #ffffff;
+    background-color: red;
+    font-size: 13px;
+    font-style: normal;
+}
+
+.table_search .td_search .required_field {
+    color: #cc0000;
+    font-family: Arial,Helvetica,sans-serif;
+}
+
+.td_state_new, .issue_state {
+    text-align: center;
+    vertical-align: text-top;
+    width: 16px;
+    height: 16px;
+}
+
+.table_content tr {
+    vertical-align: text-top;
+}
+
+.tr_data_odd, .tr_data_even{
+    cursor:default;
+}
+
+
+.tr_display_none{
+    display: none;
+}
+
+.tr_display{
+
+}
+
+table.table_print{
+    border-style: solid;
+    border-color: Black;
+    border-width: thin;
+    border-collapse: collapse;
+    font-family: tahoma;
+    font-size: 2.2mm;
+    margin-top: 5mm;
+    margin-left: 0mm;
+}
+
+.td_print {
+    border-style: solid;
+    border-color: Black;
+    border-width: 0.18mm ;
+    color:Black;
+}
+
+.page_break {
+    page-break-before: always;
+}

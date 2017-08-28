@@ -1,0 +1,22 @@
+<table>
+  <!-- WARNING!!! The first list must be the table start tag -->
+
+  <tr id="<%=@report.id %>_replacement" readonly='<%=@readonly %>'>
+    <td class='td_cell'>&nbsp;</td>
+    <td class='td_cell'><%=h @report.id %></td>
+    <td class='td_cell'><%= (@report.name.to_s.empty?) ? "&nbsp;" : @report.name %></td>
+    <td class='td_cell'><%=full_text_toogler_tag("#{@report.id}_descr", (@report.descr.to_s.empty?) ? "&nbsp;" : @report.descr, @report.id) %></td>
+    <td class='td_cell'>
+      <pre class="td_cell_remark"><%=full_text_toogler_tag("#{@report.id}_remark", @report.remark.to_s.empty? ? "&nbsp;" : @report.remark, @report.id) %></pre>
+    </td>
+<%
+
+options = {:confirm => true}
+options[:onclick] = "fncTrDelete(this.href, #{@report.id});"
+options[:object] = @report
+
+content = link_to_destroy(options)
+%>
+    <td class='td_cell' id='<%="#{@report.id}_destroy"%>'><%=content %></td>
+  </tr>
+</table>

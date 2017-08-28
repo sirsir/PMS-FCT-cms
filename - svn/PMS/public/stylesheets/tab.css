@@ -1,0 +1,133 @@
+  
+.tab_table{
+    margin: 0;
+    border-style: none;
+    padding: 0px;
+    border-collapse: collapse;
+    border-color: black;
+}
+
+.tab_page_body {
+    margin: 0px;
+    border-style: solid;
+    border-width: 2px 1px 1px 2px;
+    border-color: #001D85;
+    padding: 10px;
+    border-spacing: 0px;
+}
+
+.tab_page_background{
+    background-color: #eaf4fe;
+}
+
+.tab_button_header {
+    padding: 0px;
+}
+
+.tab_button_top_left,
+.tab_button_top,
+.tab_button_top_right{
+    height: 3px;
+}
+
+.tab_button_top_left_selected,
+.tab_button_top_selected,
+.tab_button_top_right_selected {
+    height: 5px;
+}
+.tab_button_top_left,
+.tab_button_top_left_selected,
+.tab_button_top_left,
+.tab_button_top_left_selected,
+.tab_button_top_right,
+.tab_button_top_right_selected {
+    padding: 0px;
+}
+
+.tab_button_top_left,
+.tab_button_top_left_selected,
+.tab_button_top_right,
+.tab_button_top_right_selected {
+    width: 3px;
+    background-repeat: no-repeat;
+}
+
+.tab_button_top_left,
+.tab_button_top_left_selected {
+    background-position: right bottom;
+}
+
+.tab_button_top,
+.tab_button_top_selected{
+    width: auto;
+    border-top-width: 1px;
+    border-top-style: solid;
+    border-spacing: 0px;
+    border-color: black;
+}
+
+.tab_button_top_right,
+.tab_button_top_right_selected {
+    background-position: left bottom;
+}
+
+.tab_button_top_left{
+    background-image: url(/images/tab_button_left_0.gif);
+}
+
+.tab_button_top {
+    background-color: #BAB4BE;
+}
+.tab_button_top_right{
+    background-image: url(/images/tab_button_right_0.gif);
+}
+
+.tab_button_top_left_selected{
+    background-image: url(/images/tab_button_left_1.gif);
+}
+
+.tab_button_top_selected{
+    background-color: #001D85;
+}
+
+.tab_button_top_right_selected{
+    background-image: url(/images/tab_button_right_1.gif);
+}
+
+.tab_button,
+.tab_button_selected {
+    height: auto;
+    padding:0px 10px;
+    text-align: center;
+    cursor: pointer;
+    margin: 0px;
+    border-style: solid;
+    border-color: black;
+    border-width: 0px 1px;
+    white-space: nowrap;
+}
+
+.tab_button{
+    color: #001D85;
+    background-color: #BAB4BE;
+}
+
+.tab_button_selected{
+    color: #ffffff;
+    background-color: #001D85;
+    font-weight: bold;
+}
+
+.tab_content{
+    display: none;
+}
+
+.tab_content_selected{
+    display: block;
+}
+
+.tab_expand{
+    background-color: transparent;
+    border-style: none;
+    border-bottom-width: 1px;
+}

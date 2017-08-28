@@ -1,0 +1,25 @@
+<%  if readonly %>
+  <%= cell.to_html %>
+<% else %>
+<%
+name_prefix ||= ''
+cf = field.custom_field
+cf_id = field.custom_field_id
+cf_options = cf.option
+cell_value = cell.value
+
+isLower_Char = cf_options[:alphabet] == "all" || cf_options[:alphabet] == "lower_case"
+isUpper_Char = cf_options[:alphabet] == "all" || cf_options[:alphabet] == "upper_case"
+symbols = cf_options[:symbols].collect{|s| s.symbol}.join("\",\"")
+symbols = symbols.empty? ? "[ ]" : "[\"" + symbols + "\"]"
+
+field_options = {}
+field_options[:name] = "#{name_prefix}cells[#{cf_id}]"
+field_options[:cell_value] = cell_value.empty? ? cf.default_value : cell_value
+field_options[:maxlength] = cf_options[:length][:max] unless cf_options[:length][:max].nil?
+field_options[:onKeyPress] = "return fncCheckKeyInput(event, #{cf_options[:numeric]}, #{isLower_Char}, #{isUpper_Char}, #{symbols}, #{cf_options[:non_english]});"
+field_options[:onKeyUp] = "this.value = #{isLower_Char ? "this.value.toLowerCase()" : "this.value.toUpperCase()"};" unless (isLower_Char == isUpper_Char)
+%>
+<%= screen_text_area_tag(field_options) %>
+<%= field_descr_tag :descr => field.custom_field.descr %>
+<% end %>

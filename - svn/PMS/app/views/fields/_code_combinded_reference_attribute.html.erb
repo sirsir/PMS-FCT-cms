@@ -1,0 +1,22 @@
+<tr>
+  <th class="th_row_header">Code Combined Reference:</th>
+  <td>
+    <% operation_url = url_for(
+            :controller => "fields",
+            :action=>"code_combinded_reference_attribute",
+            :id=>0,
+            :field_id=>@field.id,
+            :ccr_field_id=>"JAVASCRIPT_VAR_VALUE_01")
+      on_click = "fncAjaxUpdaterWithReplacement(\"ccr_ref_att_#{@field.id}\",\"#{operation_url}\", [\"JAVASCRIPT_VAR_VALUE_01\", this.value]);"
+    %>
+    <%=select_tag("field[value][field_id]", options_from_collection_for_select_tag( @assigned_options, :id, :screen_field_caption, (@field.id.nil? ? nil : @field.ccr_field_id), {:include_blank => true } ), :onchange=> on_click ) %>
+  </td>
+</tr>
+<tr>
+  <th class="th_row_header">Field:</th>
+  <td>
+    <div id ="ccr_ref_att_<%=@field.id%>">
+        <%=@field.id.nil? ? "" : select_tag("field[value][source_field_id]", options_from_collection_for_select_tag( @assigned_option_fields, :id, :screen_field_caption, (@field.id.nil? ? nil : @field.source_field_id), {:include_blank => true} ) ) %>
+    </div>
+   </td>
+</tr>

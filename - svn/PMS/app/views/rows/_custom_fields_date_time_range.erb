@@ -1,0 +1,5 @@
+<%= label_tag "" "From: " %>
+<%= render :partial => "/rows/custom_fields_date_time_field", :locals => {:readonly => readonly, :cell => cell, :name_postfix => "from", :field => field} %>
+-
+<%= label_tag "" "To: " %>
+<%= render :partial => "/rows/custom_fields_date_time_field", :locals => {:readonly => readonly, :cell => cell, :name_postfix => "to", :field => field} %>

@@ -1,0 +1,21 @@
+<tr>
+  <th class="th_row_header">Format:</th>
+  <td>
+    <span class="missing_implementation">Need to set date/time format, statuses, etc.</span>
+    <%= field_descr_tag %>
+  </td>
+</tr>
+<tr>
+  <th class="th_row_header">Default Value:</th>
+  <td>
+    <%
+    select_current_date = (@custom_field.default_value == "current_date") ? true : false
+    %>
+    <%= radio_button_tag("custom_field[value][default_value]", 'current_date', select_current_date) %>
+    <%= label_tag("custom_field[value][default_value][current_date]", 'Current Date') %>
+    <br />
+    <%= radio_button_tag("custom_field[value][default_value]",'empty', !select_current_date) %>
+    <%= label_tag("custom_field[value][default_value][empty]", 'Empty') %>
+    <%= field_descr_tag %>
+  </td>
+</tr>

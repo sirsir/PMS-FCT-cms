@@ -1,0 +1,31 @@
+<% if readonly %>
+  <%=cell.to_html %>
+<% else %>
+<%
+name_prefix ||= ''
+cf = field.custom_field
+cf_id = field.custom_field_id
+cf_options = cf.option
+cell_value = cell.value
+
+cell_value = User.find(session['user_id']).login.titleize if(!cell_value.to_s.empty? && cf.name == 'Approved_By')
+isLower_Char = cf_options[:alphabet] == 'all' || cf_options[:alphabet] == 'lower_case'
+isUpper_Char = cf_options[:alphabet] == 'all' || cf_options[:alphabet] == 'upper_case'
+symbols = cf_options[:symbols].collect{|s| s.symbol}.join("\",\"")
+symbols = symbols.empty? ? '[ ]' : '["' + symbols + '"]'
+
+field_options = {}
+field_options[:name] = "#{name_prefix}cells[#{cf_id}]"
+field_options[:cell_value] = cell_value.empty? ? cf.default_value : cell_value
+field_options[:maxlength] = cf_options[:length][:max] unless cf_options[:length][:max].nil?
+field_options[:onkeypress] = "return fncCheckKeyInput(event, #{cf_options[:numeric]}, #{isLower_Char}, #{isUpper_Char}, #{symbols}, #{cf_options[:non_english]});"
+field_options[:onkeyup] = "this.value = this.value.to#{isLower_Char ? 'Lower' : 'Upper'}Case();" unless (isLower_Char == isUpper_Char)
+
+if field.screen_id.eql?(@detail_screen_id)
+  cell_id = cell.id.nil? ? nil : "_#{cell.id}"
+  field_options[:onchange] = "fncUpdateCellCalendar(this.value, '#{cell.row.id}_#{field.id}#{cell_id}', '#{@screen.id}')"
+end
+%>
+<%= screen_text_field_tag(field_options) %>
+<%= field_descr_tag :descr => field.custom_field.descr %>
+<% end %>

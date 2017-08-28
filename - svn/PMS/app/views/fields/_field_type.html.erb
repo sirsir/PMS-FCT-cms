@@ -1,0 +1,13 @@
+<%
+operation_area = "operation_area_#{@screen_self.id}"
+operation_url = url_for(:action=>:new, :id=>@screen_id, :field_type => field_type.class.name)
+%>
+
+<tr class='tr_<%= @field_types.index(field_type) % 2 == 0 ? "even" : "odd" %>' id='<%=field_type.class.name.underscore%>'
+    operation_area='<%=operation_area%>' operation_url='<%=operation_url%>'
+    relation_area='' relation_url=''
+    handleonclick='true'>
+  <td class='td_cell'>&nbsp;</td>
+  <td class='td_cell'><%=field_type.class.name.gsub("Fields::", "").titleize %></td>
+  <td class='td_cell'><%=field_type.description %></td>
+</tr>

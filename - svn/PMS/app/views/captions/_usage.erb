@@ -1,0 +1,30 @@
+<hr />
+Usage:
+<%
+usage = @label.used_by(true)
+%>
+
+<table class="table_data_content" cellspacing="0">
+  <tr class="tr_header">
+    <th class="th_col_header">Id</th>
+    <th class="th_col_header">Name</th>
+    <th class="th_col_header">Screen</th>
+  </tr>
+<% if usage.empty? %>
+  <tr class="tr_data_odd"><td class="td_cell" colspan="3">Not in use...</td></tr>
+<% end %>
+<%
+usage.each do |class_name, objects|
+%>
+  <tr class="tr_header">
+    <th class="th_col_header" colspan="3" style="text-align: left"><%= class_name %></th>
+  </tr>
+  <% objects.each do |obj| %>
+  <tr>
+    <td class="td_cell"><%= h obj[:id].to_s %></td>
+    <td class="td_cell"><%= h obj[:name].to_s %></td>
+    <td class="td_cell"><%= h obj[:screen_name].to_s %>&nbsp;</td>
+  </tr>
+  <% end %>
+<% end %>
+</table>

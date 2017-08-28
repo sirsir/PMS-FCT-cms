@@ -1,0 +1,35 @@
+<%
+name_prefix ||= ''
+style_display = "display: none;" unless field.display_in_form?
+%>
+
+<tr id="fields_reference_attribute_<%=row.id %>_<%=field.id %>" style="<%= style_display %>">
+  <th class="th_row_header">
+    <%
+    if field.is_mandatory?
+      mandatory_content = "*".to_html
+      mandatory_title = "Must specify #{field.descr}"
+    end
+    if field.is_unique?
+      unique_class = "unique"
+      unique_fields = field.screen.fields.collect{|f|
+        f.descr if f.is_unique?
+      }.compact.join(", ")
+      unique_title = "#{unique_fields} must be unique"
+    end
+  %>
+    <span class="mandatory" title="<%=mandatory_title %>"><%=mandatory_content %></span>
+    <span class="<%=unique_class %>" title="<%=unique_title %>"><%= label_tag "", "#{field.full_descr}" %></span>
+    :
+  </th>
+  <td>
+  <div id ="ref_att_<%=field.id %>">
+    <% if field.read_only? || readonly %>
+      <%= field.evaluate_value(row) %>
+    <% else %>
+      <%=text_field_tag "#{name_prefix}cells[#{field.reference_custom_field_id.to_s}][#{field.id.to_s}]", row.id.nil? ? "" : field.evaluate_value(row) %>
+    <% end %>
+  </div>
+    <%= field_descr_tag :descr => field.source_field.is_a?(Fields::Data) ? field.source_field.custom_field.descr : '', :break => false %>
+  </td>
+</tr>

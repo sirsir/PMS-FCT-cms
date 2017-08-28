@@ -1,0 +1,17 @@
+<%= screen_name_list_tag @screen %>
+
+<%
+ajax_params = {:controller => "report_requests"}
+operation_tags = operation_tag( [:new],{:ajax_params => ajax_params} )
+%>
+
+<%=operation_tags %>
+
+<%= group_tag @screen, render(:partial => 'report_requests') %>
+
+<%=operation_tags %>
+
+<hr />
+
+<div id ='error_area'></div>
+<div id ='operation_area'></div>

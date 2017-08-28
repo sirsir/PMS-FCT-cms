@@ -1,0 +1,96 @@
+<tr class='tr_header' >
+  <%
+  headers = []
+  descrs = []
+  row_span = screen.field_level
+
+  detial_screen_calendar = false
+  if screen.is_a?(DetailScreen)
+    @screen.fields.each do |s|
+      detial_screen_calendar = true if s.custom_field.is_a?(CustomFields::Calendar)
+    end
+  end
+
+  if field_level == 1
+    unless detial_screen_calendar
+      headers << {
+        :descr => check_box_tag("select[#{screen.id}][all]", false, false, { :onclick => 'fncSelectAll(this);' }),
+        :col_span => 1,
+        :row_span => row_span
+      }
+    end
+      headers << {:descr => '&nbsp;', :col_span => 1, :row_span => row_span}
+    if screen.is_a?(RevisionScreen) && screen.control_revision?
+      headers << {:descr => 'Rev no', :col_span => 1, :row_span => row_span, :field_id => -1}
+      headers << {:descr => 'Rev Date', :col_span => 1, :row_span => row_span, :field_id => -1}
+    end
+  end
+
+  screen.list_fields_level(field_level).each do |f|
+    descrs = []
+    if f.custom_field.is_a?(CustomFields::Calendar)
+      descrs=['Date:']
+      start_date = Date.null_date
+      end_date = start_date.next_year - 1.month
+      diff_year = start_date.year != end_date
+      while(start_date <= end_date)
+        descrs << start_date.strftime('%b')
+        start_date = start_date + 1.month
+        descrs << 'Date:' if (start_date == end_date.beginning_of_year) && diff_year
+      end
+    elsif f.custom_field.is_a?(CustomFields::Reference) && f.custom_field.is_separate_controls?
+      avirable_field = f.custom_field.screen.fields.select{|ff| ff.is_unique? && ff.is_a?(Fields::Data)}
+      descrs = avirable_field.collect{|cf| cf.descr}
+    else
+      # ToDo: assign row_pattern to support in show relation screen
+      # cause error occur when custom field is OCR
+      descrs = [f.descr( :row_pattern => @row_pattern )].flatten if f.display_in_list? or f.is_a?(Fields::Grouping)
+    end
+    headers += descrs.collect do |d|
+      {
+        :descr => d,
+        :col_span => f.col_span( :row_pattern => @row_pattern ),
+        :row_span => f.row_span,
+        :field_id => f.id,
+        :allow_sort => screen.is_a?(HeaderScreen) || (screen.is_a?(ListScreen)&& !f.custom_field.is_a?(CustomFields::Calendar))
+      }
+    end
+  end
+
+  if field_level == 1
+    headers << {
+        :descr => 'Latest Rev no',
+        :col_span => 1,
+        :row_span => 1,
+        :field_id => -1
+      } if screen.is_a?(HeaderScreen) && screen.revision_screen.control_revision?
+  end
+
+  if screen.is_a?(HeaderScreen)
+    screen.revision_screen.list_fields_level(field_level).each do |f|
+      descrs = []
+      descrs = [f.descr( :row_pattern => @row_pattern )].flatten if f.display_in_header_list? or f.is_a?(Fields::Grouping)
+      headers += descrs.collect do |d|
+        {
+          :descr => d,
+          :col_span => f.col_span( :row_pattern => @row_pattern ),
+          :row_span => f.row_span,
+          :field_id => f.id,
+          :allow_sort => true
+        }
+      end
+    end
+  end
+
+  if field_level == 1 && !detial_screen_calendar
+    headers << {:descr => 'Remark', :col_span => 1, :row_span => row_span}
+    headers << {:descr => 'Last Update', :col_span => 1, :row_span => row_span}
+    headers << {
+      :descr => '&nbsp;',
+      :col_span => 1,
+      :row_span => row_span
+    }  if screen.allow_action?('destroy') && @action_source != 'relations'
+  end
+%>
+  <%=render :partial => '/rows/header', :collection => headers %>
+</tr>

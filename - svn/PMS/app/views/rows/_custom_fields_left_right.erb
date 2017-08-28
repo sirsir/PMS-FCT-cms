@@ -1,0 +1,22 @@
+<% if readonly %>
+  <%=cell.to_html%>
+<% else %>
+<%
+  name_prefix ||= ''
+  left_right_options = cell.select_value_options
+  if cell.value.empty? && !field.custom_field.default_value.empty?
+    assigned_option = Row.find(:all, :conditions => [" id IN (?)", field.custom_field.default_value])
+  else
+    assigned_option = left_right_options[:assigned_options]
+  end
+%>
+
+<%= left_to_right_tag(
+      :descr => @row.screen.label_descr,
+      :name => "#{name_prefix}cells[#{field.custom_field_id}]",
+      :assigned_options => assigned_option,
+      :all_options => left_right_options[:all_options],
+      :value_method => :id,
+      :text_method => :description) %>
+<%= field_descr_tag :descr => field.custom_field.descr, :break => false %>
+<% end %>

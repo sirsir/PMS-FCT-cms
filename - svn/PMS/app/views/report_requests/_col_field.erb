@@ -1,0 +1,51 @@
+<%
+background_colors = ReportRequest.background_colors_24bit[:header]
+bg_index = @report_request.report.col_fields_reports.index(col_field) % background_colors.length
+%>
+<tr class="tr_header" style="background-color: <%=background_colors[bg_index] %>">
+  <%
+  row_field_report_span = @report_request.report.hide_row_columns? ? @report_request.report.row_fields_reports.length + 1 : 0
+  cell_field_report_span = @report_request.report.cell_location == :row ? 1 : 0
+  %>
+  <th class="th_col_header" colspan="<%=row_field_report_span + cell_field_report_span %>" style='text-align: right; white-space: nowrap;'>
+    <%=col_field.field_id < 0 ? @report_request.report.reference_screens[col_field.reference_screen_index].label_descr : col_field.descr %>
+  </th>
+  <%
+  col_fields_reports = @report_request.report.col_fields_reports
+  cell_fields_reports = @report_request.report.cell_fields_reports
+  col_index = col_fields_reports.index(col_field)
+
+  style_display = case
+  when (col_fields_reports.first == col_field && !@report_request.report.display_grand_totals.include?(:col))
+    "none"
+  when (col_index > 0 && col_index < col_fields_reports.length-1) || (col_index == col_fields_reports.length-1)
+    (col_fields_reports.first != col_field && col_fields_reports[col_index-1].summarize == :non) ? "none" : ''
+  else
+    ""
+  end
+
+  cell_field_report_count = (@report_request.report.cell_location == :row) ? 1 : @report_request.report.cell_fields_reports.size
+  sum_col_span = if @report_request.report.cell_location == :col
+    cell_fields_reports[0..cell_field_report_count-1].collect{ |c| c.percentage_weight_col_span }.compact.sum
+  else
+    @report_request.report.has_percentage_weight? ? 1 : 0
+  end
+
+  sub_total_col_span = @report_request.report.cell_location == :col ? cell_fields_reports.length : 1
+  sub_total_col_span += sum_col_span if sum_col_span > 0
+  sub_total_row_span = col_fields_reports.length - col_fields_reports.index(col_field)
+   
+  report_request_col_groups = @report_request.col_report_request_cols(col_field)
+  report_request_col_groups.each do |rrcg|
+    next if rrcg.empty?
+  %>
+  <%=render :partial => 'report_request_col', :collection => rrcg %>
+
+  <th class="th_col_header" style="background-color: <%=background_colors[bg_index-1] %>; display: <%=style_display %>;"
+      colspan="<%=sub_total_col_span %>" rowspan="<%=sub_total_row_span %>"
+      title="<%=col_fields_reports.first == col_field ? "Grand Total" : "#{rrcg.first.parent.full_descr} - Sub Total" %>">
+    <%=col_fields_reports.first == col_field ? "Grand" : "Sub" %> Total
+  </th>
+  <% end %>
+</tr>
+

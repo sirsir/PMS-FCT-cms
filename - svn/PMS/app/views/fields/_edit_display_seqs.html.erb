@@ -1,0 +1,11 @@
+<form action="/fields/update_display_seq" id="update_field_display_seq" method="post">
+  <table class = 'table_data_content' id='mainTable'>
+    <tr class="tr_header">
+      <th class="th_col_header">Field</th>
+      <th class="th_col_header" title="Move Up">U</th>
+      <th class="th_col_header" title="Move Down">D</th>
+    </tr>
+    <%= render :partial => "edit_display_seq", :collection => @fields %>
+  </table>
+  <%= group_button(:area_id => @screen_self.id) %>
+</form>

@@ -1,0 +1,28 @@
+<p>
+  <b>Transaction at:</b>
+  <%=h @stock_transaction.transaction_at %>
+</p>
+
+<p>
+  <b>Type:</b>
+  <%=h @stock_transaction.type %>
+</p>
+
+<p>
+  <b>Value:</b>
+  <%=h @stock_transaction.value %>
+</p>
+
+<p>
+  <b>Reason row:</b>
+  <%=h @stock_transaction.reason_row_id %>
+</p>
+
+<p>
+  <b>Remark:</b>
+  <%=h @stock_transaction.remark %>
+</p>
+
+
+<%= link_to 'Edit', edit_stock_transaction_path(@stock_transaction) %> |
+<%= link_to 'Back', stock_transactions_path %>

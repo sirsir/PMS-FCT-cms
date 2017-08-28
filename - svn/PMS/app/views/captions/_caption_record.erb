@@ -1,0 +1,12 @@
+<%
+label = caption_record
+operation_area ||= ""
+operation_url = url_for(:action => :edit, :id => label.id)
+%>
+
+<tr class='tr_<%= @labels.index(label) % 2 == 0 ? "even" : "odd" %>' id='<%=label.id%>'
+    operation_area='<%=operation_area%>' operation_url='<%=operation_url%>'
+    relation_area='' relation_url=''
+    handleonclick='true'>
+  <%= render :partial => "caption", :locals => { :caption => label } %>
+</tr>

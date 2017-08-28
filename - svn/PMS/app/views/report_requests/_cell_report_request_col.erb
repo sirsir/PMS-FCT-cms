@@ -1,0 +1,24 @@
+<%
+report_request_row = @report_request_row
+report_request_rows = report_request_row.leaf_report_request_rows
+report_request_col = cell_report_request_col
+fields_report = cell_report_request_col.fields_report
+show_percentage ||= false
+
+options = { 
+  :cell_value_cache => @vm[:cell_value_cache], 
+  :show_percentage => show_percentage
+}
+
+cell_values = fields_report.row_cell_values(report_request_row, 
+                                            report_request_col, 
+                                            report_request_rows,
+                                            options)
+%>
+<%=render :partial => 'cell_value', :locals => {
+  :report_request_row_id => report_request_row.id, :report_request_col_id => report_request_col.id,
+  :cell_field_report => fields_report, :cell_values => cell_values,
+  :summary => @report_request_row.childs.empty? ? :cell : :sub_total,
+  :title => "'#{@report_request_row.full_descr}' &lowast; '#{report_request_col.full_descr}'"
+}
+%>

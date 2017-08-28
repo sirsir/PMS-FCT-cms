@@ -1,0 +1,12 @@
+<%=javascript_include_tag "prototype" %>
+<%=javascript_include_tag "application" %>
+<%=javascript_include_tag "dialog" %>
+<%=javascript_include_tag "fr" %>
+
+<script type="text/javascript">
+  <% ajax_url = url_for(:action => :select_filters, :id => @field_report_filter.report_id)  %>
+    fncSetOperationContent("operation_area_<%= @screen.id.to_s %>", "<%=ajax_url %>")
+    fncLoadTempFrame();
+</script>
+
+ 

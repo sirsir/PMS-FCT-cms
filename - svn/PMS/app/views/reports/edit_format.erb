@@ -1,0 +1,9 @@
+<%
+form_id = "frm_edit_#{@field_report.id}"
+field_descr = ( @field_report.field_type == :formula ) ? Fields::Formula.evaluate_syntax(@field_report.formula) : @field_report.field.descr
+%>
+<% form_tag url_for(:action => 'update_format', :id => @field_report.id ), :onSubmit => "fncPrepareFormForSubmit(this);", :method=>:put, :id=>form_id, :target=>"tmp_frame" do %>
+  <%= screen_modification_tag "#{@report.description} - #{field_descr} - Modification Format", render(:partial => 'form_format'), "#{form_id}_content" %>
+<% end %>
+
+<hr /> 

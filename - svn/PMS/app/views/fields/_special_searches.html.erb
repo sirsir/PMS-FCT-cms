@@ -1,0 +1,27 @@
+<%
+screen = special_searches
+count = 0
+%>
+</tr>
+<tr>
+  <td colspan="<%=@fields_per_line%>"><u><%= screen.name + " Screen" %></u></td>
+</tr>
+<tr>
+<% screen.fields.each do |field| %>
+  <% if field.display_in_search? %>
+</tr>
+<tr>
+    <% if field.custom_field.is_a?(CustomFields::IssueTracking) %>
+      <% html_tag, count= field_for_search(field, {:screen_id => screen.id, :count => count, :fields_per_line => @fields_per_line}) %>
+      <%= html_tag %>
+    <% else %>
+</tr>
+<tr>
+  <td class='td_search' style='white-space:nowrap;'><b><%= label_tag("#{field.descr} :") %></b></td>
+</tr>
+<tr>
+  <td class='td_search' style='white-space:nowrap;'><%= field_for_search(field,{:screen_id => screen.id}) %></td>
+      <% count +=1 %>
+    <% end %>
+  <% end %>
+<% end %>

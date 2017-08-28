@@ -1,0 +1,21 @@
+<%
+report_request_col = report_request_cols
+col_field = report_request_col.fields_report
+
+if col_field != @report_request.report.col_fields_reports.last
+  #~ The plural partial is used to make a recursive call
+  %>
+    <%=render :partial => 'report_request_cols', :collection => report_request_col.childs %>
+    <%
+    cell_field_report_count = (@report_request.report.cell_location == :row) ? 1 : @report_request.report.cell_fields_reports.size
+    %>
+    <%=render :partial => "sub_total_cell_field", :collection => @report_request.report.cell_fields_reports[0..cell_field_report_count-1], :locals => { :report_request_col => report_request_col } unless col_field.summarize == :non %>
+  <%
+else
+  #~ The singular partial is used generate the fields
+  report_request_cols = (@report_request.report.cell_location == :row) ? report_request_col.childs[0..0] : report_request_col.childs
+  %>
+    <%=render :partial => 'report_request_col', :collection => report_request_cols %>
+  <%
+end
+%>

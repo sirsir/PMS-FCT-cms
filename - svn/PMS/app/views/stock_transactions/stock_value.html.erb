@@ -1,0 +1,12 @@
+<tr >
+  <td >
+    <table style="background-color: red">
+      <tr class="tr_data_odd" id="stock_transaction_tmp_row">
+        <td class="td_cell" style="white-space: nowrap">&nbsp;</td>
+          <%=render(:partial => 'transaction_key_value', :collection => @stock.stock_keys) %>
+          <%=render(:partial => 'transaction_amount_value', :collection => StockTransaction.transaction_value_lists) %>
+        <td class="td_cell" style="white-space: nowrap">&nbsp;</td>
+      </tr>
+    </table>
+  </td>
+</tr>

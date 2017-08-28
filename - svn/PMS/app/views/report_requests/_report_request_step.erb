@@ -1,0 +1,22 @@
+<div style="margin: 3px;">
+  <%
+  steps = [:report, :filters, :show]
+  actions = {
+    :report => :edit,
+    :filters => :edit,
+    :show => :request_report
+  }
+  controller = {
+    :report => :report_requests,
+    :filters => :field_filters,
+    :show => :report_requests
+  }
+  steps.each do |s|
+    descr = s.to_s.singularize.titleize
+    descr = link_to_remote(descr, :update => "operation_area", :url => { :controller => controller[s], :action => actions[s], :id => @report_request.id }) unless @report_request.new_record? || s == step || true
+%>
+    <span style="<%='font-weight: bold' if s == step %>"><%=descr %></span>
+    <%=' > ' unless s == steps.last %>
+  <% end %>
+</div>
+

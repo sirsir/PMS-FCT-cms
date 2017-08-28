@@ -1,0 +1,15 @@
+<div>
+  <table class="table_data_content" cellspacing="0">
+    <tbody id='selected_<%=location %>_fields'>
+      <tr class="tr_header">
+        <th class="th_col_header">Screen</th>
+        <th class="th_col_header">Field</th>
+        <th class="th_col_header">Summarize</th>
+        <th class="th_col_header" title="Move Down">D</th>
+        <th class="th_col_header" title="Move Up">U</th>
+        <th class="th_col_header" title="Remove">R</th>
+      </tr>
+      <%=render :partial => "field_report", :collection => @report.send("#{location}_fields_reports"), :locals => {:field_reports => @report.fields_reports} %>
+    </tbody>
+  </table>
+</div>

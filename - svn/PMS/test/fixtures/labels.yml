@@ -1,0 +1,36 @@
+
+labels_3: 
+  name: G_Name
+  updated_at: 2008-12-26 03:57:47 Z
+  id: 3
+  created_at: 2008-12-26 03:57:47 Z
+
+labels_16: 
+  name: S_Customers
+  updated_at: 
+  id: 16
+  created_at: 
+
+labels_130: 
+  name: G_Person_In_Charge
+  updated_at: 2009-02-05 10:18:39 Z
+  id: 130
+  created_at: 2009-02-05 10:18:39 Z
+ 
+labels_131: 
+  name: G_Tel_No
+  updated_at: 2009-02-05 10:20:18 Z
+  id: 131
+  created_at: 2009-02-05 10:20:18 Z
+ 
+labels_141: 
+  name: S_Quotation
+  updated_at: 2009-02-06 03:18:12 Z
+  id: 141
+  created_at: 2009-02-05 12:38:21 Z
+ 
+labels_142: 
+  name: S_Quotation_Detail
+  updated_at: 2009-02-06 03:28:27 Z
+  id: 142
+  created_at: 2009-02-06 03:28:27 Z

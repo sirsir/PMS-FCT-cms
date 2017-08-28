@@ -1,0 +1,36 @@
+<%
+custom_field = custom_field_record
+operation_area ||= ''
+operation_url = url_for(:action => :edit, :id => custom_field.id)
+
+self_index = @custom_fields.index(custom_field)
+if self_index == 0 || custom_field.class != @custom_fields[self_index-1].class
+%>
+<tr class='tr_header'>
+  <th class='th_col_header' colspan="6" style="text-align: left">
+    <%
+    cf_class_name = custom_field.class.to_s.gsub('CustomFields::','')
+    %>
+    <%= anchor(sanitize_to_id(cf_class_name)) %>
+    <%= cf_class_name %>
+  </th>
+  <th class='th_col_header'>
+    <a href="#page_top_anchor" style="text-decoration: none;" title="Go to top">&uArr;</a>
+  </th>
+</tr>
+<% end %>
+<tr class='tr_<%= @custom_fields.index(custom_field) % 2 == 0 ? 'even' : 'odd' %>' id='<%= custom_field.id %>'
+    operation_area='<%=operation_area%>' operation_url='<%=operation_url%>'
+    relation_area='' relation_url=''
+    handleonclick='true'>
+  <%= render :partial => 'custom_field', :locals => { :custom_field => custom_field } %>
+</tr>
+<%
+if self_index == @custom_fields.size - 1
+%>
+<tr class='tr_header'>
+  <th class='th_col_header' colspan="99">
+    <hr />
+  </th>
+</tr>
+<% end %>

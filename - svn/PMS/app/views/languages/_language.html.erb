@@ -1,0 +1,12 @@
+<td class='td_cell'>&nbsp;</td>
+<td class='td_cell'><%=h language.id %></td>
+<td class='td_cell'><%=h language.name %></td>
+
+<%
+options = {:confirm => true}
+options[:onclick] = "fncTrDelete(this.href, #{language.id});"
+options[:object] = language
+options[:controller] = :languages
+
+%>
+<td class='td_cell' id='<%= language.id %>_destroy'><%= link_to_destroy(options) %></td>

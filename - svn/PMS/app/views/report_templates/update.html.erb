@@ -1,0 +1,19 @@
+<%=javascript_include_tag "prototype" %>
+<%=javascript_include_tag "application" %>
+<%=javascript_include_tag "dialog" %>
+<%=javascript_include_tag "fr" %>
+<script type="text/javascript">
+<% if @report_template.errors.empty? %>
+    fncUpdateTrToTableContent(<%= @screen.id %>, <%= @report_template.id %>);
+
+<% unless @form_content_reuse %>
+    var main_doc = fncGetMainDocument();
+    var div = main_doc.getElementById("operation_area_<%= @screen.id.to_s %>");
+    fncClearDiv(div);
+<% end %>
+<% else %>
+    fncSetError('<%=error_messages_for(:object => @report_template).to_s.gsub(/'/, "&rsquo\;") %>');
+<% end %>
+
+  fncLoadTempFrame();
+</script>

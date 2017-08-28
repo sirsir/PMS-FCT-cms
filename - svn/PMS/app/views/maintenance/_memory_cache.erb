@@ -1,0 +1,47 @@
+<%
+caches = @mem_stat.current_cache.sort_by{|c| c[:name] } 
+%>
+
+<% form_remote_tag :url => url_for(:action => 'clear_cache', :id => session.active_screen.id, :authenticity_token => form_authenticity_token) do %>
+
+<table class="table_data_content" cellspacing='0'>
+  <tr class="tr_header">
+    <th class="th_col_header">&nbsp;</th>
+    <th class="th_col_header">Group</th>
+    <th class="th_col_header">Size</th>
+    <th class="th_col_header">Files</th>
+  </tr>
+<%
+  b = true
+  caches.each_with_index do |c, i|
+    alter = (b ^= true) ? 'odd' : 'even'
+
+    tr_class = "tr_data_#{alter}"
+
+    tr_id = "cache_#{i}"
+%>
+  <%
+  onclick = <<JAVASCRIPT
+  $('clear_#{c[:vm_group]}').checked = true;
+JAVASCRIPT
+  %>
+
+  <tr id="<%=tr_id %>" class="<%=tr_class %>" style="cursor: pointer" onclick="<%= onclick %>">
+    <td class="td_cell" id="<%=tr_id %>_clear">
+      <%= radio_button_tag :clear, c[:vm_group] %>
+    </td>
+    <td class="td_cell"><%= c[:name] %></td>
+    <td class="td_cell" style="text-align: right;">&nbsp;<%= number_to_human_size(c[:size]) if c[:size] > 0 %>&nbsp;</td>
+    <td class="td_cell" style="text-align: right;">&nbsp;<%= number_with_precision(c[:file_count], :precision => 0, :delimiter => ',') if c[:file_count] > 0 %>&nbsp;</td>
+  </tr>
+<% end %>
+</table>
+
+<%
+onclick = <<JAVASCRIPT
+fncShowDialog(null, "pop_box", "<img src='/images/progress.gif' />");
+JAVASCRIPT
+%>
+<%=submit_tag 'Clear', :onclick => onclick  %>
+
+<% end %>

@@ -1,0 +1,14 @@
+<div>
+  <table id ="table_content_<%=@report.id%>" class="table_content" cellspacing="0">
+      <tr class="tr_header">
+        <th class="th_col_header">Screen</th>
+        <th class="th_col_header">Field</th>
+        <th class="th_col_header">Descr</th>
+        <th class="th_col_header">Format</th>
+        <th class="th_col_header">Sort</th>
+        <th class="th_col_header">Chart</th>
+        <th class="th_col_header">%</th>
+      </tr>
+      <%=render :partial => "field_format", :collection => @report.fields_reports.select{|fr| fr.field_id >= 0 } , :locals => {:field_reports => @report.fields_reports} %>
+  </table>
+</div>

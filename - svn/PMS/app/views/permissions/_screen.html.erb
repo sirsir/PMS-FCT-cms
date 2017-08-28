@@ -1,0 +1,49 @@
+<%
+operation_area ||= ""
+
+if @field_permission
+  row_header_operation_area = "permission_area"
+  row_header_operation_url = url_for( :action => @action_source, :screen_id => screen.id, :id => 0, :source_screen_id => @screen.id )
+else
+  row_header_operation_area = operation_area
+  row_header_operation_url = url_for( :action => :new, :screen_id => screen.id, :role_id => -1, :user_id => -1, :type => @permission_type )
+end
+
+onclick = <<JAVASCRIPT
+var tr = this.parentNode;
+tr.setAttribute("operation_area", "#{row_header_operation_area}");
+tr.setAttribute("operation_url", "#{row_header_operation_url}");
+JAVASCRIPT
+%>
+<td class='td_cell' onclick='<%= onclick %>'>
+  <%=screen.label_descr unless screen.new_record? %>&nbsp;
+</td>
+
+<%
+if !@field_permission
+  permissions = (@permission_type == Permissions::RoleScreen) ? @roles : @users
+  permissions.each do |p|
+    permission = screen.permission(p)
+
+    cell_operation_area = operation_area
+    cell_operation_url = (permission.nil?) ?
+      url_for( :action => :new,  :type => @permission_type, :screen_id => screen.id, :role_id => p.id, :user_id => p.id) :
+      url_for( :action => :edit, :type => permission.class.name,  :id => permission.id )
+
+    onclick = <<JAVASCRIPT
+var tr = this.parentNode;
+tr.setAttribute("operation_area", "#{cell_operation_area}");
+tr.setAttribute("operation_url", "#{cell_operation_url}");
+JAVASCRIPT
+    %>
+    <td class='td_cell' onclick='<%= onclick %>'>
+      <%
+      unless permission.nil?
+        result = permission.grant_img
+        result << permission.revoke_img if @permission_type == Permissions::UserScreen
+      end
+      %>
+      <%= result%>&nbsp;
+    </td>
+  <%end%>
+<%end%>

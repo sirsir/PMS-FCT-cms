@@ -1,0 +1,73 @@
+<%
+form_id = "frm_import_#{@screen.id}"
+key_fields = @screen.fields.select{|f| f.is_unique? }.collect{|f| f.descr}.join(',')
+%>
+<% form_tag url_for(:action => :import, :step => :import_mapped_field), :onSubmit => "fncPrepareFormForSubmit(this);", :multipart => true, :method=>:put, :id=>form_id, :target=>"tmp_frame"  do %>
+  <%= hidden_field_tag("screen_id", @screen.id) %>
+  <%= hidden_field_tag("parent_row_id", @parent_row_id) %>
+  <%= hidden_field_tag("operation_area_id", @operation_area_id) %>
+  <%= hidden_field_tag("filename_hash", @filename_hash) %>
+  <%= hidden_field_tag("starting_row", @starting_row) %>
+<h3>
+  CSV Import Wizard: Screen Field Mappings (Step 2 of 2)
+</h3>
+<p>
+Below are the columns from your CSV file with sample data. Choose a field that each column
+corresponds to or leave as <i>--Skip--</i> to not import.
+</p>
+
+<!--p>
+Check the Map field value box if you want to convert old field values to ones compatible with Screen
+(you'll be prompted for more information in the next step). Generally, check this box for Reference,
+Checkbox, Radio, and ComboBox fields. Do not check for all fields.
+</p-->
+
+<p>
+<b>Note: </b>No validations are performed on fields mappings until data import occurs. So please try to ensure
+that your data is correct and valid. You must import <b><%= key_fields %></b>
+field as a bare minimum, or your import will not succeed.
+</p>
+
+<table class="table_data_content" cellspacing="0">
+  <tr class="tr_header">
+    <th class="th_col_header">Col #</th>
+    <th class="th_col_header">Sample Data</th>
+    <th class="th_col_header">Field</th>
+  </tr>
+  <%
+  b = true
+  %>
+  <% (0...@col_count).each do |i| %>
+  <tr class="tr_data_<%= (b=!b) ? 'even' : 'odd' %>">
+    <td class="td_cell"><%= i+1 %></td>
+    <td class="td_cell"><%= h @file_content.inject(''){|s, c| s.to_s.empty? ? c[i] : s } %>&nbsp;</td>
+    <%
+    field_options = options_for_select([["--Skip--", -1]])
+    field_options << options_from_collection_for_select(@screen.fields.select{|f| f.allow_import? }, :id, :descr, @fields[i.to_s].to_i )
+    field_options << options_for_select([["Remark", 0]], (i == @col_count-1) && @fields.has_key?(i.to_s) && @fields[i.to_s].to_i == 0 ? 0 : -1)
+    %>
+    <td class="td_cell"><%= select_tag "fields[#{i}]", field_options %></td>
+  </tr>
+  <% end %>
+</table>
+<%
+#~ ToDo: Prevent submitting is the mandatory filed isn't mapped
+%>
+<br />
+
+<table>
+  <tr>
+    <th class="th_row_header">Allow Update:</th>
+    <td>
+      <%= check_box_tag(:allow_update, true, @allow_update) %><%= label_tag :allow_update, "Replace record with the same <b>#{key_fields}</b> values" %>
+      <%=field_descr_tag(:descr => 'The system will updated the existing records that have the same unique key values. Searching for the existing record may take some time.') %>
+    </td>
+  </tr>
+</table>
+
+<p>
+  <%= submit_tag("Previous", :onclick => "this.form.action = '#{url_for(:action => :import, :step => :import_selected_file)}'") %>
+  <%= submit_tag("Submit") %>
+  <%= submit_tag("Cancel", :onclick => "this.form.action = '#{url_for(:action => :import, :step => :cancel)}'") %>
+</p>
+<% end %>

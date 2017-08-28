@@ -1,0 +1,113 @@
+<% if scr_row.nil? %>
+  Please select the Main Code...
+<% else %>
+  <table>
+    <%
+    scr_row_cell_value = scr_row.cell(field.ocr_field.scr_field.custom_field_id).value
+
+    parts = CustomFields::ScreenCombindedReference.cell_parts(scr_row_cell_value).select{|p| p[:type] != :option }
+
+    ccr_group_result_id ||= "combined_group_result_#{field.id}"
+
+    parent_selected_values ||= nil
+    
+    parts.each_with_index do |p, i|
+    %>
+      <tr>
+        <%
+        case p[:type]
+        when :screen
+          screen = Screen.find(p[:screen_id])
+
+          values = selected_values[0..i]
+
+          unless parent_selected_values.nil?
+            parent_values = YAML.load(parent_selected_values.to_yaml)
+            parent_values.last << values
+            values = parent_values
+          end
+        %>
+          <td>
+            <%= screen.label_descr %>
+          </td>
+          <td id="<%= ccr_result_id_prefix %>_<%= i %>">
+            <%= render :partial => '/rows/code_combined_reference_screen',
+              :locals => {
+                :screen_id => screen_id,
+                :index => i,
+                :parent_scr_row => parent_scr_row,
+                :scr_row => scr_row,
+                :sub_scr_row => sub_scr_row,
+                :field => field,
+                :input_name => input_name,
+                :ccr_result_id_prefix => ccr_result_id_prefix,
+                :ccr_group_result_id => ccr_group_result_id,
+                :parent_ccr_result_id => parent_ccr_result_id,
+                :next_ccr_result_id => next_ccr_result_id,
+                :available_options => [available_options[i]].flatten.compact,
+                :selected_values => values
+              }
+            %>
+          </td>
+        <%
+        when :group
+        %>
+          <td colspan="2">
+            <hr />
+            <%= hidden_field_tag("#{input_name}[selecteds][#{i}][row_id]", -1) %>
+            <!--span style="color: green"><%= ccr_group_result_id %></span-->
+            <div id='<%= ccr_group_result_id %>'>
+              <%=render(:partial => "/rows/code_combined_reference_group" ,
+                :locals => {
+                  :field => field,
+                  :scr_row => scr_row,
+                  :sub_scr_row => sub_scr_row,
+                  :available_options => available_options[i] || {},
+                  :selected_values => selected_values[0..i],
+                  :input_name => input_name,
+                  :ccr_result_id_prefix => ccr_result_id_prefix,
+                  :screen_id => screen_id,
+                  :next_ccr_result_id => next_ccr_result_id
+                }
+              )
+            %>
+            </div>
+            <hr />
+          </td>
+        <%
+        end
+      %>
+      </tr>
+    <%
+    end
+  %>
+  </table>
+
+  <% if parent_scr_row.nil? %>
+    <!--span style="color: green"><%= ccr_result_id_prefix %>_ccr_options</span-->
+    <div id="<%= ccr_result_id_prefix %>_ccr_options">
+      <%
+      options = field.custom_field.options(scr_row, field, selected_values.flatten, true )
+
+      relate_model_rows = [options[:ocr_row]].flatten.compact
+
+      unless relate_model_rows.empty?
+        relate_model_rows += CustomFields::OptionCombindedReference.related_model_rows(options[:ocr_row], selected_values.flatten, field.source_field)
+        model_options = CustomFields::OptionCombindedReference.model_options(options[:ocr_row], selected_values.flatten, field.source_field)
+
+        option_rows = Row.find(:all, :conditions => { :rows => { :id => model_options.keys } } )
+        option_rows.each {|option_row| model_options[option_row] = model_options.delete(option_row.id) }
+      end
+      %>
+      <%=render :partial => "/rows/code_combinded_reference_option", :locals => {
+        :scr_row => scr_row,
+        :ccr_text => CustomFields::CodeCombindedReference.ccr_text(scr_row, selected_values.flatten),
+        :caller_clicked => !new_record,
+        :field => field,
+        :relate_model_rows => relate_model_rows,
+        :model_options => model_options || {},
+        :selected_option_row_ids => selected_option_row_ids}
+    %>
+    </div>
+  <% end %>
+<% end %>

@@ -1,0 +1,88 @@
+# SQLite version 3.x
+#   gem install sqlite3-ruby (not necessary on OS X Leopard)
+
+# Mode: ODBC, ADO
+#
+# ODBC  : Used for creating the database via ODBC. In this case, you'll need
+#         the client to make a ODBC connection to the database. We won't need
+#         to know thier username/password for connecting.
+#         When using ODBC mode, please specify the default host to localhost
+#         host: localhost
+#
+#defaults: &defaults
+#  mode: ODBC
+#  dsn: {DSN Name}
+#  adapter: {Adapter}
+#  host: localhost
+#  username: {User Name}
+#  password: {Password}
+#
+# ADO   : Normal system usage (development/test/production)
+#         When using ADO mode, please specify the default host to TSE's db-server
+#         host: db-server
+#
+#defaults: &defaults
+#  mode: ADO
+#  adapter: sqlserver
+#  host: {Database Server}
+#  username: {User Name}
+#  password: {Password}
+#
+# Sample adapters: firebird, frontbase, infomix, oracle, sqlanywhere, sqlserver, sybase, etc.
+
+
+#defaults: &defaults
+#  mode: ODBC
+#  dsn: pms
+#  adapter: sqlserver
+#  host: localhost
+#  username: pmsuser
+#  password: fed118
+
+defaults: &defaults
+  encoding: utf8
+  username: pmsuser
+  password: fed118
+  
+defaults_mysql: &defaults_mysql
+  adapter: mysql
+  encoding: utf8
+  host: unix-db-server
+  pool: 5
+  <<: *defaults
+
+defaults_mssql: &defaults_mssql
+  mode: ODBC
+  dsn: pms
+  adapter: sqlserver
+  host: db-server
+  <<: *defaults
+
+# Framework development
+development:
+  database: pms_development
+  <<: *defaults_mysql
+
+# Framework production
+production:
+  database: pms_production
+  <<: *defaults_mssql
+
+# Framework test
+test:
+  database: pms_test
+  <<: *defaults_mssql
+
+
+# Framework template
+template:
+  database: pms_template
+  <<: *defaults_mysql
+
+
+# Framework demo
+demo:
+  database: pms_demo
+  <<: *defaults_mysql
+
+# Please client environment database settings in client/*/config folder

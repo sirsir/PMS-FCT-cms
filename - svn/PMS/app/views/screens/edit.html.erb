@@ -1,0 +1,20 @@
+<% unless @screen.system? %>
+  <table name="operation_links_<%= @screen.id %>" class="operation_container">
+    <tr>
+      <td>
+        Actions : <%= link_to 'Rebuild Index', {:action => :rebuild_index, :id => @screen.id } %>
+      </td>
+      <td style="text-align:right"></td>
+    </tr>
+  </table>
+<% end %>
+
+<%
+form_id = "frm_edit_#{@screen_self.id}"
+%>
+
+<% form_tag url_for(:action => 'update' ), :method => :put, :onSubmit => "fncPrepareFormForSubmit(this);", :id=>form_id, :target=>"tmp_frame" do %>
+  <%= screen_modification_tag @screen_self, render(:partial => 'form', :locals => { :action => 'update', :method => ''}) %>
+<% end %>
+
+<hr />

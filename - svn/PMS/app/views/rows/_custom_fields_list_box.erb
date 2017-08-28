@@ -1,0 +1,21 @@
+<% if readonly %>
+  <%=cell.to_html%>
+<% else %>
+<%
+name_prefix ||= ''
+name = "#{name_prefix}cells[#{field.custom_field_id}]"
+
+if cell.row_id.nil?
+  cell_value = [field.custom_field.default_value]
+else
+  cell_value = cell.value
+end
+
+label_id = CustomFields::ListBox.cell_label_ids(cell_value).first
+
+option_tag = options_from_collection_for_select_tag(field.custom_field.labels, :id, :descr, label_id)
+%>
+
+<%=select_tag(name, option_tag, :sort => true, :size=>8, :style=>"width:100%") %>
+<%= field_descr_tag :descr => field.custom_field.descr %>
+<% end %>

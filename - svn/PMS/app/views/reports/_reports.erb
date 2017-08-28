@@ -1,0 +1,13 @@
+<%
+operation_area ||= ''
+%>
+
+<table class='table_content' id='table_content_<%= @screen.id %>' cellspacing='0'>
+  <tr class='tr_header'>
+    <% ["&nbsp;", "Id", "Name", "Description", "Remark", "&nbsp;"].each do |h| %>
+      <th class='th_col_header'><%= (h =~ /&nbsp;/) ? h : h.to_s.titleize %></th>
+    <% end %>
+  </tr>
+  <%= render :partial => "empty_loading_row", :locals => { :operation_area => operation_area } %>
+  <%= render :partial => "report_record", :collection => @reports, :locals => { :operation_area => operation_area } %>
+</table>

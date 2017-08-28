@@ -1,0 +1,17 @@
+<%=javascript_include_tag "prototype" %>
+<%=javascript_include_tag "application" %>
+<%=javascript_include_tag "ajax" %>
+<%=javascript_include_tag "dialog" %>
+<%=javascript_include_tag "fr" %>
+<% 
+  html_tag = hidden_field_tag("screen_id", @row.screen_id) +
+             hidden_field_tag("revision_row_id", @revision_row_id) +
+             hidden_field_tag("type", @row.class.to_s) +
+             hidden_field_tag("user", @user) +
+             screen_creation_tag(@screen, render(:partial => "/rows/form", :locals => {:row => @row, :readonly => false, :area_id => @row.screen_id }), "frm_new_#{@row.screen_id.to_s}_content")
+  action = url_for(:controller => "detail_rows", :action => "create", :id => @row.screen_id )
+
+form_tag action,:onSubmit => "fncPrepareFormForSubmit(this);",:enctype=>'multipart/form-data',:method=>:put, :id=>"frm_new_#{@row.screen_id.to_s}", :target=>"tmp_frame" do %>
+  <%= html_tag %>
+<% end %>
+<hr />

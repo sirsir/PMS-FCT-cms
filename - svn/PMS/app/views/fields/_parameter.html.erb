@@ -1,0 +1,10 @@
+
+<tr>
+  <th class="th_row_header">DT Field:</th>
+  <td>
+      <%=select_tag("field[value][field_id]", options_from_collection_for_select(@screen.fields, :id, :descr)) %>
+      <%= field_descr_tag %>
+  </td>
+</tr>
+ 
+

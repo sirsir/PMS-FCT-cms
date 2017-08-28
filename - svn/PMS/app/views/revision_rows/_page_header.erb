@@ -1,0 +1,22 @@
+<%
+addresses ||= {
+  :address_1 => '9/13 Moo 5 Phaholyothin Rd., T.Klong Nueng, A.Klong Luang, ',
+  :address_2 => 'Pathumthani 12120 Thailand',
+  :tel => 'Tel: +66-2-516-2747~9 Fax: +66-2-516-4388'
+}
+
+addresses = [:address_1, :address_2, :tel].collect{|a| addresses[a] }
+%>
+<table class="table_header">
+  <tr>
+    <td class="td_logo_company" rowspan="2">SUS BKK</td>
+    <td class="td_name_company"><%= name %></td>
+    <td class="td_free1_header" rowspan="2">&nbsp;</td>
+  </tr>
+  <tr>
+    <td class="td_address_company"><%= addresses.join('<br/>') %></td>
+  </tr>
+  <tr>
+    <th class="td_quotation_header" colspan="3"><%= title %></th>
+  </tr>
+</table>

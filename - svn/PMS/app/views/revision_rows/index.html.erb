@@ -1,0 +1,64 @@
+<%=javascript_include_tag "prototype" %>
+<%=javascript_include_tag "application" %>
+<%=javascript_include_tag "ajax" %>
+<%=javascript_include_tag "dialog" %>
+<%=javascript_include_tag "fr" %>
+<div id='revision_row_index'>
+
+<% if @screen.control_revision? %>
+  <%= screen_name_list_tag "#{@header_row.description}'s Revision" if @action_source != "relations" %>
+  <% operations = []
+  ajax_params = {
+    :controller => @screen.class.to_s.pluralize.underscore.gsub("screen","row"),
+    :action_source => @action_source,
+    :filtered_reference => @filtered_reference,
+    :header_row_id =>@header_row.id,
+    :screen_id => @screen.id,
+    :parent_row_id => @header_row.id
+    }
+
+  operations << :new if @screen.allow_action?("new") && @screen.control_revision?
+  operations << :delete if @screen.allow_action?("destroy") && @screen.control_revision?
+  operations << :export if (@action_source.gsub("page_","") != "relations") && (@screen.allow_action?("export"))
+  action = "page_" + @action_source.gsub("page_","")
+  html_page_tags = page_tag(@screen.id,@pageno.to_i,@maxpage.to_i,action)
+  html_operation_tags = operation_tag( operations,{:id =>@screen.id, :ajax_params => ajax_params, :pagination => html_page_tags },
+    { :new => {:onClick => "document.getElementById('frm_new_link_#{@screen.id}').submit(); return false;"} }  )
+%>
+
+<%= render(:partial => '/rows/list',
+    :locals => {:screen => @screen, :rows => @rows, :html_operation_tags => html_operation_tags}) %>
+<% end %>
+
+<%
+  action = url_for( :action => "new", :id => @screen.id )
+  form_tag action, :method=>:get, :id=>"frm_new_link_#{@screen.id}", :target=>"tmp_frame" do %>
+  <%=hidden_field_tag "action_source", @action_source %>
+  <%=hidden_field_tag "filtered_reference", @filtered_reference %>
+  <%=hidden_field_tag "header_row_id", @header_row.id %>
+
+<% end %>
+    
+  <% if @action_source != "relations" %>
+    <div id ='error_area_<%=@screen.id%>'></div>
+    <div id ='operation_area_<%=@screen.id%>'>
+      <%
+      operation_url_options = {
+          :action => :edit,
+          :id=>@header_row.latest_revision.id,
+          :screen_id=>@screen.id
+        }
+      operation_url = url_for(operation_url_options)
+    %>
+      <div name="on_load_operation_content" status="unloaded" ajax_result_id="operation_area_<%=@screen.id%>" ajax_url="<%=operation_url %>"></div>
+    </div>
+    <!-- ToDo: Allow user to select if they want to auto/manual load relation -->
+    <div id ='relation_area_<%=@screen.id%>'></div>
+  <% end %>
+
+  </div>
+  <script type="text/javascript">
+    fncCopyResultToMainFrame("revision_row_index", "operation_area_<%=@screen.header_screen.id%>");
+    fncLoadTempFrame();
+  </script>
+

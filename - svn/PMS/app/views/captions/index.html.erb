@@ -1,0 +1,33 @@
+<%= screen_name_list_tag @screen %>
+
+<%
+operation_area = "operation_area_#{@screen.id}"
+operation_url_new = url_for(:action=>:new)
+on_click_new = <<JAVASCRIPT
+fncAjaxUpdater("#{operation_area}", "#{operation_url_new}");
+return false;
+JAVASCRIPT
+%>
+
+<div class="operation_container" style="width: 100%">
+<%
+name_initials = @labels.collect{|l| l.name_initial }.uniq.sort
+name_initial_links = name_initials.collect{|name_initial| link_to name_initial, ("##{name_initial}_anchor") }
+%>
+
+<%= name_initial_links.join(' | ') %>
+
+</div>
+
+<%= operation_tag( [:new],{:actions=>{:new=>:new}}, {:new=>{:onClick=>"#{on_click_new}"}} )%>
+
+<%= group_tag @screen, render(:partial => 'captions',
+                              :locals => { :operation_area => operation_area }) %>
+
+<%= operation_tag([:new], {:actions => {:new => :new}}, {:new => {:onClick => on_click_new}} )%>
+
+<hr />
+
+<div id ='error_area'></div>
+<%= anchor(operation_area) %>
+<div id ='<%= operation_area %>'></div>

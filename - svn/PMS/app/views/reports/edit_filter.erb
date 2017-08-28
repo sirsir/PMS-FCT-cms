@@ -1,0 +1,16 @@
+<%
+screen = @field_report_filter.screen
+frf_descr = [
+  "#{screen.nil? ? 'Screen?' : screen.label_descr} (#{@field_report_filter.screen_alias})",
+  @field_report_filter.field_id < 0 ? 'Rows' : @field_report_filter.field.descr
+]
+
+field_report_filter_id = @field_report_filter.new_record? ? "#{@field_report_filter.reference_screen_index}_#{@field_report_filter.field_id}" : @field_report_filter.id
+
+form_id = "frm_edit_#{field_report_filter_id}"
+%>
+<% form_tag url_for(:action => 'update_filter', :id => field_report_filter_id ), :onSubmit => "fncPrepareFormForSubmit(this);", :method=>:put, :id=>form_id, :target=>"tmp_frame" do %>
+  <%= screen_modification_tag "#{frf_descr.join(' - ')} - Modification Filter", render(:partial => 'form_filter'), "#{form_id}_content" %>
+<% end %>
+
+<hr />

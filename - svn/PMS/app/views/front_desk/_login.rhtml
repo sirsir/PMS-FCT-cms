@@ -1,0 +1,26 @@
+<table>
+  <tr>
+    <td>
+      <%=image_tag "logo_small_light.png", :style=>"" %>
+    </td>
+    <td>
+      <% if @message %>
+        <div class="error_message" id="message"><%= @message %></div>
+      <% end %>
+      <% demo = RAILS_ENV == 'demo' %>
+      <table>
+        <tr>
+          <th class="th_row_header"><%=label_tag "user_login", "Login" %> :</th>
+          <td><input type="text" name="user_login" id="user_login" size="30" value="<%= 'guest' if demo %>"/></td>
+        </tr>
+        <tr>
+          <th class="th_row_header"><%=label_tag "user_password", "Password" %> :</th>
+          <td><input type="password" name="user_password" id="user_password" size="30" value="<%= 'password' if demo %>"/></td>
+        </tr>
+        <tr>
+          <td colspan='2' align='center'><input type="submit" name="login" value="Login &#187;" class="primary" /></td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+</table>

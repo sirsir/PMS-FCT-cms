@@ -1,0 +1,22 @@
+<%
+length = 0
+length += 1 if report_request_col.fields_report.is_percentage_weight? || (report_request_col.fields_report.location == :cell && report_request_col.fields_report.report.cell_location == :row && report_request_col.fields_report.report.has_percentage_weight?)
+
+(0..length).each do |l|
+  full_descr = report_request_col.full_descr
+  full_descr << ' [%]' unless l == 0
+
+  if l != 0
+    descr = '%'
+  elsif report_request_col.fields_report.location == :col || report_request_col.fields_report.report.cell_location == :col
+    descr = report_request_col.descr
+  else
+    descr = '&nbsp;'
+  end
+
+  colspan = report_request_col.column_span(@report_request)
+%>
+<th class="th_col_header" colspan="<%=colspan %>" title="<%=full_descr %>">
+  <%=descr %>
+</th>
+<% end %>

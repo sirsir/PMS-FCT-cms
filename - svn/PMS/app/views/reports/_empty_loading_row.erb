@@ -1,0 +1,21 @@
+<%
+tr_row_id = "#{@screen.id}_empty_loading_row"
+
+operation_area ||= ""
+operation_url = url_for(:action => :edit, :id => tr_row_id)
+
+ajax_status = "loaded"
+ajax_url = url_for(:action => :fetch_row, :id => tr_row_id)
+%>
+<tr id='<%= tr_row_id %>' style='display: none'
+    operation_area='<%= operation_area %>' operation_url='<%= operation_url %>'
+    relation_area='' relation_url=''
+    handleonclick='true'>
+  <td class='td_loading' id="td_loading_<%=tr_row_id %>" colspan="99">
+    <img src='/images/loading.gif' alt="Loading..." />&nbsp;Loading...
+
+    <div id="div_<%=tr_row_id %>" row_id="<%=tr_row_id %>" cell_id="td_loading_<%=tr_row_id %>"
+         name='on_load_row_content' ajax_status='<%=ajax_status %>' ajax_result_id='div_<%=tr_row_id %>' ajax_url='<%=ajax_url %>'>
+    </div>
+  </td>
+</tr>

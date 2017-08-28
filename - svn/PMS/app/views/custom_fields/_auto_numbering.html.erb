@@ -1,0 +1,74 @@
+<tr>
+  <th class="th_row_header">Ref Description:</th>
+  <td id='custom_field_reference_selector'>
+    <% 
+    all_custom_field_references = CustomFields::Reference.find(:all)
+    assigned_custom_field_references = @custom_field.reference_custom_fields
+    %>
+    <% if @custom_field.auto_number_runnings.empty? && @custom_field.cells.empty? %>
+      <%=left_to_right_tag(
+        :descr => "Custom Field : References",
+        :name => "custom_field[value][custom_field_ids]",
+        :assigned_options => assigned_custom_field_references,
+        :all_options => all_custom_field_references,
+        :text_method => "name")%>
+    <% else %>
+      <% @custom_field.reference_custom_fields.each do |c| %>
+        <li><%= c.name %></li>
+      <% end %>
+      <% @custom_field.reference_custom_field_ids.each do |cf_id| %>
+        <%=hidden_field_tag("custom_field[value][custom_field_ids][]", cf_id) %>
+      <% end %>
+    <% end %>
+    <%= field_descr_tag %>
+  </td>
+</tr>
+<tr>
+  <%
+  field_type_optional_tag = ""
+  if @custom_field.id.nil?
+    field_type_optional_tag << text_field_tag("custom_field[value][format]",  "", :size=>50)
+  else
+    if @custom_field.auto_number_runnings.empty? && @custom_field.cells.empty?
+      field_type_optional_tag << text_field_tag("custom_field[value][format]",  @custom_field.value['format'], :size=>50)
+    else
+      field_type_optional_tag << @custom_field.value['format']
+      field_type_optional_tag << "<br /><span class='error'>Already in use, unable to modify format.</span>"
+      field_type_optional_tag << hidden_field_tag("custom_field[value][format]", @custom_field.value['format'])
+    end
+  end
+%>
+
+  <th class="th_row_header">Format:</th>
+  <td>
+    <%=field_type_optional_tag %>
+    <%=field_descr_tag :descr => render(:partial => "auto_numbering_descr") %>
+  </td>
+</tr>
+<tr>
+  <th class="th_row_header">Start:</th>
+  <td>
+    <%= @custom_field.start_value %>
+    <%=field_descr_tag :descr => "The start value of running" %>
+  </td>
+</tr>
+<tr>
+  <th class="th_row_header">Increment:</th>
+  <td>
+    <%
+    input_value = @custom_field.id.nil? ? 1 : @custom_field.value['increment']
+    %>
+    <%= text_field_tag("custom_field[value][increment]", input_value) %>
+    <%=field_descr_tag %>
+  </td>
+</tr>
+<tr>
+  <th class="th_row_header">Year Shift:</th>
+  <td>
+    <%
+    input_value = @custom_field.id.nil? ? 0 : @custom_field.value['year_shift']
+    %>
+    <%= text_field_tag("custom_field[value][year_shift]", input_value) %>
+    <%=field_descr_tag %>
+  </td>
+</tr>

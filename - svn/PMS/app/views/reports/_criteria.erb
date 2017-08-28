@@ -1,0 +1,32 @@
+<tr class='tr_data_' criteria_status="<%= criteria.nil? ? "new" : "used" %>" onclick="fncAddReportCriteria(this)">
+  <%
+  criteria ||= {}
+
+  name = "report[criterias][]"
+  screen_options = {}
+  [:a_screen_index, :b_screen_index].each do |t_key|
+    screen_options[t_key] = "<option value=''>Please select</option>"
+    @report.reference_screens.each_with_index do |s, i|
+      selected = "selected" if i == criteria[t_key]
+      screen_options[t_key] << "<option value='#{i}' #{selected}>#{s.label_descr} (#{@report.reference_screen_alias[i]})</option>"
+    end
+
+    value_selected = "selected" if criteria[t_key] == @report.reference_screens.length
+    screen_options[t_key] << "<option value='#{@report.reference_screens.length}' #{value_selected}>Value</option>"
+  end
+  operation_options = options_from_collection_for_select_tag(Report.criteria_operations, "to_s", "to_s", criteria[:operation], :include_blank => true)
+
+  %>
+    <td class='td_cell'>&nbsp;</td>
+    <td class='td_cell' id="a_screen_index"><%= select_tag "#{name}[a_screen_index]", screen_options[:a_screen_index], :onchange => "fncSetReportCriteriaFields(this);" %></td>
+    <td class='td_cell' id="a_field_ids">
+      <%=render :partial => "criteria_fields", :locals => { :criteria => criteria, :name => name, :table => :a } %>
+    </td>
+    <td class='td_cell'><%= select_tag "#{name}[operation]", operation_options %></td>
+    <td class='td_cell' id="b_screen_index"><%= select_tag "#{name}[b_screen_index]", screen_options[:b_screen_index], :onchange => "fncSetReportCriteriaFields(this);" %></td>
+    <td class='td_cell' id="b_field_ids">
+      <%=render :partial => "criteria_fields", :locals => { :criteria => criteria, :name => name, :table => :b } %>
+    </td>
+    <td class='td_cell'>&nbsp;</td>
+</tr>
+

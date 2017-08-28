@@ -1,0 +1,115 @@
+/* 
+    Document   : calendar
+    Created on : Nov 19, 2012, 5:33:43 PM
+    Author     : Ju
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+/* 
+   TODO customize this sample style
+   Syntax recommendation http://www.w3.org/TR/REC-CSS2/
+*/
+#calendar_view {
+}
+
+#calendar_view table,
+#calendar_view th,
+#calendar_view td {
+    border-style: solid;
+    border-color: black;
+    font-family: verdana,arial,helvetica,sans-serif;
+    font-size: 13px;
+    line-height: 18px;
+}
+
+#calendar_view table {
+    border-width: 1px 0px 0px 1px;
+}
+
+#calendar_view .rows {
+    height: 75px;
+}
+
+#calendar_view th {
+    border-width: 0px 1px 1px 0px;
+    background-color: #88A7D8;
+    width: 150px;
+}
+
+#calendar_view td {
+    border-width: 0px 1px 1px 0px;
+    vertical-align: top;
+}
+
+#calendar_view .date {
+    font: bold small monospace;
+    width: 15px;
+    height: 15px;
+    text-align: center;
+    vertical-align: middle;
+}
+
+/* Set by Element Class*/
+#calendar_view .td_0 {
+    background-color: #C5C5C5;
+}
+
+#calendar_view .td_1 {
+    background-color: #F5F8FD;
+}
+
+#calendar_view .td_2 {
+    background-color: #EBF3FD;
+}
+
+#calendar_view .td_3 {
+    /* background-color: #FFD; */
+    background-color: #E1EFFE;
+}
+
+#calendar_view .td_4 {
+    background-color: #D7EBFE;
+}
+
+#calendar_view .td_5 {
+    background-color: #CEE7FF;
+}
+
+#calendar_view .content,
+#calendar_view .data {
+    border-color: gray
+}
+
+#calendar_view .data {
+    border-width: 1px;
+    border-style: solid;
+    margin: 3px;
+    padding: 0px 1px;
+}
+
+#calendar_view .more {
+    text-align: right;
+}
+
+#calendar_view .header {
+    color: white;
+}
+
+#calendar_view .title {
+    width: 1022px;
+}
+
+#calendar_view .navigator {
+    width: 20px;
+}
+
+#calendar_view .title,
+#calendar_view .navigator {
+    background-color: #001D85;
+}
+
+#calendar_view .navigator,
+#calendar_view .selectable {
+    cursor: pointer;
+}

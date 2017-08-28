@@ -1,0 +1,22 @@
+
+<p>
+  <b>Screen:</b>
+  <%=h @report_template.screen_id %>
+</p>
+
+
+<p>
+  <b>Name:</b>
+  <%=h @report_template.name %>
+</p>
+
+
+<p>
+  <b>View:</b>
+  <%=h @report_template.type %>
+</p>
+
+
+
+<%= link_to 'Edit', edit_report_template_path(@report_template) %> |
+<%= link_to 'Back', report_templates_path %>

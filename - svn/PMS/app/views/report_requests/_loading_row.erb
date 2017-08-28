@@ -1,0 +1,22 @@
+<%
+row_id = loading_row
+if row_id.nil?
+  tr_row_id = 0
+elsif row_id < 0
+  tr_row_id = "empty_loading_row"
+else
+  tr_row_id = row_id
+end
+
+ajax_status = "loaded"
+ajax_url = url_for(:action => :fetch_row, :id => @report_request.id, :report_request_row_id => tr_row_id )
+%>
+<tr id='<%= 'report_request_row_' if tr_row_id != 'empty_loading_row' %><%= tr_row_id %>' <%= "style='display: none'" if !row_id.nil? && row_id < 0 %>>
+  <td class='td_loading' id="td_loading_<%=tr_row_id %>" colspan="99">
+    <img src='/images/loading.gif' alt="Loading..." />&nbsp;Loading...
+
+    <div id="div_<%=tr_row_id %>" row_id="<%=tr_row_id %>" cell_id="td_loading_<%=tr_row_id %>"
+         name='on_load_row_content' ajax_status='<%=ajax_status %>' ajax_result_id='div_<%=tr_row_id %>' ajax_url='<%=ajax_url %>'>
+    </div>
+  </td>
+</tr>

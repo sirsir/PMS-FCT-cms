@@ -1,0 +1,26 @@
+<% if readonly %>
+  <%=cell.to_html%>
+<% else %>
+<%
+name_prefix ||= ''
+cf = CustomField.find(field.custom_field_id)
+cf_options = cf.option
+cell_value = cell.value
+cell_value = cf.default_value if cell_value.to_s.empty?
+
+options = {}
+options[:name] = "#{name_prefix}cells[#{field.custom_field_id}]"
+options[:cell_value] = cf.parse(cell_value)
+[:precision, :separator, :delimiter].each do |k|
+  options[k] = cf_options[k] unless cf_options[k].to_s.empty?
+end
+%>
+
+<div name="custom_field_numeric">
+  <%= screen_numeric_field_tag(options) %>
+  <%= field_descr_tag :descr => field.custom_field.descr %>
+  <% [:precision, :separator, :delimiter].each do |k| %>
+    <%= hidden_field_tag k.to_s, options[k].nil? ? '' : options[k] %>
+  <% end %>
+</div>
+<% end %>
